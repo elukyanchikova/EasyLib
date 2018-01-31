@@ -9,16 +9,26 @@ public abstract class Document {
     boolean ifCheckOutable;
     String title;
     static int maxCheckOutTime;
-    ArrayList<String> authors;
+    ArrayList<Author> authors;
     //copies - я хз что это будет
     int numberOfRequests;
 
-    Document(){
-        keywords=null;
-        ifCheckOutable=false;
-        title="none";
-        maxCheckOutTime=0;
-        authors=null;
+    Document() {
+        keywords = null;
+        ifCheckOutable = false;
+        title = "none";
+        maxCheckOutTime = 0;
+        authors = null;
+    }
+
+    private class Author {
+        String name;
+        String surname;
+
+        Author(String name, String surname) {
+            this.name = name;
+            this.surname = surname;
+        }
     }
 
 }

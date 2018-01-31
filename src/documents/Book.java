@@ -1,19 +1,31 @@
 package documents;
 
 public class Book extends Document {
-    String publisher;
-    int edition ; //year
+    Publisher publisher;
+    int edition; //year
     boolean isBestseller;
-    Book ( String publisher, int edition, boolean isBestseller){
-        this.publisher=publisher;
-        this.edition=edition;
-        this.isBestseller=isBestseller;
+
+    Book(Publisher publisher, int edition, boolean isBestseller) {
+        this.publisher = publisher;
+        this.edition = edition;
+        this.isBestseller = isBestseller;
 
     }
-    Book (){
-        this.publisher="NoName";
-        this.edition=0;
-        this.isBestseller=false;
 
+    Book() {
+        this.publisher = null;
+        this.edition = 0;
+        this.isBestseller = false;
+
+    }
+
+    private class Publisher {
+        String name;
+        String surname;
+
+        Publisher(String name, String surname) {
+            this.name = name;
+            this.surname = surname;
+        }
     }
 }
