@@ -5,7 +5,8 @@ import documents.Book;
 import java.util.ArrayList;
 
 public class UserCard {
-    User person;
+    ID id;
+    UserType person;
     int phoneNumb;
     Address addess;
     ArrayList<Book> checkedOutBooks;
@@ -24,6 +25,14 @@ public class UserCard {
             this.flat = flat;
         }
     }
+    private class ID {
+        String name;
+        String surname;
+
+        ID(String name, String surname) {
+            this.name = name;
+            this.surname = surname;
+        }
 
 
 }

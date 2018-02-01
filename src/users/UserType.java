@@ -1,14 +1,15 @@
 package users;
 
-public abstract class User {
-    Id person;
+import com.sun.xml.internal.bind.v2.model.core.ID;
+
+public abstract class UserType {
     boolean hasCheckOverdueDocPerm;
     boolean hasEditPerm; // permissions
     boolean hasCheckOutPerm;
     boolean hasReturnPerm;
     boolean hasLongCheckOutPerm;
 
-    User() {
+    UserType() {
         hasCheckOutPerm = true;
         hasEditPerm = false;
         hasReturnPerm = true;
@@ -16,14 +17,7 @@ public abstract class User {
         hasCheckOverdueDocPerm = false;
     }
 
-    private class Id {
-        String name;
-        String surname;
 
-        Id(String name, String surname) {
-            this.name = name;
-            this.surname = surname;
-        }
 
     }
 

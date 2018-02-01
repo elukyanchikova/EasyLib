@@ -1,6 +1,6 @@
 package users;
 
-public class Librian extends User {
+public class Librian extends UserType {
 
     Librian() {
         hasCheckOutPerm = true;

@@ -1,6 +1,6 @@
 package users;
 
-public class Patron extends User {
+public class Patron extends UserType {
     Patron() {
         hasCheckOutPerm = true;
         hasEditPerm = false;
