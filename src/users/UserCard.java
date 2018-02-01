@@ -1,18 +1,26 @@
 package users;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import documents.Book;
 
 import java.util.ArrayList;
 
 public class UserCard {
-    ID id;
-    UserType person;
+    String name;
+    String surname;
+    ID id;// card number
+    UserType userType;
     int phoneNumb;
     Address addess;
     ArrayList<Book> checkedOutBooks;
     int fine;// штраф за передержку
 
-
+    UserCard(String name, String surname,UserType userType, int phoneNumb ){
+        this.name=name;
+        this.surname=surname;
+        this.userType=userType;
+        this.phoneNumb=phoneNumb;
+    }
 
     private class Address {
         String street;
@@ -25,14 +33,5 @@ public class UserCard {
             this.flat = flat;
         }
     }
-    private class ID {
-        String name;
-        String surname;
-
-        ID(String name, String surname) {
-            this.name = name;
-            this.surname = surname;
-        }
-
-
+    //TODO method calculate ID
 }
