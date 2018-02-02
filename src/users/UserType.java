@@ -1,7 +1,5 @@
 package users;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
-
 public abstract class UserType {
     boolean hasCheckOverdueDocPerm;
     boolean hasEditPerm; // permissions
@@ -15,10 +13,6 @@ public abstract class UserType {
         hasReturnPerm = true;
         hasLongCheckOutPerm = false;
         hasCheckOverdueDocPerm = false;
-    }
-
-
-
     }
 
 }

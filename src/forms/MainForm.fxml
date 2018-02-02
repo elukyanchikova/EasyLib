@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="forms.MainForm"
+          hgap="10" vgap="10">
+
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <columnConstraints>
+        <ColumnConstraints minWidth="100"
+                           percentWidth="30.0">
+        </ColumnConstraints>
+        <ColumnConstraints minWidth="200" prefWidth="200"
+                           percentWidth="70.0">
+        </ColumnConstraints>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints
+        minHeight="150" prefHeight="400" vgrow="ALWAYS"></RowConstraints>
+    </rowConstraints>
+
+    <ListView GridPane.columnIndex="0" fx:id="bookListView"
+              minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
+    />
+
+    <GridPane GridPane.columnIndex="1" fx:id="bookInfoStackPane"
+               minWidth="100"
+               minHeight="50" prefHeight="300"
+               maxHeight="Infinity"
+               maxWidth="Infinity">
+
+        <Label GridPane.rowIndex = "0"  fx:id="titleLbl" text="Title" ></Label>
+        <Label GridPane.rowIndex = "1" fx:id="authorsLbl" text="Author(s)" ></Label>
+        <Label GridPane.rowIndex = "2" fx:id="priceLbl" text="Price"></Label>
+        <Label GridPane.rowIndex = "3" fx:id="keywordsLbl" text="Keyword, keyword, keyword"></Label>
+        <Label GridPane.rowIndex = "4" fx:id="numberOfRequestsLbl" text="0"></Label>
+        <Button GridPane.rowIndex = "5" fx:id="checkoutButton" text="Check out"></Button>
+
+    </GridPane>
+</GridPane>
