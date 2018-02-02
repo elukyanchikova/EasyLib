@@ -7,7 +7,7 @@ public abstract class Document {
     ArrayList<String> keywords;
     float price;
     boolean ifCheckOutable;
-    String title;
+    public String title;//Changed into public
     static int maxCheckOutTime;
     ArrayList<Author> authors;
     //copies - я хз что это будет

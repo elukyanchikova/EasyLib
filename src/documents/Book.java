@@ -12,7 +12,7 @@ public class Book extends Document {
 
     }
 
-    Book() {
+    public Book() {
         this.publisher = null;
         this.edition = 0;
         this.isBestseller = false;

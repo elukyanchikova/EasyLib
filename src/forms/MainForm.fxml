@@ -37,7 +37,7 @@
                maxHeight="Infinity"
                maxWidth="Infinity">
 
-        <Label GridPane.rowIndex = "0"  fx:id="titleLbl" text="Title" ></Label>
+        <Label GridPane.rowIndex = "0"  fx:id="titleLbl" text="Title"></Label>
         <Label GridPane.rowIndex = "1" fx:id="authorsLbl" text="Author(s)" ></Label>
         <Label GridPane.rowIndex = "2" fx:id="priceLbl" text="Price"></Label>
         <Label GridPane.rowIndex = "3" fx:id="keywordsLbl" text="Keyword, keyword, keyword"></Label>
