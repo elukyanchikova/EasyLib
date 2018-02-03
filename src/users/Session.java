@@ -1,14 +1,16 @@
+package users;
+
 import users.Guest;
 
 public class Session {
 
-    Guest authorizedUser;
-
+    private UserType authorizedUser;
+    //TODO: uaerID
     /**
      * After authorization program creates session
      * which has current authorized user
      */
-    public  Session(Guest user){
+    public  Session(UserType user){
         this.authorizedUser = user;
     }
 
@@ -20,5 +22,9 @@ public class Session {
             authorizedUser = null;
             return true;
         }else return false;
+    }
+
+    public UserType getUser(){
+        return authorizedUser;
     }
 }

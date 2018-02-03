@@ -1,7 +1,7 @@
 package users;
 
 public class Student extends Patron {
-    Student() {
+    public Student() {
         hasCheckOutPerm = true;
         hasEditPerm = false;
         hasReturnPerm = true;

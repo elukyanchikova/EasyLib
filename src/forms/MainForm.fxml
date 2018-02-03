@@ -27,22 +27,30 @@
         minHeight="150" prefHeight="400" vgrow="ALWAYS"></RowConstraints>
     </rowConstraints>
 
-    <ListView GridPane.columnIndex="0" fx:id="bookListView"
+    <ListView GridPane.columnIndex="0" fx:id="documentListView"
               minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
     />
 
-    <GridPane GridPane.columnIndex="1" fx:id="bookInfoStackPane"
+    <GridPane GridPane.columnIndex="1" fx:id="documentInfoPane"
                minWidth="100"
                minHeight="50" prefHeight="300"
                maxHeight="Infinity"
-               maxWidth="Infinity">
+               maxWidth="Infinity"
+              visible="false">
 
-        <Label GridPane.rowIndex = "0"  fx:id="titleLbl" text="Title"></Label>
-        <Label GridPane.rowIndex = "1" fx:id="authorsLbl" text="Author(s)" ></Label>
-        <Label GridPane.rowIndex = "2" fx:id="priceLbl" text="Price"></Label>
-        <Label GridPane.rowIndex = "3" fx:id="keywordsLbl" text="Keyword, keyword, keyword"></Label>
-        <Label GridPane.rowIndex = "4" fx:id="numberOfRequestsLbl" text="0"></Label>
-        <Button GridPane.rowIndex = "5" fx:id="checkoutButton" text="Check out"></Button>
+        <Label GridPane.rowIndex = "0" GridPane.columnIndex="0" fx:id="labelTitle" text="Title: "></Label>
+        <Label GridPane.rowIndex = "1" GridPane.columnIndex="0" fx:id="labelAuthors" text="Author(s): " ></Label>
+        <Label GridPane.rowIndex = "2" GridPane.columnIndex="0" fx:id="labelType" text="Type: "></Label>
+        <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelPrice" text="Price: "></Label>
+        <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelKeywords" text="Keywords: "></Label>
+        <Label GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="labelRequests" text="Requests: "></Label>
+        <Label GridPane.rowIndex = "0"  GridPane.columnIndex="1" fx:id="titleLbl" text="Title"></Label>
+        <Label GridPane.rowIndex = "1" GridPane.columnIndex="1" fx:id="authorsLbl" text="Author(s)" ></Label>
+        <Label GridPane.rowIndex = "2" GridPane.columnIndex="1" fx:id="documentTypeLbl" text ="Book"></Label>
+        <Label GridPane.rowIndex = "3" GridPane.columnIndex="1" fx:id="priceLbl" text="Price"></Label>
+        <Label GridPane.rowIndex = "4" GridPane.columnIndex="1" fx:id="keywordsLbl" text="Keyword, keyword, keyword"></Label>
+        <Label GridPane.rowIndex = "5" GridPane.columnIndex="1" fx:id="requestLbl" text="0"></Label>
+        <Button GridPane.rowIndex = "6" GridPane.columnIndex="2" fx:id="checkoutButton" text="Requested" onMouseClicked="#checkOut"></Button>
 
     </GridPane>
 </GridPane>

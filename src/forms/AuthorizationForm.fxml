@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="forms.MainForm"
+          maxWidth="Infinity"
+          hgap="20" vgap="10">
+
+    <padding><Insets top="20" right="10" bottom="20" left="10"/></padding>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="100">
+        </ColumnConstraints>
+
+    </columnConstraints>
+
+    <TextField GridPane.rowIndex="0"  fx:id="emailTextField" promptText="n.surname@innopolis.ru"
+    prefWidth="250" maxWidth="-Infinity"  GridPane.halignment="CENTER"></TextField>
+    <Button GridPane.rowIndex = "1"  fx:id="loginAsStudentBtn" text="Login as student" GridPane.halignment="CENTER"
+            prefWidth="250" maxWidth="-Infinity" onMouseClicked="#loginAsStudent"></Button>
+    <Button GridPane.rowIndex="6"  fx:id="loginAsGuestBtn" text="Login as Guest" GridPane.halignment="CENTER"
+            prefWidth="250" maxWidth="-Infinity" onMouseClicked="#loginAsGuest"></Button>
+
+</GridPane>
