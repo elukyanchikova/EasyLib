@@ -9,12 +9,22 @@ public class Book extends Document {
         return publisher;
     }
 
+    public void setPublisher(Publisher publisher){this.publisher=publisher;}
+
     public int getEdition() {
         return edition;
     }
 
+    public void setEdition(int edition) {
+        this.edition = edition;
+    }
+
     public boolean isBestseller() {
         return isBestseller;
+    }
+
+    public void setIsBestseller(boolean isBestseller) {
+        isBestseller = isBestseller;
     }
 
     public Book(Publisher publisher, int edition, boolean isBestseller) {

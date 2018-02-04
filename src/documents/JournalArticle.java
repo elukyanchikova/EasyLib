@@ -12,6 +12,10 @@ public class JournalArticle extends Document {
         return issue;
     }
 
+    public void setIssue(Issue issue){
+       this.issue=issue;
+    }
+
     private class Issue {
         String editor;
         String publicationDate;
