@@ -1,57 +1,40 @@
 package documents;
 
-public class Book extends Document {
-    Publisher publisher;
-    int edition; //year
-    boolean isBestseller;
+import java.util.ArrayList;
 
-    public Publisher getPublisher() {
+public class Book extends Document {
+    protected  String publisher;
+    protected int year;
+    protected boolean isBestseller;
+
+    public Book(String title, ArrayList<Person> authors, ArrayList<String> keywords, int price,
+                int numberOfCopies, int numberOfRequests, String publisher, int year, boolean isBestseller) {
+
+        super(title, "Book", authors, keywords, price, numberOfCopies, numberOfRequests);
+        this.publisher = publisher;
+        this.year = year;
+        this.isBestseller = isBestseller;
+    }
+
+    public Book(String title, ArrayList<Person> authors, ArrayList<String> keywords, int price,
+                int numberOfCopies, String publisher, int year, boolean isBestseller) {
+
+        this(title, authors, keywords, price, numberOfCopies, 0, publisher, year, isBestseller);
+    }
+
+
+    public String getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(Publisher publisher){this.publisher=publisher;}
-
-    public int getEdition() {
-        return edition;
-    }
-
-    public void setEdition(int edition) {
-        this.edition = edition;
+    public int getYear() {
+        return year;
     }
 
     public boolean isBestseller() {
         return isBestseller;
     }
 
-    public void setIsBestseller(boolean isBestseller) {
-        isBestseller = isBestseller;
-    }
-
-    public Book(Publisher publisher, int edition, boolean isBestseller) {
-
-        this.publisher = publisher;
-        this.edition = edition;
-        this.isBestseller = isBestseller;
-        docType="Book";
-
-    }
-
-    public Book() {
-        this.publisher = null;
-        this.edition = 0;
-        this.isBestseller = false;
-        docType="Book";
 
 
-    }
-
-    private class Publisher {
-        String name;
-        String surname;
-
-        protected Publisher(String name, String surname) {
-            this.name = name;
-            this.surname = surname;
-        }
-    }
 }

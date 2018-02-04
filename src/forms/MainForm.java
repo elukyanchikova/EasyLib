@@ -74,7 +74,7 @@ public class MainForm {
                     protected void updateItem(Document document, boolean flag) {
                         super.updateItem(document, flag);
                         if (document != null) {
-                            setText(document.title);
+                            setText(document.getTitle());
                         }
                     }
                 };
@@ -91,11 +91,11 @@ public class MainForm {
             }
             openDocumentID = documentListView.getSelectionModel().getSelectedIndex();
             Document chosenDocument = documents.get(openDocumentID);
-            titleLbl.setText(chosenDocument.title);
-            authorsLbl.setText(chosenDocument.title);
-            documentTypeLbl.setText(chosenDocument.title);
-            priceLbl.setText(chosenDocument.title);
-            keywordsLbl.setText(chosenDocument.title);
+            titleLbl.setText(chosenDocument.getTitle());
+            authorsLbl.setText(chosenDocument.getTitle());
+            documentTypeLbl.setText(chosenDocument.getTitle());
+            priceLbl.setText(chosenDocument.getTitle());
+            keywordsLbl.setText(chosenDocument.getTitle());
             requestLbl.setText(String.valueOf(tempRequests));
         }
     }

@@ -1,11 +1,11 @@
 package users;
 
-import users.Guest;
-
 public class Session {
 
     private UserType authorizedUser;
-    //TODO: uaerID
+
+    //TODO: change userName into userID and make it private.
+    public String userName = "";
     /**
      * After authorization program creates session
      * which has current authorized user
@@ -24,6 +24,11 @@ public class Session {
         }else return false;
     }
 
+    //TODO: get UserCard instead UserType
+
+    /**
+     * @return user of current session
+     */
     public UserType getUser(){
         return authorizedUser;
     }

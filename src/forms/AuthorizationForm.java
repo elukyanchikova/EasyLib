@@ -20,35 +20,48 @@ public class AuthorizationForm {
     @FXML private TextField emailTextField;
     @FXML private Button loginAsStudentBtn;
     @FXML private Button loginAsGuestBtn;
-    public void startForm(Stage primaryStage) throws Exception{
+
+    /**
+     * Initialization and run new scene on the primary stage
+     */
+    void startForm(Stage primaryStage) throws Exception{
         this.stage = primaryStage;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Initialization scene and scene's elements
+     */
     private void sceneInitialization() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("AuthorizationForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root,700,700);
+
+        emailTextField = (TextField) scene.lookup("#emailTextField");
+        loginAsStudentBtn = (Button) scene.lookup("#loginAsStudentBtn");
+        loginAsGuestBtn = (Button) scene.lookup("#loginAsGuestBtn");
     }
 
+    /**
+     * Click on button "loginAsStudent" event
+     */
     @FXML
     public void loginAsStudent() throws Exception{
-
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage,new Session(new Student()));
+        Session session = new Session(new Student());
+        session.userName = emailTextField.getText().toLowerCase().replace("@innopolis.ru", "");
+        mainForm.startForm(stage,session);
     }
 
+    /**
+     * Click on button "loginAsGuest" event
+     */
     @FXML
     public void loginAsGuest()throws Exception{
         MainForm mainForm = new MainForm();
         mainForm.startForm(stage,new Session(new Guest()));
-
-        /*currentSession = new Session(new Guest());
-        primaryStage.setScene(scene);
-        checkoutButton.setVisible(false);
-        primaryStage.show();*/
     }
 }

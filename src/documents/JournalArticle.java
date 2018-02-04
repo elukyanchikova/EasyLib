@@ -1,35 +1,24 @@
 package documents;
 
+import java.util.ArrayList;
+
 public class JournalArticle extends Document {
     Issue issue;
+    String journal;
 
-   public  JournalArticle(Issue issue) {
+    public  JournalArticle(String title,String journal, ArrayList<Person> authors, ArrayList<String> keywords, int price,
+                           int numberOfCopies, int numberOfRequests, Issue issue) {
+        super(title, "Journal Article", authors, keywords, price, numberOfCopies,numberOfRequests);
+        this.journal = journal;
         this.issue = issue;
-        docType="Journal article";
+    }
+
+    public  JournalArticle(String title,String journal,ArrayList<Person> authors, ArrayList<String> keywords, int price,
+                           int numberOfCopies, Issue issue) {
+        this(title, journal,authors, keywords, price, numberOfCopies,0, issue);
     }
 
     public Issue getIssue() {
         return issue;
     }
-
-    public void setIssue(Issue issue){
-       this.issue=issue;
-    }
-
-    private class Issue {
-        String editor;
-        String publicationDate;
-
-        Issue(String editor, String publicationDate) {
-            this.editor = editor;
-            this.publicationDate = publicationDate;
-        }
-
-        Issue() {
-            editor = "NoName";
-            publicationDate = "unknown";
-        }
-    }
-
-
 }
