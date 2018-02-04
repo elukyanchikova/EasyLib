@@ -9,7 +9,6 @@
 <?import javafx.geometry.Insets?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="forms.MainForm"
           maxWidth="Infinity"
           hgap="20" vgap="10">
 
