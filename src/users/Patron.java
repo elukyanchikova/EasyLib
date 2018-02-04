@@ -1,7 +1,7 @@
 package users;
 
 public class Patron extends UserType {
-    Patron() {
+    public Patron() {
         hasCheckOutPerm = true;
         hasEditPerm = false;
         hasReturnPerm = true;

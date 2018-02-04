@@ -5,10 +5,12 @@ public class Book extends Document {
     int edition; //year
     boolean isBestseller;
 
-    Book(Publisher publisher, int edition, boolean isBestseller) {
+    public Book(Publisher publisher, int edition, boolean isBestseller) {
+        
         this.publisher = publisher;
         this.edition = edition;
         this.isBestseller = isBestseller;
+        docType="Book";
 
     }
 
@@ -16,6 +18,8 @@ public class Book extends Document {
         this.publisher = null;
         this.edition = 0;
         this.isBestseller = false;
+        docType="Book";
+
 
     }
 
@@ -23,7 +27,7 @@ public class Book extends Document {
         String name;
         String surname;
 
-        Publisher(String name, String surname) {
+        protected Publisher(String name, String surname) {
             this.name = name;
             this.surname = surname;
         }

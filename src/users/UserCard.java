@@ -2,6 +2,7 @@ package users;
 
 import com.sun.xml.internal.bind.v2.model.core.ID;
 import documents.Book;
+import documents.Document;
 
 import java.util.ArrayList;
 
@@ -13,13 +14,15 @@ public class UserCard {
     int phoneNumb;
     Address addess;
     ArrayList<Book> checkedOutBooks;
+    ArrayList<Document> requestedDocs;
     int fine;// штраф за передержку
 
-    UserCard(String name, String surname,UserType userType, int phoneNumb ){
+    public UserCard(String name, String surname,UserType userType, int phoneNumb ){
         this.name=name;
         this.surname=surname;
         this.userType=userType;
         this.phoneNumb=phoneNumb;
+        requestedDocs=null;
     }
 
     private class Address {

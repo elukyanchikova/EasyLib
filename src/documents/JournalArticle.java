@@ -5,6 +5,7 @@ public class JournalArticle extends Document {
 
     JournalArticle(Issue issue) {
         this.issue = issue;
+        docType="Journal article";
     }
 
     private class Issue {

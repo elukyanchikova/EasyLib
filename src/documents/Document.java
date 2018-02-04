@@ -12,16 +12,18 @@ public abstract class Document {
     ArrayList<Author> authors;
     //copies - я хз что это будет
     int numberOfRequests;
+    String docType;
 
-    Document() {
+   public Document() {
         keywords = null;
         ifCheckOutable = false;
         title = "none";
         maxCheckOutTime = 0;
         authors = null;
+        docType= "none";
     }
 
-    private class Author {
+     private class Author {
         String name;
         String surname;
 

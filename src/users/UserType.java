@@ -7,7 +7,7 @@ public abstract class UserType {
     boolean hasReturnPerm;
     boolean hasLongCheckOutPerm;
 
-    UserType() {
+    public UserType() {
         hasCheckOutPerm = true;
         hasEditPerm = false;
         hasReturnPerm = true;

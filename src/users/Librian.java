@@ -2,7 +2,7 @@ package users;
 
 public class Librian extends UserType {
 
-    Librian() {
+   public  Librian() {
         hasCheckOutPerm = true;
         hasEditPerm = true;
         hasReturnPerm = true;
