@@ -35,8 +35,12 @@ public abstract class Document {
         return keywords;
     }
 
-    public float getPrice() {
+    public int getPrice() {
         return price;
+    }
+
+    public void setRequest(int requests){
+        this.numberOfRequests = requests;
     }
 
     public String getTitle() {

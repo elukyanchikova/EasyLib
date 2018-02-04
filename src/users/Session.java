@@ -4,8 +4,8 @@ public class Session {
 
     private UserType authorizedUser;
 
-    //TODO: change userName into userID and make it private.
-    public String userName = "";
+    //TODO: change userCard access.
+    public UserCard userCard;
     /**
      * After authorization program creates session
      * which has current authorized user

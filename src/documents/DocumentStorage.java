@@ -25,13 +25,13 @@ public class DocumentStorage {
         ArrayList<Person> authors2 = new ArrayList<>();
         authors2.add(new Person("Gilbert", "Strang","Gilbert Strang"));
         ArrayList<String> keywords2 = new ArrayList<>();
-        keywords1.add("Linear algebra");
-        keywords1.add("Mathematics");
+        keywords2.add("Linear algebra");
+        keywords2.add("Mathematics");
         AVMaterial avMaterial = new AVMaterial("MIT linear algebra lecture", authors2, keywords2, 200, 10);
 
 
         ArrayList<Person> authors3 = new ArrayList<>();
-        authors2.add(new Person("Edsger", "Dijkstra","Edsger W. Dijkstra"));
+        authors3.add(new Person("Edsger", "Dijkstra","Edsger W. Dijkstra"));
         ArrayList<String> keywords3 = new ArrayList<>();
         keywords3.add("ACM");
         JournalArticle article = new JournalArticle("Go to Statement Considered Harmful", "Communication ACM", authors3,

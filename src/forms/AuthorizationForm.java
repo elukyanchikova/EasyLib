@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import users.Guest;
 import users.Session;
 import users.Student;
+import users.UserCard;
 
 public class AuthorizationForm {
 
@@ -52,7 +53,8 @@ public class AuthorizationForm {
     public void loginAsStudent() throws Exception{
         MainForm mainForm = new MainForm();
         Session session = new Session(new Student());
-        session.userName = emailTextField.getText().toLowerCase().replace("@innopolis.ru", "");
+        //TODO: get UserCard from storage
+        session.userCard = new UserCard(emailTextField.getText().toLowerCase().replace("@innopolis.ru", ""));
         mainForm.startForm(stage,session);
     }
 

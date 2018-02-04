@@ -1,9 +1,9 @@
 package documents;
 
 public class Person {
-    String name;
-    String surname;
-    String fullName;
+    public String name;
+    public String surname;
+    public String fullName;
 
     Person(String name, String surname, String fullName) {
         this.name = name;

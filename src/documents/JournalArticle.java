@@ -21,4 +21,8 @@ public class JournalArticle extends Document {
     public Issue getIssue() {
         return issue;
     }
+
+    public String getJournal() {
+        return journal;
+    }
 }
