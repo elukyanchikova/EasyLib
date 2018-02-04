@@ -9,7 +9,6 @@
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="forms.MainForm"
           hgap="10" vgap="10">
 
     <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
@@ -29,6 +28,7 @@
 
     <ListView GridPane.columnIndex="0" fx:id="documentListView"
               minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
+              onMouseClicked="#selectDocument"
     />
 
     <GridPane GridPane.columnIndex="1" fx:id="documentInfoPane"

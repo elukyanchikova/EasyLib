@@ -1,77 +1,72 @@
 package forms;
 
-
 import documents.Document;
 import documents.DocumentStorage;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import users.Guest;
 import users.Session;
-import users.Student;
 
 import java.util.ArrayList;
 
+public class MainForm {
 
-public class MainForm extends Application implements EventHandler<MouseEvent>{
+    private Stage stage;
+    private Scene scene;
+    private Session session;
 
-    public static void main(String[] args){
-        launch(args);
-    }
-
-    Session currentSession;
     ArrayList<Document> documents = new ArrayList<>();
-
     private int openDocumentID = -1;
 
-    @FXML private ListView<Document> documentListView;
     @FXML private GridPane documentInfoPane;
-    @FXML private Label titleLbl;
-    @FXML private Label authorsLbl;
-    @FXML private Label documentTypeLbl;
-    @FXML private Label priceLbl;
-    @FXML private Label keywordsLbl;
-    @FXML private Label requestLbl;
+
+    @FXML private ListView<Document> documentListView;
+
+    @FXML private javafx.scene.control.Label titleLbl;
+    @FXML private javafx.scene.control.Label authorsLbl;
+    @FXML private javafx.scene.control.Label documentTypeLbl;
+    @FXML private javafx.scene.control.Label priceLbl;
+    @FXML private javafx.scene.control.Label keywordsLbl;
+    @FXML private javafx.scene.control.Label requestLbl;
     @FXML private static Button checkoutButton;
 
-    @FXML private Button loginAsStudentBtn;
-    //TODO: refactor this class. Divide the functions by forms
-    ObservableList<Document> data;
 
-    static Stage primaryStage;
-    static Scene scene;
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("EasyLib");
-
-        GridPane root = FXMLLoader.load(getClass().getResource("MainForm.fxml"));
-        GridPane authorization = FXMLLoader.load(getClass().getResource("AuthorizationForm.fxml"));
-
-
-        this.primaryStage = primaryStage;
-        Scene authorizationScene = new Scene(authorization,350,300);
-        this.scene = new Scene(root,700,700);
-        primaryStage.setScene(authorizationScene);
-
-        initializationAuthorizationScene(authorizationScene);
-        initializationMainScene(scene);
-
+    public void startForm(Stage primaryStage, Session currentSession) throws Exception{
+        this.session = currentSession;
+        this.stage = primaryStage;
         documents = DocumentStorage.getDocuments();
+        sceneInitialization();
+        stage.setScene(scene);
+        stage.show();
+    }
 
-        data = FXCollections.observableArrayList(documents);
-        documentListView.setItems(data);
+    private void sceneInitialization() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainForm.fxml"));
+        loader.setController(this);
+        GridPane root = loader.load();
+        this.scene = new Scene(root,700,700);
+
+        documentListView = (ListView<Document>) scene.lookup("#documentListView");
+        documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
+        titleLbl = (javafx.scene.control.Label) scene.lookup("#titleLbl");
+        authorsLbl = (javafx.scene.control.Label) scene.lookup("#authorsLbl");
+        documentTypeLbl = (javafx.scene.control.Label) scene.lookup("#documentTypeLbl");
+        priceLbl = (javafx.scene.control.Label) scene.lookup("#priceLbl");
+        keywordsLbl = (javafx.scene.control.Label) scene.lookup("#keywordsLbl");
+        requestLbl = (javafx.scene.control.Label) scene.lookup("#requestLbl");
+        checkoutButton = (javafx.scene.control.Button) scene.lookup("#checkoutButton");
+
+        if(session.getUser().getClass().equals(Guest.class)) checkoutButton.setVisible(false);
+
+        documentListView.setItems(FXCollections.observableArrayList(documents));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>(){
             public ListCell<Document> call(ListView<Document> documentListView) {
                 ListCell<Document> cell = new ListCell<Document>(){
@@ -86,48 +81,24 @@ public class MainForm extends Application implements EventHandler<MouseEvent>{
                 return cell;
             }
         });
-
-        documentListView.setOnMouseClicked(this);
-
-        primaryStage.show();
     }
 
-    private void initializationMainScene(Scene scene){
-
-        documentListView = (ListView<Document>) scene.lookup("#documentListView");
-        documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
-        titleLbl = (Label) scene.lookup("#titleLbl");
-        authorsLbl = (Label) scene.lookup("#authorsLbl");
-        documentTypeLbl = (Label) scene.lookup("#documentTypeLbl");
-        priceLbl = (Label) scene.lookup("#priceLbl");
-        keywordsLbl = (Label) scene.lookup("#keywordsLbl");
-        requestLbl = (Label) scene.lookup("#requestLbl");
-        checkoutButton = (Button) scene.lookup("#checkoutButton");
-
-
-    }
-
-    private void initializationAuthorizationScene(Scene scene){
-
-        loginAsStudentBtn =(Button) scene.lookup("#loginAsStudentBtn");
-        loginAsStudentBtn.requestFocus();
-    }
-
-    @Override
-    public void handle(MouseEvent event) {
-        if(openDocumentID == -1){
-            documentInfoPane.setVisible(true);
+    @FXML
+    public void selectDocument(){
+        if(documentListView.getSelectionModel().getSelectedIndex() > -1) {
+            if(openDocumentID == -1){
+                documentInfoPane.setVisible(true);
+            }
+            openDocumentID = documentListView.getSelectionModel().getSelectedIndex();
+            Document chosenDocument = documents.get(openDocumentID);
+            titleLbl.setText(chosenDocument.title);
+            authorsLbl.setText(chosenDocument.title);
+            documentTypeLbl.setText(chosenDocument.title);
+            priceLbl.setText(chosenDocument.title);
+            keywordsLbl.setText(chosenDocument.title);
+            requestLbl.setText(String.valueOf(tempRequests));
         }
-        openDocumentID = documentListView.getSelectionModel().getSelectedIndex();
-        Document chosenDocument = documents.get(openDocumentID);
-        titleLbl.setText(chosenDocument.title);
-        authorsLbl.setText(chosenDocument.title);
-        documentTypeLbl.setText(chosenDocument.title);
-        priceLbl.setText(chosenDocument.title);
-        keywordsLbl.setText(chosenDocument.title);
-        requestLbl.setText(String.valueOf(tempRequests));
     }
-
 
     private int tempRequests = 0;
     private boolean requested = false;
@@ -144,20 +115,5 @@ public class MainForm extends Application implements EventHandler<MouseEvent>{
             requested = true;
         }
         requestLbl.setText(String.valueOf(tempRequests));
-    }
-
-    @FXML
-    public void loginAsStudent(){
-        currentSession = new Session(new Student());
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    @FXML
-    public void loginAsGuest(){
-        currentSession = new Session(new Guest());
-        primaryStage.setScene(scene);
-        checkoutButton.setVisible(false);
-        primaryStage.show();
     }
 }
