@@ -5,8 +5,20 @@ public class Book extends Document {
     int edition; //year
     boolean isBestseller;
 
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public int getEdition() {
+        return edition;
+    }
+
+    public boolean isBestseller() {
+        return isBestseller;
+    }
+
     public Book(Publisher publisher, int edition, boolean isBestseller) {
-        
+
         this.publisher = publisher;
         this.edition = edition;
         this.isBestseller = isBestseller;

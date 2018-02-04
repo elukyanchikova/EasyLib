@@ -14,16 +14,48 @@ public abstract class Document {
     int numberOfRequests;
     String docType;
 
-   public Document() {
+    public ArrayList<String> getKeywords() {
+        return keywords;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public boolean isIfCheckOutable() {
+        return ifCheckOutable;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getMaxCheckOutTime() {
+        return maxCheckOutTime;
+    }
+
+    public ArrayList<Author> getAuthors() {
+        return authors;
+    }
+
+    public int getNumberOfRequests() {
+        return numberOfRequests;
+    }
+
+    public String getDocType() {
+        return docType;
+    }
+
+    public Document() {
         keywords = null;
         ifCheckOutable = false;
         title = "none";
         maxCheckOutTime = 0;
         authors = null;
-        docType= "none";
+        docType = "none";
     }
 
-     private class Author {
+    private class Author {
         String name;
         String surname;
 

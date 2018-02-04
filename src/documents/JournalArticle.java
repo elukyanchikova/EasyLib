@@ -3,9 +3,13 @@ package documents;
 public class JournalArticle extends Document {
     Issue issue;
 
-    JournalArticle(Issue issue) {
+   public  JournalArticle(Issue issue) {
         this.issue = issue;
         docType="Journal article";
+    }
+
+    public Issue getIssue() {
+        return issue;
     }
 
     private class Issue {
