@@ -13,17 +13,12 @@ public class UserCard {
     UserType userType;
     String phoneNumb;
     String address;
-    ArrayList<Copy> checkedOutDocs;
+
+    public ArrayList<Copy> checkedOutDocs;
 
     public ArrayList<Document> requestedDocs;
 
     int fine;
-
-    //TODO: delete this templar constructor
-    public UserCard(String name){
-        this.name=name;
-        this.requestedDocs = new ArrayList<>();
-    }
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address,
                     ArrayList<Copy> checkedOutDocs, ArrayList<Document> requestedDocs, int fine){

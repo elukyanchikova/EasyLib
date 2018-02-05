@@ -1,7 +1,7 @@
 package users;
 
 public abstract class UserType {
-    //Permissions
+    //Permissions of the user
     boolean hasCheckOverdueDocPerm = false;
     boolean hasEditPerm = false;
     boolean hasCheckOutPerm = false;

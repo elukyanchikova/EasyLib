@@ -63,4 +63,8 @@ public abstract class Document {
         return docType;
     }
 
+    public void setNumberOfCopies(int numberOfCopies){
+        this.numberOfCopies = numberOfCopies;
+    }
+
 }

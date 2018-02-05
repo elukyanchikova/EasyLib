@@ -35,6 +35,7 @@ public class MainForm {
     @FXML private Label priceLbl;
     @FXML private Label keywordsLbl;
     @FXML private Label requestLbl;
+    @FXML private Label labelRequests;
 
     @FXML private Label labelAddition1;
     @FXML private Label labelAddition2;
@@ -46,17 +47,22 @@ public class MainForm {
 
     @FXML private static Button checkoutButton;
 
-
+    /**
+     * Initialization and run new scene on the primary stage
+     */
     public void startForm(Stage primaryStage, Session currentSession) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
-        documents = DocumentStorage.getDocuments();
+        documents = Storage.getDocuments();
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
     }
 
     //TODO refactor after adding storage
+    /**
+     * Initialization scene and scene's elements
+     */
     private void sceneInitialization() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainForm.fxml"));
         loader.setController(this);
@@ -71,6 +77,7 @@ public class MainForm {
         priceLbl = (Label) scene.lookup("#priceLbl");
         keywordsLbl = (Label) scene.lookup("#keywordsLbl");
         requestLbl = (Label) scene.lookup("#requestLbl");
+        labelRequests = (Label) scene.lookup("#labelRequests");
 
         additionLbl1 = (Label) scene.lookup("#additionLbl1");
         additionLbl2 = (Label) scene.lookup("#additionLbl2");
@@ -80,7 +87,7 @@ public class MainForm {
         labelAddition2 = (Label) scene.lookup("#labelAddition2");
         labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
-        checkoutButton = (javafx.scene.control.Button) scene.lookup("#checkoutButton");
+        checkoutButton = (Button) scene.lookup("#checkoutButton");
 
         if(!session.getUser().isHasCheckOutPerm()) checkoutButton.setVisible(false);
 
@@ -101,12 +108,18 @@ public class MainForm {
     }
 
     //TODO change process of output
+
+    /**
+     * Select element of Document List View Event
+     */
     @FXML
     public void selectDocument(){
+        //get selected element
         if(documentListView.getSelectionModel().getSelectedIndex() > -1) {
             if(openDocumentID == -1){
-                documentInfoPane.setVisible(true);
+                documentInfoPane.setVisible(true);//If no document was opened
             }
+            //Set document info
             openDocumentID = documentListView.getSelectionModel().getSelectedIndex();
             Document chosenDocument = documents.get(openDocumentID);
             titleLbl.setText(chosenDocument.getTitle());
@@ -149,25 +162,56 @@ public class MainForm {
                 additionLbl2.setText("");
                 additionLbl3.setText("");
             }
-            if(session.userCard.requestedDocs.contains( documents.get(openDocumentID))) {
-                checkoutButton.setText("Cancel request");
-            }else checkoutButton.setText("Request");
+            if(session.getUser().isHasCheckOutPerm()) {
+                //Check number of copies and output it or number of requests
+                if (documents.get(openDocumentID).getNumberOfCopies() == -1) {
+                    checkoutButton.setVisible(false);
+                    labelRequests.setText("");
+                    requestLbl.setText("");
+                } else if (documents.get(openDocumentID).getNumberOfCopies() == 0) {
+                    requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfRequests()));
+                    checkoutButton.setVisible(true);
+                    if (session.userCard.requestedDocs.contains(documents.get(openDocumentID))) {
+                        checkoutButton.setText("Cancel request");
+                    } else checkoutButton.setText("Request");
+                } else {
+                    checkoutButton.setVisible(true);
+                    labelRequests.setText("Copies: ");
+                    requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfCopies()));
+                    checkoutButton.setText("Check out");
+                }
+            }
         }
     }
 
+    /**
+     * Click on check out button event.
+     * Check out or request(temp) document
+     */
     @FXML
     public void checkOut(){
         Document currentDoc = documents.get(openDocumentID);
-        boolean requested = session.userCard.requestedDocs.contains(currentDoc);
-        if(requested) {
-            currentDoc.setRequest(currentDoc.getNumberOfRequests()-1);
-            checkoutButton.setText("Request");
-            session.userCard.requestedDocs.remove(currentDoc);
-        } else{
-            currentDoc.setRequest(currentDoc.getNumberOfRequests()+1);
-            checkoutButton.setText("Cancel request");
-            session.userCard.requestedDocs.add(currentDoc);
+        if(currentDoc.getNumberOfCopies() == 0) {
+            boolean requested = session.userCard.requestedDocs.contains(currentDoc);
+            if (requested) {
+                currentDoc.setRequest(currentDoc.getNumberOfRequests() - 1);
+                checkoutButton.setText("Request");
+                session.userCard.requestedDocs.remove(currentDoc);
+            } else {
+                currentDoc.setRequest(currentDoc.getNumberOfRequests() + 1);
+                checkoutButton.setText("Cancel request");
+                session.userCard.requestedDocs.add(currentDoc);
+            }
+            requestLbl.setText(String.valueOf(currentDoc.getNumberOfRequests()));
+        }else{
+            currentDoc.setNumberOfCopies(currentDoc.getNumberOfCopies()-1);
+            session.userCard.checkedOutDocs.add(new Copy(currentDoc, -1,10));
+            requestLbl.setText(String.valueOf(currentDoc.getNumberOfCopies()));
+            if(currentDoc.getNumberOfCopies() == 0) {
+                labelRequests.setText("Requests: ");
+                requestLbl.setText(String.valueOf(currentDoc.getNumberOfRequests()));
+                checkoutButton.setText("Request");
+            }
         }
-        requestLbl.setText(String.valueOf(currentDoc.getNumberOfRequests()));
     }
 }

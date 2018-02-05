@@ -1,5 +1,6 @@
 package forms;
 
+import documents.Storage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,8 +11,6 @@ import javafx.stage.Stage;
 import users.Guest;
 import users.Session;
 import users.Student;
-import users.UserCard;
-
 public class AuthorizationForm {
 
 
@@ -51,11 +50,15 @@ public class AuthorizationForm {
      */
     @FXML
     public void loginAsStudent() throws Exception{
-        MainForm mainForm = new MainForm();
-        Session session = new Session(new Student());
+
         //TODO: get UserCard from storage
-        session.userCard = new UserCard(emailTextField.getText().toLowerCase().replace("@innopolis.ru", ""));
-        mainForm.startForm(stage,session);
+        if(emailTextField.getText().toLowerCase().contains("@innopolis.ru") &&
+                emailTextField.getText().toLowerCase().replace("@innopolis.ru", "").replace(" ", "").length() != 0) {
+            MainForm mainForm = new MainForm();
+            Session session = new Session(new Student());
+            session.userCard = Storage.getUsers().get(0);
+            mainForm.startForm(stage, session);
+        }
     }
 
     /**

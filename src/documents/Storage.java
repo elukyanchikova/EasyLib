@@ -1,9 +1,13 @@
 package documents;
 
+import users.Faculty;
+import users.Student;
+import users.UserCard;
+
 import java.util.ArrayList;
 
-public class DocumentStorage {
-    //TODO: make real Document Storage
+public class Storage {
+    //TODO: make real Storage
     /**
      * Templar storage of documents
      * @return data from pseudo-storage
@@ -27,7 +31,7 @@ public class DocumentStorage {
         ArrayList<String> keywords2 = new ArrayList<>();
         keywords2.add("Linear algebra");
         keywords2.add("Mathematics");
-        AVMaterial avMaterial = new AVMaterial("MIT linear algebra lecture", authors2, keywords2, 200, 10);
+        AVMaterial avMaterial = new AVMaterial("MIT linear algebra lecture", authors2, keywords2, 200, -1);
 
 
         ArrayList<Person> authors3 = new ArrayList<>();
@@ -42,5 +46,17 @@ public class DocumentStorage {
         documents.add(article);
 
         return documents;
+    }
+
+    /**
+     * Templar storage of users
+     * @return data from pseudo-storage
+     */
+    public static ArrayList<UserCard> getUsers(){
+        ArrayList<UserCard> users = new ArrayList<>();
+        users.add(new UserCard("Lily", "Smith", new Student(),"8900355355", "Eiffel st 2"));
+        users.add(new UserCard("Mike", "Landgraab", new Student(),"8967999966", "Meyer avenue 10"));
+        users.add(new UserCard("Bertrand", "Meyer", new Faculty(),"8555444333", "Eiffel st 11"));
+        return users;
     }
 }

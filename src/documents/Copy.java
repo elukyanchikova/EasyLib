@@ -14,6 +14,7 @@ public class Copy {
         this.room = room;
     }
 
+    //TODO bound with user
     public void checkoutBy(UserCard user){
         this.checkoutByUser = user;
     }
