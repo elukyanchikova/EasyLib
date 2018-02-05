@@ -47,13 +47,15 @@ public class AuthorizationForm {
 
     /**
      * Click on button "loginAsStudent" event
+     * If textField has right format(will be stronger filter soon) then the student log in(temp: from one account)
      */
     @FXML
     public void loginAsStudent() throws Exception{
 
         //TODO: get UserCard from storage
         if(emailTextField.getText().toLowerCase().contains("@innopolis.ru") &&
-                emailTextField.getText().toLowerCase().replace("@innopolis.ru", "").replace(" ", "").length() != 0) {
+                emailTextField.getText().toLowerCase().replace("@innopolis.ru", "").replace(" ", "").length() != 0)
+        {
             MainForm mainForm = new MainForm();
             Session session = new Session(new Student());
             session.userCard = Storage.getUsers().get(0);

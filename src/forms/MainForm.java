@@ -49,6 +49,8 @@ public class MainForm {
 
     /**
      * Initialization and run new scene on the primary stage
+     * @param primaryStage != null;
+     * @param currentSession != null
      */
     public void startForm(Stage primaryStage, Session currentSession) throws Exception{
         this.session = currentSession;
@@ -62,6 +64,7 @@ public class MainForm {
     //TODO refactor after adding storage
     /**
      * Initialization scene and scene's elements
+     * All elements will be initialized
      */
     private void sceneInitialization() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainForm.fxml"));

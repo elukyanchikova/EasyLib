@@ -7,18 +7,18 @@ import java.util.ArrayList;
 
 public class UserCard {
     static int lastID = 0;
-    String name;
-    String surname;
-    int id;
-    UserType userType;
-    String phoneNumb;
-    String address;
+    private String name;
+    private String surname;
+    private int id;
+    private UserType userType;
+    private String phoneNumb;
+    private String address;
 
     public ArrayList<Copy> checkedOutDocs;
 
     public ArrayList<Document> requestedDocs;
 
-    int fine;
+    private int fine;
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address,
                     ArrayList<Copy> checkedOutDocs, ArrayList<Document> requestedDocs, int fine){
@@ -37,6 +37,7 @@ public class UserCard {
                     ArrayList<Copy> checkedOutDocs, ArrayList<Document> requestedDocs){
         this(name, surname, userType, phoneNumb, address, checkedOutDocs, requestedDocs, 0);
     }
+
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address){
         this(name, surname, userType, phoneNumb, address, new ArrayList<Copy>(), new ArrayList<Document>(), 0);
     }
