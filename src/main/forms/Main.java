@@ -2,7 +2,6 @@ package forms;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import users.Session;
 
 
 public class Main extends Application {

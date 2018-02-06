@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import users.Guest;
 import users.Session;
 import users.Student;
+
 public class AuthorizationForm {
 
 

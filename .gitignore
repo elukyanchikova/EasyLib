@@ -52,3 +52,4 @@ fabric.properties
 # Build
 META-INF/
 artifacts/
+lib/

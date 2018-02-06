@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Document {
 
     protected String title;
-    protected ArrayList<Person> authors;
+    protected ArrayList<String> authors;
     protected  String docType;
     protected  ArrayList<String> keywords;
     protected  int price;
@@ -15,12 +15,12 @@ public abstract class Document {
     protected int numberOfCopies;
     protected  int numberOfRequests = 0;
 
-    public Document(String title, String docType, ArrayList<Person> authors, ArrayList<String> keywords, int price,
+    public Document(String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
                     int numberOfCopies) {
         this(title, docType,authors, keywords,price,numberOfCopies, 0);
     }
 
-    public Document(String title, String docType, ArrayList<Person> authors, ArrayList<String> keywords, int price,
+    public Document(String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
                     int numberOfCopies, int numberOfRequests) {
         this.title = title;
         this.authors = authors;
@@ -52,7 +52,7 @@ public abstract class Document {
         return numberOfCopies;
     }
 
-    public ArrayList<Person> getAuthors() {
+    public ArrayList<String> getAuthors() {
         return authors;
     }
 

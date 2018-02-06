@@ -123,12 +123,11 @@ public class MainForm {
                 documentInfoPane.setVisible(true);//If no document was opened
             }
             //Set document info
-            openDocumentID = documentListView.getSelectionModel().getSelectedIndex();
-            Document chosenDocument = documents.get(openDocumentID);
+            Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
             titleLbl.setText(chosenDocument.getTitle());
             StringBuilder stringBuilder = new StringBuilder();
-            for(Person p:chosenDocument.getAuthors()){
-                stringBuilder.append(p.fullName);
+            for(String p:chosenDocument.getAuthors()){
+                stringBuilder.append(p);
                 stringBuilder.append(", ");
             }
             authorsLbl.setText(stringBuilder.toString());
@@ -190,28 +189,56 @@ public class MainForm {
     public void checkOut(){
         Document currentDoc = documents.get(openDocumentID);
         if(currentDoc.getNumberOfCopies() == 0) {
-            boolean requested = session.userCard.requestedDocs.contains(currentDoc);
-            if (requested) {
-                currentDoc.setRequest(currentDoc.getNumberOfRequests() - 1);
+            if (request(currentDoc)) {
                 checkoutButton.setText("Request");
-                session.userCard.requestedDocs.remove(currentDoc);
             } else {
-                currentDoc.setRequest(currentDoc.getNumberOfRequests() + 1);
                 checkoutButton.setText("Cancel request");
-                session.userCard.requestedDocs.add(currentDoc);
             }
         }else{
-            currentDoc.setNumberOfCopies(currentDoc.getNumberOfCopies()-1);
-            Copy copy = new Copy(currentDoc, -1,10);
-            session.userCard.checkedOutCopies.add(copy);
-            copy.checkoutBy(session.userCard);
-            copy.checkOutWeeks = currentDoc.getCheckOutTime(session.userCard.getUserType().isHasLongCheckOutPerm());
-            session.userCard.checkedOutDocs.add(currentDoc);
+            checkOut(currentDoc);
             requestLbl.setText(String.valueOf(currentDoc.getNumberOfCopies()));
             if(currentDoc.getNumberOfCopies() == 0) {
                 checkoutButton.setText("Request");
             }
             checkoutButton.setVisible(false);
+        }
+    }
+
+    public void setSession(Session session){
+        this.session = session;
+    }
+
+    public Document selectDocument(int id){
+        openDocumentID = id;
+        return documents.get(openDocumentID);
+    }
+
+    public boolean checkOut(Document document){
+
+        if(document.getNumberOfCopies() > 0 && !session.userCard.checkedOutDocs.contains(document)) {
+            document.setNumberOfCopies(document.getNumberOfCopies() - 1);
+            Copy copy = new Copy(document, -1, 10);
+            session.userCard.checkedOutCopies.add(copy);
+            copy.checkoutBy(session.userCard);
+            copy.checkOutTime = document.getCheckOutTime(session.userCard.getUserType().isHasLongCheckOutPerm());
+            session.userCard.checkedOutDocs.add(document);
+            return true;
+        }
+        return false;
+
+    }
+
+    public boolean request(Document document){
+
+        boolean requested = session.userCard.requestedDocs.contains(document);
+        if (requested) {
+            document.setRequest(document.getNumberOfRequests() - 1);
+            session.userCard.requestedDocs.remove(document);
+            return true;
+        } else {
+            document.setRequest(document.getNumberOfRequests() + 1);
+            session.userCard.requestedDocs.add(document);
+            return false;
         }
     }
 }
