@@ -11,6 +11,7 @@ public class JournalArticle extends Document {
         super(title, "Journal Article", authors, keywords, price, numberOfCopies,numberOfRequests);
         this.journal = journal;
         this.issue = issue;
+        this.checkOutTime = 14;
     }
 
     public  JournalArticle(String title,String journal,ArrayList<Person> authors, ArrayList<String> keywords, int price,

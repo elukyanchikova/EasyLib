@@ -31,7 +31,7 @@ public class Storage {
         ArrayList<String> keywords2 = new ArrayList<>();
         keywords2.add("Linear algebra");
         keywords2.add("Mathematics");
-        AVMaterial avMaterial = new AVMaterial("MIT linear algebra lecture", authors2, keywords2, 200, -1);
+        AVMaterial avMaterial = new AVMaterial("MIT linear algebra lecture", authors2, keywords2, 200, 0);
 
 
         ArrayList<Person> authors3 = new ArrayList<>();

@@ -10,6 +10,7 @@ public abstract class Document {
     protected  ArrayList<String> keywords;
     protected  int price;
 
+    protected int checkOutTime;
     //If number of copies equal -1 it is not able to be checked out
     protected int numberOfCopies;
     protected  int numberOfRequests = 0;
@@ -61,6 +62,10 @@ public abstract class Document {
 
     public String getDocType() {
         return docType;
+    }
+
+    public int getCheckOutTime(boolean longCheckOutPermission){
+        return checkOutTime;
     }
 
     public void setNumberOfCopies(int numberOfCopies){

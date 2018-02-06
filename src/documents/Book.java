@@ -14,6 +14,7 @@ public class Book extends Document {
         this.publisher = publisher;
         this.year = year;
         this.isBestseller = isBestseller;
+        this.checkOutTime = 21;
     }
 
     public Book(String title, ArrayList<Person> authors, ArrayList<String> keywords, int price,
@@ -35,6 +36,11 @@ public class Book extends Document {
         return isBestseller;
     }
 
-
+    @Override
+    public int getCheckOutTime(boolean longCheckOutPermission){
+        if(isBestseller) return 14;
+        if(longCheckOutPermission) return 28;
+        return checkOutTime;
+    }
 
 }

@@ -43,7 +43,7 @@
         <Label GridPane.rowIndex = "2" GridPane.columnIndex="0" fx:id="labelType" text="Type: "></Label>
         <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelPrice" text="Price: "></Label>
         <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelKeywords" text="Keywords: "></Label>
-        <Label GridPane.rowIndex = "8" GridPane.columnIndex="0" fx:id="labelRequests" text="Requests: "></Label>
+        <Label GridPane.rowIndex = "8" GridPane.columnIndex="0" fx:id="labelRequests" text="Copies: "></Label>
 
         <Label GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="labelAddition1" ></Label>
         <Label GridPane.rowIndex = "6" GridPane.columnIndex="0" fx:id="labelAddition2" ></Label>

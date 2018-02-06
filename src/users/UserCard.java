@@ -14,28 +14,29 @@ public class UserCard {
     private String phoneNumb;
     private String address;
 
-    public ArrayList<Copy> checkedOutDocs;
+    public ArrayList<Copy> checkedOutCopies;
+    public ArrayList<Document> checkedOutDocs = new ArrayList<>();
 
     public ArrayList<Document> requestedDocs;
 
     private int fine;
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address,
-                    ArrayList<Copy> checkedOutDocs, ArrayList<Document> requestedDocs, int fine){
+                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs, int fine){
         this.name=name;
         this.surname=surname;
         this.userType=userType;
         this.phoneNumb=phoneNumb;
         this.address = address;
-        this.checkedOutDocs = checkedOutDocs;
+        this.checkedOutCopies = checkedOutCopies;
         this.requestedDocs = requestedDocs;
         this.fine = fine;
         this.id = lastID++;
     }
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address,
-                    ArrayList<Copy> checkedOutDocs, ArrayList<Document> requestedDocs){
-        this(name, surname, userType, phoneNumb, address, checkedOutDocs, requestedDocs, 0);
+                    ArrayList<Copy> Copies, ArrayList<Document> requestedDocs){
+        this(name, surname, userType, phoneNumb, address, Copies, requestedDocs, 0);
     }
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address){
@@ -71,8 +72,8 @@ public class UserCard {
         return requestedDocs;
     }
 
-    public ArrayList<Copy> getCheckedOutDocs(){
-        return checkedOutDocs;
+    public ArrayList<Copy> getCheckedOutCopies(){
+        return checkedOutCopies;
     }
 
     public int getFine() {

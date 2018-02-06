@@ -6,6 +6,8 @@ public class Copy {
     private Document documentType;
     private int level;
     private int room;
+    //TODO work with that variable when returning system will be started
+    public int checkOutTime;
     private UserCard checkoutByUser;
 
     public Copy(Document documentType, int level, int room){
