@@ -13,7 +13,11 @@ import users.UserCard;
 import java.util.ArrayList;
 
 public class TestCases {
-
+    /**
+     * Initial state: 1 patron, 1 librian, 2 copies of book 'b'(not a reference)
+     * Action: Patron p checks out a copy of book b
+     * Effect: 1 copy is checked out by 'p', 1 copy is in the library
+     */
     @Test
     public void testCase1(){
         ArrayList<Document> documents = Storage.getDocuments();
@@ -36,7 +40,12 @@ public class TestCases {
         Assert.assertTrue(session.userCard.checkedOutDocs.contains(documents.get(doc1ID)));
     }
 
-
+    /**
+     * Initial state: 1 patron, 1 librarian, no books by author A
+     * Action: patron 'p' checks out book by A.
+     * Effect: The system does not change its state. Maybe a message notifying the patron can read: the
+     library does not have book 'b'
+     */
     @Test
     public void testCase2(){
         ArrayList<Document> documents = Storage.getDocuments();
@@ -76,6 +85,11 @@ public class TestCases {
         }
     }
 
+    /**
+     * Initial state: 1 patron, 1 librarian in the system, copy c of a book b is checked out by a patron p
+     * Action: patron p tries to check out another copy c' of book b.
+     * Effect: None
+     */
     @Test
     public void testCase6() {
         ArrayList<Document> documents = Storage.getDocuments();
@@ -101,6 +115,11 @@ public class TestCases {
         Assert.assertTrue(session.userCard.checkedOutCopies.size() == numberOfCopies + 1);
     }
 
+    /**
+     * Initial state: 2 patrons, 1 librarian. It has two no reference copies of book b1.
+     * Action: student check out b1
+     * Effect: the system should track both bookings
+     */
     @Test
     public void testCase7(){
         ArrayList<Document> documents = Storage.getDocuments();
@@ -145,7 +164,11 @@ public class TestCases {
         Assert.assertEquals(copies2.size(), numberOfCopies2+1);
         Assert.assertEquals(copies2.get(copies2.size()-1).getDocument(),documents.get(doc1ID));
     }
-
+    /**
+     * Initial state: 2 patrons (1 student, 1 faculty), 1 librarian. It has two no reference copies of book b1.
+     * Action: patrons check out b1
+     * Effect: the due time of checked out book is 3 week
+     */
     @Test
     public void testCase8(){
         ArrayList<Document> documents = Storage.getDocuments();
@@ -175,6 +198,11 @@ public class TestCases {
         Assert.assertEquals(copies.get(copies.size()-1).checkOutTime,21);
     }
 
+    /**
+     * Initial state: 2 patrons (1 student, 1 faculty), 1 librarian. It has two no reference copies of book b1 - bestseller.
+     * Action: patrons check out b1
+     * Effect: the due time of checked out book is 2 week
+     */
     @Test
     public void testCase9(){
         ArrayList<Document> documents = Storage.getDocuments();
