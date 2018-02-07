@@ -125,15 +125,20 @@ public class TestCases {
 
     }
 
+    /**
+     * Initial state: 1 faculty, 1 student, 1 librarian in the system, copy c of a book b(bestseller) is checked out by a faculty f.
+     * Action:  'f' checks out book 'b'
+     * Effect: the due time of checked out book is 2 week
+     */
     @Test
     public void testCase4(){
 
         ArrayList<Document> documents = Storage.getDocuments();
         ArrayList<UserCard> userCards = Storage.getUsers();
 
-        int userID=3, bookID = 3, numberOfCopies;
+        int userID=3, bookID = 2, numberOfCopies;
 
-        Assert.assertTrue(Faculty.class.isAssignableFrom(userCards.get(userID).getUserType().class));
+        Assert.assertTrue(Faculty.class.isAssignableFrom(userCards.get(userID).getUserType().getClass()));
         Assert.assertTrue(Book.class.isAssignableFrom(documents.get(bookID).getClass()));
         Assert.assertTrue(documents.get(bookID).getNumberOfCopies()>=1);
 
@@ -150,13 +155,18 @@ public class TestCases {
 
         ArrayList<Copy> copies = session.userCard.checkedOutCopies;
 
-        Assert.assertEqual(copies.size(),numberOfCopies+1);
+        Assert.assertEquals(copies.size(),numberOfCopies+1);
         Assert.assertSame(copies.get(copies.size()-1).getDocument(),documents.get(bookID));
-        Assert.assertEqual(copies.get(copies.size()-1).checkOutTime,14);
-
-
+        Assert.assertEquals(copies.get(copies.size()-1).checkOutTime,14);
     }
 
+    /**
+     * Initial state: 3 patrons, 1 librarian in the system, two copies c of a book b is checked out by a faculty f
+     * Action:  Three patrons try to check out book 'b'
+     * Effect: t: Only first two patrons can check out the copy of book A. The third patron sees an empty list of
+     books
+     */
+    @Test
     public void testCase5(){
 
         ArrayList<Document> documents = Storage.getDocuments();
@@ -164,41 +174,41 @@ public class TestCases {
 
         int user1ID=1, user2ID=2 ,user3ID = 3, bookID = 0, numberOfCopies1, numberOfCopies2,numberOfCopies3;
 
-        Assert.assertTrue(Patron.class.isAssignableFrom(userCards.get(user1ID).getUserType().class));
-        Assert.assertTrue(Patron.class.isAssignableFrom(userCards.get(user2ID).getUserType().class));
-        Assert.assertTrue(Patron.class.isAssignableFrom(userCards.get(user3ID).getUserType().class));
+        Assert.assertTrue(Patron.class.isAssignableFrom(userCards.get(user1ID).getUserType().getClass()));
+        Assert.assertTrue(Patron.class.isAssignableFrom(userCards.get(user2ID).getUserType().getClass()));
+        Assert.assertTrue(Patron.class.isAssignableFrom(userCards.get(user3ID).getUserType().getClass()));
 
 
         MainForm mainForm = new MainForm();
+
         Session session = new Session(userCards.get(user1ID).getUserType());
+        session.userCard = userCards.get(user1ID);
         mainForm.setSession(session);
         numberOfCopies1 = session.userCard.getCheckedOutCopies().size();
         mainForm.checkOut(documents.get(bookID));
         ArrayList<Copy> copies1 = session.userCard.checkedOutCopies;
 
-
         session = new Session(userCards.get(user2ID).getUserType());
+        session.userCard = userCards.get(user2ID);
         mainForm.setSession(session);
         numberOfCopies2 = session.userCard.getCheckedOutCopies().size();
         mainForm.checkOut(documents.get(bookID));
         ArrayList<Copy> copies2 = session.userCard.checkedOutCopies;
 
-
-
         session = new Session(userCards.get(user3ID).getUserType());
+        session.userCard = userCards.get(user3ID);
         mainForm.setSession(session);
         numberOfCopies3 = session.userCard.getCheckedOutCopies().size();
         mainForm.checkOut(documents.get(bookID));
         ArrayList<Copy> copies3 = session.userCard.checkedOutCopies;
 
-        Assert.assertEqual(copies1.size(),numberOfCopies1+1);
+        Assert.assertEquals(copies1.size(),numberOfCopies1+1);
         Assert.assertSame(copies1.get(copies1.size()-1).getDocument(),documents.get(bookID));
 
-        Assert.assertEqual(copies2.size(),numberOfCopies2+1);
+        Assert.assertEquals(copies2.size(),numberOfCopies2+1);
         Assert.assertSame(copies2.get(copies2.size()-1).getDocument(),documents.get(bookID));
 
-        Assert.assertEqual(copies3.size(),numberOfCopies3);
-
+        Assert.assertEquals(copies3.size(),numberOfCopies3);
     }
 
     @Test
