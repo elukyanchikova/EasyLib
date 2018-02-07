@@ -120,6 +120,82 @@ public class TestCases {
     }
 
     @Test
+    public void testCase4(){
+
+        ArrayList<Document> documents = Storage.getDocuments();
+        ArrayList<UserCard> userCards = Storage.getUsers();
+
+        int userID=3, bookID = 3, numberOfCopies;
+
+        Assert.assertTrue(Faculty.class.isAssignableFrom(userCards.get(userID).getUserType().class));
+        Assert.assertTrue(Book.class.isAssignableFrom(documents.get(bookID).getClass()));
+        Assert.assertTrue(documents.get(bookID).getNumberOfCopies()>=1);
+
+        Session session = new Session(userCards.get(userID).getUserType());
+        session.userCard = userCards.get(userID);
+
+        MainForm mainForm = new MainForm();
+
+        mainForm.setSession(session);
+
+        numberOfCopies = session.userCard.getCheckedOutCopies().size();
+
+        mainForm.checkOut(documents.get(bookID));
+
+        ArrayList<Copy> copies = session.userCard.checkedOutCopies;
+
+        Assert.assertEqual(copies.size(),numberOfCopies+1);
+        Assert.assertSame(copies.get(copies.size()-1).getDocument(),documents.get(bookID));
+        Assert.assertEqual(copies.get(copies.size()-1).checkOutTime,14);
+
+
+    }
+
+    public void testCase5(){
+
+        ArrayList<Document> documents = Storage.getDocuments();
+        ArrayList<UserCard> userCards = Storage.getUsers();
+
+        int user1ID=1, user2ID=2 ,user3ID = 3, bookID = 0, numberOfCopies1, numberOfCopies2,numberOfCopies3;
+
+        Assert.assertTrue(Patron.class.isAssignableFrom(userCards.get(user1ID).getUserType().class));
+        Assert.assertTrue(Patron.class.isAssignableFrom(userCards.get(user2ID).getUserType().class));
+        Assert.assertTrue(Patron.class.isAssignableFrom(userCards.get(user3ID).getUserType().class));
+
+
+        MainForm mainForm = new MainForm();
+        Session session = new Session(userCards.get(user1ID).getUserType());
+        mainForm.setSession(session);
+        numberOfCopies1 = session.userCard.getCheckedOutCopies().size();
+        mainForm.checkOut(documents.get(bookID));
+        ArrayList<Copy> copies1 = session.userCard.checkedOutCopies;
+
+
+        session = new Session(userCards.get(user2ID).getUserType());
+        mainForm.setSession(session);
+        numberOfCopies2 = session.userCard.getCheckedOutCopies().size();
+        mainForm.checkOut(documents.get(bookID));
+        ArrayList<Copy> copies2 = session.userCard.checkedOutCopies;
+
+
+
+        session = new Session(userCards.get(user3ID).getUserType());
+        mainForm.setSession(session);
+        numberOfCopies3 = session.userCard.getCheckedOutCopies().size();
+        mainForm.checkOut(documents.get(bookID));
+        ArrayList<Copy> copies3 = session.userCard.checkedOutCopies;
+
+        Assert.assertEqual(copies1.size(),numberOfCopies1+1);
+        Assert.assertSame(copies1.get(copies1.size()-1).getDocument(),documents.get(bookID));
+
+        Assert.assertEqual(copies2.size(),numberOfCopies2+1);
+        Assert.assertSame(copies2.get(copies2.size()-1).getDocument(),documents.get(bookID));
+
+        Assert.assertEqual(copies3.size(),numberOfCopies3);
+
+    }
+
+    @Test
     public void testCase6() {
         ArrayList<Document> documents = Storage.getDocuments();
         ArrayList<UserCard> userCards = Storage.getUsers();
