@@ -5,10 +5,7 @@ import documents.Document;
 import documents.Storage;
 import forms.MainForm;
 import org.junit.*;
-import users.Patron;
-import users.Session;
-import users.Student;
-import users.UserCard;
+import users.*;
 
 import java.util.ArrayList;
 
@@ -74,6 +71,38 @@ public class TestCases {
                         authorName.toLowerCase());
             }
         }
+    }
+
+    @Test
+    public void testCase3(){
+        ArrayList<Document> documents = Storage.getDocuments();
+        ArrayList<UserCard> userCards = Storage.getUsers();
+
+        int userID=3, bookID = 0, numberOfCopies;
+
+        Assert.assertTrue(Faculty.class.isAssignableFrom(userCards.get(userID).getUserType().class));
+        Assert.assertTrue(Book.class.isAssignableFrom(documents.get(bookID).getClass()));
+        Assert.assertTrue(documents.get(bookID).getNumberOfCopies()>=1);
+
+        Session session = new Session(userCards.get(userID).getUserType());
+        session.userCard = userCards.get(userID);
+
+        MainForm mainForm = new MainForm();
+
+        mainForm.setSession(session);
+
+        numberOfCopies = session.userCard.getCheckedOutCopies().size();
+
+        mainForm.checkOut(documents.get(bookID));
+
+        ArrayList<Copy> copies = session.userCard.checkedOutCopies;
+
+        Assert.assertEqual(copies.size(),numberOfCopies+1);
+        Assert.assertSame(copies.get(copies.size()-1).getDocument(),documents.get(bookID));
+        Assert.assertEqual(copies.get(copies.size()-1).checkOutTime,28);
+
+
+
     }
 
     @Test
