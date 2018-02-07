@@ -234,6 +234,11 @@ public class TestCases {
         Assert.assertEquals(copies.get(copies.size()-1).checkOutTime,14);
     }
 
+    /**
+     * Initial state: 1 patron,1 librarian, 1 book A, 1 reference book B
+     * Action: patron tries to check out the book A and reference book B.
+     * Effect:The system allows to check out only the book A. The reference book B is not available for checking out.
+     */
     @Test
     public void testCase10() {
         ArrayList<Document> documents = Storage.getDocuments();
