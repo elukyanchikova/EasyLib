@@ -147,6 +147,7 @@ public class MainForm {
                 labelAddition2.setText("Publication Year: ");
                 additionLbl2.setText(String.valueOf(((Book)chosenDocument).getYear()));
                 if(((Book) chosenDocument).isBestseller()) labelAddition3.setText("Bestseller");
+                else labelAddition3.setText("");
                 additionLbl3.setText("");
             }else if(chosenDocument.getClass().equals(JournalArticle.class)){
                 labelAddition1.setText("Journal: ");
