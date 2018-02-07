@@ -23,17 +23,24 @@ public class TestCases {
         int user1ID = 1;
         int doc1ID = 0;
 
+        int numberOfCopies;
+
         Session session = new Session(userCards.get(user1ID).getUserType());
         session.userCard = userCards.get(user1ID);
 
         Assert.assertTrue(Patron.class.isAssignableFrom(session.getUser().getClass()));
         Assert.assertTrue(session.userCard.checkedOutDocs.isEmpty());
+
+        Assert.assertTrue(Book.class.isAssignableFrom(documents.get(doc1ID).getClass()));
         Assert.assertEquals(documents.get(doc1ID).getNumberOfCopies(), 2);
+
+        numberOfCopies = session.userCard.checkedOutCopies.size();
 
         MainForm mainForm = new MainForm();
         mainForm.setSession(session);
         mainForm.checkOut(documents.get(doc1ID));
 
+        Assert.assertEquals(session.userCard.checkedOutCopies.size(),numberOfCopies + 1);
         Assert.assertTrue(session.userCard.checkedOutDocs.contains(documents.get(doc1ID)));
     }
 
@@ -50,12 +57,12 @@ public class TestCases {
 
         int user1ID = 1;
         String authorName = "No Any Name";
-        int numberOfDocs;
+        int numberOfCopies;
 
         Session session = new Session(userCards.get(user1ID).getUserType());
         session.userCard = userCards.get(user1ID);
 
-        numberOfDocs = userCards.get(user1ID).checkedOutDocs.size();
+        numberOfCopies = userCards.get(user1ID).checkedOutDocs.size();
 
         Assert.assertTrue(Patron.class.isAssignableFrom(session.getUser().getClass()));
 
@@ -72,20 +79,21 @@ public class TestCases {
         mainForm.setSession(session);
 
         if(doc != null) mainForm.checkOut(doc);
-        ArrayList<Document> docs = session.userCard.checkedOutDocs;
-        Assert.assertEquals(docs.size(), numberOfDocs);
-        if(docs.size() > 0){
-            for(int j = 0; j < docs.get(docs.size() - 1).getAuthors().size(); j++) {
-                Assert.assertNotSame(docs.get(docs.size() - 1).getAuthors().get(j).toLowerCase(),
+
+        ArrayList<Copy> copies = session.userCard.checkedOutCopies;
+        Assert.assertEquals(copies.size(), numberOfCopies);
+        if(copies.size() > 0){
+            for(int j = 0; j < copies.get(copies.size() - 1).getDocument().getAuthors().size(); j++) {
+                Assert.assertNotSame(copies.get(copies.size() - 1).getDocument().getAuthors().get(j).toLowerCase(),
                         authorName.toLowerCase());
             }
         }
     }
 
     /**
-     * Initial state: 1 patron, 1 librarian in the system, copy c of a book b is checked out by a patron p
-     * Action: patron p tries to check out another copy c' of book b.
-     * Effect: None
+     * Initial state: 1 faculty, 1 student, 1 librarian in the system, copy c of a book b is checked out by a faculty f
+     * Action:  'f' checks out book 'b'
+     * Effect: the due time of checked out book is 4 week
      */
     @Test
     public void testCase3(){
@@ -94,7 +102,7 @@ public class TestCases {
 
         int userID=3, bookID = 0, numberOfCopies;
 
-        Assert.assertTrue(Faculty.class.isAssignableFrom(userCards.get(userID).getUserType().class));
+        Assert.assertTrue(Faculty.class.isAssignableFrom(userCards.get(userID).getUserType().getClass()));
         Assert.assertTrue(Book.class.isAssignableFrom(documents.get(bookID).getClass()));
         Assert.assertTrue(documents.get(bookID).getNumberOfCopies()>=1);
 
@@ -111,11 +119,9 @@ public class TestCases {
 
         ArrayList<Copy> copies = session.userCard.checkedOutCopies;
 
-        Assert.assertEqual(copies.size(),numberOfCopies+1);
+        Assert.assertEquals(copies.size(),numberOfCopies+1);
         Assert.assertSame(copies.get(copies.size()-1).getDocument(),documents.get(bookID));
-        Assert.assertEqual(copies.get(copies.size()-1).checkOutTime,28);
-
-
+        Assert.assertEquals(copies.get(copies.size()-1).checkOutTime,28);
 
     }
 
@@ -125,14 +131,15 @@ public class TestCases {
         ArrayList<UserCard> userCards = Storage.getUsers();
 
         int user1ID = 1;
-        int doc1ID = 1;//TODO change on 4 when every book will be done
+        int doc1ID = 1;
         int numberOfCopies;
 
         Session session = new Session(userCards.get(user1ID).getUserType());
         session.userCard = userCards.get(user1ID);
-
-        Assert.assertTrue(documents.get(doc1ID).getNumberOfCopies() >= 2);
         Assert.assertTrue(Patron.class.isAssignableFrom(session.getUser().getClass()));
+
+        Assert.assertTrue(Book.class.isAssignableFrom(documents.get(doc1ID).getClass()));
+        Assert.assertTrue(documents.get(doc1ID).getNumberOfCopies() >= 2);
 
         numberOfCopies = session.userCard.checkedOutCopies.size();
 
@@ -238,7 +245,7 @@ public class TestCases {
         ArrayList<UserCard> userCards = Storage.getUsers();
 
         int user1ID = 1;
-        int doc1ID = 2;//TODO to 6
+        int doc1ID = 2;
         int numberOfCopies;
 
         Assert.assertTrue(Book.class.isAssignableFrom(documents.get(doc1ID).getClass()));
@@ -274,16 +281,19 @@ public class TestCases {
         ArrayList<UserCard> userCards = Storage.getUsers();
 
         int user1ID = 1;
-        int doc1ID = 3;//TODO change on 8 when every book will be done
-        int doc2ID = 4;//TODO change on 9 when every book will be done
+        int doc1ID = 3;
+        int doc2ID = 4;
         int numberOfDocs;
+
+        Assert.assertTrue(Book.class.isAssignableFrom(documents.get(doc1ID).getClass()));
+        Assert.assertTrue(Book.class.isAssignableFrom(documents.get(doc2ID).getClass()));
+        Assert.assertTrue(documents.get(doc1ID).getNumberOfCopies() >= 1);
+        Assert.assertEquals(documents.get(doc2ID).getNumberOfCopies(), 0);
 
         Session session = new Session(userCards.get(user1ID).getUserType());
         session.userCard = userCards.get(user1ID);
-        Assert.assertTrue(documents.get(doc1ID).getNumberOfCopies() >= 1);
-        Assert.assertEquals(documents.get(doc2ID).getNumberOfCopies(), 0);
-        Assert.assertTrue(Patron.class.isAssignableFrom(session.getUser().getClass()));
 
+        Assert.assertTrue(Patron.class.isAssignableFrom(session.getUser().getClass()));
         numberOfDocs = session.userCard.checkedOutDocs.size();
 
         MainForm mainForm = new MainForm();
