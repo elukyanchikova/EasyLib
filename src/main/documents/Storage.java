@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Storage {
-    //TODO: make real Storage
+    //TODO: make real storage
     /**
      * Templar storage of main.documents
      * @return data from pseudo-storage

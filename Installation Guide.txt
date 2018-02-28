@@ -1,3 +1,3 @@
-The application locate in folder "jar". You need install Java8 and JavaFX if you do not have it.
+The application locate in folder "jar". You need install Java8 and JavaFX, (org.json:json:20180130) if you do not have it.
 
 For running the test  and compilation you need library Junit5("junit:junit:5.0-SNAPSHOT")

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class UserCard {
     static int lastID = 0;
+
     private String name;
     private String surname;
     private int id;
