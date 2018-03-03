@@ -17,10 +17,16 @@ public class AuthorizationForm {
 
     private Stage stage;
     private Scene scene;
+    private Session session;
 
-    @FXML private TextField emailTextField;
-    @FXML private Button loginAsStudentBtn;
-    @FXML private Button loginAsGuestBtn;
+    @FXML private Button addFileBtn;
+    @FXML private Button deleteFileBtn;
+    @FXML private Button modifyFileBtn;
+
+    @FXML private Button addUserBtn;
+    @FXML private Button deleteUserBtn;
+    @FXML private Button modifyUserBtn;
+
 
     /**
      * Initialization and run new scene on the primary stage
@@ -35,7 +41,7 @@ public class AuthorizationForm {
     /**
      * Initialization scene and scene's elements
      */
-    private void sceneInitialization() throws Exception {
+    /*private void sceneInitialization() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("AuthorizationForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
@@ -44,12 +50,26 @@ public class AuthorizationForm {
         emailTextField = (TextField) scene.lookup("#emailTextField");
         loginAsStudentBtn = (Button) scene.lookup("#loginAsStudentBtn");
         loginAsGuestBtn = (Button) scene.lookup("#loginAsGuestBtn");
-    }
+    }*/
 
+    private void sceneInitialization() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("EditForm.fxml"));
+        loader.setController(this);
+        GridPane root = loader.load();
+        this.scene = new Scene(root,700,700);
+
+        addFileBtn = (Button) scene.lookup("#addFileBtn");
+        addUserBtn = (Button) scene.lookup("#addUserBtn");
+        deleteFileBtn = (Button) scene.lookup("#deleteFileBtn");
+        deleteUserBtn = (Button) scene.lookup("#deleteUserBtn");
+        modifyFileBtn = (Button) scene.lookup("#modifyFileBtn");
+        modifyUserBtn = (Button) scene.lookup("#modifyUserBtn");
+
+    }
     /**
      * Click on button "loginAsStudent" event
      * If textField has right format(will be stronger filter soon) then the student log in(temp: from one account)
-     */
+   /*  *//*
     @FXML
     public void loginAsStudent() throws Exception{
 
@@ -62,17 +82,23 @@ public class AuthorizationForm {
             session.userCard = Storage.getUsers().get(0);
             mainForm.startForm(stage, session);
         }
-    }
+    }*/
 
 
      /**
      /* Click on button "loginAsGuest" event
      */
-    @FXML
+    /*@FXML
     public void loginAsGuest()throws Exception{
         MainForm mainForm = new MainForm();
         mainForm.startForm(stage,new Session(new Guest()));
     }
+*/
+     @FXML
+     public void loginAsGuest()throws Exception{
+         EditForm mainForm = new EditForm();
+         mainForm.startForm(stage,new Session(new Guest()));
+     }
 
 
 
