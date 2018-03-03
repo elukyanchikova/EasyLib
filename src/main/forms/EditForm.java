@@ -49,7 +49,7 @@ public class EditForm {
 
         deleteUserBtn = (Button) scene.lookup("#deleteUserBtn");
         addUserBtn = (Button) scene.lookup("#addUserBtn");
-        modifyUserBtn = (Button) scene.lookup("#modifyUSerBtn");
+        modifyUserBtn = (Button) scene.lookup("#modifyUserBtn");
 
     }
 
@@ -61,7 +61,15 @@ public class EditForm {
     public void addUser() throws Exception{
 
 
-        //if()
+
+        {
+        }
+    }
+
+    @FXML
+    public void addFile() throws Exception{
+
+
         {
         }
     }

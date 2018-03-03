@@ -16,11 +16,22 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button mnemonicParsing="false"  text="Add file" GridPane.halignment="CENTER" />
-      <Button mnemonicParsing="false" text="Delete file" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <Button mnemonicParsing="false" text="Modify File information" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" text="Delete User" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <Button mnemonicParsing="false" text="Modify User information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" text="Add User" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+      <Button GridPane.rowIndex = "0" GridPane.columnIndex = "0"  fx:id="addFileBtn" text="Add file" GridPane.halignment="CENTER"
+              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#addFileBtn" />
+
+      <Button GridPane.rowIndex = "0"  GridPane.columnIndex = "1" fx:id="addUserBtn" text="Add User" GridPane.halignment="CENTER"
+              prefWidth="250"  maxWidth="-Infinity" onMouseClicked="#addUserBtn"/>
+
+      <Button GridPane.rowIndex = "1"  GridPane.columnIndex = "0"  fx:id="deleteFileBtn" text="Delete file" GridPane.halignment="CENTER"
+              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#deleteFileBtn" />
+
+      <Button GridPane.rowIndex = "1"  GridPane.columnIndex = "1"  fx:id="deleteUerBtn" text="Delete User" GridPane.halignment="CENTER"
+              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#DeleteUserBtn" />
+
+      <Button GridPane.rowIndex = "2" GridPane.columnIndex = "0"  fx:id="modifyFileBtn" text="Modify File" GridPane.halignment="CENTER"
+              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#modifyFileBtn"/>
+
+      <Button GridPane.rowIndex = "2"  GridPane.columnIndex = "1"  fx:id="modifyUserBtn" text="Modify User" GridPane.halignment="CENTER"
+              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#modifyUserBtn" />
    </children>
 </GridPane>
