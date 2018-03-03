@@ -55,14 +55,14 @@ public class AuthorizationForm {
     public void loginAsStudent() throws Exception{
 
         //TODO: get UserCard from storage
-        /*if(emailTextField.getText().toLowerCase().contains("@innopolis.ru") &&
+        if(emailTextField.getText().toLowerCase().contains("@innopolis.ru") &&
                 emailTextField.getText().toLowerCase().replace("@innopolis.ru", "").replace(" ", "").length() != 0)
         {
             MainForm mainForm = new MainForm();
             Session session = new Session(new Student());
             session.userCard = Storage.getUsers().get(0);
             mainForm.startForm(stage, session);
-        }*/
+        }
     }
 
 
