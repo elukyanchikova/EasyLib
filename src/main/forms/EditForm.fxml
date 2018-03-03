@@ -17,21 +17,21 @@
   </rowConstraints>
    <children>
       <Button GridPane.rowIndex = "0" GridPane.columnIndex = "0"  fx:id="addFileBtn" text="Add file" GridPane.halignment="CENTER"
-              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#addFileBtn" />
+              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#addFile" />
 
       <Button GridPane.rowIndex = "0"  GridPane.columnIndex = "1" fx:id="addUserBtn" text="Add User" GridPane.halignment="CENTER"
-              prefWidth="250"  maxWidth="-Infinity" onMouseClicked="#addUserBtn"/>
+              prefWidth="250"  maxWidth="-Infinity" onMouseClicked="#addUser"/>
 
       <Button GridPane.rowIndex = "1"  GridPane.columnIndex = "0"  fx:id="deleteFileBtn" text="Delete file" GridPane.halignment="CENTER"
-              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#deleteFileBtn" />
+              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#deleteFile" />
 
       <Button GridPane.rowIndex = "1"  GridPane.columnIndex = "1"  fx:id="deleteUerBtn" text="Delete User" GridPane.halignment="CENTER"
-              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#DeleteUserBtn" />
+              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#DeleteUser" />
 
       <Button GridPane.rowIndex = "2" GridPane.columnIndex = "0"  fx:id="modifyFileBtn" text="Modify File" GridPane.halignment="CENTER"
-              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#modifyFileBtn"/>
+              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#modifyFile"/>
 
-      <Button GridPane.rowIndex = "2"  GridPane.columnIndex = "1"  fx:id="modifyUserBtn" text="Modify User" GridPane.halignment="CENTER"
-              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#modifyUserBtn" />
+      <Button GridPane.rowIndex = "2"  GridPane.columnIndex = "2"  fx:id="modifyUserBtn" text="Modify User" GridPane.halignment="CENTER"
+              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#modifyUser" />
    </children>
 </GridPane>

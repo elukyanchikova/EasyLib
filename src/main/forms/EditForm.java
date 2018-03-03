@@ -59,20 +59,17 @@ public class EditForm {
      * Click on button "addUser" event
      * If the User has an access to editing(i.e. librian) than the inf can be edited by him
      */
-    @FXML
-    public void addUser() throws Exception{
-
-
-
-        {
-        }
-    }
 
     @FXML
-    public void addFile() throws Exception{
-
-
-        {
-        }
-    }
+    public void addFile(){}
+    @FXML
+    public void addUser(){}
+    @FXML
+    public void deleteFile(){}
+    @FXML
+    public void deleteUser(){}
+    @FXML
+    public void modifyUser(){}
+    @FXML
+    public void modifyFile(){}
 }
