@@ -26,7 +26,7 @@
               prefWidth="250" maxWidth="-Infinity" onMouseClicked="#deleteFile" />
 
       <Button GridPane.rowIndex = "1"  GridPane.columnIndex = "1"  fx:id="deleteUerBtn" text="Delete User" GridPane.halignment="CENTER"
-              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#DeleteUser" />
+              prefWidth="250" maxWidth="-Infinity" onMouseClicked="#deleteUser" />
 
       <Button GridPane.rowIndex = "2" GridPane.columnIndex = "0"  fx:id="modifyFileBtn" text="Modify File" GridPane.halignment="CENTER"
               prefWidth="250" maxWidth="-Infinity" onMouseClicked="#modifyFile"/>

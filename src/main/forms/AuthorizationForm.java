@@ -14,19 +14,13 @@ import users.Student;
 
 public class AuthorizationForm {
 
-
     private Stage stage;
     private Scene scene;
     private Session session;
 
-    @FXML private Button addFileBtn;
-    @FXML private Button deleteFileBtn;
-    @FXML private Button modifyFileBtn;
-
-    @FXML private Button addUserBtn;
-    @FXML private Button deleteUserBtn;
-    @FXML private Button modifyUserBtn;
-
+    @FXML private TextField emailTextField;
+    @FXML private Button loginAsStudentBtn;
+    @FXML private Button loginAsGuestBtn;
 
     /**
      * Initialization and run new scene on the primary stage
@@ -41,7 +35,7 @@ public class AuthorizationForm {
     /**
      * Initialization scene and scene's elements
      */
-    /*private void sceneInitialization() throws Exception {
+    private void sceneInitialization() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("AuthorizationForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
@@ -50,39 +44,26 @@ public class AuthorizationForm {
         emailTextField = (TextField) scene.lookup("#emailTextField");
         loginAsStudentBtn = (Button) scene.lookup("#loginAsStudentBtn");
         loginAsGuestBtn = (Button) scene.lookup("#loginAsGuestBtn");
-    }*/
-
-    private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("EditForm.fxml"));
-        loader.setController(this);
-        GridPane root = loader.load();
-        this.scene = new Scene(root,700,700);
-
-        addFileBtn = (Button) scene.lookup("#addFileBtn");
-        addUserBtn = (Button) scene.lookup("#addUserBtn");
-        deleteFileBtn = (Button) scene.lookup("#deleteFileBtn");
-        deleteUserBtn = (Button) scene.lookup("#deleteUserBtn");
-        modifyFileBtn = (Button) scene.lookup("#modifyFileBtn");
-        modifyUserBtn = (Button) scene.lookup("#modifyUserBtn");
-
     }
+
+
     /**
      * Click on button "loginAsStudent" event
      * If textField has right format(will be stronger filter soon) then the student log in(temp: from one account)
-   /*  *//*
+   /*  */
     @FXML
     public void loginAsStudent() throws Exception{
 
         //TODO: get UserCard from storage
-        if(emailTextField.getText().toLowerCase().contains("@innopolis.ru") &&
+        /*if(emailTextField.getText().toLowerCase().contains("@innopolis.ru") &&
                 emailTextField.getText().toLowerCase().replace("@innopolis.ru", "").replace(" ", "").length() != 0)
         {
             MainForm mainForm = new MainForm();
             Session session = new Session(new Student());
             session.userCard = Storage.getUsers().get(0);
             mainForm.startForm(stage, session);
-        }
-    }*/
+        }*/
+    }
 
 
      /**
