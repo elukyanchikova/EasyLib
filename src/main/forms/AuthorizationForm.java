@@ -64,12 +64,17 @@ public class AuthorizationForm {
         }
     }
 
-    /**
-     * Click on button "loginAsGuest" event
+
+     /**
+     /* Click on button "loginAsGuest" event
      */
     @FXML
     public void loginAsGuest()throws Exception{
         MainForm mainForm = new MainForm();
         mainForm.startForm(stage,new Session(new Guest()));
     }
+
+
+
+
 }
