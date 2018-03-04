@@ -53,3 +53,4 @@ fabric.properties
 META-INF/
 artifacts/
 lib/
+.idea/misc.xml

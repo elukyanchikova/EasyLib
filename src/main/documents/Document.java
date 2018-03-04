@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Document {
 
+    public int id;
     protected String title;
     protected ArrayList<String> authors;
     protected  String docType;
@@ -15,12 +16,13 @@ public abstract class Document {
     protected int numberOfCopies;
     protected  int numberOfRequests = 0;
 
-    public Document(String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
+    public Document(int id, String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
                     int numberOfCopies) {
-        this(title, docType,authors, keywords,price,numberOfCopies, 0);
+        this(id,title, docType,authors, keywords,price,numberOfCopies, 0);
     }
 
-    public Document(String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
+
+    public Document(int id, String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
                     int numberOfCopies, int numberOfRequests) {
         this.title = title;
         this.authors = authors;
@@ -28,7 +30,7 @@ public abstract class Document {
         this.price = price;
         this.numberOfCopies = numberOfCopies;
         this.numberOfRequests = numberOfRequests;
-
+        this.id = id;
         this.docType = docType;
     }
 

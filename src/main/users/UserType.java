@@ -1,5 +1,7 @@
 package users;
 
+import java.util.HashMap;
+
 public abstract class UserType {
     //Permissions of the user
     boolean hasCheckOverdueDocPerm = false;
@@ -28,5 +30,6 @@ public abstract class UserType {
         return hasCheckOverdueDocPerm;
     }
 
+    public static HashMap<String, UserType> userTypes = new HashMap<>();
 
 }

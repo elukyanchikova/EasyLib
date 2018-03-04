@@ -6,17 +6,17 @@ public class JournalArticle extends Document {
     Issue issue;
     String journal;
 
-    public  JournalArticle(String title,String journal, ArrayList<String> authors, ArrayList<String> keywords, int price,
+    public  JournalArticle(int id, String title,String journal, ArrayList<String> authors, ArrayList<String> keywords, int price,
                            int numberOfCopies, int numberOfRequests, Issue issue) {
-        super(title, "Journal Article", authors, keywords, price, numberOfCopies,numberOfRequests);
+        super(id, title, "Journal Article", authors, keywords, price, numberOfCopies,numberOfRequests);
         this.journal = journal;
         this.issue = issue;
         this.checkOutTime = 14;
     }
 
-    public  JournalArticle(String title,String journal,ArrayList<String> authors, ArrayList<String> keywords, int price,
+    public  JournalArticle(int id, String title,String journal,ArrayList<String> authors, ArrayList<String> keywords, int price,
                            int numberOfCopies, Issue issue) {
-        this(title, journal,authors, keywords, price, numberOfCopies,0, issue);
+        this(id, title, journal,authors, keywords, price, numberOfCopies,0, issue);
     }
 
     public Issue getIssue() {

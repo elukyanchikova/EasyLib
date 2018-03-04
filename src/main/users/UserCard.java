@@ -7,24 +7,30 @@ import documents.Document;
 import java.util.ArrayList;
 
 public class UserCard {
-    static int lastID = 0;
+    private static int lastID = 0;
 
-    private String name;
-    private String surname;
-    private int id;
-    private UserType userType;
-    private String phoneNumb;
-    private String address;
+    public int id;
+    public String name;
+    public String surname;
+    public UserType userType;
+    public String phoneNumb;
+    public String address;
 
     public ArrayList<Copy> checkedOutCopies;
+    public ArrayList<Document> requestedDocs;
+    public int fine;
+
+    //TODO: remove this
     public ArrayList<Document> checkedOutDocs = new ArrayList<>();
 
-    public ArrayList<Document> requestedDocs;
-
-    private int fine;
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address,
-                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs, int fine){
+                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs){
+        this(++lastID, name,surname, userType, phoneNumb, address, checkedOutCopies, requestedDocs);
+    }
+
+    public UserCard(int id, String name, String surname, UserType userType, String phoneNumb, String address,
+                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs){
         this.name=name;
         this.surname=surname;
         this.userType=userType;
@@ -32,19 +38,17 @@ public class UserCard {
         this.address = address;
         this.checkedOutCopies = checkedOutCopies;
         this.requestedDocs = requestedDocs;
-        this.fine = fine;
-        this.id = lastID++;
-    }
-
-    public UserCard(String name, String surname, UserType userType, String phoneNumb, String address,
-                    ArrayList<Copy> Copies, ArrayList<Document> requestedDocs){
-        this(name, surname, userType, phoneNumb, address, Copies, requestedDocs, 0);
+        this.id = id;
+        lastID = lastID < id?id:lastID;
     }
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address){
-        this(name, surname, userType, phoneNumb, address, new ArrayList<Copy>(), new ArrayList<Document>(), 0);
+        this(name, surname, userType, phoneNumb, address, new ArrayList<>(), new ArrayList<>());
     }
 
+    public UserCard(int id,String name, String surname, UserType userType, String phoneNumb, String address){
+        this(id, name, surname, userType, phoneNumb, address, new ArrayList<>(), new ArrayList<>());
+    }
 
     public String getAddress() {
         return address;
