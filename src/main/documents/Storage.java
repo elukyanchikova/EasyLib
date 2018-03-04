@@ -66,8 +66,7 @@ public class Storage {
 
         Database db = new Database();
         db.load();
-        db.saveUserCard(users.get(0));
-        db.saveUserCard(users.get(2));
+        db.removeUserCard(db.getUserCard(1));
 
         return users;
     }

@@ -51,8 +51,10 @@ public class Database {
     public void saveUserCard(UserCard userCard){
         //Update data of userCard
         userCardData.put(Integer.toString(userCard.getId()), userCard.serialize());
+        update();
+    }
 
-        //Update in JSON
+    private void update(){
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream(
                     new File("library.json")));
@@ -62,6 +64,12 @@ public class Database {
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void removeUserCard(UserCard userCard){
+        userCardData.remove(Integer.toString(userCard.getId()));
+        userCards.remove(userCard.getId());
+        update();
     }
 
     private void loadUserCards(){
@@ -77,9 +85,7 @@ public class Database {
     }
 
     public UserCard getUserCard(int id){
-        UserCard card = userCards.get(id);
-        card.name = jsonData.getJSONObject(Integer.toString(id)).getString("Name");
-        return card;
+        return userCards.get(id);
     }
 
 }
