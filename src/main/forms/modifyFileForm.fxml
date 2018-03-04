@@ -31,7 +31,7 @@
               onMouseClicked="#selectFile"
     />
 
-    <GridPane GridPane.columnIndex="1" fx:id="documentModifyingPane"
+    <GridPane GridPane.columnIndex="1" fx:id="documentInfoPane"
               minWidth="100"
               minHeight="50" prefHeight="300"
               maxHeight="Infinity"
@@ -50,8 +50,8 @@
 
         <TextField fx:id="titleField" GridPane.columnIndex="1" maxWidth="-Infinity" prefHeight="25.0" prefWidth="149.0" promptText="title of the doc" GridPane.rowIndex="0" />
         <TextField fx:id="authorsField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="authors" GridPane.rowIndex="1" />
-        <TextField fx:id="keywordsField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="keywords" GridPane.rowIndex="2" />
-        <TextField fx:id="priceField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="price of the doc" GridPane.rowIndex="4" />
+        <TextField fx:id="keywordsField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="keywords" GridPane.rowIndex="4" />
+        <TextField fx:id="priceField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="price of the doc" GridPane.rowIndex="3" />
         <TextField fx:id="publisherField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="publisher" GridPane.rowIndex="5" />
         <TextField fx:id="yearField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="year of publishing" GridPane.rowIndex="6" />
         <TextField fx:id="journalNameField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="journal name (only for JA)" GridPane.rowIndex="8" />
@@ -59,7 +59,7 @@
 
         <CheckBox  fx:id="isBestsellerCheckBox" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150"  text="Bestseller" GridPane.rowIndex="10"  />
 
-        <Button fx:id="saveBtn" maxWidth="-Infinity" onMouseClicked="#save" prefWidth="150" text="Save" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
-        <Button fx:id="deleteFileBtn" maxWidth="-Infinity" onMouseClicked="#deleteFile" prefWidth="150" text="Save" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+        <Button fx:id="saveBtn" maxWidth="-Infinity" onMouseClicked="#save" prefWidth="150" text="Save" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.columnIndex="0" />
+        <Button fx:id="deleteFileBtn" maxWidth="-Infinity" onMouseClicked="#deleteFile" prefWidth="150" text="Delete Document" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.columnIndex="2"/>
     </GridPane>
 </GridPane>

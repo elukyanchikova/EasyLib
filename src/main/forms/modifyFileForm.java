@@ -129,8 +129,20 @@ public class modifyFileForm {
      */
     @FXML
     public void selectFile() {
+        if(documentListView.getSelectionModel().getSelectedIndex() > -1) {
+            if(openDocumentID == -1){
+                documentInfoPane.setVisible(true);//If no document was opened
+            }
+            //Set document info
+            Document chosenDocument = selectFile(documentListView.getSelectionModel().getSelectedIndex());
 
+
+    }}
+    public Document selectFile(int id){
+        openDocumentID = id;
+        return documents.get(openDocumentID);
     }
+
 
     @FXML
     public void save() {
@@ -188,5 +200,6 @@ public class modifyFileForm {
 
     @FXML
     public void deleteFile() {
+        //TODO delete file
     }
 }
