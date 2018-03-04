@@ -81,7 +81,11 @@ public class AuthorizationForm {
          mainForm.startForm(stage,new Session(new Guest()));
      }
 
-
+    @FXML
+    public void templar()throws Exception{
+       ReturnForm mainForm2 = new ReturnForm();
+        mainForm2.startForm(stage, new Session(new Guest()));
+    }
 
 
 }
