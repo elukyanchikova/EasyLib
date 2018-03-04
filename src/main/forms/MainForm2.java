@@ -98,7 +98,7 @@ public class MainForm2 {
                     protected void updateItem(Document document, boolean flag) {
                         super.updateItem(document, flag);
                         if (document != null) {
-                            setText(document.getTitle());
+                            setText(document.title);
                         }
                     }
                 };
