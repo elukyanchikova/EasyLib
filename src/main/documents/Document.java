@@ -84,6 +84,10 @@ public abstract class Document {
         return takenCopies.size();
     }
 
+    public void setCopy(int level, int room){
+        setCopy(new Copy(this, level, room));
+    }
+    
     public void setCopy(Copy copy){
         if (copy.getDocument() == this){
             availableCopies.add(copy);
