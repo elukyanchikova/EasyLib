@@ -31,7 +31,7 @@ public class Copy {
     }
 
     public Document getDocument() {
-        return Storage.getDocuments().get(documentID);
+        return Storage.getDocuments().get(0);
     }
 
     public JSONObject serialize(){
@@ -44,7 +44,7 @@ public class Copy {
         return data;
     }
 
-    public static Copy deserialize(JSONObject data){
-        return null;
+    public int getID(){
+        return id;
     }
 }

@@ -87,7 +87,7 @@ public class ReturnForm {
         labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
         returnButton = (Button) scene.lookup("#checkoutButton");
-        
+
         documentListView.setItems(FXCollections.observableArrayList(documents));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
             public ListCell<Document> call(ListView<Document> documentListView) {

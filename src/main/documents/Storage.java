@@ -1,7 +1,7 @@
 package documents;
 
 
-//import storage.Database;
+import storage.Database;
 import users.Faculty;
 import users.Librarian;
 import users.Student;
@@ -64,11 +64,11 @@ public class Storage {
                 new ArrayList<>(Collections.singletonList(new Copy(getDocuments().get(0),0,-1))), new ArrayList<>()));
         users.add(new UserCard("Bertrand", "Meyer", new Faculty(),"8555444333", "Eiffel st 11"));
 
-        /*Database db = new Database();
+        Database db = new Database();
         db.load();
         db.saveUserCard(users.get(0));
         db.saveUserCard(users.get(2));
-        */
+
         return users;
     }
 }

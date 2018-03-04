@@ -87,7 +87,7 @@ public abstract class Document {
     public void setCopy(int level, int room){
         setCopy(new Copy(this, level, room));
     }
-    
+
     public void setCopy(Copy copy){
         if (copy.getDocument() == this){
             availableCopies.add(copy);
@@ -107,12 +107,13 @@ public abstract class Document {
         if(availableCopies.size() > 0){
             availableCopies.get(0).checkoutBy(user);
             user.checkedOutCopies.add(availableCopies.get(0));
-            availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.getUserType().isHasLongCheckOutPerm());
+            availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.userType.isHasLongCheckOutPerm());
             takenCopies.add(availableCopies.get(0));
             availableCopies.remove(0);
             return true;
         }else return false;
     }
+
     public int getCheckOutTime(boolean longCheckOutPermission){
         return checkOutTime;
     }

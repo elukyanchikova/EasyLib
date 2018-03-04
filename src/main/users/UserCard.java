@@ -1,15 +1,17 @@
 package users;
 
-
 import documents.Copy;
 import documents.Document;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import storage.Database;
 
 import java.util.ArrayList;
 
 public class UserCard {
     private static int lastID = 0;
 
-    public int id;
+    private int id;
     public String name;
     public String surname;
     public UserType userType;
@@ -19,10 +21,6 @@ public class UserCard {
     public ArrayList<Copy> checkedOutCopies;
     public ArrayList<Document> requestedDocs;
     public int fine;
-
-    //TODO: remove this
-    public ArrayList<Document> checkedOutDocs = new ArrayList<>();
-
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address,
                     ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs){
@@ -50,40 +48,39 @@ public class UserCard {
         this(id, name, surname, userType, phoneNumb, address, new ArrayList<>(), new ArrayList<>());
     }
 
-    public String getAddress() {
-        return address;
+    //public UserCard(int id, JSONObject data, Database database){
+    public UserCard(int id, JSONObject data){
+        this.id = id;
+        this.name = data.getString("Name");
+        this.surname = data.getString("Surname");
+        this.userType = UserType.userTypes.get(data.getString("UserType"));
+        this.phoneNumb = data.getString("PhoneNumber");
+        this.address = data.getString("Address");
+        JSONArray requestedDocsObj = data.getJSONArray("RequestedDocs");
+        for(int i = 0; i < requestedDocsObj.toList().size(); i++){
+            //database.getDocument(requestedBooksObj.get(i))
+        }
+        requestedDocs = new ArrayList<>();
+        checkedOutCopies = new ArrayList<>();
     }
 
     public int getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
+    public JSONObject serialize(){
+        JSONObject data = new JSONObject();
 
-    public String getPhoneNumb() {
-        return phoneNumb;
+        data.put("Name", name);
+        data.put("Surname", surname);
+        data.put("UserType", userType.getClass().getName());
+        data.put("PhoneNumber", phoneNumb);
+        data.put("Address", address);
+        JSONArray requestedBooksObj = new JSONArray();
+        for(int i = 0; i < requestedDocs.size(); i++){
+            requestedBooksObj.put(requestedDocs.get(i).getID());
+        }
+        data.put("RequestedDocs", requestedBooksObj);
+        return data;
     }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public UserType getUserType() {
-        return userType;
-    }
-
-    public ArrayList<Document> getRequestedDocs() {
-        return requestedDocs;
-    }
-
-    public ArrayList<Copy> getCheckedOutCopies(){
-        return checkedOutCopies;
-    }
-
-    public int getFine() {
-        return fine;
-    }
-
 }
