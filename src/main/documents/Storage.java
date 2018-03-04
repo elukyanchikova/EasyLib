@@ -23,6 +23,7 @@ public class Storage {
         Book book1 = new Book("Introduction to Painting", new ArrayList<>(Collections.singletonList("John Lanber")),
                 new ArrayList<String>(Collections.singletonList("Painting")), 5200,
                 "Aress", 2009, false);
+        book1.setCopy(0,101);
         documents.add(book1);
 
         /*Book book4 = new Book(1,"The art of thinking", new ArrayList<String>(Arrays.asList("Demi Lessy", "Mike Bolly")),
@@ -66,8 +67,11 @@ public class Storage {
 
         Database db = new Database();
         db.load();
-        db.removeUserCard(db.getUserCard(1));
-
+        db.saveUserCard(users.get(0));
+        db.saveUserCard(users.get(1));
+        db.saveUserCard(users.get(2));
+        db.saveUserCard(users.get(3));
+        db.saveDocuments(getDocuments().get(0));
         return users;
     }
 }

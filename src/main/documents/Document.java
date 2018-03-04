@@ -1,5 +1,8 @@
 package documents;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import storage.Database;
 import users.UserCard;
 
 import java.util.ArrayList;
@@ -10,7 +13,7 @@ public abstract class Document {
 
     protected int id;
     public String title;
-    public String docType;
+    protected String docType;
     public ArrayList<String> authors;
     public ArrayList<String> keywords;
     public int price;
@@ -54,9 +57,44 @@ public abstract class Document {
         this(++lastID,title, docType,authors, keywords,price,0, new ArrayList<>(), new ArrayList<>(),1);
     }
 
+    public Document(int id, JSONObject data, Database database){
+        this.id = id;
+        this.title = data.getString("Title");
+        this.authors = new ArrayList<>();
+        for(int i = 0; i < data.getJSONArray("Authors").toList().size(); i++ ){
+            authors.add(data.getJSONArray("Authors").getString(i));
+        }
+        this.keywords = new ArrayList<>();
+        for(int i = 0; i < data.getJSONArray("Keywords").toList().size(); i++ ){
+            authors.add(data.getJSONArray("Keywords").getString(i));
+        }
+        this.price = data.getInt("Price");
+        this.numberOfRequests = data.getInt("NumberOfRequest");
+        this.availableCopies = new ArrayList<>();
+        int copyID;
+        String[] keys = new String[0];
+        JSONObject availableCopiesObj = data.getJSONObject("AvailableCopies");
+        keys = availableCopiesObj.keySet().toArray(keys);
+        for (int i = 0; i < availableCopiesObj.length(); i++){
+            copyID = Integer.parseInt(keys[i]);
+            availableCopies.add(new Copy(availableCopiesObj.getJSONObject(Integer.toString(copyID)), database));
+        }
+        JSONObject takenCopiesObj = data.getJSONObject("TakenCopies");
+        keys = takenCopiesObj.keySet().toArray(keys);
+        for (int i = 0; i < takenCopiesObj.length(); i++){
+            copyID = Integer.parseInt(keys[i]);
+            takenCopies.add(new Copy(takenCopiesObj.getJSONObject(Integer.toString(copyID)), database));
+        }
+
+    }
+
 
     public int getID(){
         return id;
+    }
+
+    public String getDocType(){
+        return docType;
     }
 
     public int getNumberOfRequests() {
@@ -89,7 +127,7 @@ public abstract class Document {
     }
 
     public void setCopy(Copy copy){
-        if (copy.getDocument() == this){
+        if (copy.getDocumentID() == id){
             availableCopies.add(copy);
             lastCopyID++;
         }
@@ -116,5 +154,26 @@ public abstract class Document {
 
     public int getCheckOutTime(boolean longCheckOutPermission){
         return checkOutTime;
+    }
+
+    public JSONObject serialize(){
+        JSONObject data = new JSONObject();
+        data.put("Title", title);
+        data.put("Authors", authors);
+        data.put("Keywords", keywords);
+        data.put("Price", price);
+        data.put("NumberOfRequest", numberOfRequests);
+        JSONObject availableCopiesObj = new JSONObject();
+        for(int i = 0; i < availableCopies.size(); i++){
+            availableCopiesObj.put(Integer.toString(availableCopies.get(i).getID()), availableCopies.get(i).serialize());
+        }
+        data.put("AvailableCopies", availableCopiesObj);
+        JSONObject takenCopiesObj = new JSONObject();
+        for(int i = 0; i < takenCopies.size(); i++){
+            takenCopiesObj.put(Integer.toString(takenCopies.get(i).getID()), takenCopies.get(i).serialize());
+        }
+        data.put("TakenCopies", takenCopiesObj);
+        data.put("DocumentType" , docType);
+        return data;
     }
 }

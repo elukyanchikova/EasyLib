@@ -1,5 +1,8 @@
 package documents;
 
+import org.json.JSONObject;
+import storage.Database;
+
 import java.util.ArrayList;
 
 public class Book extends Document {
@@ -30,12 +33,29 @@ public class Book extends Document {
         this(++lastID, title, authors, keywords, price,0, new ArrayList<>(), new ArrayList<>(), 1, publisher, year, isBestseller);
     }
 
+    public Book(int id, JSONObject data, Database database){
+        super(id, data,database);
+        this.docType = "Book";
+        this.isBestseller = data.getBoolean("Bestseller");
+        this.publisher = data.getString("Publisher");
+        this.year = data.getInt("Year");
+    }
+
 
     @Override
     public int getCheckOutTime(boolean longCheckOutPermission){
         if(isBestseller) return 14;
         if(longCheckOutPermission) return 28;
         return checkOutTime;
+    }
+
+    @Override
+    public JSONObject serialize() {
+        JSONObject data = super.serialize();
+        data.put("Publisher", publisher);
+        data.put("Year", year);
+        data.put("Bestseller", isBestseller);
+        return data;
     }
 
 }

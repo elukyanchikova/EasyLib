@@ -1,5 +1,8 @@
 package documents;
 
+import org.json.JSONObject;
+import storage.Database;
+
 import java.util.ArrayList;
 
 public class AVMaterial extends Document{
@@ -17,5 +20,10 @@ public class AVMaterial extends Document{
 
     public AVMaterial(String title, ArrayList<String> authors, ArrayList<String> keywords, int price){
         this(++lastID, title, authors, keywords, price, 0, new ArrayList<>(), new ArrayList<>(),1);
+    }
+
+    public AVMaterial(int id, JSONObject data, Database database){
+        super(id, data, database);
+        this.docType = "AV material";
     }
 }

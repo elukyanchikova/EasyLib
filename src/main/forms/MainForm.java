@@ -132,8 +132,8 @@ public class MainForm {
             }
             authorsLbl.setText(stringBuilder.toString());
 
-            documentTypeLbl.setText(chosenDocument.docType);
-            priceLbl.setText(String.valueOf(chosenDocument.docType));
+            documentTypeLbl.setText(chosenDocument.getDocType());
+            priceLbl.setText(String.valueOf(chosenDocument.price));
             StringBuilder stringBuilderKeywords = new StringBuilder();
             for(String s:chosenDocument.keywords){
                 stringBuilderKeywords.append(s);
@@ -151,7 +151,7 @@ public class MainForm {
                 additionLbl3.setText("");
             }else if(chosenDocument.getClass().equals(JournalArticle.class)){
                 labelAddition1.setText("Journal: ");
-                additionLbl1.setText(((JournalArticle)chosenDocument).journal);
+                additionLbl1.setText(((JournalArticle)chosenDocument).journalName);
                 labelAddition2.setText("Editor: ");
                 additionLbl2.setText(String.valueOf(((JournalArticle)chosenDocument).editor));
                 labelAddition3.setText("Publication Date: ");
@@ -168,7 +168,7 @@ public class MainForm {
                 //Check number of copies and output it or number of requests
                 boolean flag = true;
                 for (Copy copy : session.userCard.checkedOutCopies) {
-                    if (copy.getDocument() == documents.get(openDocumentID)) {
+                    if (copy.getDocumentID() == documents.get(openDocumentID).getID()) {
                         flag = false;
                         break;
                     }
@@ -226,7 +226,7 @@ public class MainForm {
 
         boolean flag = true;
         for (Copy copy : session.userCard.checkedOutCopies) {
-            if (copy.getDocument() == documents.get(openDocumentID)) {
+            if (copy.getDocumentID() == documents.get(openDocumentID).getID()) {
                 flag = false;
                 break;
             }

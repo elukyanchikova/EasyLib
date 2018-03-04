@@ -1,19 +1,15 @@
 package storage;
 
-import documents.Copy;
-import documents.Document;
-import org.json.JSONArray;
+import documents.*;
 import org.json.JSONObject;
 import users.UserCard;
-import users.UserType;
-
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Database {
     private JSONObject jsonData;
     private JSONObject userCardData;
+    private JSONObject documentsData;
 
     HashMap<Integer,UserCard> userCards = new HashMap<>();
     HashMap<Integer,Document> documents = new HashMap<>();
@@ -23,21 +19,38 @@ public class Database {
         try {
             if(file.exists()) {
 
-                    BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(
-                                    new FileInputStream(file)));
-                    StringBuilder stringBuilder = new StringBuilder();
-                    reader.lines().forEach(stringBuilder::append);
-                    this.jsonData = new JSONObject(stringBuilder.toString());
-                    this.userCardData = jsonData.getJSONObject("UserCard");
-                    reader.close();
-                 loadUserCards();
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(
+                                new FileInputStream(file)));
+                StringBuilder stringBuilder = new StringBuilder();
+                reader.lines().forEach(stringBuilder::append);
+                this.jsonData = new JSONObject(stringBuilder.toString());
+                this.userCardData = jsonData.getJSONObject("UserCard");
+                this.documentsData = jsonData.getJSONObject("Document");
+                reader.close();
+                loadUserCards();
+                loadDocuments();
 
             }else {
                 file.createNewFile();
                 this.jsonData = new JSONObject();
                 this.userCardData = new JSONObject();
+                this.documentsData = new JSONObject();
             }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void update(){
+        try {
+            PrintWriter pw = new PrintWriter(new FileOutputStream(
+                    new File("library.json")));
+            jsonData.put("UserCard", userCardData);
+            jsonData.put("Document", documentsData);
+            pw.write(jsonData.toString());
+            pw.close();
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,18 +67,6 @@ public class Database {
         update();
     }
 
-    private void update(){
-        try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream(
-                    new File("library.json")));
-            jsonData.put("UserCard", userCardData);
-            pw.write(jsonData.toString());
-            pw.close();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void removeUserCard(UserCard userCard){
         userCardData.remove(Integer.toString(userCard.getId()));
         userCards.remove(userCard.getId());
@@ -76,9 +77,9 @@ public class Database {
         int id;
         String[] keys = new String[0];
         keys = userCardData.keySet().toArray(keys);
-        for (int i = 0; i < keys.length; i++){
-            id = Integer.parseInt(keys[i]);
-            JSONObject data =  userCardData.getJSONObject(Integer.toString(id));
+        for (String key : keys) {
+            id = Integer.parseInt(key);
+            JSONObject data = userCardData.getJSONObject(Integer.toString(id));
             UserCard userCard = new UserCard(id, data);
             userCards.put(id, userCard);
         }
@@ -88,4 +89,51 @@ public class Database {
         return userCards.get(id);
     }
 
+    public Integer[] getUsercardsID(){
+        return userCards.keySet().toArray(new Integer[0]);
+    }
+
+
+    public void saveDocuments(Document document){
+        //Update data of userCard
+        documentsData.put(Integer.toString(document.getID()), document.serialize());
+        update();
+    }
+
+    public void removeDocuments(Document document){
+        documentsData.remove(Integer.toString(document.getID()));
+        documents.remove(document.getID());
+        update();
+    }
+
+    private void loadDocuments(){
+        int id;
+        String[] keys = new String[0];
+        keys = documentsData.keySet().toArray(keys);
+        for (String key : keys) {
+            id = Integer.parseInt(key);
+            JSONObject data = documentsData.getJSONObject(Integer.toString(id));
+            Document document = null;
+            switch (data.getString("DocumentType")) {
+                case "Book":
+                    document = new Book(id, data, this);
+                    break;
+                case "Journal Article":
+                    document = new JournalArticle(id, data, this);
+                    break;
+                case "AV material":
+                    document = new AVMaterial(id, data, this);
+                    break;
+            }
+            documents.put(id, document);
+        }
+    }
+
+    public Document getDocuments(int id){
+        return documents.get(id);
+    }
+
+    public Integer[] getDocumentsID(){
+        return documents.keySet().toArray(new Integer[0]);
+    }
 }
