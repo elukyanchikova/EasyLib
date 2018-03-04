@@ -20,12 +20,12 @@ public class Storage {
     public static ArrayList<Document> getDocuments(){
         ArrayList<Document> documents = new ArrayList<>();
 
-        Book book1 = new Book(0,"Introduction to Painting", new ArrayList<String>(Collections.singletonList("John Lanber")),
-                new ArrayList<String>(Collections.singletonList("Painting")), 5200, 2,
+        Book book1 = new Book("Introduction to Painting", new ArrayList<>(Collections.singletonList("John Lanber")),
+                new ArrayList<String>(Collections.singletonList("Painting")), 5200,
                 "Aress", 2009, false);
         documents.add(book1);
 
-        Book book4 = new Book(1,"The art of thinking", new ArrayList<String>(Arrays.asList("Demi Lessy", "Mike Bolly")),
+        /*Book book4 = new Book(1,"The art of thinking", new ArrayList<String>(Arrays.asList("Demi Lessy", "Mike Bolly")),
                 new ArrayList<String>(Collections.singletonList("Science")), 600, 2,
                 "FreeThink", 2015, false);
         documents.add(book4);
@@ -47,7 +47,7 @@ public class Storage {
         Book book9 = new Book(5,"Java for beginners", new ArrayList<String>(Arrays.asList("Bill Mates")),
                 new ArrayList<String>(Collections.singletonList("Java")), 3000, 0,
                 "OracleBook", 2017, true);
-        documents.add(book9);
+        documents.add(book9);*/
 
         return documents;
     }
@@ -64,10 +64,11 @@ public class Storage {
                 new ArrayList<>(Collections.singletonList(new Copy(getDocuments().get(0),0,-1))), new ArrayList<>()));
         users.add(new UserCard("Bertrand", "Meyer", new Faculty(),"8555444333", "Eiffel st 11"));
 
-      /*  Database db = new Database();
+        /*Database db = new Database();
         db.load();
         db.saveUserCard(users.get(0));
-        db.saveUserCard(users.get(2));*/
+        db.saveUserCard(users.get(2));
+        */
         return users;
     }
 }

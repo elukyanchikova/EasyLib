@@ -1,90 +1,115 @@
 package documents;
 
+import users.UserCard;
+
 import java.util.ArrayList;
 
 public abstract class Document {
 
-    public static int lastID = 0;
-    public int id;
-    protected String title;
-    protected ArrayList<String> authors;
-    protected  String docType;
-    protected  ArrayList<String> keywords;
-    protected  int price;
+    protected static int lastID = 0;
 
+    protected int id;
+    public String title;
+    public String docType;
+    public ArrayList<String> authors;
+    public ArrayList<String> keywords;
+    public int price;
+    protected int numberOfRequests = 0;
+    protected ArrayList<Copy> availableCopies;
+    protected ArrayList<Copy> takenCopies;
     protected int checkOutTime;
-    //If number of copies equal -1 it is not able to be checked out
-    protected int numberOfCopies;
-    protected  int numberOfRequests = 0;
 
-    public ArrayList<Copy> copies;
+    int lastCopyID = 0;
 
+    /**
+     * The constructor is used for restoring object from all existing information about document
+     */
     public Document(int id, String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
-                    int numberOfCopies, int numberOfRequests) {
+                    int numberOfRequests, ArrayList<Copy> availableCopies, ArrayList<Copy> takenCopies, int lastCopyID) {
         this.title = title;
         this.authors = authors;
         this.keywords = keywords;
         this.price = price;
-        this.numberOfCopies = numberOfCopies;
         this.numberOfRequests = numberOfRequests;
         this.id = id;
         this.docType = docType;
+        this.availableCopies = availableCopies;
+        this.takenCopies = takenCopies;
         lastID = lastID < id?id:lastID;
+        this.lastCopyID = lastCopyID;
     }
 
-    public Document(int id, String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
-                    int numberOfCopies) {
-        this(id,title, docType,authors, keywords,price,numberOfCopies, 0);
-    }
-
+    /**
+     * The constructor is used for creating object and fill copies
+     */
     public Document(String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
-                    int numberOfCopies, int numberOfRequests){
-        this(++lastID, title, docType,authors, keywords,price,numberOfCopies, numberOfRequests);
+                    ArrayList<Copy> copies){
+        this(++lastID,title, docType,authors, keywords,price,0, copies, new ArrayList<>(),1);
     }
 
-    public Document(String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
-                    int numberOfCopies){
-        this(++lastID,title, docType,authors, keywords,price,numberOfCopies, 0);
+    /**
+     * The constructor is used for creating object without copies
+     */
+    public Document(String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price){
+        this(++lastID,title, docType,authors, keywords,price,0, new ArrayList<>(), new ArrayList<>(),1);
     }
 
-    public ArrayList<String> getKeywords() {
-        return keywords;
-    }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setRequest(int requests){
-        this.numberOfRequests = requests;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getNumberOfCopies() {
-        return numberOfCopies;
-    }
-
-    public ArrayList<String> getAuthors() {
-        return authors;
+    public int getID(){
+        return id;
     }
 
     public int getNumberOfRequests() {
         return numberOfRequests;
     }
 
-    public String getDocType() {
-        return docType;
+    public void increaseNumberOfRequest(){
+        numberOfRequests++;
     }
 
+    public void decreaseNumberOfRequest(){
+        if(numberOfRequests > 0)
+            numberOfRequests--;
+    }
+
+    public int getNumberOfAllCopies() {
+        return getNumberOfAvailableCopies() + getNumberOfTakenCopies();
+    }
+
+    public int getNumberOfAvailableCopies(){
+        return availableCopies.size();
+    }
+
+    public int getNumberOfTakenCopies(){
+        return takenCopies.size();
+    }
+
+    public void setCopy(Copy copy){
+        if (copy.getDocument() == this){
+            availableCopies.add(copy);
+            lastCopyID++;
+        }
+    }
+
+    public void removeCopy(Copy copy){
+        if(availableCopies.contains(copy)) availableCopies.remove(copy);
+        if(takenCopies.contains(copy)){
+            copy.getCheckoutByUser().checkedOutCopies.remove(copy);
+            takenCopies.remove(copy);
+        }
+    }
+
+    public boolean takeCopy(UserCard user){
+        if(availableCopies.size() > 0){
+            availableCopies.get(0).checkoutBy(user);
+            user.checkedOutCopies.add(availableCopies.get(0));
+            availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.getUserType().isHasLongCheckOutPerm());
+            takenCopies.add(availableCopies.get(0));
+            availableCopies.remove(0);
+            return true;
+        }else return false;
+    }
     public int getCheckOutTime(boolean longCheckOutPermission){
         return checkOutTime;
     }
-
-    public void setNumberOfCopies(int numberOfCopies){
-        this.numberOfCopies = numberOfCopies;
-    }
-
 }

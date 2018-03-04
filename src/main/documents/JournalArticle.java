@@ -3,27 +3,28 @@ package documents;
 import java.util.ArrayList;
 
 public class JournalArticle extends Document {
-    Issue issue;
-    String journal;
+    public String editor;
+    public String publicationDate;
+    public String journal;
 
-    public  JournalArticle(int id, String title,String journal, ArrayList<String> authors, ArrayList<String> keywords, int price,
-                           int numberOfCopies, int numberOfRequests, Issue issue) {
-        super(id, title, "Journal Article", authors, keywords, price, numberOfCopies,numberOfRequests);
+    public  JournalArticle(int id, String title, ArrayList<String> authors, ArrayList<String> keywords, int price,
+                           int numberOfRequests, ArrayList<Copy> availableCopies, ArrayList<Copy> takenCopies, int lastCopyID,
+                           String journal, String editor, String publicationDate ) {
+        super(id, title, "Journal Article", authors, keywords, price, numberOfRequests, availableCopies, takenCopies, lastCopyID);
         this.journal = journal;
-        this.issue = issue;
+        this.editor = editor;
+        this.publicationDate = publicationDate;
         this.checkOutTime = 14;
     }
 
-    public  JournalArticle(int id, String title,String journal,ArrayList<String> authors, ArrayList<String> keywords, int price,
-                           int numberOfCopies, Issue issue) {
-        this(id, title, journal,authors, keywords, price, numberOfCopies,0, issue);
+    public  JournalArticle(String title, ArrayList<String> authors, ArrayList<String> keywords, int price,
+                           ArrayList<Copy> copies, String journal, String editor, String publicationDate ) {
+        this(++lastID, title, authors, keywords, price, 0, copies, new ArrayList<>(), 1,journal, editor, publicationDate);
     }
 
-    public Issue getIssue() {
-        return issue;
+    public  JournalArticle(String title, ArrayList<String> authors, ArrayList<String> keywords, int price,
+                           String journal, String editor, String publicationDate ) {
+        this(++lastID, title, authors, keywords, price, 0, new ArrayList<>(), new ArrayList<>(), 1, journal, editor, publicationDate);
     }
 
-    public String getJournal() {
-        return journal;
-    }
 }

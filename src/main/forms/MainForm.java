@@ -102,7 +102,7 @@ public class MainForm {
                     protected void updateItem(Document document, boolean flag) {
                         super.updateItem(document, flag);
                         if (document != null) {
-                            setText(document.getTitle());
+                            setText(document.title);
                         }
                     }
                 };
@@ -124,18 +124,18 @@ public class MainForm {
             }
             //Set document info
             Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
-            titleLbl.setText(chosenDocument.getTitle());
+            titleLbl.setText(chosenDocument.title);
             StringBuilder stringBuilder = new StringBuilder();
-            for(String p:chosenDocument.getAuthors()){
+            for(String p:chosenDocument.authors){
                 stringBuilder.append(p);
                 stringBuilder.append(", ");
             }
             authorsLbl.setText(stringBuilder.toString());
 
-            documentTypeLbl.setText(chosenDocument.getDocType());
-            priceLbl.setText(String.valueOf(chosenDocument.getPrice()));
+            documentTypeLbl.setText(chosenDocument.docType);
+            priceLbl.setText(String.valueOf(chosenDocument.docType));
             StringBuilder stringBuilderKeywords = new StringBuilder();
-            for(String s:chosenDocument.getKeywords()){
+            for(String s:chosenDocument.keywords){
                 stringBuilderKeywords.append(s);
                 stringBuilderKeywords.append(", ");
             }
@@ -143,19 +143,19 @@ public class MainForm {
 
             if(chosenDocument.getClass().equals(Book.class)){
                 labelAddition1.setText("Publisher: ");
-                additionLbl1.setText(((Book)chosenDocument).getPublisher());
+                additionLbl1.setText(((Book)chosenDocument).publisher);
                 labelAddition2.setText("Publication Year: ");
-                additionLbl2.setText(String.valueOf(((Book)chosenDocument).getYear()));
-                if(((Book) chosenDocument).isBestseller()) labelAddition3.setText("Bestseller");
+                additionLbl2.setText(String.valueOf(((Book)chosenDocument).year));
+                if(((Book) chosenDocument).isBestseller) labelAddition3.setText("Bestseller");
                 else labelAddition3.setText("");
                 additionLbl3.setText("");
             }else if(chosenDocument.getClass().equals(JournalArticle.class)){
                 labelAddition1.setText("Journal: ");
-                additionLbl1.setText(((JournalArticle)chosenDocument).getJournal());
+                additionLbl1.setText(((JournalArticle)chosenDocument).journal);
                 labelAddition2.setText("Editor: ");
-                additionLbl2.setText(String.valueOf(((JournalArticle)chosenDocument).getIssue().editor));
+                additionLbl2.setText(String.valueOf(((JournalArticle)chosenDocument).editor));
                 labelAddition3.setText("Publication Date: ");
-                additionLbl3.setText(String.valueOf(((JournalArticle)chosenDocument).getIssue().publicationDate));
+                additionLbl3.setText(String.valueOf(((JournalArticle)chosenDocument).publicationDate));
             }else{
                 labelAddition1.setText("");
                 labelAddition2.setText("");
@@ -167,15 +167,15 @@ public class MainForm {
             if(session.getUser().isHasCheckOutPerm()
                     && !(session.userCard.checkedOutDocs.contains(documents.get(openDocumentID)))) {
                 //Check number of copies and output it or number of requests
-                 if (documents.get(openDocumentID).getNumberOfCopies() == 0) {
-                     requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfCopies()));
+                 if (documents.get(openDocumentID).getNumberOfAvailableCopies() == 0) {
+                     requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
                     checkoutButton.setVisible(true);
                     if (session.userCard.requestedDocs.contains(documents.get(openDocumentID))) {
                         checkoutButton.setText("Cancel request");
                     } else checkoutButton.setText("Request");
                 } else {
                     checkoutButton.setVisible(true);
-                    requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfCopies()));
+                    requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
                     checkoutButton.setText("Check out");
                 }
             }else checkoutButton.setVisible(false);
@@ -189,7 +189,7 @@ public class MainForm {
     @FXML
     public void checkOut(){
         Document currentDoc = documents.get(openDocumentID);
-        if(currentDoc.getNumberOfCopies() == 0) {
+        if(currentDoc.getNumberOfAvailableCopies() == 0) {
             if (request(currentDoc)) {
                 checkoutButton.setText("Request");
             } else {
@@ -197,8 +197,8 @@ public class MainForm {
             }
         }else{
             checkOut(currentDoc);
-            requestLbl.setText(String.valueOf(currentDoc.getNumberOfCopies()));
-            if(currentDoc.getNumberOfCopies() == 0) {
+            requestLbl.setText(String.valueOf(currentDoc.getNumberOfAvailableCopies()));
+            if(currentDoc.getNumberOfAvailableCopies() == 0) {
                 checkoutButton.setText("Request");
             }
             checkoutButton.setVisible(false);
@@ -216,13 +216,8 @@ public class MainForm {
 
     public boolean checkOut(Document document){
 
-        if(document.getNumberOfCopies() > 0 && !session.userCard.checkedOutDocs.contains(document)) {
-            document.setNumberOfCopies(document.getNumberOfCopies() - 1);
-            Copy copy = new Copy(document, -1, 10);
-            session.userCard.checkedOutCopies.add(copy);
-            copy.checkoutBy(session.userCard);
-            copy.checkOutTime = document.getCheckOutTime(session.userCard.getUserType().isHasLongCheckOutPerm());
-            session.userCard.checkedOutDocs.add(document);
+        if(document.getNumberOfAvailableCopies() > 0 && !session.userCard.checkedOutDocs.contains(document)) {
+            document.takeCopy( session.userCard);
             return true;
         }
         return false;
@@ -233,11 +228,11 @@ public class MainForm {
 
         boolean requested = session.userCard.requestedDocs.contains(document);
         if (requested) {
-            document.setRequest(document.getNumberOfRequests() - 1);
+            document.increaseNumberOfRequest();
             session.userCard.requestedDocs.remove(document);
             return true;
         } else {
-            document.setRequest(document.getNumberOfRequests() + 1);
+            document.increaseNumberOfRequest();
             session.userCard.requestedDocs.add(document);
             return false;
         }
