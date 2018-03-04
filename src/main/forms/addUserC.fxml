@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane hgap="50" maxWidth="Infinity" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <padding><Insets bottom="20" left="10" right="10" top="20" /></padding>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="200">
+        </ColumnConstraints>
+
+    </columnConstraints>
+
+    <children>
+
+        <TextField GridPane.columnSpan="1" GridPane.halignment="CENTER" GridPane.valignment="BASELINE" />
+        <TextField fx:id="nameField" maxWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" promptText="First name" GridPane.rowIndex="0" />
+        <TextField fx:id="surnameField" maxWidth="-Infinity" prefWidth="150" promptText="Surname" GridPane.rowIndex="1" />
+        <TextField fx:id="idField" maxWidth="-Infinity" prefWidth="150" promptText="id" GridPane.rowIndex="2" />
+        <TextField fx:id="userTypeField" maxWidth="-Infinity" prefWidth="150" promptText="User type" GridPane.rowIndex="3" />
+        <TextField fx:id="phoneNumbField" maxWidth="-Infinity" prefWidth="150" promptText="phone number" GridPane.rowIndex="4" />
+        <TextField fx:id="addressField" maxWidth="-Infinity" prefWidth="150" promptText="address" GridPane.rowIndex="5" />
+    </children>
+    <rowConstraints>
+        <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="24.0" />
+        <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="26.0" />
+        <RowConstraints />
+        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" />
+        <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="28.0" />
+        <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="22.0" />
+    </rowConstraints>
+</GridPane>

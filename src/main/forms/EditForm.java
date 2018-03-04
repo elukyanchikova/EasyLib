@@ -65,10 +65,6 @@ public class EditForm {
     @FXML
     public void addUser(){}
     @FXML
-    public void deleteFile(){}
-    @FXML
-    public void deleteUser(){}
-    @FXML
     public void modifyUser(){}
     @FXML
     public void modifyFile(){}
