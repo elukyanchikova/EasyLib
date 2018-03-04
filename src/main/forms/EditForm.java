@@ -61,9 +61,17 @@ public class EditForm {
      */
 
     @FXML
-    public void addFile(){}
+    public void addFile() throws Exception {
+
+        addFileC mainForm = new addFileC();
+        mainForm.startForm(stage,new Session(new Guest()));
+
+    }
     @FXML
-    public void addUser(){}
+    public void addUser() throws Exception {
+        addUserC mainForm = new addUserC();
+        mainForm.startForm(stage,new Session(new Guest()));
+    }
     @FXML
     public void modifyUser(){}
     @FXML

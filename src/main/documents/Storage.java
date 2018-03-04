@@ -1,7 +1,7 @@
 package documents;
 
 
-import storage.Database;
+//import storage.Database;
 import users.Faculty;
 import users.Librian;
 import users.Student;
@@ -63,10 +63,10 @@ public class Storage {
         users.add(new UserCard("Mike", "Landgraab", new Student(),"8967999966", "Meyer avenue 10"));
         users.add(new UserCard("Bertrand", "Meyer", new Faculty(),"8555444333", "Eiffel st 11"));
 
-        Database db = new Database();
+       /* Database db = new Database();
         db.load();
         db.saveUserCard(users.get(0));
-        db.saveUserCard(users.get(2));
-        return users;
+        db.saveUserCard(users.get(2));*/
+       return users;
     }
 }
