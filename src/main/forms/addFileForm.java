@@ -32,7 +32,6 @@ public class addFileForm {
     @FXML private TextField publisherTextField;
     @FXML private TextField yearTextField;
     @FXML private TextField journalNameTextField;
-    @FXML private TextField issueTextField;
     @FXML private TextField editorNameTextField;
 
 
@@ -63,7 +62,6 @@ public class addFileForm {
         priceTextField = (TextField) scene.lookup("#priceField");
         publisherTextField = (TextField) scene.lookup("#publisherField");
         yearTextField = (TextField) scene.lookup("#yearField");
-        issueTextField = (TextField) scene.lookup("#issueField");
         journalNameTextField = (TextField) scene.lookup("#journalNameField");
         editorNameTextField = (TextField) scene.lookup("#editorNameField");
         saveFileBtn = (Button) scene.lookup("#saveFileBtn");
@@ -92,7 +90,7 @@ public class addFileForm {
          else if(docTypeTextField.getText() == "JournalArticle")
             {
                 JournalArticle file = new JournalArticle( titleTextField.getText(), authors, keywords, price,
-                        journalNameTextField.getText(), editorNameTextField.getText(), issueTextField.getText());
+                        journalNameTextField.getText(), editorNameTextField.getText(), yearTextField.getText());
 
             }
         }

@@ -76,5 +76,8 @@ public class EditForm {
 
     }
     @FXML
-    public void modifyFile(){}
+    public void modifyFile() throws Exception {
+        modifyFileForm mainForm = new modifyFileForm();
+        mainForm.startForm(stage,new Session(new Guest()));
+    }
 }
