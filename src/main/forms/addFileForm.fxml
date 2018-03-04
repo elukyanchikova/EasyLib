@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -20,7 +22,16 @@
       <TextField fx:id="docTypeField" maxWidth="-Infinity" prefWidth="150" promptText="doc type" GridPane.rowIndex="2" />
       <TextField fx:id="keywordsField" maxWidth="-Infinity" prefWidth="150" promptText="keywords" GridPane.rowIndex="3" />
       <TextField fx:id="priceField" maxWidth="-Infinity" prefWidth="150" promptText="price of the doc" GridPane.rowIndex="4" />
-       <TextField fx:id="numbOfCopiesField" maxWidth="-Infinity" prefWidth="150" promptText="number of copies" GridPane.rowIndex="5" />
+       <TextField fx:id="publisherField" maxWidth="-Infinity" prefWidth="150" promptText="publisher" GridPane.rowIndex="5" />
+       <TextField fx:id="yearField" maxWidth="-Infinity" prefWidth="150" promptText="year of publishing" GridPane.rowIndex="6" />
+       <TextField fx:id="issueField" maxWidth="-Infinity" prefWidth="150" promptText="issue (only for JA)" GridPane.rowIndex="7" />
+       <TextField fx:id="journalNameField" maxWidth="-Infinity" prefWidth="150" promptText="journal name (only for JA)" GridPane.rowIndex="8" />
+       <TextField fx:id="editorNameField" maxWidth="-Infinity" prefWidth="150" promptText="editor name (only for JA)" GridPane.rowIndex="9" />
+       <CheckBox  fx:id="isBestsellerCheckBox" maxWidth="-Infinity" prefWidth="150"  text="Bestseller" GridPane.rowIndex="10"  />
+       <Button fx:id="saveFileBtn" maxWidth="-Infinity" onMouseClicked="#save" prefWidth="150" text="Save" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
+
+
+
    </children>
    <rowConstraints>
       <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="24.0" />
@@ -29,5 +40,12 @@
       <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" />
       <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="28.0" />
       <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="22.0" />
+      <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="22.0" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
    </rowConstraints>
 </GridPane>
