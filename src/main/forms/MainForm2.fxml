@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="327.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ListView layoutX="25.0" layoutY="28.0" prefHeight="272.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
@@ -30,8 +29,7 @@
           <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Button layoutX="438.0" layoutY="14.0" mnemonicParsing="false" text="Request" AnchorPane.topAnchor="10.0" />
-      <Button layoutX="438.0" layoutY="48.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="74.0" text="Return" />
+      <Button layoutX="700.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="74.0" text="Return" AnchorPane.rightAnchor="14.0" fx:id="returnButton" />
       <Label layoutX="458.0" layoutY="292.0" prefHeight="21.0" prefWidth="157.0" text="User info" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
    </children>
 </AnchorPane>
