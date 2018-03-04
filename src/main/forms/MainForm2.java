@@ -1,13 +1,18 @@
 package forms;
 
 import documents.Document;
+import documents.Storage;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import users.Session;
 
 import java.util.ArrayList;
@@ -45,5 +50,63 @@ public class MainForm2 {
     @FXML private static Button checkoutButton;
     @FXML private static Button returnButton;
     @FXML private static Button requestButton;
+
+    public void startForm(Stage primaryStage, Session currentSession) throws Exception{
+        this.session = currentSession;
+        this.stage = primaryStage;
+        documents = Storage.getDocuments();
+        sceneInitialization();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+
+    private void sceneInitialization() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainForm2.fxml"));
+        loader.setController(this);
+        GridPane root = loader.load();
+        this.scene = new Scene(root, 1000, 700);
+
+        documentListView = (ListView<Document>) scene.lookup("#documentListView");
+        documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
+        titleLbl = (Label) scene.lookup("#titleLbl");
+        authorsLbl = (Label) scene.lookup("#authorsLbl");
+        documentTypeLbl = (Label) scene.lookup("#documentTypeLbl");
+        priceLbl = (Label) scene.lookup("#priceLbl");
+        keywordsLbl = (Label) scene.lookup("#keywordsLbl");
+        requestLbl = (Label) scene.lookup("#requestLbl");
+        labelRequests = (Label) scene.lookup("#labelRequests");
+
+        additionLbl1 = (Label) scene.lookup("#additionLbl1");
+        additionLbl2 = (Label) scene.lookup("#additionLbl2");
+        additionLbl3 = (Label) scene.lookup("#additionLbl3");
+
+        labelAddition1 = (Label) scene.lookup("#labelAddition1");
+        labelAddition2 = (Label) scene.lookup("#labelAddition2");
+        labelAddition3 = (Label) scene.lookup("#labelAddition3");
+
+        returnButton = (Button) scene.lookup("#checkoutButton");
+
+        if (!session.getUser().isHasCheckOutPerm()) checkoutButton.setVisible(false);
+
+        documentListView.setItems(FXCollections.observableArrayList(documents));
+        documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
+            public ListCell<Document> call(ListView<Document> documentListView) {
+                return new ListCell<Document>() {
+                    @Override
+                    protected void updateItem(Document document, boolean flag) {
+                        super.updateItem(document, flag);
+                        if (document != null) {
+                            setText(document.getTitle());
+                        }
+                    }
+                };
+            }
+        });
+    }
+
+
+
 
 }
