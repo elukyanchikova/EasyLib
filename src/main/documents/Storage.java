@@ -64,18 +64,10 @@ public class Storage {
                 new ArrayList<>(Collections.singletonList(new Copy(getDocuments().get(0),0,-1))), new ArrayList<>()));
         users.add(new UserCard("Bertrand", "Meyer", new Faculty(),"8555444333", "Eiffel st 11"));
 
-<<<<<<< HEAD
       /*  Database db = new Database();
         db.load();
         db.saveUserCard(users.get(0));
         db.saveUserCard(users.get(2));*/
         return users;
-=======
-       /* Database db = new Database();
-        db.load();
-        db.saveUserCard(users.get(0));
-        db.saveUserCard(users.get(2));*/
-       return users;
->>>>>>> f59d7024b7cd123e0a9319495a2c1d6f8633720a
     }
 }
