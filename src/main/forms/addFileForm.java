@@ -3,21 +3,23 @@ package forms;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import users.Session;
 
-public class addUserC {
+public class addFileForm {
     private Stage stage;
     private Scene scene;
     private Session session;
 
-    @FXML private TextField nameTextField;
-    @FXML private TextField surnameTextField;
-    @FXML private TextField idTextField;
-    @FXML private TextField addressTextField;
-    @FXML private TextField phoneNumberTextField;
+    @FXML private TextField titleTextField;
+    @FXML private TextField authorsTextField;
+    @FXML private TextField keywordsTextField;
+    @FXML private TextField docTypeTextField;
+    @FXML private TextField priceTextField;
+    @FXML private TextField numbOfCopiesTextField;
 
     /**
      * Initialization and run new scene on the primary stage
@@ -34,19 +36,20 @@ public class addUserC {
      * Initialization scene and scene's elements
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("AuthorizationForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("addFileForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root,700,700);
 
-        nameTextField = (TextField) scene.lookup("#nameField");
-        surnameTextField = (TextField) scene.lookup("#surnameTextField");
-        idTextField = (TextField) scene.lookup("#idTextField");
-        phoneNumberTextField = (TextField) scene.lookup("#phoneNumberTextField");
-        addressTextField = (TextField) scene.lookup("#addressTextField");
-
+        titleTextField = (TextField) scene.lookup("#titleField");
+        authorsTextField = (TextField) scene.lookup("#authorsTextField");
+        docTypeTextField = (TextField) scene.lookup("#docTypeField");
+        keywordsTextField = (TextField) scene.lookup("#keywordsTextField");
+        priceTextField = (TextField) scene.lookup("#priceTextField");
+        numbOfCopiesTextField = (TextField) scene.lookup("#numbOfCopiesField");
 
 
     }
+
 
 }

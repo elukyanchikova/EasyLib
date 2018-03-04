@@ -1,6 +1,5 @@
 package forms;
 
-import documents.Storage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,7 +8,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import users.Guest;
 import users.Session;
-import users.Student;
 
 public class EditForm {
 
@@ -63,17 +61,20 @@ public class EditForm {
     @FXML
     public void addFile() throws Exception {
 
-        addFileC mainForm = new addFileC();
+        addFileForm mainForm = new addFileForm();
         mainForm.startForm(stage,new Session(new Guest()));
 
     }
     @FXML
     public void addUser() throws Exception {
-        addUserC mainForm = new addUserC();
+        addUserForm mainForm = new addUserForm();
         mainForm.startForm(stage,new Session(new Guest()));
     }
     @FXML
-    public void modifyUser(){}
+    public void modifyUser(){
+        // add deleting
+
+    }
     @FXML
     public void modifyFile(){}
 }
