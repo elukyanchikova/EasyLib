@@ -16,11 +16,7 @@ public abstract class Document {
     protected int numberOfCopies;
     protected  int numberOfRequests = 0;
 
-    public Document(int id, String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
-                    int numberOfCopies) {
-        this(id,title, docType,authors, keywords,price,numberOfCopies, 0);
-    }
-
+    public ArrayList<Copy> copies;
 
     public Document(int id, String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
                     int numberOfCopies, int numberOfRequests) {
@@ -32,6 +28,11 @@ public abstract class Document {
         this.numberOfRequests = numberOfRequests;
         this.id = id;
         this.docType = docType;
+    }
+
+    public Document(int id, String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
+                    int numberOfCopies) {
+        this(id,title, docType,authors, keywords,price,numberOfCopies, 0);
     }
 
     public ArrayList<String> getKeywords() {

@@ -1,9 +1,11 @@
 package documents;
 
 
+import org.json.JSONObject;
 import users.UserCard;
 
 public class Copy {
+    private int id;
     private int documentID;
     private int level;
     private int room;
@@ -26,5 +28,11 @@ public class Copy {
         return Storage.getDocuments().get(documentID);
     }
 
+    public JSONObject serialize(){
+        JSONObject data = new JSONObject();
+        data.put("ID", id);
+        data.put("DocumentID", documentID);
+        return data;
+    }
 
 }
