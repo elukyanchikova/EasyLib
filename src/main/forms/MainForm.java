@@ -164,20 +164,28 @@ public class MainForm {
                 additionLbl2.setText("");
                 additionLbl3.setText("");
             }
-            if(session.getUser().isHasCheckOutPerm()
-                    && !(session.userCard.checkedOutDocs.contains(documents.get(openDocumentID)))) {
+            if(session.getUser().isHasCheckOutPerm()) {
                 //Check number of copies and output it or number of requests
-                 if (documents.get(openDocumentID).getNumberOfAvailableCopies() == 0) {
-                     requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
-                    checkoutButton.setVisible(true);
-                    if (session.userCard.requestedDocs.contains(documents.get(openDocumentID))) {
-                        checkoutButton.setText("Cancel request");
-                    } else checkoutButton.setText("Request");
-                } else {
-                    checkoutButton.setVisible(true);
-                    requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
-                    checkoutButton.setText("Check out");
+                boolean flag = true;
+                for (Copy copy : session.userCard.checkedOutCopies) {
+                    if (copy.getDocument() == documents.get(openDocumentID)) {
+                        flag = false;
+                        break;
+                    }
                 }
+                if (flag){
+                    if (documents.get(openDocumentID).getNumberOfAvailableCopies() == 0) {
+                        requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
+                        checkoutButton.setVisible(true);
+                        if (session.userCard.requestedDocs.contains(documents.get(openDocumentID))) {
+                            checkoutButton.setText("Cancel request");
+                        } else checkoutButton.setText("Request");
+                    } else {
+                        checkoutButton.setVisible(true);
+                        requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
+                        checkoutButton.setText("Check out");
+                    }
+                }else checkoutButton.setVisible(false);
             }else checkoutButton.setVisible(false);
         }
     }
@@ -216,7 +224,14 @@ public class MainForm {
 
     public boolean checkOut(Document document){
 
-        if(document.getNumberOfAvailableCopies() > 0 && !session.userCard.checkedOutDocs.contains(document)) {
+        boolean flag = true;
+        for (Copy copy : session.userCard.checkedOutCopies) {
+            if (copy.getDocument() == documents.get(openDocumentID)) {
+                flag = false;
+                break;
+            }
+        }
+        if(document.getNumberOfAvailableCopies() > 0 && flag) {
             document.takeCopy( session.userCard);
             return true;
         }

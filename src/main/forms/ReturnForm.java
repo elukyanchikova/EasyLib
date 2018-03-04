@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -47,7 +48,6 @@ public class ReturnForm {
     @FXML private Label additionLbl2;
     @FXML private Label additionLbl3;
 
-    @FXML private static Button checkoutButton;
     @FXML private static Button returnButton;
     @FXML private static Button requestButton;
 
@@ -65,7 +65,7 @@ public class ReturnForm {
     private void sceneInitialization() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ReturnForm.fxml"));
         loader.setController(this);
-        GridPane root = loader.load();
+        AnchorPane root = loader.load();
         this.scene = new Scene(root, 1000, 700);
 
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
@@ -87,9 +87,7 @@ public class ReturnForm {
         labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
         returnButton = (Button) scene.lookup("#checkoutButton");
-
-        if (!session.getUser().isHasCheckOutPerm()) checkoutButton.setVisible(false);
-
+        
         documentListView.setItems(FXCollections.observableArrayList(documents));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
             public ListCell<Document> call(ListView<Document> documentListView) {
