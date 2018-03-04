@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Document {
 
+    public static int lastID = 0;
     public int id;
     protected String title;
     protected ArrayList<String> authors;
@@ -28,11 +29,22 @@ public abstract class Document {
         this.numberOfRequests = numberOfRequests;
         this.id = id;
         this.docType = docType;
+        lastID = lastID < id?id:lastID;
     }
 
     public Document(int id, String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
                     int numberOfCopies) {
         this(id,title, docType,authors, keywords,price,numberOfCopies, 0);
+    }
+
+    public Document(String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
+                    int numberOfCopies, int numberOfRequests){
+        this(++lastID, title, docType,authors, keywords,price,numberOfCopies, numberOfRequests);
+    }
+
+    public Document(String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
+                    int numberOfCopies){
+        this(++lastID,title, docType,authors, keywords,price,numberOfCopies, 0);
     }
 
     public ArrayList<String> getKeywords() {
