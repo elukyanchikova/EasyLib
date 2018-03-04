@@ -4,26 +4,26 @@ package documents;
 import users.UserCard;
 
 public class Copy {
-    private Document document;
+    private int documentID;
     private int level;
     private int room;
     //TODO work with that variable when returning system will be started
     public int checkOutTime;
-    private UserCard checkoutByUser;
+    private int checkoutByUserID;
 
     public Copy(Document document, int level, int room){
-        this.document = document;
+        this.documentID = document.id;
         this.level = level;
         this.room = room;
     }
 
     //TODO bound with user
     public void checkoutBy(UserCard user){
-        this.checkoutByUser = user;
+        this.checkoutByUserID = user.id;
     }
 
     public Document getDocument() {
-        return document;
+        return Storage.getDocuments().get(documentID);
     }
 
 
