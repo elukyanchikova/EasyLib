@@ -15,8 +15,6 @@
     </columnConstraints>
 
    <children>
-
-      <TextField GridPane.rowSpan="1" />
       <TextField fx:id="titleField" maxWidth="-Infinity" prefHeight="25.0" prefWidth="149.0" promptText="title of the doc" GridPane.rowIndex="0" />
       <TextField fx:id="authorsField" maxWidth="-Infinity" prefWidth="150" promptText="authors" GridPane.rowIndex="1" />
       <TextField fx:id="docTypeField" maxWidth="-Infinity" prefWidth="150" promptText="doc type" GridPane.rowIndex="2" />
