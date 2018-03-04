@@ -17,7 +17,7 @@ import users.Session;
 
 import java.util.ArrayList;
 
-public class MainForm2 {
+public class ReturnForm {
 
     private Stage stage;
     private Scene scene;
@@ -63,7 +63,7 @@ public class MainForm2 {
 
 
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainForm2.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ReturnForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root, 1000, 700);
