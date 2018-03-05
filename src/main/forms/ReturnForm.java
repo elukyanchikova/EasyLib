@@ -109,7 +109,19 @@ public class ReturnForm {
         });
 
         userListView.setItems(FXCollections.observableArrayList(users));
-        userListView.setCellFactory();
+        userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
+            public ListCell<UserCard> call(ListView<UserCard> userListView) {
+                return new ListCell<UserCard>() {
+                  @Override
+                  protected void updateItem(UserCard userCard, boolean flag){
+                      super.updateItem(userCard,flag);
+                      if (userCard != null && userCard.checkedOutCopies != null){
+                          setText(userCard.name);
+                      }
+                  }
+                };
+            }
+        });
 
 
 
