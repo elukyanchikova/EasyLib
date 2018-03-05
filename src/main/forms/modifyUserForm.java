@@ -13,6 +13,7 @@ import storage.Database;
 import users.Session;
 import users.Student;
 import users.UserCard;
+import users.UserType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -174,7 +175,15 @@ public class modifyUserForm {
             database.saveUserCard(currentUser);
         }
 
-        // TODO UserType setting
+
+        if(!userTypeTextField.getText().isEmpty()){
+            UserCard currentUser = database.getUserCard(database.getUsercardsID()[openUserCardID]);
+            UserType u = UserType.userTypes.get(userTypeTextField.getText());
+            if(u != null){
+                currentUser.userType = u;
+            }
+            database.saveUserCard(currentUser);
+        }
 
 
         if (!phoneNumberTextField.getText().isEmpty()) {

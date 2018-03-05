@@ -40,8 +40,8 @@
 
         <Label GridPane.rowIndex = "0" GridPane.columnIndex="0" fx:id="labelName" text="First name: "></Label>
         <Label GridPane.rowIndex = "1" GridPane.columnIndex="0" fx:id="labelSurname" text="Surname: " ></Label>
-        <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelUserType" text="UserType: "></Label>
-        <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelAddress" text="Address: "></Label>
+        <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelAddress" text="Address: "></Label>
+        <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelUserType" text="UserType: "></Label>
         <Label GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="labelPublisher" text="PhoneNumber: "></Label>
         <!--<Label GridPane.rowIndex = "6" GridPane.columnIndex="0" fx:id="labelCheckedOutCopies" text="Checked out copies: " ></Label>-->
 <!--

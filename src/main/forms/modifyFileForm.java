@@ -151,7 +151,6 @@ public class modifyFileForm {
 
     @FXML
     public void save() {
-        //TODO add connection with database
 
         if (!titleTextField.getText().isEmpty()) {
             Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);;
