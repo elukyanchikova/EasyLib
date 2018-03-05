@@ -76,8 +76,6 @@ public class addFileForm {
     @FXML public void save(){
         ArrayList<String> keywords = new ArrayList<String>(Arrays.asList(keywordsTextField.getText().toLowerCase().replace(',' , ';').split(";")));
         ArrayList<String> authors = new ArrayList<String>(Arrays.asList(authorsTextField.getText().toLowerCase().replace(',' , ';').split(";")));
-
-
         int price = Integer.parseInt(priceTextField.getText());
         int year = Integer.parseInt(yearTextField.getText());
 
@@ -87,20 +85,19 @@ public class addFileForm {
         {
             Book file = new Book( titleTextField.getText(), authors, keywords, price, publisherTextField.getText(),
                     year, isBestseller);
-
+            database.saveDocuments(file);
         }
         else if(docTypeTextField.getText() == "AVMaterial") {
-              AVMaterial file = new AVMaterial( titleTextField.getText(), authors, keywords, price)
-            ;}
+              AVMaterial file = new AVMaterial( titleTextField.getText(), authors, keywords, price);
+             database.saveDocuments(file);}
          else if(docTypeTextField.getText() == "JournalArticle")
             {
                 JournalArticle file = new JournalArticle( titleTextField.getText(), authors, keywords, price,
                         journalNameTextField.getText(), editorNameTextField.getText(), yearTextField.getText());
-
+                database.saveDocuments(file);
             }
         }
 
-        //TODO add this particular doc to the database
 
     @FXML public void back() throws Exception {
         EditForm mainForm = new EditForm();
