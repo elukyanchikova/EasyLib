@@ -74,7 +74,7 @@ public class modifyUserForm {
      * Initialization and run new scene on the primary stage
      */
     void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception {
-        users = Storage.getUsers();
+        users = database.getAllUsers();
         this.session = currentSession;
         this.database = database;
         this.stage = primaryStage;

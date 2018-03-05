@@ -74,7 +74,7 @@ public class modifyFileForm {
      * Initialization and run new scene on the primary stage
      */
     void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception {
-        documents = Storage.getDocuments();
+        documents = database.getAllDocuments();
         this.database = database;
         this.session = currentSession;
         this.stage = primaryStage;

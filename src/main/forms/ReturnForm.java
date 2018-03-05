@@ -58,7 +58,7 @@ public class ReturnForm {
     public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
-        documents = Storage.getDocuments();
+        documents = database.getAllDocuments();
         sceneInitialization();
         this.database = database;
         stage.setScene(scene);
