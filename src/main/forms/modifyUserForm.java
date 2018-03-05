@@ -140,7 +140,11 @@ public class modifyUserForm {
             }
 
             UserCard chosenUser = selectUser(userListView.getSelectionModel().getSelectedIndex());
-
+            nameTextField.setText(chosenUser.name);
+            surnameTextField.setText(chosenUser.surname);
+            addressTextField.setText(chosenUser.address);
+            phoneNumberTextField.setText(chosenUser.phoneNumb);
+            userTypeTextField.setText(chosenUser.userType.getClass().getName());
 
         }
     }
@@ -197,7 +201,9 @@ public class modifyUserForm {
     }
 
     @FXML
-    void back() {
+    void back() throws Exception {
+        EditForm mainForm = new EditForm();
+        mainForm.startForm(stage, session,database);
     }
 
     @FXML
