@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="551.0" prefWidth="1011.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -45,7 +43,7 @@
             <Label fx:id="labelAddition1" GridPane.rowIndex="6" />
             <Label fx:id="additionLbl1" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label fx:id="labelAddition2" GridPane.rowIndex="7" />
-            <Label fx:id="additionLbl2" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="additiobLbl2" GridPane.columnIndex="1" GridPane.rowIndex="7" />
          </children>
       </GridPane>
       <Button fx:id="returnbutton" layoutX="652.0" layoutY="10.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="136.0" text="Return" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />

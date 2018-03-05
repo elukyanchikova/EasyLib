@@ -26,8 +26,8 @@ public class ReturnForm {
     private Session session;
     private Database database;
 
-    ArrayList<Document> documents = new ArrayList<>();
-    ArrayList<UserCard> users = new ArrayList<>();
+    //ArrayList<Document> documents = new ArrayList<>();
+    //ArrayList<UserCard> users = new ArrayList<>();
     private int openDocumentID = -1;
 
     @FXML
@@ -53,14 +53,12 @@ public class ReturnForm {
     @FXML private Label additionLbl3;
 
     @FXML private static Button returnButton;
-    @FXML private static Button requestButton;
 
     public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
-        documents = database.getAllDocuments();
-        sceneInitialization();
         this.database = database;
+        sceneInitialization();
         stage.setScene(scene);
         stage.show();
     }
@@ -84,15 +82,13 @@ public class ReturnForm {
 
         additionLbl1 = (Label) scene.lookup("#additionLbl1");
         additionLbl2 = (Label) scene.lookup("#additionLbl2");
-        additionLbl3 = (Label) scene.lookup("#additionLbl3");
 
         labelAddition1 = (Label) scene.lookup("#labelAddition1");
         labelAddition2 = (Label) scene.lookup("#labelAddition2");
-        labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
-        returnButton = (Button) scene.lookup("#checkoutButton");
+        returnButton = (Button) scene.lookup("#returnButton");
 
-        documentListView.setItems(FXCollections.observableArrayList(documents));
+        documentListView.setItems(FXCollections.observableArrayList(database.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
             public ListCell<Document> call(ListView<Document> documentListView) {
                 return new ListCell<Document>() {
@@ -107,7 +103,7 @@ public class ReturnForm {
             }
         });
 
-        userListView.setItems(FXCollections.observableArrayList(users));
+        userListView.setItems(FXCollections.observableArrayList(database.getAllUsers()));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
             public ListCell<UserCard> call(ListView<UserCard> userListView) {
                 return new ListCell<UserCard>() {
@@ -177,21 +173,21 @@ public class ReturnForm {
                 //Check number of copies and output it or number of requests
                 boolean flag = true;
                 for (Copy copy : session.userCard.checkedOutCopies) {
-                    if (copy.getDocumentID() == documents.get(openDocumentID).getID()) {
+                    if (copy.getDocumentID() == database.getDocuments(database.getDocumentsID()[openDocumentID]).getID()) {
                         flag = false;
                         break;
                     }
                 }
                 if (flag){
-                    if (documents.get(openDocumentID).getNumberOfAvailableCopies() == 0) {
-                        requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
+                    if (database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() == 0) {
+                        requestLbl.setText(String.valueOf(database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
                         returnButton.setVisible(true);
-                        if (session.userCard.requestedDocs.contains(documents.get(openDocumentID))) {
+                        if (session.userCard.requestedDocs.contains(database.getDocuments(database.getDocumentsID()[openDocumentID]))) {
                             returnButton.setText("Cancel request");
                         } else returnButton.setText("Request");
                     } else {
                         returnButton.setVisible(true);
-                        requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
+                        requestLbl.setText(String.valueOf(database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
                         returnButton.setText("Check out");
                     }
                 }else returnButton.setVisible(false);
@@ -201,7 +197,7 @@ public class ReturnForm {
 
     public Document selectDocument(int id){
         openDocumentID = id;
-        return documents.get(openDocumentID);
+        return database.getDocuments(database.getDocumentsID()[openDocumentID]);
     }
 
 
