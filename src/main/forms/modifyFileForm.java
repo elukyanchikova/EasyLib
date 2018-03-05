@@ -201,5 +201,7 @@ public class modifyFileForm {
     @FXML
     public void deleteFile() {
         //TODO delete file
+        Document currentDoc = documents.get(openDocumentID);
+        removeDocuments(currentDoc);
     }
 }
