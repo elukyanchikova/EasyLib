@@ -70,7 +70,6 @@ public class ReturnForm {
         this.scene = new Scene(root, 1000, 700);
 
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
-        userListView = (ListView<UserCard>) scene.lookup("#userListView");
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
         titleLbl = (Label) scene.lookup("#titleLbl");
         authorsLbl = (Label) scene.lookup("#authorsLbl");
@@ -82,9 +81,11 @@ public class ReturnForm {
 
         additionLbl1 = (Label) scene.lookup("#additionLbl1");
         additionLbl2 = (Label) scene.lookup("#additionLbl2");
+        additionLbl3 = (Label) scene.lookup("#additionLbl3");
 
         labelAddition1 = (Label) scene.lookup("#labelAddition1");
         labelAddition2 = (Label) scene.lookup("#labelAddition2");
+        labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
         returnButton = (Button) scene.lookup("#returnButton");
 
@@ -172,8 +173,6 @@ public class ReturnForm {
                 labelAddition2.setText("Publication Year: ");
                 additionLbl2.setText(String.valueOf(((Book)chosenDocument).year));
                 if(((Book) chosenDocument).isBestseller) labelAddition3.setText("Bestseller");
-                else labelAddition3.setText("");
-                additionLbl3.setText("");
             }else if(chosenDocument.getClass().equals(JournalArticle.class)){
                 labelAddition1.setText("Journal: ");
                 additionLbl1.setText(((JournalArticle)chosenDocument).journalName);
