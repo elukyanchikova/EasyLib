@@ -50,6 +50,9 @@ public class MainForm {
     @FXML private Label additionLbl2;
     @FXML private Label additionLbl3;
 
+    @FXML private Button b1;
+    @FXML private  Button b2;
+
     @FXML private static Button checkoutButton;
 
     /**
@@ -77,6 +80,10 @@ public class MainForm {
         GridPane root = loader.load();
         this.scene = new Scene(root,1000,700);
         elementsInitialization();
+        if(!session.getUser().isHasEditPerm()){
+            b1.setVisible(false);
+            b2.setVisible(false);
+        }
         if(!session.getUser().isHasCheckOutPerm()) checkoutButton.setVisible(false);
         documentListView.setItems(FXCollections.observableArrayList(database.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
@@ -114,6 +121,9 @@ public class MainForm {
         labelAddition2 = (Label) scene.lookup("#labelAddition2");
         labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
+        b1 = (Button) scene.lookup("#returnButton");
+        b2 = (Button) scene.lookup("#editButton");
+
         checkoutButton = (Button) scene.lookup("#checkoutButton");
     }
 
@@ -125,6 +135,10 @@ public class MainForm {
     @FXML
     public void selectDocumentListViewButton(){
         //get selected element
+        if(!session.getUser().isHasEditPerm()){
+            b1.setVisible(false);
+            b2.setVisible(false);
+        }
         if(documentListView.getSelectionModel().getSelectedIndex() > -1) {
             //If no document was opened
             if(openDocumentID == -1){
@@ -175,6 +189,7 @@ public class MainForm {
                 additionLbl2.setText("");
                 additionLbl3.setText("");
             }
+
             if(session.getUser().isHasCheckOutPerm()) {
                 //Check number of copies and output it or number of requests
                 boolean flag = true;
@@ -184,6 +199,7 @@ public class MainForm {
                         break;
                     }
                 }
+
 
                 if (flag){
                     if (database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() == 0) {

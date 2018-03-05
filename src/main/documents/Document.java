@@ -154,6 +154,11 @@ public abstract class Document {
         }else return false;
     }
 
+    public void returnCopy( Copy copy){
+        availableCopies.add(copy);
+        takenCopies.remove(copy);
+    }
+
     public int getCheckOutTime(boolean longCheckOutPermission){
         return checkOutTime;
     }
