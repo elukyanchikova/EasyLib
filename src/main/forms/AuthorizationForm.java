@@ -12,6 +12,7 @@ import storage.Database;
 import users.Guest;
 import users.Session;
 import users.Student;
+import users.UserType;
 
 public class AuthorizationForm {
 
@@ -30,6 +31,7 @@ public class AuthorizationForm {
     void startForm(Stage primaryStage) throws Exception{
         this.stage = primaryStage;
         sceneInitialization();
+        UserType.load();
         database = new Database();
         stage.setScene(scene);
         stage.show();
@@ -62,8 +64,8 @@ public class AuthorizationForm {
                 emailTextField.getText().toLowerCase().replace("@innopolis.ru", "").replace(" ", "").length() != 0)
         {
             MainForm mainForm = new MainForm();
-            Session session = new Session(new Student());
-            session.userCard = Storage.getUsers().get(0);
+            Session session = new Session(database.getUserCard(5).userType);
+            session.userCard = database.getUserCard(5);
             mainForm.startForm(stage, session,database);
         }
     }

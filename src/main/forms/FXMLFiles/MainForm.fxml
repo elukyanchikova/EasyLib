@@ -28,7 +28,7 @@
 
     <ListView GridPane.columnIndex="0" fx:id="documentListView"
               minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
-              onMouseClicked="#selectDocument"
+              onMouseClicked="#selectDocumentListViewButton"
     />
 
     <GridPane GridPane.columnIndex="1" fx:id="documentInfoPane"

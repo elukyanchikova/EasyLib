@@ -2,6 +2,8 @@ package forms;
 
 import documents.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.Database;
 import users.Session;
+import users.UserCard;
 
 import java.util.ArrayList;
 
@@ -24,7 +27,6 @@ public class MainForm {
     private Session session;
     private Database database;
 
-    ArrayList<Document> documents = new ArrayList<>();
     private int openDocumentID = -1;
 
     @FXML private GridPane documentInfoPane;
@@ -57,9 +59,8 @@ public class MainForm {
     public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
-        documents = Storage.getDocuments();
-        sceneInitialization();
         this.database = database;
+        sceneInitialization();
         stage.setScene(scene);
         stage.show();
     }
@@ -70,11 +71,30 @@ public class MainForm {
      * All elements will be initialized
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/MainForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root,1000,700);
+        elementsInitialization();
+        if(!session.getUser().isHasCheckOutPerm()) checkoutButton.setVisible(false);
+        documentListView.setItems(FXCollections.observableArrayList(database.getAllDocuments()));
+        documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
+            public ListCell<Document> call(ListView<Document> documentListView) {
+                return new ListCell<Document>() {
+                    @Override
+                    protected void updateItem(Document document, boolean flag) {
+                        super.updateItem(document, flag);
+                        if (document != null) {
+                            setText(document.title);
+                        }
+                    }
+                };
+            }
+        });
 
+    }
+
+    private void elementsInitialization(){
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
         titleLbl = (Label) scene.lookup("#titleLbl");
@@ -94,23 +114,6 @@ public class MainForm {
         labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
         checkoutButton = (Button) scene.lookup("#checkoutButton");
-
-        if(!session.getUser().isHasCheckOutPerm()) checkoutButton.setVisible(false);
-
-        documentListView.setItems(FXCollections.observableArrayList(documents));
-        documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>(){
-            public ListCell<Document> call(ListView<Document> documentListView) {
-                return new ListCell<Document>(){
-                    @Override
-                    protected void updateItem(Document document, boolean flag) {
-                        super.updateItem(document, flag);
-                        if (document != null) {
-                            setText(document.title);
-                        }
-                    }
-                };
-            }
-        });
     }
 
     //TODO change process of output
@@ -119,15 +122,19 @@ public class MainForm {
      * Select element of Document List View Event
      */
     @FXML
-    public void selectDocument(){
+    public void selectDocumentListViewButton(){
         //get selected element
         if(documentListView.getSelectionModel().getSelectedIndex() > -1) {
+            //If no document was opened
             if(openDocumentID == -1){
-                documentInfoPane.setVisible(true);//If no document was opened
+                documentInfoPane.setVisible(true);
             }
+
             //Set document info
             Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+
             titleLbl.setText(chosenDocument.title);
+
             StringBuilder stringBuilder = new StringBuilder();
             for(String p:chosenDocument.authors){
                 stringBuilder.append(p);
@@ -171,21 +178,22 @@ public class MainForm {
                 //Check number of copies and output it or number of requests
                 boolean flag = true;
                 for (Copy copy : session.userCard.checkedOutCopies) {
-                    if (copy.getDocumentID() == documents.get(openDocumentID).getID()) {
+                    if (copy.getDocumentID() == database.getDocuments(database.getDocumentsID()[openDocumentID]).getID()) {
                         flag = false;
                         break;
                     }
                 }
+
                 if (flag){
-                    if (documents.get(openDocumentID).getNumberOfAvailableCopies() == 0) {
-                        requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
+                    if (database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() == 0) {
+                        requestLbl.setText(String.valueOf(database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
                         checkoutButton.setVisible(true);
-                        if (session.userCard.requestedDocs.contains(documents.get(openDocumentID))) {
+                        if (session.userCard.requestedDocs.contains(database.getDocuments(database.getDocumentsID()[openDocumentID]))) {
                             checkoutButton.setText("Cancel request");
                         } else checkoutButton.setText("Request");
                     } else {
                         checkoutButton.setVisible(true);
-                        requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
+                        requestLbl.setText(String.valueOf(database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
                         checkoutButton.setText("Check out");
                     }
                 }else checkoutButton.setVisible(false);
@@ -199,7 +207,7 @@ public class MainForm {
      */
     @FXML
     public void checkOut(){
-        Document currentDoc = documents.get(openDocumentID);
+        Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]) ;
         if(currentDoc.getNumberOfAvailableCopies() == 0) {
             if (request(currentDoc)) {
                 checkoutButton.setText("Request");
@@ -222,14 +230,14 @@ public class MainForm {
 
     public Document selectDocument(int id){
         openDocumentID = id;
-        return documents.get(openDocumentID);
+        return database.getDocuments(database.getDocumentsID()[openDocumentID]);
     }
 
     public boolean checkOut(Document document){
 
         boolean flag = true;
         for (Copy copy : session.userCard.checkedOutCopies) {
-            if (copy.getDocumentID() == documents.get(openDocumentID).getID()) {
+            if (copy.getDocumentID() == database.getDocuments(database.getDocumentsID()[openDocumentID]).getID()) {
                 flag = false;
                 break;
             }

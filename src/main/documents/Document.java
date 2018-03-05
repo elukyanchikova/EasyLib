@@ -123,7 +123,8 @@ public abstract class Document {
     }
 
     public void setCopy(int level, int room){
-        setCopy(new Copy(this, level, room));
+        new Copy(this, level, room);
+        lastCopyID++;
     }
 
     public void setCopy(Copy copy){
