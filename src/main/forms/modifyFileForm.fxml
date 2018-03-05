@@ -61,5 +61,7 @@
 
         <Button fx:id="saveBtn" maxWidth="-Infinity" onMouseClicked="#save" prefWidth="150" text="Save" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.columnIndex="0" />
         <Button fx:id="deleteFileBtn" maxWidth="-Infinity" onMouseClicked="#deleteFile" prefWidth="150" text="Delete Document" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.columnIndex="2"/>
+        <Button fx:id="backBtn" maxWidth="-Infinity" onMouseClicked="#back" prefWidth="150" text="Back" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+
     </GridPane>
 </GridPane>

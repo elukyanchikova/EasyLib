@@ -4,7 +4,7 @@ import documents.Copy;
 import documents.Document;
 import documents.Storage;
 import forms.MainForm;
-//import org.junit.*;
+import org.junit.*;
 import users.*;
 
 import java.util.ArrayList;

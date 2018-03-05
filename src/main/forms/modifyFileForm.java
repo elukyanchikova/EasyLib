@@ -32,6 +32,8 @@ public class modifyFileForm {
     private Button saveBtn;
     @FXML
     private Button deleteFileBtn;
+    @FXML
+    private  Button backBtn;
 
     @FXML
     private Label labelTitle;
@@ -89,6 +91,7 @@ public class modifyFileForm {
 
         deleteFileBtn = (Button) scene.lookup("#deleteFileBtn");
         saveBtn = (Button) scene.lookup("#saveBtn");
+        backBtn = (Button) scene.lookup("#backBtn");
 
         labelTitle = (Label) scene.lookup("#labelTitle");
         labelAuthors = (Label) scene.lookup("#labelAuthors");
@@ -204,4 +207,6 @@ public class modifyFileForm {
         Document currentDoc = documents.get(openDocumentID);
         //removeDocuments(currentDoc);
     }
+    @FXML
+    public void back(){}
 }

@@ -34,6 +34,8 @@ public class modifyUserForm {
     private Button saveBtn;
     @FXML
     private Button deleteUserBtn;
+    @FXML
+    private Button backBtn;
 
     @FXML
     private Label labelName;
@@ -89,6 +91,7 @@ public class modifyUserForm {
 
         deleteUserBtn = (Button) scene.lookup("#deleteUserBtn");
         saveBtn = (Button) scene.lookup("#saveBtn");
+        backBtn = (Button) scene.lookup("#backBtn");
 
         labelName = (Label) scene.lookup("#labelName");
         labelSurname = (Label) scene.lookup("#labelSurname");
@@ -173,6 +176,7 @@ public class modifyUserForm {
         }
 
     }
+    @FXML void back(){}
 
     @FXML
     public void deleteFile() {
