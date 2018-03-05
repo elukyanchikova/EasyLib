@@ -64,22 +64,23 @@ public class EditForm {
     public void addFile() throws Exception {
 
         addFileForm mainForm = new addFileForm();
-        mainForm.startForm(stage,session);
+        mainForm.startForm(stage,session,database);
 
     }
     @FXML
     public void addUser() throws Exception {
         addUserForm mainForm = new addUserForm();
-        mainForm.startForm(stage,session);
+        mainForm.startForm(stage,session,database);
     }
     @FXML
-    public void modifyUser(){
-        // add deleting
+    public void modifyUser() throws Exception {
+        modifyUserForm mainForm = new modifyUserForm();
+        mainForm.startForm(stage,session,database);
 
     }
     @FXML
     public void modifyFile() throws Exception {
         modifyFileForm mainForm = new modifyFileForm();
-        mainForm.startForm(stage,session);
+        mainForm.startForm(stage,session,database);
     }
 }

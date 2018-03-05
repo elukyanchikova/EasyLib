@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import storage.Database;
 import users.Session;
 import users.Student;
 import users.UserCard;
@@ -20,6 +21,7 @@ public class modifyUserForm {
     private Stage stage;
     private Scene scene;
     private Session session;
+    private  Database database;
 
     ArrayList<UserCard> users = new ArrayList<>();
     private int openUserCardID = -1;
@@ -71,9 +73,10 @@ public class modifyUserForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession) throws Exception {
+    void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception {
         users = Storage.getUsers();
         this.session = currentSession;
+        this.database = database;
         this.stage = primaryStage;
         sceneInitialization();
         stage.setScene(scene);

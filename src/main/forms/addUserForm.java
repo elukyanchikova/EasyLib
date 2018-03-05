@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import storage.Database;
 import users.*;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class addUserForm {
     private Stage stage;
     private Scene scene;
     private Session session;
+    private Database database;
 
     @FXML private TextField nameTextField;
     @FXML private TextField surnameTextField;
@@ -29,9 +31,10 @@ public class addUserForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession) throws Exception{
+    void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
         this.stage = primaryStage;
         this.session = currentSession;
+        this.database = database;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();

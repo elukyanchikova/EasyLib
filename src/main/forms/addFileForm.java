@@ -12,6 +12,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import storage.Database;
 import users.Session;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class addFileForm {
     private Stage stage;
     private Scene scene;
     private Session session;
+    private Database database;
 
     @FXML private TextField titleTextField;
     @FXML private TextField authorsTextField;
@@ -39,9 +41,10 @@ public class addFileForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession) throws Exception{
+    void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
         this.stage = primaryStage;
         this.session = currentSession;
+        this.database = database;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
