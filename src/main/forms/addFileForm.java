@@ -28,6 +28,7 @@ public class addFileForm {
     @FXML private TextField docTypeTextField;
     @FXML private TextField priceTextField;
     @FXML private Button saveFileBtn;
+    @FXML private Button backBtn;
     @FXML private CheckBox isBestsellerCheckBox;
     @FXML private TextField publisherTextField;
     @FXML private TextField yearTextField;
@@ -65,6 +66,7 @@ public class addFileForm {
         journalNameTextField = (TextField) scene.lookup("#journalNameField");
         editorNameTextField = (TextField) scene.lookup("#editorNameField");
         saveFileBtn = (Button) scene.lookup("#saveFileBtn");
+        backBtn = (Button) scene.lookup("#backBtn");
         isBestsellerCheckBox = (CheckBox) scene.lookup("#isBestsellerCheckBox");
 
     }
@@ -97,6 +99,7 @@ public class addFileForm {
 
         //TODO add this particular doc to the database
 
+    @FXML public void back(){}
 
     }
 
