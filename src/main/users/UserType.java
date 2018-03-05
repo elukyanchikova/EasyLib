@@ -14,6 +14,9 @@ public abstract class UserType {
         UserType.userTypes.put("Faculty", new Faculty());
         UserType.userTypes.put("Student", new Student());
         UserType.userTypes.put("Librarian", new Librarian());
+        UserType.userTypes.put("users.Faculty", new Faculty());
+        UserType.userTypes.put("users.Student", new Student());
+        UserType.userTypes.put("users.Librarian", new Librarian());
     }
 
     public boolean isHasCheckOutPerm() {
