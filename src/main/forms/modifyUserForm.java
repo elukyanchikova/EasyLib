@@ -28,7 +28,7 @@ public class modifyUserForm {
     private GridPane userInfoPane;
 
     @FXML
-    private ListView<Document> userListView;
+    private ListView<UserCard> userListView;
 
     @FXML
     private Button saveBtn;
@@ -106,7 +106,7 @@ public class modifyUserForm {
         /*checkedOutCopiesTextField = (TextField) scene.lookup("#checkedOutCopiesField");
         requestedDocsTextField = (TextField) scene.lookup("#requestedDocsField");*/
 
-       /* userListView.setItems(FXCollections.observableArrayList(users));
+       userListView.setItems(FXCollections.observableArrayList(users));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
             public ListCell<UserCard> call(ListView<UserCard> userListView) {
                 return new ListCell<UserCard>() {
@@ -120,7 +120,7 @@ public class modifyUserForm {
                 };
             }
         });
-*/
+
     }
 
     /**
