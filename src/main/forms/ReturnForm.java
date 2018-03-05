@@ -2,6 +2,7 @@ package forms;
 
 import documents.Document;
 import documents.Storage;
+import
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import users.Session;
+import users.UserCard;
 
 import java.util.ArrayList;
 
@@ -25,12 +27,14 @@ public class ReturnForm {
     private Session session;
 
     ArrayList<Document> documents = new ArrayList<>();
+    ArrayList<Users> users = new ArrayList<>();
     private int openDocumentID = -1;
 
     @FXML
     private GridPane documentInfoPane;
 
     @FXML private ListView<Document> documentListView;
+    @FXML private ListView<Users> userListView;
 
     @FXML private Label titleLbl;
     @FXML private Label authorsLbl;
@@ -69,6 +73,7 @@ public class ReturnForm {
         this.scene = new Scene(root, 1000, 700);
 
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
+        userListView = (ListView<>) scene.lookup("#userListView");
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
         titleLbl = (Label) scene.lookup("#titleLbl");
         authorsLbl = (Label) scene.lookup("#authorsLbl");
@@ -102,6 +107,12 @@ public class ReturnForm {
                 };
             }
         });
+
+        userListView.setItems();
+
+
+
+
     }
 
 
