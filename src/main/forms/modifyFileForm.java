@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.Database;
 import users.Session;
+import users.UserCard;
 
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ public class modifyFileForm {
     private Scene scene;
     private Session session;
     private Database database;
-    ArrayList<Document> documents = new ArrayList<>();
     private int openDocumentID = -1;
 
     @FXML
@@ -74,7 +74,6 @@ public class modifyFileForm {
      * Initialization and run new scene on the primary stage
      */
     void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception {
-        documents = Storage.getDocuments();
         this.database = database;
         this.session = currentSession;
         this.stage = primaryStage;
@@ -113,7 +112,7 @@ public class modifyFileForm {
         journalNameTextField = (TextField) scene.lookup("#journalNameField");
         editorNameTextField = (TextField) scene.lookup("#editorNameField");
 
-        documentListView.setItems(FXCollections.observableArrayList(documents));
+        documentListView.setItems(FXCollections.observableArrayList(database.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
             public ListCell<Document> call(ListView<Document> documentListView) {
                 return new ListCell<Document>() {
@@ -146,7 +145,7 @@ public class modifyFileForm {
     }}
     public Document selectFile(int id){
         openDocumentID = id;
-        return documents.get(openDocumentID);
+        return database.getDocuments(database.getDocumentsID()[openDocumentID]);
     }
 
 
@@ -155,66 +154,59 @@ public class modifyFileForm {
         //TODO add connection with database
 
         if (!titleTextField.getText().isEmpty()) {
-            Document currentDoc = documents.get(database.getDocumentsID()[openDocumentID]);
-            database.getDocuments(currentDoc.getID());
+            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);;
             currentDoc.title = titleTextField.getText();
             database.saveDocuments(currentDoc);
         }
 
         if (!authorsTextField.getText().isEmpty()) {
-            Document currentDoc = documents.get(database.getDocumentsID()[openDocumentID]);
-            database.getDocuments(currentDoc.getID());
+            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
             ArrayList<String> authors = new ArrayList<String>(Arrays.asList(authorsTextField.getText().toLowerCase().replace(',', ';').split(";")));
             currentDoc.authors = authors;
             database.saveDocuments(currentDoc);
         }
         if (!keywordsTextField.getText().isEmpty()) {
-            Document currentDoc = documents.get(database.getDocumentsID()[openDocumentID]);
-            database.getDocuments(currentDoc.getID());
+            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
             ArrayList<String> keywords = new ArrayList<String>(Arrays.asList(keywordsTextField.getText().toLowerCase().replace(',', ';').split(";")));
             currentDoc.keywords = keywords;
             database.saveDocuments(currentDoc);
         }
         if (!priceTextField.getText().isEmpty()) {
-            Document currentDoc =documents.get(database.getDocumentsID()[openDocumentID]);
-            database.getDocuments(currentDoc.getID());
+            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
             currentDoc.price = Integer.parseInt(priceTextField.getText());
             database.saveDocuments(currentDoc);
         }
 
         if (!publisherTextField.getText().isEmpty()) {
-            Document currentDoc = documents.get(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
             if (currentDoc.getClass().equals(Book.class)) {
-                database.getDocuments(currentDoc.getID());
                 ((Book) currentDoc).publisher = publisherTextField.getText();
             }
             database.saveDocuments(currentDoc);
         }
 
         if (!yearTextField.getText().isEmpty()) {
-            Document currentDoc =documents.get(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
             if (currentDoc.getClass().equals(Book.class)) {
-                database.getDocuments(currentDoc.getID());
+
                 ((Book) currentDoc).year = Integer.parseInt(yearTextField.getText());
             }
             if (currentDoc.getClass().equals(JournalArticle.class)) {
-                database.getDocuments(currentDoc.getID());
+
                 ((JournalArticle) currentDoc).publicationDate = yearTextField.getText();
             }
             database.saveDocuments(currentDoc);
         }
         if (!journalNameTextField.getText().isEmpty()) {
-            Document currentDoc = documents.get(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);;
             if (currentDoc.getClass().equals(JournalArticle.class)) {
-                database.getDocuments(currentDoc.getID());
                 ((JournalArticle) currentDoc).journalName = journalNameTextField.getText();
             }
             database.saveDocuments(currentDoc);
         }
         if (!editorNameTextField.getText().isEmpty()) {
-            Document currentDoc = documents.get(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
             if (currentDoc.getClass().equals(JournalArticle.class)) {
-                database.getDocuments(currentDoc.getID());
                 ((JournalArticle) currentDoc).editor = editorNameTextField.getText();
             }
             database.saveDocuments(currentDoc);
@@ -223,7 +215,7 @@ public class modifyFileForm {
 
     @FXML
     public void deleteFile() {
-        Document currentDoc = documents.get(openDocumentID);
+        Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);;
         database.removeDocuments(currentDoc);
     }
     @FXML
