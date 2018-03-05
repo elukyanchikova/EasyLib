@@ -13,8 +13,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="551.0" prefWidth="1011.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="documentListView" layoutX="25.0" layoutY="28.0" prefHeight="310.0" prefWidth="391.0" AnchorPane.bottomAnchor="294.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <GridPane fx:id="documentinfopane" layoutX="2.0" layoutY="337.0" prefHeight="267.0" prefWidth="391.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
+      <ListView fx:id="documentListView" onMouseClicked="#selectDocument"
+                layoutX="25.0" layoutY="28.0" prefHeight="310.0" prefWidth="391.0" AnchorPane.bottomAnchor="294.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <GridPane fx:id="documentInfoPane" layoutX="2.0" layoutY="337.0" prefHeight="267.0" prefWidth="391.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -48,7 +49,9 @@
             <Label fx:id="additionLbl2" GridPane.columnIndex="1" GridPane.rowIndex="7" />
          </children>
       </GridPane>
-      <Button fx:id="returnbutton" layoutX="652.0" layoutY="10.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="136.0" text="Return" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <ListView fx:id="userListView" layoutX="444.0" layoutY="10.0" prefHeight="528.0" prefWidth="391.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Button fx:id="returnbutton"
+              layoutX="652.0" layoutY="10.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="136.0" text="Return" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <ListView fx:id="userListView"
+                layoutX="444.0" layoutY="10.0" prefHeight="528.0" prefWidth="391.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
    </children>
 </AnchorPane>

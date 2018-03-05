@@ -103,7 +103,7 @@ public class ReturnForm {
             }
         });
 
-        userListView.setItems(FXCollections.observableArrayList(database.getAllUsers()));
+        /*userListView.setItems(FXCollections.observableArrayList(database.getAllUsers()));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
             public ListCell<UserCard> call(ListView<UserCard> userListView) {
                 return new ListCell<UserCard>() {
@@ -116,7 +116,7 @@ public class ReturnForm {
                   }
                 };
             }
-        });
+        });*/
 
     }
 
@@ -124,9 +124,29 @@ public class ReturnForm {
     public void selectDocument(){
         //get selected element
         if(documentListView.getSelectionModel().getSelectedIndex() > -1) {
-            if(openDocumentID == -1){
+            if (openDocumentID == -1) {
                 documentInfoPane.setVisible(true);//If no document was opened
             }
+        }
+
+            userListView.setItems(FXCollections.observableArrayList(database.getAllUsers()));
+            userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
+                public ListCell<UserCard> call(ListView<UserCard> userListView) {
+                    return new ListCell<UserCard>() {
+                        @Override
+                        protected void updateItem(UserCard userCard, boolean flag){
+                            super.updateItem(userCard,flag);
+                            if (userCard != null && userCard.checkedOutCopies != null){
+                                boolean f = false;
+                                for(int i = 0; i < userCard.checkedOutCopies.size(); i++){
+                                    if(userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]);
+                                }
+                                if(f) setText(userCard.name);
+                            }
+                        }
+                    };
+                }
+            });
             //Set document info
             Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
             titleLbl.setText(chosenDocument.title);
@@ -192,7 +212,7 @@ public class ReturnForm {
                     }
                 }else returnButton.setVisible(false);
             }else returnButton.setVisible(false);
-        }
+
     }
 
     public Document selectDocument(int id){
