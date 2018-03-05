@@ -5,10 +5,61 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="forms.ModifyFileC"
-            prefHeight="400.0" prefWidth="600.0">
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          hgap="10" vgap="10">
 
-</AnchorPane>
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <columnConstraints>
+        <ColumnConstraints minWidth="100"
+                           percentWidth="30.0">
+        </ColumnConstraints>
+        <ColumnConstraints minWidth="200" prefWidth="200"
+                           percentWidth="70.0">
+        </ColumnConstraints>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints
+                minHeight="150" prefHeight="400" vgrow="ALWAYS"></RowConstraints>
+    </rowConstraints>
+
+    <ListView GridPane.columnIndex="0" fx:id="documentListView"
+              minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
+              onMouseClicked="#selectFile"
+    />
+
+    <GridPane GridPane.columnIndex="1" fx:id="documentInfoPane"
+              minWidth="100"
+              minHeight="50" prefHeight="300"
+              maxHeight="Infinity"
+              maxWidth="Infinity"
+              visible="false">
+
+        <Label GridPane.rowIndex = "0" GridPane.columnIndex="0" fx:id="labelTitle" text="Title: "></Label>
+        <Label GridPane.rowIndex = "1" GridPane.columnIndex="0" fx:id="labelAuthors" text="Author(s): " ></Label>
+        <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelPrice" text="Price: "></Label>
+        <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelKeywords" text="Keywords: "></Label>
+        <Label GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="labelPublisher" text="Publisher: "></Label>
+        <Label GridPane.rowIndex = "6" GridPane.columnIndex="0" fx:id="labelYear" text="Year of publishing: " ></Label>
+        <Label GridPane.rowIndex = "8" GridPane.columnIndex="0" fx:id="labelJournal" text="Journal: "></Label>
+        <Label GridPane.rowIndex = "9" GridPane.columnIndex="0" fx:id="labelEditorName" text="Editor(s): "></Label>
+
+
+        <TextField fx:id="titleField" GridPane.columnIndex="1" maxWidth="-Infinity" prefHeight="25.0" prefWidth="149.0" promptText="title of the doc" GridPane.rowIndex="0" />
+        <TextField fx:id="authorsField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="authors" GridPane.rowIndex="1" />
+        <TextField fx:id="keywordsField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="keywords" GridPane.rowIndex="4" />
+        <TextField fx:id="priceField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="price of the doc" GridPane.rowIndex="3" />
+        <TextField fx:id="publisherField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="publisher" GridPane.rowIndex="5" />
+        <TextField fx:id="yearField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="year of publishing" GridPane.rowIndex="6" />
+        <TextField fx:id="journalNameField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="journal name (only for JA)" GridPane.rowIndex="8" />
+        <TextField fx:id="editorNameField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="editor name (only for JA)" GridPane.rowIndex="9" />
+
+        <CheckBox  fx:id="isBestsellerCheckBox" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150"  text="Bestseller" GridPane.rowIndex="10"  />
+
+        <Button fx:id="saveBtn" maxWidth="-Infinity" onMouseClicked="#save" prefWidth="150" text="Save" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.columnIndex="0" />
+        <Button fx:id="deleteFileBtn" maxWidth="-Infinity" onMouseClicked="#deleteFile" prefWidth="150" text="Delete Document" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.columnIndex="2"/>
+    </GridPane>
+</GridPane>

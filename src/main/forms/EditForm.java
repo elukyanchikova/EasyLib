@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import users.Guest;
+import storage.Database;
 import users.Session;
 
 public class EditForm {
@@ -14,6 +14,7 @@ public class EditForm {
     private Stage stage;
     private Scene scene;
     private Session session;
+    private Database database;
 
     @FXML private Button addFileBtn;
     @FXML private Button deleteFileBtn;
@@ -26,10 +27,11 @@ public class EditForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession) throws Exception{
+    void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
         sceneInitialization();
+        this.database = database;
         stage.setScene(scene);
         stage.show();
     }
@@ -55,20 +57,20 @@ public class EditForm {
 
     /**
      * Click on button "addUser" event
-     * If the User has an access to editing(i.e. librian) than the inf can be edited by him
+     * If the User has an access to editing(i.e. librarian) than the inf can be edited by him
      */
 
     @FXML
     public void addFile() throws Exception {
 
         addFileForm mainForm = new addFileForm();
-        mainForm.startForm(stage,new Session(new Guest()));
+        mainForm.startForm(stage,session);
 
     }
     @FXML
     public void addUser() throws Exception {
         addUserForm mainForm = new addUserForm();
-        mainForm.startForm(stage,new Session(new Guest()));
+        mainForm.startForm(stage,session);
     }
     @FXML
     public void modifyUser(){
@@ -76,5 +78,8 @@ public class EditForm {
 
     }
     @FXML
-    public void modifyFile(){}
+    public void modifyFile() throws Exception {
+        modifyFileForm mainForm = new modifyFileForm();
+        mainForm.startForm(stage,session);
+    }
 }

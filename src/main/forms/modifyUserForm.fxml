@@ -5,10 +5,64 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="forms.ModifyUser"
-            prefHeight="400.0" prefWidth="600.0">
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          hgap="10" vgap="10">
 
-</AnchorPane>
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <columnConstraints>
+        <ColumnConstraints minWidth="100"
+                           percentWidth="30.0">
+        </ColumnConstraints>
+        <ColumnConstraints minWidth="200" prefWidth="200"
+                           percentWidth="70.0">
+        </ColumnConstraints>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints
+                minHeight="150" prefHeight="400" vgrow="ALWAYS"></RowConstraints>
+    </rowConstraints>
+
+    <ListView GridPane.columnIndex="0" fx:id="userListView"
+              minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
+              onMouseClicked="#selectUser"
+    />
+
+    <GridPane GridPane.columnIndex="1" fx:id="userInfoPane"
+              minWidth="100"
+              minHeight="50" prefHeight="300"
+              maxHeight="Infinity"
+              maxWidth="Infinity"
+              visible="false">
+
+        <Label GridPane.rowIndex = "0" GridPane.columnIndex="0" fx:id="labelName" text="First name: "></Label>
+        <Label GridPane.rowIndex = "1" GridPane.columnIndex="0" fx:id="labelSurname" text="Surname: " ></Label>
+        <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelUserType" text="UserType: "></Label>
+        <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelAddress" text="Address: "></Label>
+        <Label GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="labelPublisher" text="PhoneNumber: "></Label>
+        <!--<Label GridPane.rowIndex = "6" GridPane.columnIndex="0" fx:id="labelCheckedOutCopies" text="Checked out copies: " ></Label>-->
+<!--
+        <Label GridPane.rowIndex = "8" GridPane.columnIndex="0" fx:id="labelRequestedDocs" text="Requested docs: "></Label>
+-->
+
+
+        <TextField fx:id="nameField" GridPane.columnIndex="1" maxWidth="-Infinity" prefHeight="25.0" prefWidth="149.0" promptText="First name" GridPane.rowIndex="0" />
+        <TextField fx:id="surnameField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="Surname" GridPane.rowIndex="1" />
+        <TextField fx:id="UserTypeField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="User Type" GridPane.rowIndex="4" />
+        <TextField fx:id="addressField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="address" GridPane.rowIndex="3" />
+        <TextField fx:id="phoneNumberField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="phone number" GridPane.rowIndex="5" />
+<!--
+        <TextField fx:id="checkOutCopiesField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="year of publishing" GridPane.rowIndex="6" />
+-->
+<!--
+        <TextField fx:id="requestedDocs" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="requested docs" GridPane.rowIndex="8" />
+-->
+
+
+        <Button fx:id="saveBtn" maxWidth="-Infinity" onMouseClicked="#save" prefWidth="150" text="Save" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.columnIndex="0" />
+        <Button fx:id="deleteUserBtn" maxWidth="-Infinity" onMouseClicked="#deleteUser" prefWidth="150" text="Delete UserCard" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.columnIndex="2"/>
+    </GridPane>
+</GridPane>

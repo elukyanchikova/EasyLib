@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import storage.Database;
 import users.Session;
 import users.UserCard;
 
@@ -25,6 +26,7 @@ public class ReturnForm {
     private Stage stage;
     private Scene scene;
     private Session session;
+    private Database database;
 
     ArrayList<Document> documents = new ArrayList<>();
     ArrayList<Users> users = new ArrayList<>();
@@ -55,16 +57,15 @@ public class ReturnForm {
     @FXML private static Button returnButton;
     @FXML private static Button requestButton;
 
-    public void startForm(Stage primaryStage, Session currentSession) throws Exception{
+    public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
         documents = Storage.getDocuments();
         sceneInitialization();
+        this.database = database;
         stage.setScene(scene);
         stage.show();
     }
-
-
 
     private void sceneInitialization() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ReturnForm.fxml"));
@@ -92,7 +93,7 @@ public class ReturnForm {
         labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
         returnButton = (Button) scene.lookup("#checkoutButton");
-        
+
         documentListView.setItems(FXCollections.observableArrayList(documents));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
             public ListCell<Document> call(ListView<Document> documentListView) {

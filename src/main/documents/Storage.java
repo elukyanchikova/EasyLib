@@ -1,7 +1,7 @@
 package documents;
 
 
-//import storage.Database;
+import storage.Database;
 import users.Faculty;
 import users.Librarian;
 import users.Student;
@@ -23,6 +23,7 @@ public class Storage {
         Book book1 = new Book("Introduction to Painting", new ArrayList<>(Collections.singletonList("John Lanber")),
                 new ArrayList<String>(Collections.singletonList("Painting")), 5200,
                 "Aress", 2009, false);
+        book1.setCopy(0,101);
         documents.add(book1);
 
         /*Book book4 = new Book(1,"The art of thinking", new ArrayList<String>(Arrays.asList("Demi Lessy", "Mike Bolly")),
@@ -64,11 +65,13 @@ public class Storage {
                 new ArrayList<>(Collections.singletonList(new Copy(getDocuments().get(0),0,-1))), new ArrayList<>()));
         users.add(new UserCard("Bertrand", "Meyer", new Faculty(),"8555444333", "Eiffel st 11"));
 
-        /*Database db = new Database();
+        Database db = new Database();
         db.load();
         db.saveUserCard(users.get(0));
+        db.saveUserCard(users.get(1));
         db.saveUserCard(users.get(2));
-        */
+        db.saveUserCard(users.get(3));
+        db.saveDocuments(getDocuments().get(0));
         return users;
     }
 }

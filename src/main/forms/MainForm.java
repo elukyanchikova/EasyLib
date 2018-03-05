@@ -12,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import storage.Database;
 import users.Session;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class MainForm {
     private Stage stage;
     private Scene scene;
     private Session session;
+    private Database database;
 
     ArrayList<Document> documents = new ArrayList<>();
     private int openDocumentID = -1;
@@ -52,11 +54,12 @@ public class MainForm {
      * @param primaryStage != null;
      * @param currentSession != null
      */
-    public void startForm(Stage primaryStage, Session currentSession) throws Exception{
+    public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
         documents = Storage.getDocuments();
         sceneInitialization();
+        this.database = database;
         stage.setScene(scene);
         stage.show();
     }
@@ -132,8 +135,8 @@ public class MainForm {
             }
             authorsLbl.setText(stringBuilder.toString());
 
-            documentTypeLbl.setText(chosenDocument.docType);
-            priceLbl.setText(String.valueOf(chosenDocument.docType));
+            documentTypeLbl.setText(chosenDocument.getDocType());
+            priceLbl.setText(String.valueOf(chosenDocument.price));
             StringBuilder stringBuilderKeywords = new StringBuilder();
             for(String s:chosenDocument.keywords){
                 stringBuilderKeywords.append(s);
@@ -151,7 +154,7 @@ public class MainForm {
                 additionLbl3.setText("");
             }else if(chosenDocument.getClass().equals(JournalArticle.class)){
                 labelAddition1.setText("Journal: ");
-                additionLbl1.setText(((JournalArticle)chosenDocument).journal);
+                additionLbl1.setText(((JournalArticle)chosenDocument).journalName);
                 labelAddition2.setText("Editor: ");
                 additionLbl2.setText(String.valueOf(((JournalArticle)chosenDocument).editor));
                 labelAddition3.setText("Publication Date: ");
@@ -168,7 +171,7 @@ public class MainForm {
                 //Check number of copies and output it or number of requests
                 boolean flag = true;
                 for (Copy copy : session.userCard.checkedOutCopies) {
-                    if (copy.getDocument() == documents.get(openDocumentID)) {
+                    if (copy.getDocumentID() == documents.get(openDocumentID).getID()) {
                         flag = false;
                         break;
                     }
@@ -226,7 +229,7 @@ public class MainForm {
 
         boolean flag = true;
         for (Copy copy : session.userCard.checkedOutCopies) {
-            if (copy.getDocument() == documents.get(openDocumentID)) {
+            if (copy.getDocumentID() == documents.get(openDocumentID).getID()) {
                 flag = false;
                 break;
             }

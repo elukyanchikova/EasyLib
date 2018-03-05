@@ -2,6 +2,7 @@ package documents;
 
 
 import org.json.JSONObject;
+import storage.Database;
 import users.UserCard;
 
 public class Copy {
@@ -21,6 +22,18 @@ public class Copy {
         document.setCopy(this);
     }
 
+    public Copy(JSONObject data, Database database){
+        this.id = data.getInt("ID");
+        this.documentID = data.getInt("DocumentID");
+        this.level = data.getInt("Level");
+        this.room = data.getInt("Room");
+        if(data.get("CheckedOutBy")!= JSONObject.NULL) {
+            this.checkoutByUser = database.getUserCard(data.getInt("CheckedOutBy"));
+            checkoutByUser.checkedOutCopies.add(this);
+        }
+
+    }
+
     //TODO bound with user
     public void checkoutBy(UserCard user){
         this.checkoutByUser = user;
@@ -30,21 +43,23 @@ public class Copy {
         return checkoutByUser;
     }
 
-    public Document getDocument() {
-        return Storage.getDocuments().get(documentID);
+    public int getDocumentID() {
+        return documentID;
     }
 
     public JSONObject serialize(){
         JSONObject data = new JSONObject();
         data.put("ID", id);
         data.put("DocumentID", documentID);
-        data.put("CheckedOutBy", checkoutByUser.getId());
+        if(checkoutByUser != null) {
+            data.put("CheckedOutBy", checkoutByUser.getId());
+        }else data.put("CheckedOutBy", JSONObject.NULL);
         data.put("Level", level);
         data.put("Room", room);
         return data;
     }
 
-    public static Copy deserialize(JSONObject data){
-        return null;
+    public int getID(){
+        return id;
     }
 }
