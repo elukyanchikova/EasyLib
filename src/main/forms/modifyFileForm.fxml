@@ -27,7 +27,7 @@
     </rowConstraints>
 
     <Button fx:id="backBtn" maxWidth="-Infinity" onMouseClicked="#back" prefWidth="150" text="Back" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
- 
+
     <ListView GridPane.columnIndex="0" fx:id="documentListView"
               minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
               onMouseClicked="#selectFile"

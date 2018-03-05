@@ -102,7 +102,10 @@ public class addFileForm {
 
         //TODO add this particular doc to the database
 
-    @FXML public void back(){}
+    @FXML public void back() throws Exception {
+        EditForm mainForm = new EditForm();
+        mainForm.startForm(stage, session,database);
+    }
 
     }
 
