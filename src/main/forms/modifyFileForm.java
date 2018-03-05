@@ -218,5 +218,8 @@ public class modifyFileForm {
         database.removeDocuments(currentDoc);
     }
     @FXML
-    public void back(){}
+    public void back() throws Exception {
+        EditForm mainForm = new EditForm();
+        mainForm.startForm(stage, session,database);
+    }
 }

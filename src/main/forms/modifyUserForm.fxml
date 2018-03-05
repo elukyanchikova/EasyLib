@@ -26,6 +26,8 @@
                 minHeight="150" prefHeight="400" vgrow="ALWAYS"></RowConstraints>
     </rowConstraints>
 
+    <Button fx:id="backBtn" GridPane.columnIndex="0"  maxWidth="-Infinity" onMouseClicked="#back" prefWidth="150" text="Back" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+
     <ListView GridPane.columnIndex="0" fx:id="userListView"
               minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
               onMouseClicked="#selectUser"
@@ -51,7 +53,7 @@
 
         <TextField fx:id="nameField" GridPane.columnIndex="1" maxWidth="-Infinity" prefHeight="25.0" prefWidth="149.0" promptText="First name" GridPane.rowIndex="0" />
         <TextField fx:id="surnameField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="Surname" GridPane.rowIndex="1" />
-        <TextField fx:id="UserTypeField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="User Type" GridPane.rowIndex="4" />
+        <TextField fx:id="userTypeField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="User Type" GridPane.rowIndex="4" />
         <TextField fx:id="addressField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="address" GridPane.rowIndex="3" />
         <TextField fx:id="phoneNumberField" GridPane.columnIndex="1" maxWidth="-Infinity" prefWidth="150" promptText="phone number" GridPane.rowIndex="5" />
 <!--
@@ -64,7 +66,6 @@
 
         <Button fx:id="saveBtn" maxWidth="-Infinity" onMouseClicked="#save" prefWidth="150" text="Save" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.columnIndex="0" />
         <Button fx:id="deleteUserBtn" maxWidth="-Infinity" onMouseClicked="#deleteUser" prefWidth="150" text="Delete UserCard" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.columnIndex="2"/>
-        <Button fx:id="backBtn" maxWidth="-Infinity" onMouseClicked="#back" prefWidth="150" text="Back" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
 
     </GridPane>
 </GridPane>
