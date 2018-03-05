@@ -66,11 +66,12 @@ public abstract class Document {
         }
         this.keywords = new ArrayList<>();
         for(int i = 0; i < data.getJSONArray("Keywords").toList().size(); i++ ){
-            authors.add(data.getJSONArray("Keywords").getString(i));
+            keywords.add(data.getJSONArray("Keywords").getString(i));
         }
         this.price = data.getInt("Price");
         this.numberOfRequests = data.getInt("NumberOfRequest");
         this.availableCopies = new ArrayList<>();
+        this.takenCopies = new ArrayList<>();
         int copyID;
         String[] keys = new String[0];
         JSONObject availableCopiesObj = data.getJSONObject("AvailableCopies");
