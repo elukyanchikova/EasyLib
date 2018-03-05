@@ -158,4 +158,14 @@ public class Database {
         }
         return result;
     }
+
+    public ArrayList<UserCard> getAllUsers(){
+        ArrayList<UserCard> result = new ArrayList<>();
+        Integer[] keys = new Integer[0];
+        keys = userCards.keySet().toArray(keys);
+        for (Integer key : keys) {
+            result.add(getUserCard(key));
+        }
+        return result;
+    }
 }
