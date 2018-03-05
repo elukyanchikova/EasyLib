@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import storage.Database;
 import users.Guest;
 import users.Session;
 
@@ -14,6 +15,7 @@ public class EditForm {
     private Stage stage;
     private Scene scene;
     private Session session;
+    private Database database;
 
     @FXML private Button addFileBtn;
     @FXML private Button deleteFileBtn;
@@ -26,10 +28,11 @@ public class EditForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession) throws Exception{
+    void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
         sceneInitialization();
+        this.database = database;
         stage.setScene(scene);
         stage.show();
     }

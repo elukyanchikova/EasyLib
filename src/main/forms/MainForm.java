@@ -12,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import storage.Database;
 import users.Session;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class MainForm {
     private Stage stage;
     private Scene scene;
     private Session session;
+    private Database database;
 
     ArrayList<Document> documents = new ArrayList<>();
     private int openDocumentID = -1;
@@ -52,11 +54,12 @@ public class MainForm {
      * @param primaryStage != null;
      * @param currentSession != null
      */
-    public void startForm(Stage primaryStage, Session currentSession) throws Exception{
+    public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
         documents = Storage.getDocuments();
         sceneInitialization();
+        this.database = database;
         stage.setScene(scene);
         stage.show();
     }

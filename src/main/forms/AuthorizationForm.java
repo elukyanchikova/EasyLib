@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import storage.Database;
 import users.Guest;
 import users.Session;
 import users.Student;
@@ -17,6 +18,7 @@ public class AuthorizationForm {
     private Stage stage;
     private Scene scene;
     private Session session;
+    private Database database;
 
     @FXML private TextField emailTextField;
     @FXML private Button loginAsStudentBtn;
@@ -28,6 +30,7 @@ public class AuthorizationForm {
     void startForm(Stage primaryStage) throws Exception{
         this.stage = primaryStage;
         sceneInitialization();
+        database = new Database();
         stage.setScene(scene);
         stage.show();
     }
@@ -61,7 +64,7 @@ public class AuthorizationForm {
             MainForm mainForm = new MainForm();
             Session session = new Session(new Student());
             session.userCard = Storage.getUsers().get(0);
-            mainForm.startForm(stage, session);
+            mainForm.startForm(stage, session,database);
         }
     }
 
@@ -78,13 +81,13 @@ public class AuthorizationForm {
      @FXML
      public void loginAsGuest()throws Exception{
          EditForm mainForm = new EditForm();
-         mainForm.startForm(stage,new Session(new Guest()));
+         mainForm.startForm(stage,new Session(new Guest()),database);
      }
 
     @FXML
     public void templar()throws Exception{
        ReturnForm mainForm2 = new ReturnForm();
-        mainForm2.startForm(stage, new Session(new Guest()));
+        mainForm2.startForm(stage, new Session(new Guest()),database);
     }
 
 

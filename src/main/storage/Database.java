@@ -14,6 +14,10 @@ public class Database {
     HashMap<Integer,UserCard> userCards = new HashMap<>();
     HashMap<Integer,Document> documents = new HashMap<>();
 
+    public Database(){
+        load();
+    }
+
     public void load(){
         File file = new File("library.json");
         try {
@@ -32,7 +36,9 @@ public class Database {
                 loadDocuments();
 
             }else {
-                file.createNewFile();
+                if(!file.createNewFile()){
+                    throw new IOException("File is not created");
+                }
                 this.jsonData = new JSONObject();
                 this.userCardData = new JSONObject();
                 this.documentsData = new JSONObject();
