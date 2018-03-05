@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import storage.Database;
-import users.Guest;
 import users.Session;
 
 public class EditForm {
@@ -58,20 +57,20 @@ public class EditForm {
 
     /**
      * Click on button "addUser" event
-     * If the User has an access to editing(i.e. librian) than the inf can be edited by him
+     * If the User has an access to editing(i.e. librarian) than the inf can be edited by him
      */
 
     @FXML
     public void addFile() throws Exception {
 
         addFileForm mainForm = new addFileForm();
-        mainForm.startForm(stage,new Session(new Guest()));
+        mainForm.startForm(stage,session);
 
     }
     @FXML
     public void addUser() throws Exception {
         addUserForm mainForm = new addUserForm();
-        mainForm.startForm(stage,new Session(new Guest()));
+        mainForm.startForm(stage,session);
     }
     @FXML
     public void modifyUser(){
@@ -81,6 +80,6 @@ public class EditForm {
     @FXML
     public void modifyFile() throws Exception {
         modifyFileForm mainForm = new modifyFileForm();
-        mainForm.startForm(stage,new Session(new Guest()));
+        mainForm.startForm(stage,session);
     }
 }
