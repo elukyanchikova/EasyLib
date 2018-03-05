@@ -1,7 +1,6 @@
 package forms;
 
-import documents.Document;
-import documents.Storage;
+import documents.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -123,9 +122,86 @@ public class ReturnForm {
             }
         });
 
+    }
 
+    @FXML
+    public void selectDocument(){
+        //get selected element
+        if(documentListView.getSelectionModel().getSelectedIndex() > -1) {
+            if(openDocumentID == -1){
+                documentInfoPane.setVisible(true);//If no document was opened
+            }
+            //Set document info
+            Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+            titleLbl.setText(chosenDocument.title);
+            StringBuilder stringBuilder = new StringBuilder();
+            for(String p:chosenDocument.authors){
+                stringBuilder.append(p);
+                stringBuilder.append(", ");
+            }
+            authorsLbl.setText(stringBuilder.toString());
 
+            documentTypeLbl.setText(chosenDocument.getDocType());
+            priceLbl.setText(String.valueOf(chosenDocument.price));
+            StringBuilder stringBuilderKeywords = new StringBuilder();
+            for(String s:chosenDocument.keywords){
+                stringBuilderKeywords.append(s);
+                stringBuilderKeywords.append(", ");
+            }
+            keywordsLbl.setText(stringBuilderKeywords.toString());
 
+            if(chosenDocument.getClass().equals(Book.class)){
+                labelAddition1.setText("Publisher: ");
+                additionLbl1.setText(((Book)chosenDocument).publisher);
+                labelAddition2.setText("Publication Year: ");
+                additionLbl2.setText(String.valueOf(((Book)chosenDocument).year));
+                if(((Book) chosenDocument).isBestseller) labelAddition3.setText("Bestseller");
+                else labelAddition3.setText("");
+                additionLbl3.setText("");
+            }else if(chosenDocument.getClass().equals(JournalArticle.class)){
+                labelAddition1.setText("Journal: ");
+                additionLbl1.setText(((JournalArticle)chosenDocument).journalName);
+                labelAddition2.setText("Editor: ");
+                additionLbl2.setText(String.valueOf(((JournalArticle)chosenDocument).editor));
+                labelAddition3.setText("Publication Date: ");
+                additionLbl3.setText(String.valueOf(((JournalArticle)chosenDocument).publicationDate));
+            }else{
+                labelAddition1.setText("");
+                labelAddition2.setText("");
+                labelAddition3.setText("");
+                additionLbl1.setText("");
+                additionLbl2.setText("");
+                additionLbl3.setText("");
+            }
+            if(session.getUser().isHasCheckOutPerm()) {
+                //Check number of copies and output it or number of requests
+                boolean flag = true;
+                for (Copy copy : session.userCard.checkedOutCopies) {
+                    if (copy.getDocumentID() == documents.get(openDocumentID).getID()) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag){
+                    if (documents.get(openDocumentID).getNumberOfAvailableCopies() == 0) {
+                        requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
+                        returnButton.setVisible(true);
+                        if (session.userCard.requestedDocs.contains(documents.get(openDocumentID))) {
+                            returnButton.setText("Cancel request");
+                        } else returnButton.setText("Request");
+                    } else {
+                        returnButton.setVisible(true);
+                        requestLbl.setText(String.valueOf(documents.get(openDocumentID).getNumberOfAvailableCopies()));
+                        returnButton.setText("Check out");
+                    }
+                }else returnButton.setVisible(false);
+            }else returnButton.setVisible(false);
+        }
+    }
+
+    public Document selectDocument(int id){
+        openDocumentID = id;
+        return documents.get(openDocumentID);
     }
 
 
