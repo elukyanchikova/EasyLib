@@ -17,6 +17,7 @@ import storage.Database;
 import users.Session;
 import users.UserCard;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 
 public class ReturnForm {
@@ -142,7 +143,9 @@ public class ReturnForm {
                             if (userCard != null && userCard.checkedOutCopies != null){
                                 boolean f = false;
                                 for(int i = 0; i < userCard.checkedOutCopies.size(); i++){
-                                    if(userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]);
+                                    if(userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]){
+                                        f = true;
+                                    }
                                 }
                                 if(f) setText(userCard.name);
                             }
@@ -227,5 +230,14 @@ public class ReturnForm {
         mainForm.startForm(stage, session,database);
     }
 
-
+    public void returnBtn(){
+        UserCard userCard = database.getUserCard(database.getUsercardsID()[userListView.getSelectionModel().getSelectedIndex()]);
+        Document document = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+        for(int i = 0; i < userCard.checkedOutCopies.size(); i++){
+            if(userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]){
+                userCard.checkedOutCopies.remove(i);
+                document.returnCopy(userCard.checkedOutCopies.get(i));
+            }
+        }
+    }
 }

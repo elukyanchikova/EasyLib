@@ -140,12 +140,16 @@ public class modifyFileForm {
             }
             //Set document info
             Document chosenDocument = selectFile(documentListView.getSelectionModel().getSelectedIndex());
+           titleTextField.setText(chosenDocument.title);
+           priceTextField.setText(Integer.toString(chosenDocument.price));
+
 
 
     }}
     public Document selectFile(int id){
         openDocumentID = id;
         return database.getDocuments(database.getDocumentsID()[openDocumentID]);
+
     }
 
 
