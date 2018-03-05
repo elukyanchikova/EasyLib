@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.Database;
+import users.Guest;
 import users.Session;
 import users.UserCard;
 
@@ -263,4 +264,17 @@ public class MainForm {
             return false;
         }
     }
+
+    @FXML
+    public void clickOnReturnBtn() throws Exception{
+        ReturnForm mainForm2 = new ReturnForm();
+        mainForm2.startForm(stage, new Session(new Guest()),database);
+    }
+
+    @FXML
+    public void clickOnEditBtn() throws Exception{
+        EditForm mainForm = new EditForm();
+        mainForm.startForm(stage,new Session(new Guest()),database);
+    }
+
 }

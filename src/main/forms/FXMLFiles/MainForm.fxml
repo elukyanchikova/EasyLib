@@ -31,6 +31,9 @@
               onMouseClicked="#selectDocumentListViewButton"
     />
 
+    <Button GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="returnButton" text="Return" onMouseClicked="#clickOnReturnBtn"></Button>
+    <Button GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="editButton" text="Edit" onMouseClicked="#clickOnEditBtn"></Button>
+
     <GridPane GridPane.columnIndex="1" fx:id="documentInfoPane"
                minWidth="100"
                minHeight="50" prefHeight="300"

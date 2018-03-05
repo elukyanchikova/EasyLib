@@ -74,23 +74,9 @@ public class AuthorizationForm {
      /**
      /* Click on button "loginAsGuest" event
      */
-    /*@FXML
+    @FXML
     public void loginAsGuest()throws Exception{
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage,new Session(new Guest()));
+        mainForm.startForm(stage,new Session(new Guest()),database);
     }
-*/
-     @FXML
-     public void loginAsGuest()throws Exception{
-         EditForm mainForm = new EditForm();
-         mainForm.startForm(stage,new Session(new Guest()),database);
-     }
-
-    @FXML
-    public void templar()throws Exception{
-       ReturnForm mainForm2 = new ReturnForm();
-        mainForm2.startForm(stage, new Session(new Guest()),database);
-    }
-
-
 }
