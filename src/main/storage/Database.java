@@ -4,6 +4,7 @@ import documents.*;
 import org.json.JSONObject;
 import users.UserCard;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Database {
@@ -42,6 +43,7 @@ public class Database {
                 this.jsonData = new JSONObject();
                 this.userCardData = new JSONObject();
                 this.documentsData = new JSONObject();
+                update();
             }
         }catch (IOException e) {
             e.printStackTrace();
@@ -71,15 +73,17 @@ public class Database {
         //Update data of userCard
         userCardData.put(Integer.toString(userCard.getId()), userCard.serialize());
         update();
+        loadUserCards();
     }
 
     public void removeUserCard(UserCard userCard){
         userCardData.remove(Integer.toString(userCard.getId()));
-        userCards.remove(userCard.getId());
         update();
+        loadUserCards();
     }
 
     private void loadUserCards(){
+        userCards.clear();
         int id;
         String[] keys = new String[0];
         keys = userCardData.keySet().toArray(keys);
@@ -104,15 +108,17 @@ public class Database {
         //Update data of userCard
         documentsData.put(Integer.toString(document.getID()), document.serialize());
         update();
+        loadDocuments();
     }
 
     public void removeDocuments(Document document){
         documentsData.remove(Integer.toString(document.getID()));
-        documents.remove(document.getID());
         update();
+        loadDocuments();
     }
 
     private void loadDocuments(){
+        documents.clear();
         int id;
         String[] keys = new String[0];
         keys = documentsData.keySet().toArray(keys);
@@ -141,5 +147,15 @@ public class Database {
 
     public Integer[] getDocumentsID(){
         return documents.keySet().toArray(new Integer[0]);
+    }
+
+    public ArrayList<Document> getAllDocuments(){
+        ArrayList<Document> result = new ArrayList<>();
+        Integer[] keys = new Integer[0];
+        keys = documents.keySet().toArray(keys);
+        for (Integer key : keys) {
+            result.add(getDocuments(key));
+        }
+        return result;
     }
 }
