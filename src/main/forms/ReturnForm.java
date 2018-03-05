@@ -17,6 +17,7 @@ import storage.Database;
 import users.Session;
 import users.UserCard;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 
 public class ReturnForm {
@@ -222,7 +223,16 @@ public class ReturnForm {
         return database.getDocuments(database.getDocumentsID()[openDocumentID]);
     }
 
-
-
+    @FXML
+    public void returnBtn(){
+        UserCard userCard = database.getUserCard(database.getUsercardsID()[userListView.getSelectionModel().getSelectedIndex()]);
+        Document document = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+        for(int i = 0; i < userCard.checkedOutCopies.size(); i++){
+            if(userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]){
+                userCard.checkedOutCopies.remove(i);
+                document.returnCopy(userCard.checkedOutCopies.get(i));
+            }
+        }
+    }
 
 }
