@@ -187,7 +187,7 @@ public class modifyFileForm {
         if (!journalNameTextField.getText().isEmpty()) {
             Document currentDoc = documents.get(openDocumentID);
             if (currentDoc.getClass().equals(JournalArticle.class)) {
-                ((JournalArticle) currentDoc).journal = journalNameTextField.getText();
+                ((JournalArticle) currentDoc).journalName = journalNameTextField.getText();
             }
         }
         if (!editorNameTextField.getText().isEmpty()) {
@@ -202,6 +202,6 @@ public class modifyFileForm {
     public void deleteFile() {
         //TODO delete file
         Document currentDoc = documents.get(openDocumentID);
-        removeDocuments(currentDoc);
+        //removeDocuments(currentDoc);
     }
 }
