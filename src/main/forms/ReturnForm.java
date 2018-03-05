@@ -139,7 +139,9 @@ public class ReturnForm {
                             if (userCard != null && userCard.checkedOutCopies != null){
                                 boolean f = false;
                                 for(int i = 0; i < userCard.checkedOutCopies.size(); i++){
-                                    if(userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]);
+                                    if(userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]){
+                                        f = true;
+                                    }
                                 }
                                 if(f) setText(userCard.name);
                             }
