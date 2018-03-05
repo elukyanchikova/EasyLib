@@ -52,6 +52,7 @@ public class ReturnForm {
     @FXML private Label additionLbl2;
     @FXML private Label additionLbl3;
 
+    @FXML private static Button backButt;
     @FXML private static Button returnButton;
 
     public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
@@ -88,6 +89,7 @@ public class ReturnForm {
         labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
         returnButton = (Button) scene.lookup("#returnButton");
+        backButt = (Button) scene.lookup("backButt");
 
         documentListView.setItems(FXCollections.observableArrayList(database.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
@@ -219,7 +221,11 @@ public class ReturnForm {
         return database.getDocuments(database.getDocumentsID()[openDocumentID]);
     }
 
-
+    @FXML
+    public void back () throws Exception {
+        MainForm mainForm = new MainForm();
+        mainForm.startForm(stage, session,database);
+    }
 
 
 }
