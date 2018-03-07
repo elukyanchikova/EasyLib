@@ -3,7 +3,11 @@ import documents.Book;
 import documents.Copy;
 import documents.Document;
 import forms.MainForm;
+<<<<<<< HEAD
 import org.junit.Assert;
+=======
+
+>>>>>>> 30801d2ee160729f3f3355d9531b95d85eff754c
 import org.junit.Test;
 import storage.Database;
 import users.*;
@@ -22,6 +26,7 @@ public class TestCases2 {
      *                          patrons p1, p2 andp3
      * Effect: number of documents in the System is 8 and the number of users is 4.
      */
+
     @Test
     public void TestCase1() {
        //Initial state
@@ -153,7 +158,7 @@ public class TestCases2 {
     @Test
     public void TestCase4() {
     }
-
+    Database database = new Database();
     /**
      * Initial state:
      * Action:
