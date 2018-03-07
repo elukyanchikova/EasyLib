@@ -6,11 +6,13 @@ public class Session {
 
     //TODO: change userCard access.
     public UserCard userCard;
+    public int day;
+    public int month;
     /**
      * After authorization program creates session
      * which has current authorized user
      */
-    public  Session(UserType user){
+    public  Session(UserType user, int day, int month){
         this.authorizedUser = user;
     }
 

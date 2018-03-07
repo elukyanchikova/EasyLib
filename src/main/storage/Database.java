@@ -15,12 +15,14 @@ public class Database {
     HashMap<Integer,UserCard> userCards = new HashMap<>();
     HashMap<Integer,Document> documents = new HashMap<>();
 
-    public Database(){
+    private String fileDataName;
+    public Database(String fileDataName){
+        this.fileDataName  = fileDataName;
         load();
     }
 
     public void load(){
-        File file = new File("library.json");
+        File file = new File(fileDataName +".json");
         try {
             if(file.exists()) {
 
@@ -54,7 +56,7 @@ public class Database {
     private void update(){
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream(
-                    new File("library.json")));
+                    new File(fileDataName + ".json")));
             jsonData.put("UserCard", userCardData);
             jsonData.put("Document", documentsData);
             pw.write(jsonData.toString());

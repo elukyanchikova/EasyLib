@@ -29,7 +29,7 @@ public class AuthorizationForm {
     @FXML private Button loginAsStudentBtn;
     @FXML private Button loginAsGuestBtn;
     @FXML private ListView<UserCard> usersListView;
-
+    @FXML private TextField dateField;
     /**
      * Initialization and run new scene on the primary stage
      */
@@ -55,6 +55,7 @@ public class AuthorizationForm {
         loginAsStudentBtn = (Button) scene.lookup("#loginAsStudentBtn");
         loginAsGuestBtn = (Button) scene.lookup("#loginAsGuestBtn");
         usersListView = (ListView<UserCard>) scene.lookup("#usersListView");
+        dateField = (TextField) scene.lookup("#dateField");
 
         usersListView.setItems(FXCollections.observableArrayList(database.getAllUsers()));
         usersListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
@@ -83,9 +84,24 @@ public class AuthorizationForm {
         /*if(emailTextField.getText().toLowerCase().contains("@innopolis.ru") &&
                 emailTextField.getText().toLowerCase().replace("@innopolis.ru", "").replace(" ", "").length() != 0)
         */
+        int day = 1;
+        int month = 1;
+        if(dateField.getText() != null){
+            String str = dateField.getText();
+            if(str.length() == 5 &&
+                    str.charAt(0) >= '0' && str.charAt(0) <= '9' &&
+                    str.charAt(1) >= '0' && str.charAt(1) <= '9' &&
+                    str.charAt(3) >= '0' && str.charAt(3) <= '9' &&
+                    str.charAt(4) >= '0' && str.charAt(4) <= '9'){
+                day = Integer.parseInt(str.substring(0,2));
+                month = Integer.parseInt(str.substring(3,5));
+                if(month > 12 || month < 1) month = 12;
+                if(day > 31 || day<1) month = 28;
+            }
+        }
         if(selectedUser != null ){
             MainForm mainForm = new MainForm();
-            Session session = new Session(selectedUser.userType);
+            Session session = new Session(selectedUser.userType, day,month);
             session.userCard = selectedUser;
             mainForm.startForm(stage, session,database);
         }
@@ -94,6 +110,21 @@ public class AuthorizationForm {
     private UserCard selectedUser;
     @FXML
     public void selectUserOnListView() throws Exception{
+        int day = 1;
+        int month = 1;
+        if(dateField.getText() != null){
+            String str = dateField.getText();
+            if(str.length() == 5 &&
+                    str.charAt(0) >= '0' && str.charAt(0) <= '9' &&
+                    str.charAt(1) >= '0' && str.charAt(1) <= '9' &&
+                    str.charAt(3) >= '0' && str.charAt(3) <= '9' &&
+                    str.charAt(4) >= '0' && str.charAt(4) <= '9'){
+                day = Integer.parseInt(str.substring(0,2));
+                month = Integer.parseInt(str.substring(3,5));
+                if(month > 12 || month < 1) month = 12;
+                if(day > 31 || day<1) month = 28;
+            }
+        }
         int i = usersListView.getSelectionModel().getSelectedIndex();
         if( i > -1){
             selectedUser = database.getUserCard(database.getUsercardsID()[i]);
@@ -106,7 +137,22 @@ public class AuthorizationForm {
      */
     @FXML
     public void loginAsGuest()throws Exception{
+        int day = 1;
+        int month = 1;
+        if(dateField.getText() != null){
+            String str = dateField.getText();
+            if(str.length() == 5 &&
+                    str.charAt(0) >= '0' && str.charAt(0) <= '9' &&
+                    str.charAt(1) >= '0' && str.charAt(1) <= '9' &&
+                    str.charAt(3) >= '0' && str.charAt(3) <= '9' &&
+                    str.charAt(4) >= '0' && str.charAt(4) <= '9'){
+                day = Integer.parseInt(str.substring(0,2));
+                month = Integer.parseInt(str.substring(3,5));
+                if(month > 12 || month < 1) month = 12;
+                if(day > 31 || day<1) month = 28;
+            }
+        }
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage,new Session(new Guest()),database);
+        mainForm.startForm(stage,new Session(new Guest(), day,month),database);
     }
 }
