@@ -36,7 +36,7 @@ public class AuthorizationForm {
     void startForm(Stage primaryStage) throws Exception{
         this.stage = primaryStage;
         UserType.load();
-        database = new Database();
+        database = new Database("library");
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
