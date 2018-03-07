@@ -26,7 +26,7 @@
     <Button GridPane.rowIndex="6"  fx:id="loginAsGuestBtn" text="Login as Guest" GridPane.halignment="CENTER"
             prefWidth="250" maxWidth="-Infinity" onMouseClicked="#loginAsGuest"></Button>
 
-    <ListView GridPane.rowIndex="7"  fx:id="usersListView"
+    <ListView GridPane.rowIndex="7"  fx:id="usersListView"  onMouseClicked="#selectUserOnListView"
     prefWidth="250" maxWidth="-Infinity"  GridPane.halignment="CENTER"></ListView>
 
 </GridPane>

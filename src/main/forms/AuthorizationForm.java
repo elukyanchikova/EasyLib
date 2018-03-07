@@ -80,14 +80,23 @@ public class AuthorizationForm {
     @FXML
     public void loginAsStudent() throws Exception{
 
-        //TODO: get UserCard from storage
-        if(emailTextField.getText().toLowerCase().contains("@innopolis.ru") &&
+        /*if(emailTextField.getText().toLowerCase().contains("@innopolis.ru") &&
                 emailTextField.getText().toLowerCase().replace("@innopolis.ru", "").replace(" ", "").length() != 0)
-        {
+        */
+        if(selectedUser != null ){
             MainForm mainForm = new MainForm();
-            Session session = new Session(database.getUserCard(6).userType);
-            session.userCard = database.getUserCard(6);
+            Session session = new Session(selectedUser.userType);
+            session.userCard = selectedUser;
             mainForm.startForm(stage, session,database);
+        }
+    }
+
+    private UserCard selectedUser;
+    @FXML
+    public void selectUserOnListView() throws Exception{
+        int i = usersListView.getSelectionModel().getSelectedIndex();
+        if( i > -1){
+            selectedUser = database.getUserCard(database.getUsercardsID()[i]);
         }
     }
 
