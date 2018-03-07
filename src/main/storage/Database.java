@@ -102,16 +102,10 @@ public class Database {
     }
 
     public void resetDatabase(){
-        try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream(
-                    new File(fileDataName + ".json")));
-            jsonData.put("UserCard", new JSONObject());
-            jsonData.put("Document", new JSONObject());
-            pw.write(jsonData.toString());
-            pw.close();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.userCardData = new JSONObject();
+        this.documentsData = new JSONObject();
+        update();
+        load();
     }
 
     public Integer[] getUsercardsID(){

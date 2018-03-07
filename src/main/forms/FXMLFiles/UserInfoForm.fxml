@@ -30,6 +30,8 @@
               minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
               onMouseClicked="#selectUserListView"
     />
+    <Button GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="backButton" text="Back"
+            onMouseClicked="#clickOnBackBtn"></Button>
     <GridPane GridPane.columnIndex="1" fx:id="userInfoPane"
               minWidth="100"
               minHeight="50" prefHeight="300"
