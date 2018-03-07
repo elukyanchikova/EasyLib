@@ -2,8 +2,6 @@ package forms;
 
 import documents.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,11 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.Database;
-import users.Guest;
 import users.Session;
-import users.UserCard;
-
-import java.util.ArrayList;
 
 public class MainForm {
 
@@ -283,14 +277,20 @@ public class MainForm {
 
     @FXML
     public void clickOnReturnBtn() throws Exception{
-        ReturnForm mainForm2 = new ReturnForm();
-        mainForm2.startForm(stage, session,database);
+        ReturnForm returnForm = new ReturnForm();
+        returnForm.startForm(stage, session,database);
     }
 
     @FXML
     public void clickOnEditBtn() throws Exception{
-        EditForm mainForm = new EditForm();
-        mainForm.startForm(stage,session,database);
+        EditForm editForm = new EditForm();
+        editForm.startForm(stage,session,database);
+    }
+
+    @FXML
+    public void clickOnUserInfoBtn() throws Exception{
+        UserInfoForm userInfoForm = new UserInfoForm();
+        userInfoForm.startForm(stage,session,database);
     }
 
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          hgap="10" vgap="10">
+
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <columnConstraints>
+        <ColumnConstraints minWidth="100"
+                           percentWidth="30.0">
+        </ColumnConstraints>
+        <ColumnConstraints minWidth="200" prefWidth="200"
+                           percentWidth="70.0">
+        </ColumnConstraints>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints
+                minHeight="150" prefHeight="400" vgrow="ALWAYS"></RowConstraints>
+    </rowConstraints>
+
+    <ListView GridPane.columnIndex="0" fx:id="userListView"
+              minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
+              onMouseClicked="#selectUserListView"
+    />
+    <GridPane GridPane.columnIndex="1" fx:id="userInfoPane"
+              minWidth="100"
+              minHeight="50" prefHeight="300"
+              maxHeight="Infinity"
+              maxWidth="Infinity"
+              visible="false">
+
+        <Label GridPane.rowIndex = "0" GridPane.columnIndex="0" fx:id="labelName" text="Name: "></Label>
+        <Label GridPane.rowIndex = "1" GridPane.columnIndex="0" fx:id="labelAddress" text="Address: "></Label>
+        <Label GridPane.rowIndex = "2" GridPane.columnIndex="0" fx:id="labelPhoneNum" text="Phone Number: "></Label>
+        <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelID" text="Lib.card ID: "></Label>
+        <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelType" text="Type: "></Label>
+        <Label GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="labelCheckedOut" text="Checked out: "></Label>
+
+        <Label GridPane.rowIndex = "0"  GridPane.columnIndex="1" fx:id="nameLbl"/>
+        <Label GridPane.rowIndex = "1" GridPane.columnIndex="1" fx:id="addressLbl"  ></Label>
+        <Label GridPane.rowIndex = "2" GridPane.columnIndex="1" fx:id="phoneNumLbl" ></Label>
+        <Label GridPane.rowIndex = "3" GridPane.columnIndex="1" fx:id="idLbl" ></Label>
+        <Label GridPane.rowIndex = "4" GridPane.columnIndex="1" fx:id="typeLbl" ></Label>
+        <Label GridPane.rowIndex = "5" GridPane.columnIndex="1" fx:id="checkedOutLbl" ></Label>
+
+    </GridPane>
+</GridPane>

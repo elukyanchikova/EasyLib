@@ -33,6 +33,7 @@
 
     <Button GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="returnButton" text="Return" onMouseClicked="#clickOnReturnBtn"></Button>
     <Button GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="editButton" text="Edit" onMouseClicked="#clickOnEditBtn"></Button>
+    <Button GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="userInfoButton" text="Users" onMouseClicked="#clickOnUserInfoBtn"></Button>
 
     <GridPane GridPane.columnIndex="1" fx:id="documentInfoPane"
                minWidth="100"
