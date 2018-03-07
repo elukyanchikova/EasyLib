@@ -284,13 +284,13 @@ public class MainForm {
     @FXML
     public void clickOnReturnBtn() throws Exception{
         ReturnForm mainForm2 = new ReturnForm();
-        mainForm2.startForm(stage, new Session(new Guest()),database);
+        mainForm2.startForm(stage, session,database);
     }
 
     @FXML
     public void clickOnEditBtn() throws Exception{
         EditForm mainForm = new EditForm();
-        mainForm.startForm(stage,new Session(new Guest()),database);
+        mainForm.startForm(stage,session,database);
     }
 
 }
