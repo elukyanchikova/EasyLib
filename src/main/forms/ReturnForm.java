@@ -34,28 +34,43 @@ public class ReturnForm {
     @FXML
     private GridPane documentInfoPane;
 
-    @FXML private ListView<Document> documentListView;
-    @FXML private ListView<UserCard> userListView;
+    @FXML
+    private ListView<Document> documentListView;
+    @FXML
+    private ListView<UserCard> userListView;
 
-    @FXML private Label titleLbl;
-    @FXML private Label authorsLbl;
-    @FXML private Label documentTypeLbl;
-    @FXML private Label priceLbl;
-    @FXML private Label keywordsLbl;
+    @FXML
+    private Label titleLbl;
+    @FXML
+    private Label authorsLbl;
+    @FXML
+    private Label documentTypeLbl;
+    @FXML
+    private Label priceLbl;
+    @FXML
+    private Label keywordsLbl;
 
 
-    @FXML private Label labelAddition1;
-    @FXML private Label labelAddition2;
-    @FXML private Label labelAddition3;
+    @FXML
+    private Label labelAddition1;
+    @FXML
+    private Label labelAddition2;
+    @FXML
+    private Label labelAddition3;
 
-    @FXML private Label additionLbl1;
-    @FXML private Label additionLbl2;
-    @FXML private Label additionLbl3;
+    @FXML
+    private Label additionLbl1;
+    @FXML
+    private Label additionLbl2;
+    @FXML
+    private Label additionLbl3;
 
-    @FXML private static Button backButt;
-    @FXML private static Button returnButton;
+    @FXML
+    private static Button backButt;
+    @FXML
+    private static Button returnButton;
 
-    public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
+    public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception {
         this.session = currentSession;
         this.stage = primaryStage;
         this.database = database;
@@ -122,9 +137,9 @@ public class ReturnForm {
     }
 
     @FXML
-    public void selectDocument(){
+    public void selectDocument() {
         //get selected element
-        if(documentListView.getSelectionModel().getSelectedIndex() > -1) {
+        if (documentListView.getSelectionModel().getSelectedIndex() > -1) {
             if (openDocumentID == -1) {
                 documentInfoPane.setVisible(true);//If no document was opened
             }
@@ -132,101 +147,104 @@ public class ReturnForm {
 
         ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
         ArrayList<UserCard> all = database.getAllUsers();
-        for(int i = 0; i < all.size(); i++){
-            for(int j = 0; j < all.get(i).checkedOutCopies.size(); j++){
-                if(all.get(i).checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]){
+        for (int i = 0; i < all.size(); i++) {
+            for (int j = 0; j < all.get(i).checkedOutCopies.size(); j++) {
+                if (all.get(i).checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]) {
                     userCardsWithCopy.add(all.get(i));
                 }
             }
         }
 
-            userListView.setItems(FXCollections.observableArrayList(userCardsWithCopy));
-            userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
-                public ListCell<UserCard> call(ListView<UserCard> userListView) {
-                    return new ListCell<UserCard>() {
-                        @Override
-                        protected void updateItem(UserCard userCard, boolean flag){
-                            super.updateItem(userCard,flag);
-                            setText(userCard.name);
-                        }
-                    };
-                }
-            });
-            //Set document info
-            Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
-            titleLbl.setText(chosenDocument.title);
-            StringBuilder stringBuilder = new StringBuilder();
-            for(String p:chosenDocument.authors){
-                stringBuilder.append(p);
-                stringBuilder.append(", ");
-            }
-            authorsLbl.setText(stringBuilder.toString());
-
-            documentTypeLbl.setText(chosenDocument.getDocType());
-            priceLbl.setText(String.valueOf(chosenDocument.price));
-            StringBuilder stringBuilderKeywords = new StringBuilder();
-            for(String s:chosenDocument.keywords){
-                stringBuilderKeywords.append(s);
-                stringBuilderKeywords.append(", ");
-            }
-            keywordsLbl.setText(stringBuilderKeywords.toString());
-
-            if(chosenDocument.getClass().equals(Book.class)){
-                labelAddition1.setText("Publisher: ");
-                additionLbl1.setText(((Book)chosenDocument).publisher);
-                labelAddition2.setText("Publication Year: ");
-                additionLbl2.setText(String.valueOf(((Book)chosenDocument).year));
-                if(((Book) chosenDocument).isBestseller) labelAddition3.setText("Bestseller");
-            }else if(chosenDocument.getClass().equals(JournalArticle.class)){
-                labelAddition1.setText("Journal: ");
-                additionLbl1.setText(((JournalArticle)chosenDocument).journalName);
-                labelAddition2.setText("Editor: ");
-                additionLbl2.setText(String.valueOf(((JournalArticle)chosenDocument).editor));
-                labelAddition3.setText("Publication Date: ");
-                additionLbl3.setText(String.valueOf(((JournalArticle)chosenDocument).publicationDate));
-            }else{
-                labelAddition1.setText("");
-                labelAddition2.setText("");
-                labelAddition3.setText("");
-                additionLbl1.setText("");
-                additionLbl2.setText("");
-                additionLbl3.setText("");
-            }
-
-            if(session.getUser().isHasCheckOutPerm()) {
-                //Check number of copies and output it or number of requests
-                boolean flag = true;
-                for (Copy copy : session.userCard.checkedOutCopies) {
-                    if (copy.getDocumentID() == database.getDocuments(database.getDocumentsID()[openDocumentID]).getID()) {
-                        flag = false;
-                        break;
+        userListView.setItems(FXCollections.observableArrayList(userCardsWithCopy));
+        userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
+            public ListCell<UserCard> call(ListView<UserCard> userListView) {
+                return new ListCell<UserCard>() {
+                    @Override
+                    protected void updateItem(UserCard userCard, boolean flag) {
+                        super.updateItem(userCard, flag);
+                        setText(userCard.name);
                     }
+                };
+            }
+        });
+        //Set document info
+        Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+        titleLbl.setText(chosenDocument.title);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String p : chosenDocument.authors) {
+            stringBuilder.append(p);
+            stringBuilder.append(", ");
+        }
+        authorsLbl.setText(stringBuilder.toString());
+
+        documentTypeLbl.setText(chosenDocument.getDocType());
+        priceLbl.setText(String.valueOf(chosenDocument.price));
+        StringBuilder stringBuilderKeywords = new StringBuilder();
+        for (String s : chosenDocument.keywords) {
+            stringBuilderKeywords.append(s);
+            stringBuilderKeywords.append(", ");
+        }
+        keywordsLbl.setText(stringBuilderKeywords.toString());
+
+        if (chosenDocument.getClass().equals(Book.class)) {
+            labelAddition1.setText("Publisher: ");
+            additionLbl1.setText(((Book) chosenDocument).publisher);
+            labelAddition2.setText("Publication Year: ");
+            additionLbl2.setText(String.valueOf(((Book) chosenDocument).year));
+            if (((Book) chosenDocument).isBestseller) labelAddition3.setText("Bestseller");
+        } else if (chosenDocument.getClass().equals(JournalArticle.class)) {
+            labelAddition1.setText("Journal: ");
+            additionLbl1.setText(((JournalArticle) chosenDocument).journalName);
+            labelAddition2.setText("Editor: ");
+            additionLbl2.setText(String.valueOf(((JournalArticle) chosenDocument).editor));
+            labelAddition3.setText("Publication Date: ");
+            additionLbl3.setText(String.valueOf(((JournalArticle) chosenDocument).publicationDate));
+        } else {
+            labelAddition1.setText("");
+            labelAddition2.setText("");
+            labelAddition3.setText("");
+            additionLbl1.setText("");
+            additionLbl2.setText("");
+            additionLbl3.setText("");
+        }
+
+        if (session.getUser().isHasCheckOutPerm()) {
+            //Check number of copies and output it or number of requests
+            boolean flag = true;
+            for (Copy copy : session.userCard.checkedOutCopies) {
+                if (copy.getDocumentID() == database.getDocuments(database.getDocumentsID()[openDocumentID]).getID()) {
+                    flag = false;
+                    break;
                 }
-            }else returnButton.setVisible(false);
+            }
+        } else returnButton.setVisible(false);
 
     }
 
-    public Document selectDocument(int id){
+    public Document selectDocument(int id) {
         openDocumentID = id;
         return database.getDocuments(database.getDocumentsID()[openDocumentID]);
     }
 
     @FXML
-    public void back () throws Exception {
+    public void back() throws Exception {
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage, session,database);
+        mainForm.startForm(stage, session, database);
     }
 
-    public void returnBtn(){
-        UserCard userCard = database.getUserCard(database.getUsercardsID()[userListView.getSelectionModel().getSelectedIndex()]);
-        Document document = database.getDocuments(database.getDocumentsID()[openDocumentID]);
-        for(int i = 0; i < userCard.checkedOutCopies.size(); i++){
-            if(userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]){
-                document.returnCopy(userCard.checkedOutCopies.get(i));
-                userCard.checkedOutCopies.remove(i);
-                database.saveUserCard(userCard);
-                database.saveDocuments(document);
+    public void returnBtn() {
+        if (openDocumentID > -1) {
+            UserCard userCard = database.getUserCard(database.getUsercardsID()[userListView.getSelectionModel().getSelectedIndex()]);
+            Document document = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+            for (int i = 0; i < userCard.checkedOutCopies.size(); i++) {
+                if (userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]) {
+                    document.returnCopy(userCard.checkedOutCopies.get(i));
+                    userCard.checkedOutCopies.remove(i);
+                    database.saveUserCard(userCard);
+                    database.saveDocuments(document);
+                }
             }
+
         }
     }
 }

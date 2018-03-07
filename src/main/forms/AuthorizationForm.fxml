@@ -21,12 +21,14 @@
 
     <TextField GridPane.rowIndex="0"  fx:id="emailTextField" promptText="n.surname@innopolis.ru"
     prefWidth="250" maxWidth="-Infinity"  GridPane.halignment="CENTER"></TextField>
-    <Button GridPane.rowIndex = "1"  fx:id="loginAsStudentBtn" text="Login as student" GridPane.halignment="CENTER"
+    <Button GridPane.rowIndex = "1"  fx:id="loginAsStudentBtn" text="Login as" GridPane.halignment="CENTER"
             prefWidth="250" maxWidth="-Infinity" onMouseClicked="#loginAsStudent"></Button>
     <Button GridPane.rowIndex="6"  fx:id="loginAsGuestBtn" text="Login as Guest" GridPane.halignment="CENTER"
             prefWidth="250" maxWidth="-Infinity" onMouseClicked="#loginAsGuest"></Button>
 
     <ListView GridPane.rowIndex="7"  fx:id="usersListView"  onMouseClicked="#selectUserOnListView"
     prefWidth="250" maxWidth="-Infinity"  GridPane.halignment="CENTER"></ListView>
+    <TextField GridPane.rowIndex="8"  fx:id="dateField"  promptText="dd/mm"
+        prefWidth="250" maxWidth="-Infinity"  GridPane.halignment="CENTER"></TextField>
 
 </GridPane>
