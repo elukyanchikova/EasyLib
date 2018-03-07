@@ -104,6 +104,8 @@ public class Database {
     public void resetDatabase(){
         this.userCardData = new JSONObject();
         this.documentsData = new JSONObject();
+        Document.resetID();
+        UserCard.resetID();
         update();
         load();
     }
