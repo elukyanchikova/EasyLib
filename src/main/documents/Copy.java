@@ -10,8 +10,9 @@ public class Copy {
     private int documentID;
     private int level;
     private int room;
-    //TODO work with that variable when returning system will be started
     public int checkOutTime;
+    public int checkOutDay;
+    public int checkOutMonth;
     private UserCard checkoutByUser;
 
     public Copy(Document document, int level, int room){
@@ -65,5 +66,73 @@ public class Copy {
 
     public void returnCopy(){
         checkoutByUser = null;
+    }
+
+    public String getDueDate(){
+        int day=checkOutDay;
+        int month = checkOutMonth;
+        day += checkOutTime;
+        switch (month){
+            case 1:
+                if(day > 31) {
+                    day -= 31;
+                    return day + " " + "February";
+                }else return day + " " + "January";
+            case 2:
+                if(day > 28) {
+                    day -= 28;
+                    return day + " " + "March";
+                }else return day + " " + "February";
+            case 3:
+                if(day > 31) {
+                    day -= 31;
+                    return day + " " + "April";
+                }else return day + " " + "March";
+            case 4:
+                if(day > 30) {
+                    day -= 30;
+                    return day + " " + "May";
+                }else return day + " " + "April";
+            case 5:
+                if(day > 31) {
+                    day -= 31;
+                    return day + " " + "June";
+                }else return day + " " + "May";
+            case 6:
+                if(day > 30) {
+                    day -= 30;
+                    return day + " " + "July";
+                }else return day + " " + "June";
+            case 7:
+                if(day > 31) {
+                    day -= 31;
+                    return day + " " + "August";
+                }else return day + " " + "July";
+            case 8:
+                if(day > 31) {
+                    day -= 31;
+                    return day + " " + "September";
+                }else return day + " " + "August";
+            case 9:
+                if(day > 30) {
+                    day -= 30;
+                    return day + " " + "October";
+                }else return day + " " + "September";
+            case 10:
+                if(day > 31) {
+                    day -= 31;
+                    return day + " " + "November";
+                }else return day + " " + "October";
+            case 11:
+                if(day > 30) {
+                    day -= 30;
+                    return day + " " + "December";
+                }else return day + " " + "November";
+            default:
+                if(day > 31) {
+                    day -= 31;
+                    return day + " " + "January";
+                }else return day + " " + "December";
+        }
     }
 }

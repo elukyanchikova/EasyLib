@@ -116,6 +116,7 @@ public abstract class Document {
             numberOfRequests--;
     }
 
+
     public int getNumberOfAllCopies() {
         return getNumberOfAvailableCopies() + getNumberOfTakenCopies();
     }
