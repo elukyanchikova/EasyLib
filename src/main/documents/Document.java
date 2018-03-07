@@ -190,4 +190,8 @@ public abstract class Document {
         data.put("DocumentType" , docType);
         return data;
     }
+
+    public static void resetID(){
+        lastID = 0;
+    }
 }

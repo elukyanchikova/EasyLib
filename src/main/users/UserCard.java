@@ -84,4 +84,8 @@ public class UserCard {
         data.put("RequestedDocs", requestedBooksObj);
         return data;
     }
+
+    public static void resetID(){
+        lastID = 0;
+    }
 }
