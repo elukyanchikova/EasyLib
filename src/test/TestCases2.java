@@ -15,11 +15,11 @@ public class TestCases2 {
     /**
      * Initial state:  system does not have any documents, any patron.
      * The system only contains one user who is a librarian.
-     * Action:  librarian adds  3 copies of book b1,
-     * 2 copies of book b2,
-     * 1 copy of book b3,
-     * 2 Video materials: av1 and av2
-     * patrons p1, p2 and p3
+     * Action:  librarian adds  * 3 copies of book b1,
+     *                          * 2 copies of book b2,
+     *                          * 1 copy of book b3,
+     *                          * 2 Video materials: av1 and av2
+     *                          * patrons p1, p2 and p3
      * Effect: number of documents in the System is 8 and the number of users is 4.
      */
 
@@ -27,14 +27,18 @@ public class TestCases2 {
     public void TestCase1() {
         //Initial state
         Database database = new Database("TestCase1");
+
+        ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
+        ArrayList<Document> l1_requestedDocuments = new ArrayList<Document>();
+
         UserCard librarian_1 = new UserCard("Irma", "Pins", new Librarian(), "8981351785", "north of London",
-                null, null);
+                l1_checkedOutCopies, l1_requestedDocuments);
         database.saveUserCard(librarian_1);
         Session session = new Session(database.getUserCard(librarian_1.getId()).userType, 9, 3);
-        Assert.assertTrue(Librarian.class.isAssignableFrom((session.getUser().getClass())));
+        Assert.assertTrue(Librarian.class.isAssignableFrom(session.getUser().getClass()));
 
         Assert.assertTrue("The database contains only one user",database.getAllUsers().size() == 1);
-        Assert.assertTrue("This only one user is a librarian.",database.getAllUsers().contains(librarian_1));
+        Assert.assertTrue("This only one user is a librarian.",( Librarian.class.isAssignableFrom(database.getUserCard(1).getClass())));
         Assert.assertTrue("There is no any documents in the database.",database.getAllUsers().size() == 0);
 
         ///////////////////////////////////////////////////////////////
@@ -129,9 +133,11 @@ public class TestCases2 {
     }
 
     /**
-     * Initial state:
-     * Action:
-     * Effect:
+     * Initial state: TC1
+     * Action: The librarian removes * 2 copies of book b1,
+     *                               * 1 copy of book b3
+     *                               * patron p2
+     * Effect:  number of documents in the System is 5 and the number of users is 3.
      */
     @Test
     public void TestCase2() {
