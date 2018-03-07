@@ -62,4 +62,8 @@ public class Copy {
     public int getID(){
         return id;
     }
+
+    public void returnCopy(){
+        checkoutByUser = null;
+    }
 }

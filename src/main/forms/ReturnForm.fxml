@@ -51,8 +51,6 @@
          </children>
       </GridPane>
 
-      <Button fx:id="returnButton" layoutX="652.0" layoutY="10.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="136.0" text="Return" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <ListView fx:id="userListView" layoutX="444.0" layoutY="10.0" prefHeight="528.0" prefWidth="391.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
       <Button fx:id="backbutt" layoutX="933.0" layoutY="510.0" mnemonicParsing="false" text="Back" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
 
       <Button fx:id="returnButton" onMouseClicked="#returnBtn"

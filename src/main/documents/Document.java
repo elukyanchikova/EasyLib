@@ -59,6 +59,7 @@ public abstract class Document {
 
     public Document(int id, JSONObject data, Database database){
         this.id = id;
+        lastID = lastID < id?id:lastID;
         this.title = data.getString("Title");
         this.authors = new ArrayList<>();
         for(int i = 0; i < data.getJSONArray("Authors").toList().size(); i++ ){
@@ -78,13 +79,17 @@ public abstract class Document {
         keys = availableCopiesObj.keySet().toArray(keys);
         for (int i = 0; i < availableCopiesObj.length(); i++){
             copyID = Integer.parseInt(keys[i]);
-            availableCopies.add(new Copy(availableCopiesObj.getJSONObject(Integer.toString(copyID)), database));
+            Copy copy = new Copy(availableCopiesObj.getJSONObject(Integer.toString(copyID)), database);
+            availableCopies.add(copy);
+            this.lastCopyID = copyID > lastCopyID? copyID:lastCopyID;
         }
         JSONObject takenCopiesObj = data.getJSONObject("TakenCopies");
         keys = takenCopiesObj.keySet().toArray(keys);
         for (int i = 0; i < takenCopiesObj.length(); i++){
             copyID = Integer.parseInt(keys[i]);
-            takenCopies.add(new Copy(takenCopiesObj.getJSONObject(Integer.toString(copyID)), database));
+            Copy copy = new Copy(takenCopiesObj.getJSONObject(Integer.toString(copyID)), database);
+            takenCopies.add(copy);
+            this.lastCopyID = copyID > lastCopyID? copyID:lastCopyID;
         }
 
     }
@@ -157,6 +162,7 @@ public abstract class Document {
     public void returnCopy( Copy copy){
         availableCopies.add(copy);
         takenCopies.remove(copy);
+        copy.returnCopy();
     }
 
     public int getCheckOutTime(boolean longCheckOutPermission){

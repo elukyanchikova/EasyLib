@@ -42,8 +42,7 @@ public class ReturnForm {
     @FXML private Label documentTypeLbl;
     @FXML private Label priceLbl;
     @FXML private Label keywordsLbl;
-    @FXML private Label requestLbl;
-    @FXML private Label labelRequests;
+
 
     @FXML private Label labelAddition1;
     @FXML private Label labelAddition2;
@@ -78,8 +77,6 @@ public class ReturnForm {
         documentTypeLbl = (Label) scene.lookup("#documentTypeLbl");
         priceLbl = (Label) scene.lookup("#priceLbl");
         keywordsLbl = (Label) scene.lookup("#keywordsLbl");
-        requestLbl = (Label) scene.lookup("#requestLbl");
-        labelRequests = (Label) scene.lookup("#labelRequests");
 
         additionLbl1 = (Label) scene.lookup("#additionLbl1");
         additionLbl2 = (Label) scene.lookup("#additionLbl2");
@@ -133,22 +130,24 @@ public class ReturnForm {
             }
         }
 
-            userListView.setItems(FXCollections.observableArrayList(database.getAllUsers()));
+        ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
+        ArrayList<UserCard> all = database.getAllUsers();
+        for(int i = 0; i < all.size(); i++){
+            for(int j = 0; j < all.get(i).checkedOutCopies.size(); j++){
+                if(all.get(i).checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]){
+                    userCardsWithCopy.add(all.get(i));
+                }
+            }
+        }
+
+            userListView.setItems(FXCollections.observableArrayList(userCardsWithCopy));
             userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
                 public ListCell<UserCard> call(ListView<UserCard> userListView) {
                     return new ListCell<UserCard>() {
                         @Override
                         protected void updateItem(UserCard userCard, boolean flag){
                             super.updateItem(userCard,flag);
-                            if (userCard != null && userCard.checkedOutCopies != null){
-                                boolean f = false;
-                                for(int i = 0; i < userCard.checkedOutCopies.size(); i++){
-                                    if(userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]){
-                                        f = true;
-                                    }
-                                }
-                                if(f) setText(userCard.name);
-                            }
+                            setText(userCard.name);
                         }
                     };
                 }
@@ -193,6 +192,7 @@ public class ReturnForm {
                 additionLbl2.setText("");
                 additionLbl3.setText("");
             }
+
             if(session.getUser().isHasCheckOutPerm()) {
                 //Check number of copies and output it or number of requests
                 boolean flag = true;
@@ -202,19 +202,6 @@ public class ReturnForm {
                         break;
                     }
                 }
-                if (flag){
-                    if (database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() == 0) {
-                        requestLbl.setText(String.valueOf(database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
-                        returnButton.setVisible(true);
-                        if (session.userCard.requestedDocs.contains(database.getDocuments(database.getDocumentsID()[openDocumentID]))) {
-                            returnButton.setText("Cancel request");
-                        } else returnButton.setText("Request");
-                    } else {
-                        returnButton.setVisible(true);
-                        requestLbl.setText(String.valueOf(database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
-                        returnButton.setText("Check out");
-                    }
-                }else returnButton.setVisible(false);
             }else returnButton.setVisible(false);
 
     }
@@ -235,8 +222,10 @@ public class ReturnForm {
         Document document = database.getDocuments(database.getDocumentsID()[openDocumentID]);
         for(int i = 0; i < userCard.checkedOutCopies.size(); i++){
             if(userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]){
-                userCard.checkedOutCopies.remove(i);
                 document.returnCopy(userCard.checkedOutCopies.get(i));
+                userCard.checkedOutCopies.remove(i);
+                database.saveUserCard(userCard);
+                database.saveDocuments(document);
             }
         }
     }
