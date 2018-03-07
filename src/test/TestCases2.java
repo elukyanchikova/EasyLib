@@ -2,7 +2,9 @@ import documents.Book;
 import documents.Copy;
 import documents.Document;
 import forms.MainForm;
+
 import org.junit.Test;
+import storage.Database;
 import users.*;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class TestCases2 {
      * Action:
      * Effect:
      */
+
     @Test
     public void TestCase1() {
     }
@@ -27,7 +30,6 @@ public class TestCases2 {
     @Test
     public void TestCase2() {
     }
-
 
     /**
      * Initial state:
@@ -46,7 +48,7 @@ public class TestCases2 {
     @Test
     public void TestCase4() {
     }
-
+    Database database = new Database();
     /**
      * Initial state:
      * Action:
