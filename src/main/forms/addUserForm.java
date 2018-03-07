@@ -65,31 +65,54 @@ public class addUserForm {
 
     @FXML
     public void save() {
+
         UserCard newUserCard = null;
+        String surname = "None";
+        String name = "None";
+        String phoneNumber = "none";
+        String address = "none";
+        if (!surnameTextField.getText().isEmpty()) {
+            surname = surnameTextField.getText();
+        }
+        if (!nameTextField.getText().isEmpty()) {
+            name = nameTextField.getText();
+        }
+        if (!phoneNumberTextField.getText().isEmpty()) {
+            phoneNumber = phoneNumberTextField.getText();
+        }
+        if (!addressTextField.getText().isEmpty()) {
+            address = phoneNumberTextField.getText();
+        }
+
+
         if (userTypeTextField.getText().equals("librarian") || userTypeTextField.getText().equals("Librarian")) {
-            newUserCard = new UserCard(nameTextField.getText(),
-                    surnameTextField.getText(), new Librarian(),
-                    phoneNumberTextField.getText(),
-                    addressTextField.getText());
+            newUserCard = new UserCard(name,
+                    surname, new Librarian(),
+                    phoneNumber,
+                    address);
         } else if (userTypeTextField.getText().equals("faculty") || userTypeTextField.getText().equals("Faculty")) {
-            newUserCard = new UserCard(nameTextField.getText(),
-                    surnameTextField.getText(),
+            newUserCard = new UserCard(name,
+                    surname,
                     new Faculty(),
-                    phoneNumberTextField.getText(),
-                    addressTextField.getText());
+                    phoneNumber,
+                    address);
         } else if (userTypeTextField.getText().equals("student") || userTypeTextField.getText().equals("Student")) {
             newUserCard = new UserCard(nameTextField.getText(),
-                    surnameTextField.getText(),
+                    surname,
                     new Student(),
-                    phoneNumberTextField.getText(),
-                    addressTextField.getText());
+                    phoneNumber,
+                    address);
 
+        } else {
+            newUserCard = new UserCard(name, surname, new Guest(), phoneNumber, address);
         }
         database.saveUserCard(newUserCard);
     }
-    @FXML public void back() throws Exception {
+
+    @FXML
+    public void back() throws Exception {
         EditForm mainForm = new EditForm();
-        mainForm.startForm(stage, session,database);
+        mainForm.startForm(stage, session, database);
     }
 
 }
