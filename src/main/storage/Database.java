@@ -101,6 +101,19 @@ public class Database {
         return userCards.get(id);
     }
 
+    public void resetDatabase(){
+        try {
+            PrintWriter pw = new PrintWriter(new FileOutputStream(
+                    new File(fileDataName + ".json")));
+            jsonData.put("UserCard", new JSONObject());
+            jsonData.put("Document", new JSONObject());
+            pw.write(jsonData.toString());
+            pw.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Integer[] getUsercardsID(){
         return userCards.keySet().toArray(new Integer[0]);
     }
