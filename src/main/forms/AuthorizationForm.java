@@ -1,18 +1,20 @@
 package forms;
 
+import documents.Document;
 import documents.Storage;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import storage.Database;
-import users.Guest;
-import users.Session;
-import users.Student;
-import users.UserType;
+import users.*;
 
 import javax.xml.crypto.Data;
 
@@ -26,15 +28,16 @@ public class AuthorizationForm {
     @FXML private TextField emailTextField;
     @FXML private Button loginAsStudentBtn;
     @FXML private Button loginAsGuestBtn;
+    @FXML private ListView<UserCard> usersListView;
 
     /**
      * Initialization and run new scene on the primary stage
      */
     void startForm(Stage primaryStage) throws Exception{
         this.stage = primaryStage;
-        sceneInitialization();
         UserType.load();
         database = new Database();
+        sceneInitialization();
         stage.setScene(scene);
         stage.show();
     }
@@ -51,6 +54,22 @@ public class AuthorizationForm {
         emailTextField = (TextField) scene.lookup("#emailTextField");
         loginAsStudentBtn = (Button) scene.lookup("#loginAsStudentBtn");
         loginAsGuestBtn = (Button) scene.lookup("#loginAsGuestBtn");
+        usersListView = (ListView<UserCard>) scene.lookup("#usersListView");
+
+        usersListView.setItems(FXCollections.observableArrayList(database.getAllUsers()));
+        usersListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
+            public ListCell<UserCard> call(ListView<UserCard> userCardListView) {
+                return new ListCell<UserCard>() {
+                    @Override
+                    protected void updateItem(UserCard user, boolean flag) {
+                        super.updateItem(user, flag);
+                        if (user != null) {
+                            setText(user.userType.getClass().getName() + " " + user.name + " " + user.surname);
+                        }
+                    }
+                };
+            }
+        });
     }
 
 
