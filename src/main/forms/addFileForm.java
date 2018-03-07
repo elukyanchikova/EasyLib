@@ -1,9 +1,6 @@
 package forms;
 
-import documents.AVMaterial;
-import documents.Book;
-import documents.Document;
-import documents.JournalArticle;
+import documents.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,9 +9,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.junit.Test;
 import storage.Database;
 import users.Session;
 
+import javax.print.attribute.standard.Copies;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -36,6 +35,7 @@ public class addFileForm {
     @FXML private TextField yearTextField;
     @FXML private TextField journalNameTextField;
     @FXML private TextField editorNameTextField;
+    @FXML private TextField numberOfCopiesTextField;
 
 
     /**
@@ -68,6 +68,7 @@ public class addFileForm {
         yearTextField = (TextField) scene.lookup("#yearField");
         journalNameTextField = (TextField) scene.lookup("#journalNameField");
         editorNameTextField = (TextField) scene.lookup("#editorNameField");
+        numberOfCopiesTextField = (TextField) scene.lookup("#numberOfCopiesField") ;
         saveFileBtn = (Button) scene.lookup("#saveFileBtn");
         backBtn = (Button) scene.lookup("#backBtn");
         isBestsellerCheckBox = (CheckBox) scene.lookup("#isBestsellerCheckBox");
@@ -79,21 +80,42 @@ public class addFileForm {
         int price = Integer.parseInt(priceTextField.getText());
         int year = Integer.parseInt(yearTextField.getText());
         boolean isBestseller = isBestsellerCheckBox.isSelected();
+        int numberOfCopies = Integer.parseInt(numberOfCopiesTextField.getText());
 
         if (docTypeTextField.getText().equals("Book"))
         {
             Book file = new Book( titleTextField.getText(), authors, keywords, price, publisherTextField.getText(),
                     year, isBestseller);
             database.saveDocuments(file);
+
+            int room = 415;
+            for (int i = 0; i <numberOfCopies ; i++) {
+                Copy copy = new Copy(file, 4, room);
+                room++;
+                database.saveDocuments(file);
+            }
         }
         else if(docTypeTextField.getText().equals("AVMaterial")) {
               AVMaterial file = new AVMaterial( titleTextField.getText(), authors, keywords, price);
-             database.saveDocuments(file);}
+             database.saveDocuments(file);
+            int room = 416;
+            for (int i = 0; i <numberOfCopies ; i++) {
+                Copy copy = new Copy(file, 4, room);
+                room++;
+                database.saveDocuments(file);
+            }}
          else if(docTypeTextField.getText().equals("JournalArticle"))
             {
                 JournalArticle file = new JournalArticle( titleTextField.getText(), authors, keywords, price,
                         journalNameTextField.getText(), editorNameTextField.getText(), yearTextField.getText());
                 database.saveDocuments(file);
+
+                int room = 417;
+                for (int i = 0; i <numberOfCopies ; i++) {
+                    Copy copy = new Copy(file, 4, room);
+                    room++;
+                    database.saveDocuments(file);
+                }
             }
         }
 
