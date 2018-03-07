@@ -46,6 +46,7 @@ public class MainForm {
 
     @FXML private Button b1;
     @FXML private  Button b2;
+    @FXML private  Button b3;
 
     @FXML private static Button checkoutButton;
 
@@ -117,6 +118,7 @@ public class MainForm {
 
         b1 = (Button) scene.lookup("#returnButton");
         b2 = (Button) scene.lookup("#editButton");
+        b3 = (Button) scene.lookup("#userInfoButton");
 
         checkoutButton = (Button) scene.lookup("#checkoutButton");
     }
@@ -132,6 +134,7 @@ public class MainForm {
         if(!session.getUser().isHasEditPerm()){
             b1.setVisible(false);
             b2.setVisible(false);
+            b3.setVisible(false);
         }
         if(documentListView.getSelectionModel().getSelectedIndex() > -1) {
             //If no document was opened

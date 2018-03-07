@@ -72,7 +72,7 @@ public class UserInfoForm {
                     protected void updateItem(UserCard user, boolean flag) {
                         super.updateItem(user, flag);
                         if (user != null) {
-                            setText(user.name + " "+  user.surname);
+                            setText(user.name + " " +  user.surname);
                         }
                     }
                 };
@@ -97,6 +97,7 @@ public class UserInfoForm {
         openUserCardID = id;
         return database.getUserCard(database.getUsercardsID()[openUserCardID]);
     }
+
 
     /**
      * Select element of Document List View Event
@@ -130,5 +131,9 @@ public class UserInfoForm {
         }
     }
 
-
+    @FXML
+    public void clickOnBackBtn() throws Exception {
+        MainForm mainForm = new MainForm();
+        mainForm.startForm(stage, session,database);
+    }
 }
