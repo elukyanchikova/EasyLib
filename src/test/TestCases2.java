@@ -3,11 +3,7 @@ import documents.Book;
 import documents.Copy;
 import documents.Document;
 import forms.MainForm;
-<<<<<<< HEAD
 import org.junit.Assert;
-=======
-
->>>>>>> 30801d2ee160729f3f3355d9531b95d85eff754c
 import org.junit.Test;
 import storage.Database;
 import users.*;
@@ -53,7 +49,7 @@ public class TestCases2 {
         b1_keywords.add("none");
 
         Book b1 = new Book("Introduction to Algorithms", b1_authors,
-                b1_keywords, 0, b1_copies, "MIT Press", 2009, false);
+                b1_keywords, 0, b1_copies,"MIT Press", 2009, "Third edition", false);
         b1.setCopy(new Copy(b1, 1,1));
         b1.setCopy(new Copy(b1, 2,1));
         b1.setCopy(new Copy(b1, 3,1));
@@ -73,7 +69,7 @@ public class TestCases2 {
         b1_keywords.add("none");
 
         Book b2 = new Book("Design Patterns: Elements of Reusable Object-Oriented Software", b2_authors,
-                b2_keywords, 0, b2_copies, "Addison-Wesley Professional", 2003, true);
+                b2_keywords, 0, b2_copies, "Addison-Wesley Professional", 2003,"First edition", true);
         b1.setCopy(new Copy(b2, 1,1));
         b1.setCopy(new Copy(b2, 2,1));
 
@@ -90,7 +86,7 @@ public class TestCases2 {
         b1_keywords.add("none");
 
         Book b3 = new Book("The Mythical Man-month", b3_authors,
-                b3_keywords, 0, b3_copies, "Addison-Wesley Longman Publishing Co.,Inc",  1995, false);
+                b3_keywords, 0, b3_copies, "Addison-Wesley Longman Publishing Co.,Inc", 1995,"Second edition", false);
 
         database.saveDocuments(b3);
 
@@ -156,9 +152,9 @@ public class TestCases2 {
      * Effect:
      */
     @Test
-    public void TestCase4() {
+    public void TestCase4() {Database database = new Database("Case4");
     }
-    Database database = new Database("Case4");
+
 
     /**
      * Initial state:
@@ -166,9 +162,9 @@ public class TestCases2 {
      * Effect:
      */
     @Test
-    public void TestCase5() {
+    public void TestCase5() { Database database = new Database("Case5");
     }
-    Database database = new Database("Case5");
+
 
     /**
      * Initial state:
@@ -176,9 +172,9 @@ public class TestCases2 {
      * Effect:
      */
     @Test
-    public void TestCase6() {
+    public void TestCase6() {Database database = new Database("Case6");
     }
-    Database database = new Database("Case6");
+
 
     /**
      * Initial state:
