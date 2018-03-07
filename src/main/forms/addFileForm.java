@@ -50,6 +50,8 @@ public class addFileForm {
     private TextField editorNameTextField;
     @FXML
     private TextField numberOfCopiesTextField;
+    @FXML
+    private TextField editionTextField;
 
 
     /**
@@ -80,6 +82,7 @@ public class addFileForm {
         priceTextField = (TextField) scene.lookup("#priceField");
         publisherTextField = (TextField) scene.lookup("#publisherField");
         yearTextField = (TextField) scene.lookup("#yearField");
+        editionTextField = (TextField) scene.lookup("#editionField");
         journalNameTextField = (TextField) scene.lookup("#journalNameField");
         editorNameTextField = (TextField) scene.lookup("#editorNameField");
         numberOfCopiesTextField = (TextField) scene.lookup("#numberOfCopiesField");
@@ -102,6 +105,7 @@ public class addFileForm {
         String publisher = "None";
         String editor = "None";
         String journalName = "None";
+        String edition = "None";
 
 
         if (!keywordsTextField.getText().isEmpty()) {
@@ -121,27 +125,29 @@ public class addFileForm {
         if (!yearTextField.getText().isEmpty()) {
             year = Integer.parseInt(yearTextField.getText());
         }
-        if(!numberOfCopiesTextField.getText().isEmpty()){
+        if (!numberOfCopiesTextField.getText().isEmpty()) {
             numberOfCopies = Integer.parseInt(numberOfCopiesTextField.getText());
         }
-        if (!titleTextField.getText().isEmpty()){
+        if (!titleTextField.getText().isEmpty()) {
             title = titleTextField.getText();
         }
-        if(!publisherTextField.getText().isEmpty()){
+        if (!publisherTextField.getText().isEmpty()) {
             publisher = publisherTextField.getText();
         }
-        if(!editorNameTextField.getText().isEmpty()){
+        if (!editorNameTextField.getText().isEmpty()) {
             editor = editorNameTextField.getText();
         }
-        if(!journalNameTextField.getText().isEmpty()){
+        if (!editionTextField.getText().isEmpty()) {
+            edition = editionTextField.getText() + "edition";
+        }
+        if (!journalNameTextField.getText().isEmpty()) {
             journalName = journalNameTextField.getText();
         }
 
 
-
         if (docTypeTextField.getText().equals("Book")) {
             Book file = new Book(title, authors, keywords, price, publisher,
-                    year, isBestseller);
+                    year, edition, isBestseller);
             database.saveDocuments(file);
 
             int room = 415;
@@ -170,10 +176,9 @@ public class addFileForm {
                 room++;
                 database.saveDocuments(file);
             }
-        }
-        else  {
+        } else {
             Book file = new Book(title, authors, keywords, price, publisher,
-                    year, isBestseller);
+                    year, edition, isBestseller);
             database.saveDocuments(file);
 
             int room = 415;

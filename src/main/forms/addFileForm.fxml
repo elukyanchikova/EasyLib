@@ -25,9 +25,11 @@
        <TextField fx:id="numberOfCopiesField" maxWidth="-Infinity" prefWidth="150" promptText="number of copies" GridPane.rowIndex="5" />
        <TextField fx:id="publisherField" maxWidth="-Infinity" prefWidth="150" promptText="publisher" GridPane.rowIndex="6" />
        <TextField fx:id="yearField" maxWidth="-Infinity" prefWidth="150" promptText="year of publishing" GridPane.rowIndex="7" />
-       <TextField fx:id="journalNameField" maxWidth="-Infinity" prefWidth="150" promptText="journal name (only for JA)" GridPane.rowIndex="8" />
-       <TextField fx:id="editorNameField" maxWidth="-Infinity" prefWidth="150" promptText="editor name (only for JA)" GridPane.rowIndex="9" />
-       <CheckBox  fx:id="isBestsellerCheckBox" maxWidth="-Infinity" prefWidth="150"  text="Bestseller" GridPane.rowIndex="10"  />
+       <TextField fx:id="editionField" maxWidth="-Infinity" prefWidth="150" promptText="edition (only for Books)" GridPane.rowIndex="8" />
+       <TextField fx:id="journalNameField" maxWidth="-Infinity" prefWidth="150" promptText="journal name (only for JA)" GridPane.rowIndex="9" />
+       <TextField fx:id="editorNameField" maxWidth="-Infinity" prefWidth="150" promptText="editor name (only for JA)" GridPane.rowIndex="10" />
+
+       <CheckBox  fx:id="isBestsellerCheckBox" maxWidth="-Infinity" prefWidth="150"  text="Bestseller" GridPane.rowIndex="11"  />
 
        <Button fx:id="saveFileBtn" maxWidth="-Infinity" onMouseClicked="#save" prefWidth="150" text="Save" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
        <Button fx:id="backBtn" maxWidth="-Infinity" onMouseClicked="#back" prefWidth="150" text="Back" GridPane.halignment="CENTER" GridPane.rowIndex="12" />

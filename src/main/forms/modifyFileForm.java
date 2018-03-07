@@ -68,6 +68,8 @@ public class modifyFileForm {
     private TextField journalNameTextField;
     @FXML
     private TextField editorNameTextField;
+    @FXML
+    private TextField editionTextField;
 
 
     /**
@@ -111,6 +113,7 @@ public class modifyFileForm {
         yearTextField = (TextField) scene.lookup("#yearField");
         journalNameTextField = (TextField) scene.lookup("#journalNameField");
         editorNameTextField = (TextField) scene.lookup("#editorNameField");
+        editionTextField = (TextField) scene.lookup("#editionField");
 
         documentListView.setItems(FXCollections.observableArrayList(database.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
@@ -201,7 +204,7 @@ public class modifyFileForm {
             database.saveDocuments(currentDoc);
         }
         if (!journalNameTextField.getText().isEmpty()) {
-            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);;
+            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
             if (currentDoc.getClass().equals(JournalArticle.class)) {
                 ((JournalArticle) currentDoc).journalName = journalNameTextField.getText();
             }
@@ -213,6 +216,13 @@ public class modifyFileForm {
                 ((JournalArticle) currentDoc).editor = editorNameTextField.getText();
             }
             database.saveDocuments(currentDoc);
+        }
+        if(!editionTextField.getText().isEmpty()){
+            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+            if (currentDoc.getClass().equals(Book.class)){
+                ((Book)currentDoc).edition = editionTextField.getText();
+            }
+
         }
     }
 
