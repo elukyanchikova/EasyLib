@@ -16,27 +16,28 @@ public class TestCases2 {
      * Initial state:  system does not have any documents, any patron.
      * The system only contains one user who is a librarian.
      * Action:  librarian adds  3 copies of book b1,
-     *                          2 copies of book b2,
-     *                          1 copy of book b3,
-     *                          2 Video materials: av1 and av2
-     *                          patrons p1, p2 andp3
+     * 2 copies of book b2,
+     * 1 copy of book b3,
+     * 2 Video materials: av1 and av2
+     * patrons p1, p2 and p3
      * Effect: number of documents in the System is 8 and the number of users is 4.
      */
 
     @Test
     public void TestCase1() {
-       //Initial state
+        //Initial state
         Database database = new Database("TestCase1");
-        UserCard librarian_1 = new UserCard( "Irma", "Pins", new Librarian(), "8981351785", "north of London",
+        UserCard librarian_1 = new UserCard("Irma", "Pins", new Librarian(), "8981351785", "north of London",
                 null, null);
         database.saveUserCard(librarian_1);
         Session session = new Session(database.getUserCard(librarian_1.getId()).userType, 9, 3);
         Assert.assertTrue(Librarian.class.isAssignableFrom((session.getUser().getClass())));
 
-        Assert.assertTrue(database.getAllUsers().contains(librarian_1));
-        Assert.assertTrue(database.getAllUsers().size() == 1);
-        Assert.assertTrue(database.getAllUsers().size() == 0);
+        Assert.assertTrue("The database contains only one user",database.getAllUsers().size() == 1);
+        Assert.assertTrue("This only one user is a librarian.",database.getAllUsers().contains(librarian_1));
+        Assert.assertTrue("There is no any documents in the database.",database.getAllUsers().size() == 0);
 
+        ///////////////////////////////////////////////////////////////
         ArrayList<Copy> b1_copies = new ArrayList<Copy>();
 
         ArrayList<String> b1_authors = new ArrayList<String>();
@@ -49,10 +50,10 @@ public class TestCases2 {
         b1_keywords.add("none");
 
         Book b1 = new Book("Introduction to Algorithms", b1_authors,
-                b1_keywords, 0, b1_copies,"MIT Press", 2009, "Third edition", false);
-        b1.setCopy(new Copy(b1, 1,1));
-        b1.setCopy(new Copy(b1, 2,1));
-        b1.setCopy(new Copy(b1, 3,1));
+                b1_keywords, 0, b1_copies, "MIT Press", 2009, "Third edition", false);
+        b1.setCopy(new Copy(b1, 1, 1));
+        b1.setCopy(new Copy(b1, 2, 1));
+        b1.setCopy(new Copy(b1, 3, 1));
 
         database.saveDocuments(b1);
 
@@ -69,9 +70,9 @@ public class TestCases2 {
         b1_keywords.add("none");
 
         Book b2 = new Book("Design Patterns: Elements of Reusable Object-Oriented Software", b2_authors,
-                b2_keywords, 0, b2_copies, "Addison-Wesley Professional", 2003,"First edition", true);
-        b1.setCopy(new Copy(b2, 1,1));
-        b1.setCopy(new Copy(b2, 2,1));
+                b2_keywords, 0, b2_copies, "Addison-Wesley Professional", 2003, "First edition", true);
+        b1.setCopy(new Copy(b2, 1, 1));
+        b1.setCopy(new Copy(b2, 2, 1));
 
         database.saveDocuments(b2);
 
@@ -86,19 +87,16 @@ public class TestCases2 {
         b1_keywords.add("none");
 
         Book b3 = new Book("The Mythical Man-month", b3_authors,
-                b3_keywords, 0, b3_copies, "Addison-Wesley Longman Publishing Co.,Inc", 1995,"Second edition", false);
+                b3_keywords, 0, b3_copies, "Addison-Wesley Longman Publishing Co.,Inc", 1995, "Second edition", false);
 
         database.saveDocuments(b3);
-
-
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         ArrayList<String> av1_keywords = new ArrayList<String>();
         av1_keywords.add("none");
         ArrayList<String> av1_authors = new ArrayList<String>();
         av1_authors.add("Tony Hoare");
 
-        AVMaterial av1 = new AVMaterial("Null References: The Billion Dollar Mistake", av1_authors, av1_keywords, 0 );
+        AVMaterial av1 = new AVMaterial("Null References: The Billion Dollar Mistake", av1_authors, av1_keywords, 0);
         database.saveDocuments(av1);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ArrayList<String> av2_keywords = new ArrayList<String>();
@@ -106,26 +104,28 @@ public class TestCases2 {
         ArrayList<String> av2_authors = new ArrayList<String>();
         av1_authors.add("Claude Shannon");
 
-        AVMaterial av2 = new AVMaterial("Information Entropy", av1_authors, av1_keywords, 0 );
+        AVMaterial av2 = new AVMaterial("Information Entropy", av1_authors, av1_keywords, 0);
         database.saveDocuments(av2);
         /////////////////////////////////////////////////////////////////////////////////////////////////
-  //String name, String surname, UserType userType, String phoneNumb, String address,
-        //                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs
 
         ArrayList<Copy> p1_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> p1_requestedDocs = new ArrayList<Document>();
-        UserCard p1 = new UserCard(1010,"Sergey", "Afonso",  new Faculty(), "30001","Via Margutta, 3", p1_checkedOutCopies,p1_requestedDocs);
+        UserCard p1 = new UserCard(1010, "Sergey", "Afonso", new Faculty(), "30001", "Via Margutta, 3", p1_checkedOutCopies, p1_requestedDocs);
         database.saveUserCard(p1);
-        ///////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
         ArrayList<Copy> p2_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> p2_requestedDocs = new ArrayList<Document>();
-        UserCard p2 = new UserCard(1011,"Nadia", "Teixeira",  new Student(), "30002","Via Sacra, 13", p2_checkedOutCopies,p2_requestedDocs);
+        UserCard p2 = new UserCard(1011, "Nadia", "Teixeira", new Student(), "30002", "Via Sacra, 13", p2_checkedOutCopies, p2_requestedDocs);
         database.saveUserCard(p2);
         //////////////////////////////////////////////////////////////////
         ArrayList<Copy> p3_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> p3_requestedDocs = new ArrayList<Document>();
-        UserCard p3 = new UserCard(1012,"Elvira", "Espindola",  new Student(), "30003","Via del Corso, 22", p3_checkedOutCopies,p3_requestedDocs);
+        UserCard p3 = new UserCard(1012, "Elvira", "Espindola", new Student(), "30003", "Via del Corso, 22", p3_checkedOutCopies, p3_requestedDocs);
         database.saveUserCard(p2);
+        //////////////////////////////////////////////////////////////////
+        Assert.assertTrue("Number of documents equals to 8", (database.getAllDocuments().size() == 8));
+        Assert.assertTrue("Number of users equals to 4", (database.getAllUsers().size() == 4));
+
     }
 
     /**
@@ -152,7 +152,8 @@ public class TestCases2 {
      * Effect:
      */
     @Test
-    public void TestCase4() {Database database = new Database("Case4");
+    public void TestCase4() {
+        Database database = new Database("Case4");
     }
 
 
@@ -162,7 +163,8 @@ public class TestCases2 {
      * Effect:
      */
     @Test
-    public void TestCase5() { Database database = new Database("Case5");
+    public void TestCase5() {
+        Database database = new Database("Case5");
     }
 
 
@@ -172,7 +174,8 @@ public class TestCases2 {
      * Effect:
      */
     @Test
-    public void TestCase6() {Database database = new Database("Case6");
+    public void TestCase6() {
+        Database database = new Database("Case6");
     }
 
 
