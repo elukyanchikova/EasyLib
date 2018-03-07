@@ -16,12 +16,14 @@
     <RowConstraints maxHeight="38.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="addFileBtn" maxWidth="-Infinity" onMouseClicked="#addFile" prefWidth="250" text="Add file" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+      <Button fx:id="addFileBtn" maxWidth="-Infinity" onMouseClicked="#addFile" prefWidth="250" text="Add file" GridPane.columnIndex="0"  GridPane.halignment="CENTER" GridPane.rowIndex="0" />
 
-      <Button fx:id="addUserBtn" maxWidth="-Infinity" onMouseClicked="#addUser" prefWidth="250" text="Add User" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+      <Button fx:id="addUserBtn" maxWidth="-Infinity" onMouseClicked="#addUser" prefWidth="250" text="Add User" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
 
       <Button fx:id="modifyFileBtn" maxWidth="-Infinity" onMouseClicked="#modifyFile" prefWidth="250" text="Modify File" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
 
-      <Button fx:id="modifyUserBtn" maxWidth="-Infinity" onMouseClicked="#modifyUser" prefWidth="250" text="Modify User" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Button fx:id="modifyUserBtn" maxWidth="-Infinity" onMouseClicked="#modifyUser" prefWidth="250" text="Modify User" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Button fx:id="backBtn" maxWidth="-Infinity" onMouseClicked="#back" prefWidth="150" text="Back" GridPane.halignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
    </children>
 </GridPane>

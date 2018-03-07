@@ -24,6 +24,8 @@ public class EditForm {
     @FXML private Button deleteUserBtn;
     @FXML private Button modifyUserBtn;
 
+    @FXML private Button backBtn;
+
     /**
      * Initialization and run new scene on the primary stage
      */
@@ -52,6 +54,7 @@ public class EditForm {
         deleteUserBtn = (Button) scene.lookup("#deleteUserBtn");
         addUserBtn = (Button) scene.lookup("#addUserBtn");
         modifyUserBtn = (Button) scene.lookup("#modifyUserBtn");
+        backBtn = (Button) scene.lookup("#backBtn");
 
     }
 
@@ -82,5 +85,9 @@ public class EditForm {
     public void modifyFile() throws Exception {
         modifyFileForm mainForm = new modifyFileForm();
         mainForm.startForm(stage,session,database);
+    }
+    @FXML public void back() throws Exception {
+        MainForm mainForm = new MainForm();
+        mainForm.startForm(stage, session,database);
     }
 }

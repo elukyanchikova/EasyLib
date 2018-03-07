@@ -78,19 +78,18 @@ public class addFileForm {
         ArrayList<String> authors = new ArrayList<String>(Arrays.asList(authorsTextField.getText().toLowerCase().replace(',' , ';').split(";")));
         int price = Integer.parseInt(priceTextField.getText());
         int year = Integer.parseInt(yearTextField.getText());
-
-
         boolean isBestseller = isBestsellerCheckBox.isSelected();
-        if (docTypeTextField.getText() == "Book")
+
+        if (docTypeTextField.getText().equals("Book"))
         {
             Book file = new Book( titleTextField.getText(), authors, keywords, price, publisherTextField.getText(),
                     year, isBestseller);
             database.saveDocuments(file);
         }
-        else if(docTypeTextField.getText() == "AVMaterial") {
+        else if(docTypeTextField.getText().equals("AVMaterial")) {
               AVMaterial file = new AVMaterial( titleTextField.getText(), authors, keywords, price);
              database.saveDocuments(file);}
-         else if(docTypeTextField.getText() == "JournalArticle")
+         else if(docTypeTextField.getText().equals("JournalArticle"))
             {
                 JournalArticle file = new JournalArticle( titleTextField.getText(), authors, keywords, price,
                         journalNameTextField.getText(), editorNameTextField.getText(), yearTextField.getText());
