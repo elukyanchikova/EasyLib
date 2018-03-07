@@ -158,7 +158,8 @@ public class TestCases2 {
     @Test
     public void TestCase4() {
     }
-    Database database = new Database();
+    Database database = new Database("Case4");
+
     /**
      * Initial state:
      * Action:
@@ -167,6 +168,7 @@ public class TestCases2 {
     @Test
     public void TestCase5() {
     }
+    Database database = new Database("Case5");
 
     /**
      * Initial state:
@@ -176,6 +178,7 @@ public class TestCases2 {
     @Test
     public void TestCase6() {
     }
+    Database database = new Database("Case6");
 
     /**
      * Initial state:
