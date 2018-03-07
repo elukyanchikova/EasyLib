@@ -258,6 +258,8 @@ public class MainForm {
         }
         if(document.getNumberOfAvailableCopies() > 0 && flag) {
             document.takeCopy( session.userCard);
+            database.saveDocuments(document);
+            database.saveUserCard(session.userCard);
             return true;
         }
         return false;

@@ -51,6 +51,7 @@ public class UserCard {
     //public UserCard(int id, JSONObject data, Database database){
     public UserCard(int id, JSONObject data){
         this.id = id;
+        lastID = lastID < id?id:lastID;
         this.name = data.getString("Name");
         this.surname = data.getString("Surname");
         this.userType = UserType.userTypes.get(data.getString("UserType"));

@@ -18,8 +18,8 @@ public abstract class Document {
     public ArrayList<String> keywords;
     public int price;
     protected int numberOfRequests = 0;
-    protected ArrayList<Copy> availableCopies;
-    protected ArrayList<Copy> takenCopies;
+    public ArrayList<Copy> availableCopies;
+    public ArrayList<Copy> takenCopies;
     protected int checkOutTime;
 
     int lastCopyID = 0;
