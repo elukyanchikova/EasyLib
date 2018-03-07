@@ -14,6 +14,8 @@ import users.Session;
 import users.Student;
 import users.UserType;
 
+import javax.xml.crypto.Data;
+
 public class AuthorizationForm {
 
     private Stage stage;
@@ -64,8 +66,8 @@ public class AuthorizationForm {
                 emailTextField.getText().toLowerCase().replace("@innopolis.ru", "").replace(" ", "").length() != 0)
         {
             MainForm mainForm = new MainForm();
-            Session session = new Session(database.getUserCard(5).userType);
-            session.userCard = database.getUserCard(5);
+            Session session = new Session(database.getUserCard(6).userType);
+            session.userCard = database.getUserCard(6);
             mainForm.startForm(stage, session,database);
         }
     }
