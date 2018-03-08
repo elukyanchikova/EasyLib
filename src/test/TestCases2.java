@@ -109,6 +109,8 @@ public class TestCases2 {
 
         AVMaterial av1 = new AVMaterial("Null References: The Billion Dollar Mistake", av1_authors, av1_keywords, 0);
         database.saveDocuments(av1);
+        av1.setCopy(new Copy(av1, 2, 1));
+        database.saveDocuments(av1);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ArrayList<String> av2_keywords = new ArrayList<String>();
         av1_keywords.add("none");
@@ -117,6 +119,9 @@ public class TestCases2 {
 
         AVMaterial av2 = new AVMaterial("Information Entropy", av1_authors, av1_keywords, 0);
         database.saveDocuments(av2);
+        av2.setCopy(new Copy(av2, 2, 1));
+        database.saveDocuments(av2);
+
         /////////////////////////////////////////////////////////////////////////////////////////////////
 
         ArrayList<Copy> p1_checkedOutCopies = new ArrayList<Copy>();
@@ -141,14 +146,10 @@ public class TestCases2 {
                 for (int j = 1; j <= database.getDocuments(i).getNumberOfAllCopies(); j++) {
                     a++;
                 }
-            } else {
-                a++;
             }
-
         }
         Assert.assertTrue("Number of documents equals to 8", (a == 8));
         Assert.assertTrue("Number of users equals to 4", (database.getAllUsers().size() == 4));
-
     }
 
     /**
@@ -158,7 +159,7 @@ public class TestCases2 {
      * * patron p2
      * Effect:  number of documents in the System is 5 and the number of users is 3.
      */
- /*   @Test
+    @Test
     public void TestCase2() {
         //Initial state
         Database database = new Database("Case1");
@@ -171,8 +172,6 @@ public class TestCases2 {
                 for (int j = 1; j <= database.getDocuments(i).getNumberOfAllCopies(); j++) {
                     a++;
                 }
-            } else {
-                a++;
             }
         }
         Assert.assertTrue("Number of documents equals to 8", (a == 8));
@@ -193,21 +192,15 @@ public class TestCases2 {
         // Effect
         int b = 0;// number of all copies of all docs i.e. all physically available in library
         for (int i = 1; i <= database.getAllDocuments().size(); i++) {
-            if ((database.getDocuments(i).getNumberOfAllCopies() == 0) && ((database.getDocuments(i).getClass() == AVMaterial.class) ||
-                    (database.getDocuments(i).getClass() == JournalArticle.class))) {
-                b=b+1;
-            } else if (!(database.getDocuments(i).getNumberOfAllCopies() == 0) && (database.getDocuments(i).getClass() == Book.class)) {
+            if (!(database.getDocuments(i).getNumberOfAllCopies() == 0)) {
                 for (int j = 1; j <= database.getDocuments(i).getNumberOfAllCopies(); j++) {
-                    b=b+1;
+                    b++;
                 }
             }
-
         }
-
         Assert.assertTrue("Number of documents equals to 5", (b == 5));
-        Assert.assertTrue("Number of users equals to 3",(database.getAllUsers().size() ==3));
-}
-*/
+        Assert.assertTrue("Number of users equals to 3", (database.getAllUsers().size() == 3));
+    }
 
     /**
      * Initial state: TC1
@@ -219,18 +212,19 @@ public class TestCases2 {
         //Initial state
         Database database = new Database("Case1");
         TestCase1();
+        database.load();
         Session session = new Session((database.getUserCard(1).userType), 9, 3);
-        int a = 0;// number of all copies of all docs i.e. all physically available in library
+        int c = 0;// number of all copies of all docs i.e. all physically available in library
         for (int i = 1; i <= database.getAllDocuments().size(); i++) {
             if (!(database.getDocuments(i).getNumberOfAllCopies() == 0)) {
                 for (int j = 1; j <= database.getDocuments(i).getNumberOfAllCopies(); j++) {
-                    a++;
+                    c++;
                 }
             } else {
-                a++;
+                c++;
             }
         }
-        Assert.assertTrue("Number of documents equals to 8", (a == 8));
+        Assert.assertTrue("Number of documents equals to 8", (c == 8));
         Assert.assertTrue("Number of users equals to 4", (database.getAllUsers().size() == 4));
         Assert.assertTrue("Session is leading by  librarian", Librarian.class.isAssignableFrom(session.getUser().getClass()));
         // Action and Effect
@@ -246,10 +240,10 @@ public class TestCases2 {
                 && (first.address.equals("Via Margutta, 3")))));
         Assert.assertTrue("Phone Number of p1 is correct.", ((first.phoneNumb.equals(database.getUserCard(1010).phoneNumb))
                 && (first.phoneNumb.equals("30001"))));
-        Assert.assertTrue("id of p1 is correct.", ((first.getId()==database.getUserCard(1010).getId())
-                                                        && (first.getId() == 1010)));
+        Assert.assertTrue("id of p1 is correct.", ((first.getId() == database.getUserCard(1010).getId())
+                && (first.getId() == 1010)));
         Assert.assertTrue("User Type of p1 is correct", Faculty.class.isAssignableFrom(first.userType.getClass()));
-      /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
         Assert.assertTrue("Name of p2 is correct.", ((third.name.equals(database.getUserCard(1012).name))
                 && (third.name.equals("Elvira"))));
         Assert.assertTrue("Surname of p2 is correct.", ((third.surname.equals(database.getUserCard(1012).surname))
@@ -258,8 +252,8 @@ public class TestCases2 {
                 && (third.address.equals("Via del Corso, 22")))));
         Assert.assertTrue("Phone Number of p2 is correct.", ((third.phoneNumb.equals(database.getUserCard(1012).phoneNumb))
                 && (third.phoneNumb.equals("30003"))));
-        Assert.assertTrue("id of p2 is correct.", ((third.getId()==database.getUserCard(1012).getId())
-                                                        && (third.getId() == 1012)));
+        Assert.assertTrue("id of p2 is correct.", ((third.getId() == database.getUserCard(1012).getId())
+                && (third.getId() == 1012)));
         Assert.assertTrue("User Type of p2 is correct", Student.class.isAssignableFrom(third.userType.getClass()));
     }
 
@@ -298,7 +292,7 @@ public class TestCases2 {
      * Action:
      * Effect:
      */
-    @Test
+    /*@Test
     public void TestCase7(){
         Database database = new Database("Case1");
         database.resetDatabase();
@@ -354,7 +348,7 @@ public class TestCases2 {
         Assert.assertEquals(user1.checkedOutCopies.get(2).getDueDate(), "18 March");
     }
 
-
+*/
 
     /**
      * Initial state:
