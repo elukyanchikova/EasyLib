@@ -280,9 +280,9 @@ public class TestCases2 {
 
         Assert.assertEquals(database.getUserCard(1012).name,"Elvira");
         Assert.assertEquals(database.getUserCard(1012).address,"Via del Corso, 22");
-        Assert.assertEquals(database.getUserCard(1012).phoneNumb,"");
-        Assert.assertEquals(database.getUserCard(1012).userType,UserType.class.getName().replace("users.",""));
-        Assert.assertEquals(database.getUserCard(1012).getId(),1010);
+        Assert.assertEquals(database.getUserCard(1012).phoneNumb,"30003");
+        Assert.assertEquals(database.getUserCard(1012).userType.getClass().getName().replace("users.",""),"Student");
+        Assert.assertEquals(database.getUserCard(1100).getId(),1100);
 
     }
 
