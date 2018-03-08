@@ -265,9 +265,9 @@ public class TestCases2 {
     }
 
     /**
-     * Initial state:
-     * Action:
-     * Effect:
+     * Initial state:  TC2
+     * Action: The librarian checks the information of patron p2 and p3
+     * Effect: got the information about p3 but not p3
      */
     @Test
     public void TestCase4() {
@@ -287,9 +287,9 @@ public class TestCases2 {
     }
 
     /**
-     * Initial state:
-     * Action:
-     * Effect:
+     * Initial state: TC2
+     * Action: Patron p2 checks out book b1
+     * Effect: nothing happen
      */
     @Test
     public void TestCase5() {
@@ -302,9 +302,13 @@ public class TestCases2 {
     }
 
     /**
-     * Initial state:
+     * Initial state: TC2
      * Action:
-     * Effect:
+     * p1 checks out b1
+     * p3 checks out b1
+     * p1 checks out b2
+     * the librarian checks the information of p1 and p3
+     * Effect: correct information about users
      */
     @Test
     public void TestCase6() {
@@ -326,9 +330,12 @@ public class TestCases2 {
     }
 
     /**
-     * Initial state:
+     * Initial state: TC1
      * Action:
-     * Effect:
+     * p1 checks out books b1, b2, b3 and video material av1
+     * p2 checks out books b1, b2 and video material av2
+     * the librarian checks the information of p1 and p2
+     * Effect: correct information about users
      */
     @Test
     public void TestCase7(){
@@ -406,8 +413,12 @@ public class TestCases2 {
 
     /**
      * Initial state:
+     * p1 checked-out b1 on February 9th and b2 on February 2nd
+     * p2 checked-out b1 on February 5th and av1 on February 17th
      * Action:
-     * Effect:
+     * the librarian checks the due dates of documents checked out by p1
+     * the librarian checks the due dates of documents checked out by p2
+     * Effect: overdue should be right
      */
     @Test
     public void TestCase8() {
@@ -469,9 +480,12 @@ public class TestCases2 {
     }
 
     /**
-     * Initial state:
+     * Initial state: TC1
      * Action:
-     * Effect:
+     * simulate a power loss (stop the application)
+     * re-run the application
+     * the librarian checks patrons and documents of the system
+     * Effect: all information should be saved
      */
     @Test
     public void TestCase9() {
@@ -495,7 +509,7 @@ public class TestCases2 {
 
         Session session1 = new Session(database.getUserCard(1).userType,1,1);
 
-        Assert.assertEquals(database.getDocuments(1).availableCopies.size(), 1);
+        Assert.assertEquals(database.getDocuments(1).availableCopies.size(), 3);
         Assert.assertEquals(database.getDocuments(2).availableCopies.size(), 2);
         Assert.assertEquals(database.getDocuments(3).availableCopies.size(), 1);
         Assert.assertEquals(database.getDocuments(4).availableCopies.size(), 1);
@@ -503,10 +517,6 @@ public class TestCases2 {
         Assert.assertNotNull(database.getUserCard(1010));
         Assert.assertNotNull(database.getUserCard(1011));
         Assert.assertNotNull(database.getUserCard(1100));
-
-
-
-
 
     }
 
