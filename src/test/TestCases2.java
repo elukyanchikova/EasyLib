@@ -96,8 +96,8 @@ public class TestCases2 {
 
         Book b3 = new Book("The Mythical Man-month", b3_authors,
                 b3_keywords, 0, b3_copies, "Addison-Wesley Longman Publishing Co.,Inc", 1995, "Second edition", false);
-        database.saveDocuments(b3);
 
+        b3.setReference(true);
         b3.setCopy(new Copy(b3, 1, 1));
 
         database.saveDocuments(b3);
@@ -136,7 +136,7 @@ public class TestCases2 {
         //////////////////////////////////////////////////////////////////
         ArrayList<Copy> p3_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> p3_requestedDocs = new ArrayList<Document>();
-        UserCard p3 = new UserCard(1012, "Elvira", "Espindola", new Student(), "30003", "Via del Corso, 22", p3_checkedOutCopies, p3_requestedDocs);
+        UserCard p3 = new UserCard(1100, "Elvira", "Espindola", new Student(), "30003", "Via del Corso, 22", p3_checkedOutCopies, p3_requestedDocs);
         database.saveUserCard(p3);
         //////////////////////////////////////////////////////////////////
         //Effect
@@ -229,7 +229,7 @@ public class TestCases2 {
         // Action and Effect
         UserCard librarian = database.getUserCard(1);
         UserCard first = database.getUserCard(1010);
-        UserCard third = database.getUserCard(1012);
+        UserCard third = database.getUserCard(1100);
 
         Assert.assertTrue("Name of p1 is correct.", ((first.name.equals(database.getUserCard(1010).name))
                 && (first.name.equals("Sergey"))));
@@ -247,20 +247,20 @@ public class TestCases2 {
             Assert.assertTrue("List of due dates of checked out documents is correct", first.checkedOutCopies.get(i).getDueDate().equals(database.getUserCard(1010).checkedOutCopies));
         }
         /////////////////////////////////////////////////////////////////////////////////////////////
-        Assert.assertTrue("Name of p2 is correct.", ((third.name.equals(database.getUserCard(1012).name))
+        Assert.assertTrue("Name of p2 is correct.", ((third.name.equals(database.getUserCard(1100).name))
                 && (third.name.equals("Elvira"))));
-        Assert.assertTrue("Surname of p2 is correct.", ((third.surname.equals(database.getUserCard(1012).surname))
+        Assert.assertTrue("Surname of p2 is correct.", ((third.surname.equals(database.getUserCard(1100).surname))
                 && (third.surname.equals("Espindola"))));
-        Assert.assertTrue("Address of p2 is correct.", ((third.address.equals(database.getUserCard(1012).address)
+        Assert.assertTrue("Address of p2 is correct.", ((third.address.equals(database.getUserCard(1100).address)
                 && (third.address.equals("Via del Corso, 22")))));
-        Assert.assertTrue("Phone Number of p2 is correct.", ((third.phoneNumb.equals(database.getUserCard(1012).phoneNumb))
+        Assert.assertTrue("Phone Number of p2 is correct.", ((third.phoneNumb.equals(database.getUserCard(1100).phoneNumb))
                 && (third.phoneNumb.equals("30003"))));
-        Assert.assertTrue("id of p2 is correct.", ((third.getId() == database.getUserCard(1012).getId())
-                && (third.getId() == 1012)));
+        Assert.assertTrue("id of p2 is correct.", ((third.getId() == database.getUserCard(1100).getId())
+                && (third.getId() == 1100)));
         Assert.assertTrue("User Type of p2 is correct", Student.class.isAssignableFrom(third.userType.getClass()));
-        Assert.assertTrue("List of checked out documents is correct", third.checkedOutCopies==database.getUserCard(1012).checkedOutCopies);
+        Assert.assertTrue("List of checked out documents is correct", third.checkedOutCopies==database.getUserCard(1100).checkedOutCopies);
         for (int i = 1; i <= third.checkedOutCopies.size() ; i++) {
-            Assert.assertTrue("List of due dates of checked out documents is correct", third.checkedOutCopies.get(i).getDueDate().equals(database.getUserCard(1012).checkedOutCopies));
+            Assert.assertTrue("List of due dates of checked out documents is correct", third.checkedOutCopies.get(i).getDueDate().equals(database.getUserCard(1100).checkedOutCopies));
         }
     }
 
@@ -316,7 +316,7 @@ public class TestCases2 {
      * Action:
      * Effect:
      */
-    /*@Test
+    @Test
     public void TestCase7(){
         Database database = new Database("Case1");
         database.resetDatabase();
@@ -366,13 +366,29 @@ public class TestCases2 {
         Assert.assertEquals(user1.checkedOutCopies.get(0).getDueDate(), "1 April");
 
         Assert.assertEquals(user1.checkedOutCopies.get(1).getDocumentID(), database.getDocuments(2).getID());
-        Assert.assertEquals(user1.checkedOutCopies.get(1).getDueDate(), "18 March");
+        Assert.assertEquals(user1.checkedOutCopies.get(1).getDueDate(), "1 April");
 
         Assert.assertEquals(user1.checkedOutCopies.get(2).getDocumentID(), database.getDocuments(4).getID());
         Assert.assertEquals(user1.checkedOutCopies.get(2).getDueDate(), "18 March");
+
+        UserCard user2 = database.getUserCard(1011);
+        Assert.assertEquals(user2.name + " " + user2.surname, "Nadia Teixeira");
+        Assert.assertEquals(user2.address, "Via Sacra, 13");
+        Assert.assertEquals(user2.phoneNumb, "30002");
+        Assert.assertEquals(user2.getId(), 1011);
+        Assert.assertEquals(user2.userType.getClass().getName().replace("users.", ""), "Student");
+
+        Assert.assertEquals(user2.checkedOutCopies.size(), 3);
+        Assert.assertEquals(user2.checkedOutCopies.get(0).getDocumentID(), database.getDocuments(1).getID());
+        Assert.assertEquals(user2.checkedOutCopies.get(0).getDueDate(), "25 March");
+
+        Assert.assertEquals(user2.checkedOutCopies.get(1).getDocumentID(), database.getDocuments(2).getID());
+        Assert.assertEquals(user2.checkedOutCopies.get(1).getDueDate(), "18 March");
+
+        Assert.assertEquals(user2.checkedOutCopies.get(2).getDocumentID(), database.getDocuments(5).getID());
+        Assert.assertEquals(user2.checkedOutCopies.get(2).getDueDate(), "18 March");
     }
 
-*/
 
     /**
      * Initial state:
@@ -417,7 +433,7 @@ public class TestCases2 {
         Assert.assertEquals(database.getDocuments(5).availableCopies.size(), 1);
         Assert.assertNotNull(database.getUserCard(1010));
         Assert.assertNotNull(database.getUserCard(1011));
-        Assert.assertNotNull(database.getUserCard(1012));
+        Assert.assertNotNull(database.getUserCard(1100));
 
 
 

@@ -36,6 +36,7 @@ public class JournalArticle extends Document {
         this.editor = data.getString("Editor");
         this.publicationDate = data.getString("PublicationDate");
         this.journalName = data.getString("JournalName");
+        this.checkOutTime = 14;
     }
 
     @Override

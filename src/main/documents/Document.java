@@ -23,6 +23,8 @@ public abstract class Document {
     public ArrayList<Copy> takenCopies;
     protected int checkOutTime;
 
+    boolean reference = false;
+
     int lastCopyID = 0;
 
     /**
@@ -70,6 +72,7 @@ public abstract class Document {
         for(int i = 0; i < data.getJSONArray("Keywords").toList().size(); i++ ){
             keywords.add(data.getJSONArray("Keywords").getString(i));
         }
+        this.reference = data.getBoolean("Reference");
         this.price = data.getInt("Price");
         this.numberOfRequests = data.getInt("NumberOfRequest");
         this.availableCopies = new ArrayList<>();
@@ -135,6 +138,9 @@ public abstract class Document {
         lastCopyID++;
     }
 
+    public void setReference(boolean isRefernce){
+        this.reference = isRefernce;
+    }
     public void setCopy(Copy copy){
         if (copy.getDocumentID() == id){
             availableCopies.add(copy);
@@ -192,10 +198,15 @@ public abstract class Document {
         }
         data.put("TakenCopies", takenCopiesObj);
         data.put("DocumentType" , docType);
+        data.put("Reference", reference);
         return data;
     }
 
     public static void resetID(){
         lastID = 0;
+    }
+
+    public boolean isReference(){
+        return reference;
     }
 }

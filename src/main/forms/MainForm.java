@@ -266,9 +266,7 @@ public class MainForm {
             }
         }
 
-        if(((!document.getDocType().equals("Book") && document.getNumberOfAvailableCopies() > 0 ) ||
-                document.getNumberOfAvailableCopies() > 1)&& flag) {
-
+        if(!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
             document.takeCopy( session.userCard, session);
             database.saveDocuments(document);
             database.saveUserCard(session.userCard);

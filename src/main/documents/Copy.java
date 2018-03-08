@@ -30,7 +30,9 @@ public class Copy {
         this.room = data.getInt("Room");
         if(data.get("CheckedOutBy")!= JSONObject.NULL) {
             this.checkoutByUser = database.getUserCard(data.getInt("CheckedOutBy"));
-            checkoutByUser.checkedOutCopies.add(this);
+            if(!checkoutByUser.checkedOutCopies.contains(this)) {
+                checkoutByUser.checkedOutCopies.add(this);
+            }
         }
         this.checkOutDay = data.getInt("CheckedOutDay");
         this.checkOutMonth = data.getInt("CheckedOutMonth");
