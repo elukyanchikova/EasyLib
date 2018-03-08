@@ -278,10 +278,10 @@ public class TestCases2 {
 
         Assert.assertNull(database.getUserCard(1011));
 
-        Assert.assertEquals(database.getUserCard(1012).name,"Elvira");
-        Assert.assertEquals(database.getUserCard(1012).address,"Via del Corso, 22");
-        Assert.assertEquals(database.getUserCard(1012).phoneNumb,"30003");
-        Assert.assertEquals(database.getUserCard(1012).userType.getClass().getName().replace("users.",""),"Student");
+        Assert.assertEquals(database.getUserCard(1100).name,"Elvira");
+        Assert.assertEquals(database.getUserCard(1100).address,"Via del Corso, 22");
+        Assert.assertEquals(database.getUserCard(1100).phoneNumb,"30003");
+        Assert.assertEquals(database.getUserCard(1100).userType.getClass().getName().replace("users.",""),"Student");
         Assert.assertEquals(database.getUserCard(1100).getId(),1100);
 
     }
@@ -308,7 +308,21 @@ public class TestCases2 {
      */
     @Test
     public void TestCase6() {
-        Database database = new Database("Case6");
+        Database database = new Database("Case1");
+
+        database.resetDatabase();
+        TestCase1();
+        database.load();
+
+        Session session = new Session((database.getUserCard(1010).userType), 5, 3);
+        session.userCard = database.getUserCard(1010);
+        MainForm mainForm = new MainForm();
+        mainForm.setSession(session);
+        mainForm.setDatabase(database);
+
+        mainForm.selectDocument(0);
+        mainForm.checkOut(database.getDocuments(1));
+
     }
 
     /**
