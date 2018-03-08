@@ -273,6 +273,7 @@ public class TestCases2 {
     public void TestCase4() {
         Database database = new Database("Case4");
 
+
     }
 
     /**
@@ -282,7 +283,11 @@ public class TestCases2 {
      */
     @Test
     public void TestCase5() {
-        Database database = new Database("Case5");
+        Database database = new Database("Case1");
+        database.resetDatabase();
+        TestCase2();
+
+        database.load();
     }
 
     /**
@@ -376,17 +381,35 @@ public class TestCases2 {
     public void TestCase9() {
         Database database = new Database("Case1");
         database.resetDatabase();
+        TestCase1();
+
         database.load();
 
-        ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
-        ArrayList<Document> l1_requestedDocuments = new ArrayList<Document>();
 
-        UserCard librarian_1 = new UserCard("Irma", "Pins", new Librarian(), "8981351785", "north of London",
-                l1_checkedOutCopies, l1_requestedDocuments);
-        database.saveUserCard(librarian_1);
-        Session session = new Session(database.getUserCard(librarian_1.getId()).userType, 9, 3);
+        Session session = new Session(database.getUserCard(1).userType, 9, 3);
 
         session.endSession();
+
+
+        Database database1 = new Database("Case1");
+        database.resetDatabase();
+        TestCase1();
+
+        database.load();
+
+        Session session1 = new Session(database.getUserCard(1).userType,1,1);
+
+        Assert.assertEquals(database.getDocuments(1).availableCopies.size(), 1);
+        Assert.assertEquals(database.getDocuments(2).availableCopies.size(), 2);
+        Assert.assertEquals(database.getDocuments(3).availableCopies.size(), 1);
+        Assert.assertEquals(database.getDocuments(4).availableCopies.size(), 1);
+        Assert.assertEquals(database.getDocuments(5).availableCopies.size(), 1);
+        Assert.assertNotNull(database.getUserCard(1010));
+        Assert.assertNotNull(database.getUserCard(1011));
+        Assert.assertNotNull(database.getUserCard(1012));
+
+
+
 
 
     }
