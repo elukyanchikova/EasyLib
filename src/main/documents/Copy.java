@@ -10,9 +10,9 @@ public class Copy {
     private int documentID;
     private int level;
     private int room;
-    public int checkOutTime;
-    public int checkOutDay;
-    public int checkOutMonth;
+    public int checkOutTime =0 ;
+    public int checkOutDay = 0;
+    public int checkOutMonth = 0;
     private UserCard checkoutByUser;
 
     public Copy(Document document, int level, int room){
@@ -32,6 +32,9 @@ public class Copy {
             this.checkoutByUser = database.getUserCard(data.getInt("CheckedOutBy"));
             checkoutByUser.checkedOutCopies.add(this);
         }
+        this.checkOutDay = data.getInt("CheckedOutDay");
+        this.checkOutMonth = data.getInt("CheckedOutMonth");
+        this.checkOutTime = data.getInt("CheckedOutTime");
 
     }
 
@@ -57,6 +60,9 @@ public class Copy {
         }else data.put("CheckedOutBy", JSONObject.NULL);
         data.put("Level", level);
         data.put("Room", room);
+        data.put("CheckedOutDay", checkOutDay);
+        data.put("CheckedOutMonth", checkOutMonth);
+        data.put("CheckedOutTime",checkOutTime);
         return data;
     }
 
@@ -71,7 +77,7 @@ public class Copy {
     public String getDueDate(){
         int day=checkOutDay;
         int month = checkOutMonth;
-        day += checkOutTime;
+        day += checkOutTime-1;
         switch (month){
             case 1:
                 if(day > 31) {

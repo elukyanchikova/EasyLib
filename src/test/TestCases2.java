@@ -26,6 +26,7 @@ public class TestCases2 {
         //Initial state
         Database database = new Database("Case1");
         database.resetDatabase();
+        database.load();
 
         ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> l1_requestedDocuments = new ArrayList<Document>();
@@ -162,6 +163,7 @@ public class TestCases2 {
         //Initial state
         Database database = new Database("Case1");
         TestCase1();
+        database.load();
         Session session = new Session((database.getUserCard(1).userType), 9, 3);
         int a = 0;// number of all copies of all docs i.e. all physically available in library
         for (int i = 1; i <= database.getAllDocuments().size(); i++) {
@@ -255,7 +257,59 @@ public void TestCase6(){
  */
 @Test
 public void TestCase7(){
-        }
+    Database database = new Database("Case1");
+    database.resetDatabase();
+    TestCase1();
+    database.load();
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    Session session = new Session((database.getUserCard(1010).userType), 5, 3);
+    session.userCard = database.getUserCard(1010);
+    MainForm mainForm = new MainForm();
+    mainForm.setSession(session);
+    mainForm.setDatabase(database);
+
+    mainForm.selectDocument(0);
+    mainForm.checkOut(database.getDocuments(1));
+    mainForm.selectDocument(1);
+    mainForm.checkOut(database.getDocuments(2));
+    mainForm.selectDocument(2);
+    mainForm.checkOut(database.getDocuments(3));
+    mainForm.selectDocument(3);
+    mainForm.checkOut(database.getDocuments(4));
+    /////////////////////////////////////////////////////////////////////////////////////////
+    Session session1 = new Session((database.getUserCard(1011).userType), 5, 3);
+    session1.userCard = database.getUserCard(1011);
+    mainForm.setSession(session1);
+
+    mainForm.selectDocument(0);
+    mainForm.checkOut(database.getDocuments(1));
+    mainForm.selectDocument(1);
+    mainForm.checkOut(database.getDocuments(2));
+    mainForm.selectDocument(4);
+    mainForm.checkOut(database.getDocuments(5 ));
+    //////////////////////////////////////////////////////////////////////////////////////////
+    Session session2 = new Session((database.getUserCard(1).userType), 5, 3);
+    session2.userCard = database.getUserCard(1);
+    mainForm.setSession(session2);
+
+    UserCard user1 = database.getUserCard(1010);
+    Assert.assertEquals(user1.name + " " + user1.surname, "Sergey Afonso");
+    Assert.assertEquals(user1.address, "Via Margutta, 3");
+    Assert.assertEquals(user1.phoneNumb, "30001");
+    Assert.assertEquals(user1.getId(), 1010);
+    Assert.assertEquals(user1.userType.getClass().getName().replace("users.", ""), "Faculty");
+
+    Assert.assertEquals(user1.checkedOutCopies.size(), 3);
+    Assert.assertEquals(user1.checkedOutCopies.get(0).getDocumentID(), database.getDocuments(1).getID());
+    Assert.assertEquals(user1.checkedOutCopies.get(0).getDueDate(), "1 April");
+
+    Assert.assertEquals(user1.checkedOutCopies.get(1).getDocumentID(), database.getDocuments(2).getID());
+    Assert.assertEquals(user1.checkedOutCopies.get(1).getDueDate(), "18 March");
+
+    Assert.assertEquals(user1.checkedOutCopies.get(2).getDocumentID(), database.getDocuments(4).getID());
+    Assert.assertEquals(user1.checkedOutCopies.get(2).getDueDate(), "18 March");
+}
 
 /**
  * Initial state:

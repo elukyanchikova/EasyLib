@@ -3,6 +3,7 @@ package documents;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import storage.Database;
+import users.Session;
 import users.UserCard;
 
 import java.util.ArrayList;
@@ -149,9 +150,12 @@ public abstract class Document {
         }
     }
 
-    public boolean takeCopy(UserCard user){
+    public boolean takeCopy(UserCard user, Session session){
         if(availableCopies.size() > 0){
             availableCopies.get(0).checkoutBy(user);
+            availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.userType.isHasLongCheckOutPerm());
+            availableCopies.get(0).checkOutDay = session.day;
+            availableCopies.get(0).checkOutMonth = session.month;
             user.checkedOutCopies.add(availableCopies.get(0));
             availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.userType.isHasLongCheckOutPerm());
             takenCopies.add(availableCopies.get(0));

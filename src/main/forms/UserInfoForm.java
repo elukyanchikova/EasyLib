@@ -137,11 +137,5 @@ public class UserInfoForm {
         mainForm.startForm(stage, session,database);
     }
 
-    public UserCard getUser(int id, int libraryID, Session session){
-        if(session.getUser().isHasCheckUserInfoPerm()){
-            if(database.getUserCard(id).libraryID == libraryID){
-                return  database.getUserCard(id);
-            }else return null;
-        }else return null;
-    }
+
 }

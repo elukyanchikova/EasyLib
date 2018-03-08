@@ -248,6 +248,10 @@ public class MainForm {
         return database.getDocuments(database.getDocumentsID()[openDocumentID]);
     }
 
+    public Document selectDocumentByID(int id){
+        return database.getDocuments(id);
+    }
+
     public void updateSession(){
         session.userCard = database.getUserCard(session.userCard.getId());
     }
@@ -261,8 +265,8 @@ public class MainForm {
                 break;
             }
         }
-        if(document.getNumberOfAvailableCopies() > 0 && flag) {
-            document.takeCopy( session.userCard);
+        if((document.getNumberOfAvailableCopies() > 0 && flag) {
+            document.takeCopy( session.userCard, session);
             database.saveDocuments(document);
             database.saveUserCard(session.userCard);
             return true;
@@ -301,6 +305,10 @@ public class MainForm {
     public void clickOnUserInfoBtn() throws Exception{
         UserInfoForm userInfoForm = new UserInfoForm();
         userInfoForm.startForm(stage,session,database);
+    }
+
+    public void setDatabase(Database database){
+        this.database = database;
     }
 
 }

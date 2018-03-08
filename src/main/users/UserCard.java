@@ -17,19 +17,18 @@ public class UserCard {
     public UserType userType;
     public String phoneNumb;
     public String address;
-    public int libraryID;
 
     public ArrayList<Copy> checkedOutCopies;
     public ArrayList<Document> requestedDocs;
     public int fine;
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address,
-                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs, int libraryID){
-        this(++lastID, name,surname, userType, phoneNumb, address, checkedOutCopies, requestedDocs, libraryID);
+                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs){
+        this(++lastID, name,surname, userType, phoneNumb, address, checkedOutCopies, requestedDocs);
     }
 
     public UserCard(int id, String name, String surname, UserType userType, String phoneNumb, String address,
-                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs, int libraryID){
+                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs){
         this.name=name;
         this.surname=surname;
         this.userType=userType;
@@ -42,11 +41,11 @@ public class UserCard {
     }
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address, int libraryID){
-        this(name, surname, userType, phoneNumb, address, new ArrayList<>(), new ArrayList<>(), libraryID);
+        this(name, surname, userType, phoneNumb, address, new ArrayList<>(), new ArrayList<>());
     }
 
-    public UserCard(int id,String name, String surname, UserType userType, String phoneNumb, String address, int libraryID){
-        this(id, name, surname, userType, phoneNumb, address, new ArrayList<>(), new ArrayList<>(),libraryID);
+    public UserCard(int id,String name, String surname, UserType userType, String phoneNumb, String address){
+        this(id, name, surname, userType, phoneNumb, address, new ArrayList<>(), new ArrayList<>());
     }
 
     //public UserCard(int id, JSONObject data, Database database){
@@ -64,7 +63,6 @@ public class UserCard {
         }
         requestedDocs = new ArrayList<>();
         checkedOutCopies = new ArrayList<>();
-        this.libraryID = data.getInt("LibraryID");
     }
 
     public int getId() {
@@ -84,7 +82,6 @@ public class UserCard {
             requestedBooksObj.put(requestedDocs.get(i).getID());
         }
         data.put("RequestedDocs", requestedBooksObj);
-        data.put("LibraryID", libraryID);
         return data;
     }
 

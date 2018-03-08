@@ -61,5 +61,4 @@ public class Book extends Document {
         data.put("Bestseller", isBestseller);
         return data;
     }
-
 }
