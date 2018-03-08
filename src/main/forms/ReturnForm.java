@@ -145,11 +145,13 @@ public class ReturnForm {
             }
         }
 
+        Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+
         ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
         ArrayList<UserCard> all = database.getAllUsers();
         for (int i = 0; i < all.size(); i++) {
             for (int j = 0; j < all.get(i).checkedOutCopies.size(); j++) {
-                if (all.get(i).checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]) {
+                if (all.get(i).checkedOutCopies.get(j).getDocumentID() == database.getDocumentsID()[openDocumentID]) {
                     userCardsWithCopy.add(all.get(i));
                 }
             }
@@ -162,13 +164,13 @@ public class ReturnForm {
                     @Override
                     protected void updateItem(UserCard userCard, boolean flag) {
                         super.updateItem(userCard, flag);
-                        setText(userCard.name);
+                        if(userCard != null)
+                            setText(userCard.name);
                     }
                 };
             }
         });
         //Set document info
-        Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
         titleLbl.setText(chosenDocument.title);
         StringBuilder stringBuilder = new StringBuilder();
         for (String p : chosenDocument.authors) {
@@ -234,14 +236,25 @@ public class ReturnForm {
 
     public void returnBtn() {
         if (openDocumentID > -1) {
-            UserCard userCard = database.getUserCard(database.getUsercardsID()[userListView.getSelectionModel().getSelectedIndex()]);
+            ArrayList<UserCard> userCardsWithCopy= new ArrayList<>();
             Document document = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+            ArrayList<UserCard> all = database.getAllUsers();
+            for (int i = 0; i < all.size(); i++) {
+                for (int j = 0; j < all.get(i).checkedOutCopies.size(); j++) {
+                    if (all.get(i).checkedOutCopies.get(j).getDocumentID() == database.getDocumentsID()[openDocumentID]) {
+                        userCardsWithCopy.add(all.get(i));
+                    }
+                }
+            }
+            UserCard userCard = userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex());
             for (int i = 0; i < userCard.checkedOutCopies.size(); i++) {
                 if (userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]) {
                     document.returnCopy(userCard.checkedOutCopies.get(i));
                     userCard.checkedOutCopies.remove(i);
-                    database.saveUserCard(userCard);
+
                     database.saveDocuments(document);
+                    database.saveUserCard(userCard);
+
                 }
             }
 

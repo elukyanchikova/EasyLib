@@ -47,7 +47,9 @@
             <Label fx:id="labelAddition1" GridPane.rowIndex="6" />
             <Label fx:id="additionLbl1" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label fx:id="labelAddition2" GridPane.rowIndex="7" />
-            <Label fx:id="additionLbl2" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+             <Label fx:id="additionLbl2" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+             <Label GridPane.rowIndex = "8" fx:id="labelAddition3" />
+             <Label GridPane.rowIndex = "8" GridPane.columnIndex="1" fx:id="additionLbl3"  />
          </children>
       </GridPane>
 

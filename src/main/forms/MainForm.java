@@ -59,6 +59,7 @@ public class MainForm {
         this.session = currentSession;
         this.stage = primaryStage;
         this.database = database;
+        updateSession();
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -78,6 +79,7 @@ public class MainForm {
         if(!session.getUser().isHasEditPerm()){
             b1.setVisible(false);
             b2.setVisible(false);
+            b3.setVisible(false);
         }
         if(!session.getUser().isHasCheckOutPerm()) checkoutButton.setVisible(false);
         documentListView.setItems(FXCollections.observableArrayList(database.getAllDocuments()));
@@ -197,10 +199,9 @@ public class MainForm {
                     }
                 }
 
-
+                requestLbl.setText(String.valueOf(database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
                 if (flag){
                     if (database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() == 0) {
-                        requestLbl.setText(String.valueOf(database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
                         checkoutButton.setVisible(true);
                         if (session.userCard.requestedDocs.contains(database.getDocuments(database.getDocumentsID()[openDocumentID]))) {
                             checkoutButton.setText("Cancel request");
@@ -245,6 +246,10 @@ public class MainForm {
     public Document selectDocument(int id){
         openDocumentID = id;
         return database.getDocuments(database.getDocumentsID()[openDocumentID]);
+    }
+
+    public void updateSession(){
+        session.userCard = database.getUserCard(session.userCard.getId());
     }
 
     public boolean checkOut(Document document){
