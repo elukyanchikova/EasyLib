@@ -136,7 +136,7 @@ public class TestCases2 {
         //////////////////////////////////////////////////////////////////
         ArrayList<Copy> p3_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> p3_requestedDocs = new ArrayList<Document>();
-        UserCard p3 = new UserCard(1012, "Elvira", "Espindola", new Student(), "30003", "Via del Corso, 22", p3_checkedOutCopies, p3_requestedDocs);
+        UserCard p3 = new UserCard(1100, "Elvira", "Espindola", new Student(), "30003", "Via del Corso, 22", p3_checkedOutCopies, p3_requestedDocs);
         database.saveUserCard(p3);
         //////////////////////////////////////////////////////////////////
         //Effect
