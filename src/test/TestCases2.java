@@ -265,6 +265,7 @@ public class TestCases2 {
     @Test
     public void TestCase4() {
         Database database = new Database("Case4");
+
     }
 
     /**
@@ -366,6 +367,21 @@ public class TestCases2 {
      */
     @Test
     public void TestCase9() {
+        Database database = new Database("Case1");
+        database.resetDatabase();
+        database.load();
+
+        ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
+        ArrayList<Document> l1_requestedDocuments = new ArrayList<Document>();
+
+        UserCard librarian_1 = new UserCard("Irma", "Pins", new Librarian(), "8981351785", "north of London",
+                l1_checkedOutCopies, l1_requestedDocuments);
+        database.saveUserCard(librarian_1);
+        Session session = new Session(database.getUserCard(librarian_1.getId()).userType, 9, 3);
+
+        session.endSession();
+
+
     }
 
 }
