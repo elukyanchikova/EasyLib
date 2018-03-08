@@ -265,12 +265,10 @@ public class MainForm {
                 break;
             }
         }
-<<<<<<< HEAD
+
         if(((!document.getDocType().equals("Book") && document.getNumberOfAvailableCopies() > 0 ) ||
                 document.getNumberOfAvailableCopies() > 1)&& flag) {
-=======
-        if(document.getNumberOfAvailableCopies() > 0 && flag) {
->>>>>>> 536f1c90cc92c9bd3510ed1e4106059e80727e7a
+
             document.takeCopy( session.userCard, session);
             database.saveDocuments(document);
             database.saveUserCard(session.userCard);
