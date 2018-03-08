@@ -76,6 +76,7 @@ public class Database {
         userCardData.put(Integer.toString(userCard.getId()), userCard.serialize());
         update();
         loadUserCards();
+        loadDocuments();
     }
 
     public void removeUserCard(UserCard userCard){

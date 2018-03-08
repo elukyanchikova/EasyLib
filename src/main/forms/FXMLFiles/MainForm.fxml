@@ -53,7 +53,6 @@
         <Label GridPane.rowIndex = "6" GridPane.columnIndex="0" fx:id="labelAddition2" ></Label>
         <Label GridPane.rowIndex = "7" GridPane.columnIndex="0" fx:id="labelAddition3" ></Label>
 
-
         <Label GridPane.rowIndex = "0"  GridPane.columnIndex="1" fx:id="titleLbl" text="Title"/>
         <Label GridPane.rowIndex = "1" GridPane.columnIndex="1" fx:id="authorsLbl" text="Author(s)" ></Label>
         <Label GridPane.rowIndex = "2" GridPane.columnIndex="1" fx:id="documentTypeLbl" text ="Book"></Label>
