@@ -35,7 +35,6 @@ public class TestCases2 {
                 l1_checkedOutCopies, l1_requestedDocuments);
         database.saveUserCard(librarian_1);
         Session session = new Session(database.getUserCard(librarian_1.getId()).userType, 9, 3);
-        Assert.assertTrue(Librarian.class.isAssignableFrom(session.getUser().getClass()));
 
         Assert.assertTrue("The database contains only one user", database.getAllUsers().size() == 1);
         Assert.assertTrue("This only one user is a librarian.", (Librarian.class.isAssignableFrom(database.getUserCard(1).userType.getClass())));
@@ -158,7 +157,7 @@ public class TestCases2 {
      * * patron p2
      * Effect:  number of documents in the System is 5 and the number of users is 3.
      */
-    @Test
+ /*   @Test
     public void TestCase2() {
         //Initial state
         Database database = new Database("Case1");
@@ -177,6 +176,7 @@ public class TestCases2 {
         }
         Assert.assertTrue("Number of documents equals to 8", (a == 8));
         Assert.assertTrue("Number of users equals to 4", (database.getAllUsers().size() == 4));
+
         //Action
         //Book b1 = (Book)database.getDocuments(1);
         database.getDocuments(1).removeCopy(database.getDocuments(1).availableCopies.get(1));
@@ -205,6 +205,7 @@ public class TestCases2 {
         Assert.assertTrue("Number of documents equals to 5", (b == 5));
         Assert.assertTrue("Number of users equals to 3",(database.getAllUsers().size() ==3));
 }
+*/
 
 
 
@@ -250,6 +251,7 @@ public void TestCase6(){
         }
 
 
+<<<<<<< HEAD
 /**
  * Initial state:
  * Action:
@@ -310,6 +312,16 @@ public void TestCase7(){
     Assert.assertEquals(user1.checkedOutCopies.get(2).getDocumentID(), database.getDocuments(4).getID());
     Assert.assertEquals(user1.checkedOutCopies.get(2).getDueDate(), "18 March");
 }
+=======
+    /**
+     * Initial state:
+     * Action:
+     * Effect:
+     */
+    @Test
+    public void TestCase7() {
+    }
+>>>>>>> 85210f07d63a6e197e9b2e19e268296ad9805544
 
 /**
  * Initial state:
