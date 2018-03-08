@@ -199,6 +199,7 @@ public class MainForm {
                     }
                 }
 
+                if(database.getDocuments(database.getDocumentsID()[openDocumentID]).isReference()) flag = false;
                 requestLbl.setText(String.valueOf(database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
                 if (flag){
                     if (database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() == 0) {
