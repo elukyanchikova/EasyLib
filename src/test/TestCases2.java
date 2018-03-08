@@ -1,7 +1,4 @@
-import documents.AVMaterial;
-import documents.Book;
-import documents.Copy;
-import documents.Document;
+import documents.*;
 import forms.MainForm;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,6 +9,7 @@ import java.util.ArrayList;
 
 
 public class TestCases2 {
+
     /**
      * Initial state:  system does not have any documents, any patron.
      * The system only contains one user who is a librarian.
@@ -22,7 +20,6 @@ public class TestCases2 {
      * * patrons p1, p2 and p3
      * Effect: number of documents in the System is 8 and the number of users is 4.
      */
-
     @Test
     public void TestCase1() {
 
@@ -136,14 +133,16 @@ public class TestCases2 {
         UserCard p3 = new UserCard(1012, "Elvira", "Espindola", new Student(), "30003", "Via del Corso, 22", p3_checkedOutCopies, p3_requestedDocs);
         database.saveUserCard(p3);
         //////////////////////////////////////////////////////////////////
-        //Result
+        //Effect
         int a = 0;// number of all copies of all docs i.e. all physically available in library
         for (int i = 1; i <= database.getAllDocuments().size(); i++) {
             if (!(database.getDocuments(i).getNumberOfAllCopies() == 0)) {
                 for (int j = 1; j <= database.getDocuments(i).getNumberOfAllCopies(); j++) {
                     a++;
-                }}
-             else{a++;}
+                }
+            } else {
+                a++;
+            }
 
         }
         Assert.assertTrue("Number of documents equals to 8", (a == 8));
@@ -160,78 +159,120 @@ public class TestCases2 {
      */
     @Test
     public void TestCase2() {
-     /*   Database database = new Database("Case2");
-        UserCard librarian_1 = database.getUserCard(1);*/
+        //Initial state
+        Database database = new Database("Case1");
+        TestCase1();
+        Session session = new Session((database.getUserCard(1).userType), 9, 3);
+        int a = 0;// number of all copies of all docs i.e. all physically available in library
+        for (int i = 1; i <= database.getAllDocuments().size(); i++) {
+            if (!(database.getDocuments(i).getNumberOfAllCopies() == 0)) {
+                for (int j = 1; j <= database.getDocuments(i).getNumberOfAllCopies(); j++) {
+                    a++;
+                }
+            } else {
+                a++;
+            }
+        }
+        Assert.assertTrue("Number of documents equals to 8", (a == 8));
+        Assert.assertTrue("Number of users equals to 4", (database.getAllUsers().size() == 4));
+        //Action
+        //Book b1 = (Book)database.getDocuments(1);
+        database.getDocuments(1).removeCopy(database.getDocuments(1).availableCopies.get(1));
+        database.saveDocuments(database.getDocuments(1));
+        database.getDocuments(1).removeCopy(database.getDocuments(1).availableCopies.get(0));
+        database.saveDocuments(database.getDocuments(1));
 
-    }
+        database.getDocuments(3).removeCopy(database.getDocuments(3).availableCopies.get(0));
+        database.saveDocuments(database.getDocuments(3));
 
-    /**
-     * Initial state:
-     * Action:
-     * Effect:
-     */
-    @Test
-    public void TestCase3() {
-    }
+        database.removeUserCard(database.getUserCard(1011));
+        // Effect
+        int b = 0;// number of all copies of all docs i.e. all physically available in library
+        for (int i = 1; i <= database.getAllDocuments().size(); i++) {
+            if ((database.getDocuments(i).getNumberOfAllCopies() == 0) && ((database.getDocuments(i).getClass() == AVMaterial.class) ||
+                    (database.getDocuments(i).getClass() == JournalArticle.class))) {
+                b=b+1;
+            } else if (!(database.getDocuments(i).getNumberOfAllCopies() == 0) && (database.getDocuments(i).getClass() == Book.class)) {
+                for (int j = 1; j <= database.getDocuments(i).getNumberOfAllCopies(); j++) {
+                    b=b+1;
+                }
+            }
 
-    /**
-     * Initial state:
-     * Action:
-     * Effect:
-     */
-    @Test
-    public void TestCase4() {
-        Database database = new Database("Case4");
-    }
+        }
 
-
-    /**
-     * Initial state:
-     * Action:
-     * Effect:
-     */
-    @Test
-    public void TestCase5() {
-        Database database = new Database("Case5");
-    }
-
-
-    /**
-     * Initial state:
-     * Action:
-     * Effect:
-     */
-    @Test
-    public void TestCase6() {
-        Database database = new Database("Case6");
-    }
-
-
-    /**
-     * Initial state:
-     * Action:
-     * Effect:
-     */
-    @Test
-    public void TestCase7() {
-    }
-
-    /**
-     * Initial state:
-     * Action:
-     * Effect:
-     */
-    @Test
-    public void TestCase8() {
-    }
-
-    /**
-     * Initial state:
-     * Action:
-     * Effect:
-     */
-    @Test
-    public void TestCase9() {
-    }
-
+        Assert.assertTrue("Number of documents equals to 5", (b == 5));
+        Assert.assertTrue("Number of users equals to 3",(database.getAllUsers().size() ==3));
 }
+
+
+
+/**
+ * Initial state:
+ * Action:
+ * Effect:
+ */
+@Test
+public void TestCase3(){
+        }
+
+/**
+ * Initial state:
+ * Action:
+ * Effect:
+ */
+@Test
+public void TestCase4(){
+        Database database=new Database("Case4");
+        }
+
+
+/**
+ * Initial state:
+ * Action:
+ * Effect:
+ */
+@Test
+public void TestCase5(){
+        Database database=new Database("Case5");
+        }
+
+
+/**
+ * Initial state:
+ * Action:
+ * Effect:
+ */
+@Test
+public void TestCase6(){
+        Database database=new Database("Case6");
+        }
+
+
+/**
+ * Initial state:
+ * Action:
+ * Effect:
+ */
+@Test
+public void TestCase7(){
+        }
+
+/**
+ * Initial state:
+ * Action:
+ * Effect:
+ */
+@Test
+public void TestCase8(){
+        }
+
+/**
+ * Initial state:
+ * Action:
+ * Effect:
+ */
+@Test
+public void TestCase9(){
+        }
+
+        }
