@@ -3,7 +3,10 @@ package documents;
 
 import org.json.JSONObject;
 import storage.Database;
+import users.Session;
 import users.UserCard;
+
+import java.util.ArrayList;
 
 public class Copy {
     private int id;
@@ -74,6 +77,20 @@ public class Copy {
 
     public void returnCopy(){
         checkoutByUser = null;
+    }
+
+    public int getOverdue(Session session){
+        int days = 0;
+        int[] m = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
+        if(checkOutMonth > session.month) return -1;
+        days = session.day - checkOutDay;
+        if(checkOutMonth < session.month){
+            int[] months = new int[session.month - checkOutMonth];
+            for(int i = checkOutMonth; i < session.month; i++) {
+                days += m[i-1];
+            }
+        }
+        return days<(checkOutTime)? -1: (days-checkOutTime);
     }
 
     public String getDueDate(){

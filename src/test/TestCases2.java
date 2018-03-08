@@ -434,6 +434,61 @@ public class TestCases2 {
      */
     @Test
     public void TestCase8() {
+        Database database = new Database("Case1");
+        database.resetDatabase();
+        TestCase1();
+        database.load();
+
+        Session session = new Session((database.getUserCard(1010).userType), 9, 2);
+        session.userCard = database.getUserCard(1010);
+        MainForm mainForm = new MainForm();
+        mainForm.setSession(session);
+        mainForm.setDatabase(database);
+
+        mainForm.selectDocument(0);
+        mainForm.checkOut(database.getDocuments(1));
+
+        Session session1 = new Session((database.getUserCard(1010).userType), 2, 2);
+        session1.userCard = database.getUserCard(1010);
+        mainForm.setSession(session1);
+
+        mainForm.selectDocument(1);
+        mainForm.checkOut(database.getDocuments(2));
+        ///////////////////////////////////////////////////////////////////////////////
+        Session session2 = new Session((database.getUserCard(1011).userType), 5, 2);
+        session2.userCard = database.getUserCard(1011);
+        mainForm.setSession(session2);
+
+        mainForm.selectDocument(0);
+        mainForm.checkOut(database.getDocuments(1));
+
+        Session session3 = new Session((database.getUserCard(1011).userType), 17, 2);
+        session3.userCard = database.getUserCard(1011);
+        mainForm.setSession(session3);
+        mainForm.selectDocument(3);
+        mainForm.checkOut(database.getDocuments(4 ));
+        ////////////////////////////////////////////////////////////////////////////////////
+        Session sessionLib = new Session((database.getUserCard(1).userType), 5, 3);
+        sessionLib.userCard = database.getUserCard(1);
+        mainForm.setSession(sessionLib);
+
+        UserCard user1 = database.getUserCard(1010);
+
+        Assert.assertEquals(user1.checkedOutCopies.size(), 2);
+        Assert.assertEquals(user1.checkedOutCopies.get(0).getDocumentID(), database.getDocuments(1).getID());
+        Assert.assertEquals(user1.checkedOutCopies.get(0).getOverdue(sessionLib), -1);
+
+        Assert.assertEquals(user1.checkedOutCopies.get(1).getDocumentID(), database.getDocuments(2).getID());
+        Assert.assertEquals(user1.checkedOutCopies.get(1).getOverdue(sessionLib), 3);
+
+        UserCard user2 = database.getUserCard(1011);
+
+        Assert.assertEquals(user2.checkedOutCopies.size(), 2);
+        Assert.assertEquals(user2.checkedOutCopies.get(0).getDocumentID(), database.getDocuments(1).getID());
+        Assert.assertEquals(user2.checkedOutCopies.get(0).getOverdue(sessionLib), 7);
+
+        Assert.assertEquals(user2.checkedOutCopies.get(1).getDocumentID(), database.getDocuments(4).getID());
+        Assert.assertEquals(user2.checkedOutCopies.get(1).getOverdue(sessionLib), 2);
     }
 
     /**
