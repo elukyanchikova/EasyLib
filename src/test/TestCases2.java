@@ -327,6 +327,31 @@ public class TestCases2 {
         mainForm.selectDocument(0);
         mainForm.checkOut(database.getDocuments(1));
 
+        mainForm.selectDocument(1);
+        mainForm.checkOut(database.getDocuments(2));
+        ///////////////////////////////////////////////////////////ehhehehe
+        Session session1 = new Session((database.getUserCard(1100).userType),5,3);
+        session1.userCard = database.getUserCard(1100);
+        mainForm.setSession(session1);
+
+        mainForm.selectDocument(0);
+        mainForm.checkOut(database.getDocuments(1));
+        ///////////////////////////////////////////////////////////phohoohohohh
+
+        Assert.assertEquals(database.getUserCard(1010).name,"Sergey");
+        Assert.assertEquals(database.getUserCard(1010).address,"Via Margutta, 3");
+        Assert.assertEquals(database.getUserCard(1010).phoneNumb,"30001");
+        Assert.assertEquals(database.getUserCard(1010).userType.getClass().getName().replace("users.",""),"Faculty");
+        Assert.assertEquals(database.getUserCard(1010).getId(),1010);
+        Assert.assertEquals(database.getUserCard(1010).checkedOutCopies.get(2).getDueDate(), "1 April");
+
+        Assert.assertEquals(database.getUserCard(1100).name,"Elvira");
+        Assert.assertEquals(database.getUserCard(1100).address,"Via del Corso, 22");
+        Assert.assertEquals(database.getUserCard(1100).phoneNumb,"30003");
+        Assert.assertEquals(database.getUserCard(1100).userType.getClass().getName().replace("users.",""),"Student");
+        Assert.assertEquals(database.getUserCard(1100).getId(),1100);
+        Assert.assertEquals(database.getUserCard(1100).checkedOutCopies.get(2).getDueDate(), "18 March");
+
     }
 
     /**
