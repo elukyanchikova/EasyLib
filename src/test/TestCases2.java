@@ -34,7 +34,7 @@ public class TestCases2 {
         UserCard librarian_1 = new UserCard("Irma", "Pins", new Librarian(), "8981351785", "north of London",
                 l1_checkedOutCopies, l1_requestedDocuments);
         database.saveUserCard(librarian_1);
-        Session session = new Session(database.getUserCard(librarian_1.getId()).userType, 9, 3);
+        Session session = new Session(database.getUserCard(librarian_1.getId()).userType, 5, 3);
         Assert.assertTrue("Session is leading by  librarian.", Librarian.class.isAssignableFrom(session.getUser().getClass()));
 
         Assert.assertTrue("The database contains only one user", database.getAllUsers().size() == 1);
@@ -165,7 +165,7 @@ public class TestCases2 {
         Database database = new Database("Case1");
         TestCase1();
         database.load();
-        Session session = new Session((database.getUserCard(1).userType), 9, 3);
+        Session session = new Session((database.getUserCard(1).userType), 5, 3);
         int a = 0;// number of all copies of all docs i.e. all physically available in library
         for (int i = 1; i <= database.getAllDocuments().size(); i++) {
             if (!(database.getDocuments(i).getNumberOfAllCopies() == 0)) {
@@ -184,7 +184,6 @@ public class TestCases2 {
         database.saveDocuments(database.getDocuments(1));
         database.getDocuments(1).removeCopy(database.getDocuments(1).availableCopies.get(0));
         database.saveDocuments(database.getDocuments(1));
-
         database.getDocuments(3).removeCopy(database.getDocuments(3).availableCopies.get(0));
         database.saveDocuments(database.getDocuments(3));
 
@@ -243,6 +242,10 @@ public class TestCases2 {
         Assert.assertTrue("id of p1 is correct.", ((first.getId() == database.getUserCard(1010).getId())
                 && (first.getId() == 1010)));
         Assert.assertTrue("User Type of p1 is correct", Faculty.class.isAssignableFrom(first.userType.getClass()));
+        Assert.assertTrue("List of checked out documents is correct", first.checkedOutCopies==database.getUserCard(1010).checkedOutCopies);
+        for (int i = 1; i <= first.checkedOutCopies.size() ; i++) {
+            Assert.assertTrue("List of due dates of checked out documents is correct", first.checkedOutCopies.get(i).getDueDate().equals(database.getUserCard(1010).checkedOutCopies));
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////
         Assert.assertTrue("Name of p2 is correct.", ((third.name.equals(database.getUserCard(1012).name))
                 && (third.name.equals("Elvira"))));
@@ -255,6 +258,10 @@ public class TestCases2 {
         Assert.assertTrue("id of p2 is correct.", ((third.getId() == database.getUserCard(1012).getId())
                 && (third.getId() == 1012)));
         Assert.assertTrue("User Type of p2 is correct", Student.class.isAssignableFrom(third.userType.getClass()));
+        Assert.assertTrue("List of checked out documents is correct", third.checkedOutCopies==database.getUserCard(1012).checkedOutCopies);
+        for (int i = 1; i <= third.checkedOutCopies.size() ; i++) {
+            Assert.assertTrue("List of due dates of checked out documents is correct", third.checkedOutCopies.get(i).getDueDate().equals(database.getUserCard(1012).checkedOutCopies));
+        }
     }
 
     /**
@@ -265,6 +272,8 @@ public class TestCases2 {
     @Test
     public void TestCase4() {
         Database database = new Database("Case4");
+
+
     }
 
     /**
@@ -274,7 +283,12 @@ public class TestCases2 {
      */
     @Test
     public void TestCase5() {
-        Database database = new Database("Case5");
+        Database database = new Database("Case1");
+        database.resetDatabase();
+        TestCase2();
+        database.load();
+
+        Assert.assertNull(database.getUserCard(1011));
     }
 
     /**
@@ -382,6 +396,39 @@ public class TestCases2 {
      */
     @Test
     public void TestCase9() {
+        Database database = new Database("Case1");
+        database.resetDatabase();
+        TestCase1();
+
+        database.load();
+
+
+        Session session = new Session(database.getUserCard(1).userType, 9, 3);
+
+        session.endSession();
+
+
+        Database database1 = new Database("Case1");
+        database.resetDatabase();
+        TestCase1();
+
+        database.load();
+
+        Session session1 = new Session(database.getUserCard(1).userType,1,1);
+
+        Assert.assertEquals(database.getDocuments(1).availableCopies.size(), 1);
+        Assert.assertEquals(database.getDocuments(2).availableCopies.size(), 2);
+        Assert.assertEquals(database.getDocuments(3).availableCopies.size(), 1);
+        Assert.assertEquals(database.getDocuments(4).availableCopies.size(), 1);
+        Assert.assertEquals(database.getDocuments(5).availableCopies.size(), 1);
+        Assert.assertNotNull(database.getUserCard(1010));
+        Assert.assertNotNull(database.getUserCard(1011));
+        Assert.assertNotNull(database.getUserCard(1012));
+
+
+
+
+
     }
 
 }
