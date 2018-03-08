@@ -286,8 +286,9 @@ public class TestCases2 {
         Database database = new Database("Case1");
         database.resetDatabase();
         TestCase2();
-
         database.load();
+
+        Assert.assertNull(database.getUserCard(1011));
     }
 
     /**
