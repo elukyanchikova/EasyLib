@@ -89,22 +89,22 @@ public class addUserForm {
             newUserCard = new UserCard(name,
                     surname, new Librarian(),
                     phoneNumber,
-                    address);
+                    address,1);
         } else if (userTypeTextField.getText().equals("faculty") || userTypeTextField.getText().equals("Faculty")) {
             newUserCard = new UserCard(name,
                     surname,
                     new Faculty(),
                     phoneNumber,
-                    address);
+                    address,1);
         } else if (userTypeTextField.getText().equals("student") || userTypeTextField.getText().equals("Student")) {
             newUserCard = new UserCard(nameTextField.getText(),
                     surname,
                     new Student(),
                     phoneNumber,
-                    address);
+                    address,1);
 
         } else {
-            newUserCard = new UserCard(name, surname, new Guest(), phoneNumber, address);
+            newUserCard = new UserCard(name, surname, new Guest(), phoneNumber, address,1);
         }
         database.saveUserCard(newUserCard);
     }

@@ -9,6 +9,7 @@ public abstract class UserType {
     boolean hasCheckOutPerm = false;
     boolean hasReturnPerm = false;
     boolean hasLongCheckOutPerm = false;
+    boolean hasCheckUserInfoPerm = false;
 
     public static void load(){
         UserType.userTypes.put("Faculty", new Faculty());
@@ -39,6 +40,10 @@ public abstract class UserType {
 
     public boolean isHasCheckOverdueDocPerm() {
         return hasCheckOverdueDocPerm;
+    }
+
+    public boolean isHasCheckUserInfoPerm(){
+        return hasCheckUserInfoPerm;
     }
 
     public static HashMap<String, UserType> userTypes = new HashMap<>();
