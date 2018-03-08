@@ -42,13 +42,14 @@ public class Book extends Document {
         this.publisher = data.getString("Publisher");
         this.edition = data.getString("Edition");
         this.year = data.getInt("Year");
+        this.checkOutTime = 21;
     }
 
 
     @Override
     public int getCheckOutTime(boolean longCheckOutPermission){
-        if(isBestseller) return 14;
         if(longCheckOutPermission) return 28;
+        if(isBestseller) return 14;
         return checkOutTime;
     }
 

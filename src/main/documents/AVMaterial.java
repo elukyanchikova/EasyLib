@@ -25,5 +25,6 @@ public class AVMaterial extends Document{
     public AVMaterial(int id, JSONObject data, Database database){
         super(id, data, database);
         this.docType = "AV material";
+        this.checkOutTime = 14;
     }
 }

@@ -96,8 +96,8 @@ public class TestCases2 {
 
         Book b3 = new Book("The Mythical Man-month", b3_authors,
                 b3_keywords, 0, b3_copies, "Addison-Wesley Longman Publishing Co.,Inc", 1995, "Second edition", false);
-        database.saveDocuments(b3);
 
+        b3.setReference(true);
         b3.setCopy(new Copy(b3, 1, 1));
 
         database.saveDocuments(b3);
@@ -292,7 +292,7 @@ public class TestCases2 {
      * Action:
      * Effect:
      */
-    /*@Test
+    @Test
     public void TestCase7(){
         Database database = new Database("Case1");
         database.resetDatabase();
@@ -342,13 +342,29 @@ public class TestCases2 {
         Assert.assertEquals(user1.checkedOutCopies.get(0).getDueDate(), "1 April");
 
         Assert.assertEquals(user1.checkedOutCopies.get(1).getDocumentID(), database.getDocuments(2).getID());
-        Assert.assertEquals(user1.checkedOutCopies.get(1).getDueDate(), "18 March");
+        Assert.assertEquals(user1.checkedOutCopies.get(1).getDueDate(), "1 April");
 
         Assert.assertEquals(user1.checkedOutCopies.get(2).getDocumentID(), database.getDocuments(4).getID());
         Assert.assertEquals(user1.checkedOutCopies.get(2).getDueDate(), "18 March");
+
+        UserCard user2 = database.getUserCard(1011);
+        Assert.assertEquals(user2.name + " " + user2.surname, "Nadia Teixeira");
+        Assert.assertEquals(user2.address, "Via Sacra, 13");
+        Assert.assertEquals(user2.phoneNumb, "30002");
+        Assert.assertEquals(user2.getId(), 1011);
+        Assert.assertEquals(user2.userType.getClass().getName().replace("users.", ""), "Student");
+
+        Assert.assertEquals(user2.checkedOutCopies.size(), 3);
+        Assert.assertEquals(user2.checkedOutCopies.get(0).getDocumentID(), database.getDocuments(1).getID());
+        Assert.assertEquals(user2.checkedOutCopies.get(0).getDueDate(), "25 March");
+
+        Assert.assertEquals(user2.checkedOutCopies.get(1).getDocumentID(), database.getDocuments(2).getID());
+        Assert.assertEquals(user2.checkedOutCopies.get(1).getDueDate(), "18 March");
+
+        Assert.assertEquals(user2.checkedOutCopies.get(2).getDocumentID(), database.getDocuments(5).getID());
+        Assert.assertEquals(user2.checkedOutCopies.get(2).getDueDate(), "18 March");
     }
 
-*/
 
     /**
      * Initial state:
