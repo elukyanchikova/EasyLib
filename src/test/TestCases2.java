@@ -271,8 +271,18 @@ public class TestCases2 {
      */
     @Test
     public void TestCase4() {
-        Database database = new Database("Case4");
+        Database database = new Database("Case1");
+        database.resetDatabase();
+        TestCase2();
+        database.load();
 
+        Assert.assertNull(database.getUserCard(1011));
+
+        Assert.assertEquals(database.getUserCard(1012).name,"Elvira");
+        Assert.assertEquals(database.getUserCard(1012).address,"Via del Corso, 22");
+        Assert.assertEquals(database.getUserCard(1012).phoneNumb,"");
+        Assert.assertEquals(database.getUserCard(1012).userType,UserType.class.getName().replace("users.",""));
+        Assert.assertEquals(database.getUserCard(1012).getId(),1010);
 
     }
 
