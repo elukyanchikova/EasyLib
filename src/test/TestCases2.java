@@ -34,7 +34,7 @@ public class TestCases2 {
                 l1_checkedOutCopies, l1_requestedDocuments);
         database.saveUserCard(librarian_1);
         Session session = new Session(database.getUserCard(librarian_1.getId()).userType, 9, 3);
-        Assert.assertTrue(Librarian.class.isAssignableFrom(session.getUser().getClass()));
+        Assert.assertTrue("Session is leading by  librarian.", Librarian.class.isAssignableFrom(session.getUser().getClass()));
 
         Assert.assertTrue("The database contains only one user", database.getAllUsers().size() == 1);
         Assert.assertTrue("This only one user is a librarian.", (Librarian.class.isAssignableFrom(database.getUserCard(1).userType.getClass())));
@@ -157,7 +157,7 @@ public class TestCases2 {
      * * patron p2
      * Effect:  number of documents in the System is 5 and the number of users is 3.
      */
-    @Test
+ /*   @Test
     public void TestCase2() {
         //Initial state
         Database database = new Database("Case1");
@@ -175,6 +175,8 @@ public class TestCases2 {
         }
         Assert.assertTrue("Number of documents equals to 8", (a == 8));
         Assert.assertTrue("Number of users equals to 4", (database.getAllUsers().size() == 4));
+        Assert.assertTrue("Session is leading by  librarian", Librarian.class.isAssignableFrom(session.getUser().getClass()));
+
         //Action
         //Book b1 = (Book)database.getDocuments(1);
         database.getDocuments(1).removeCopy(database.getDocuments(1).availableCopies.get(1));
@@ -203,76 +205,117 @@ public class TestCases2 {
         Assert.assertTrue("Number of documents equals to 5", (b == 5));
         Assert.assertTrue("Number of users equals to 3",(database.getAllUsers().size() ==3));
 }
+*/
 
-
-
-/**
- * Initial state:
- * Action:
- * Effect:
- */
-@Test
-public void TestCase3(){
+    /**
+     * Initial state: TC1
+     * Action: librarian checks the information of patron p1 and p3
+     * Effect: got all the information
+     */
+    @Test
+    public void TestCase3() {
+        //Initial state
+        Database database = new Database("Case1");
+        TestCase1();
+        Session session = new Session((database.getUserCard(1).userType), 9, 3);
+        int a = 0;// number of all copies of all docs i.e. all physically available in library
+        for (int i = 1; i <= database.getAllDocuments().size(); i++) {
+            if (!(database.getDocuments(i).getNumberOfAllCopies() == 0)) {
+                for (int j = 1; j <= database.getDocuments(i).getNumberOfAllCopies(); j++) {
+                    a++;
+                }
+            } else {
+                a++;
+            }
         }
+        Assert.assertTrue("Number of documents equals to 8", (a == 8));
+        Assert.assertTrue("Number of users equals to 4", (database.getAllUsers().size() == 4));
+        Assert.assertTrue("Session is leading by  librarian", Librarian.class.isAssignableFrom(session.getUser().getClass()));
+        // Action and Effect
+        UserCard librarian = database.getUserCard(1);
+        UserCard first = database.getUserCard(1010);
+        UserCard third = database.getUserCard(1012);
 
-/**
- * Initial state:
- * Action:
- * Effect:
- */
-@Test
-public void TestCase4(){
-        Database database=new Database("Case4");
-        }
+        Assert.assertTrue("Name of p1 is correct.", ((first.name.equals(database.getUserCard(1010).name))
+                && (first.name.equals("Sergey"))));
+        Assert.assertTrue("Surname of p1 is correct.", ((first.surname.equals(database.getUserCard(1010).surname))
+                && (first.surname.equals("Afonso"))));
+        Assert.assertTrue("Address of p1 is correct.", ((first.address.equals(database.getUserCard(1010).address)
+                && (first.address.equals("Via Margutta, 3")))));
+        Assert.assertTrue("Phone Number of p1 is correct.", ((first.phoneNumb.equals(database.getUserCard(1010).phoneNumb))
+                && (first.phoneNumb.equals("30001"))));
+        Assert.assertTrue("id of p1 is correct.", ((first.getId()==database.getUserCard(1010).getId())
+                                                        && (first.getId() == 1010)));
+        Assert.assertTrue("User Type of p1 is correct", Faculty.class.isAssignableFrom(first.userType.getClass()));
+      /////////////////////////////////////////////////////////////////////////////////////////////
+        Assert.assertTrue("Name of p2 is correct.", ((third.name.equals(database.getUserCard(1012).name))
+                && (third.name.equals("Elvira"))));
+        Assert.assertTrue("Surname of p2 is correct.", ((third.surname.equals(database.getUserCard(1012).surname))
+                && (third.surname.equals("Espindola"))));
+        Assert.assertTrue("Address of p2 is correct.", ((third.address.equals(database.getUserCard(1012).address)
+                && (third.address.equals("Via del Corso, 22")))));
+        Assert.assertTrue("Phone Number of p2 is correct.", ((third.phoneNumb.equals(database.getUserCard(1012).phoneNumb))
+                && (third.phoneNumb.equals("30003"))));
+        Assert.assertTrue("id of p2 is correct.", ((third.getId()==database.getUserCard(1012).getId())
+                                                        && (third.getId() == 1012)));
+        Assert.assertTrue("User Type of p2 is correct", Student.class.isAssignableFrom(third.userType.getClass()));
+    }
 
+    /**
+     * Initial state:
+     * Action:
+     * Effect:
+     */
+    @Test
+    public void TestCase4() {
+        Database database = new Database("Case4");
+    }
 
-/**
- * Initial state:
- * Action:
- * Effect:
- */
-@Test
-public void TestCase5(){
-        Database database=new Database("Case5");
-        }
+    /**
+     * Initial state:
+     * Action:
+     * Effect:
+     */
+    @Test
+    public void TestCase5() {
+        Database database = new Database("Case5");
+    }
 
+    /**
+     * Initial state:
+     * Action:
+     * Effect:
+     */
+    @Test
+    public void TestCase6() {
+        Database database = new Database("Case6");
+    }
 
-/**
- * Initial state:
- * Action:
- * Effect:
- */
-@Test
-public void TestCase6(){
-        Database database=new Database("Case6");
-        }
+    /**
+     * Initial state:
+     * Action:
+     * Effect:
+     */
+    @Test
+    public void TestCase7() {
+    }
 
+    /**
+     * Initial state:
+     * Action:
+     * Effect:
+     */
+    @Test
+    public void TestCase8() {
+    }
 
-/**
- * Initial state:
- * Action:
- * Effect:
- */
-@Test
-public void TestCase7(){
-        }
+    /**
+     * Initial state:
+     * Action:
+     * Effect:
+     */
+    @Test
+    public void TestCase9() {
+    }
 
-/**
- * Initial state:
- * Action:
- * Effect:
- */
-@Test
-public void TestCase8(){
-        }
-
-/**
- * Initial state:
- * Action:
- * Effect:
- */
-@Test
-public void TestCase9(){
-        }
-
-        }
+}
