@@ -111,7 +111,7 @@ public class Database {
         load();
     }
 
-    public Integer[] getUsercardsID(){
+    public Integer[] getUserСardsID(){
         return userCards.keySet().toArray(new Integer[0]);
     }
 
