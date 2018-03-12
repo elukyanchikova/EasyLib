@@ -92,6 +92,10 @@ public class addFileForm {
 
     }
 
+    /**
+     * Click on button "Save" event
+     * button for collecting information from the textFields and create a new doc of a particular docType in the database
+     */
     @FXML
     public void save() {
 
@@ -190,7 +194,11 @@ public class addFileForm {
         }
     }
 
-
+    /**
+     * Click on button "Back"
+     * button for coming back to the EditForm
+     * @throws Exception
+     */
     @FXML
     public void back() throws Exception {
         EditForm mainForm = new EditForm();

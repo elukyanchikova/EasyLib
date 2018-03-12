@@ -63,6 +63,10 @@ public class addUserForm {
 
     }
 
+    /**
+     * Click on button "Save" event
+     * button for collecting information from the textFields and create a new UserCard
+     */
     @FXML
     public void save() {
 
@@ -108,6 +112,12 @@ public class addUserForm {
         }
         database.saveUserCard(newUserCard);
     }
+
+    /**
+     * Click ob button "back" event
+     * button for coming back to the EditForm
+     * @throws Exception
+     */
 
     @FXML
     public void back() throws Exception {

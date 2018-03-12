@@ -155,7 +155,10 @@ public class modifyFileForm {
 
     }
 
-
+    /**
+     * Click on button "Save" event
+     * collecting information from textFields(if the textField is not empty) and rewriting the information about the particular doc in the database
+     */
     @FXML
     public void save() {
 
@@ -226,11 +229,20 @@ public class modifyFileForm {
         }
     }
 
+    /**
+     * Click on button "Delete" event
+     * remove the file from database
+     */
     @FXML
     public void deleteFile() {
         Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);;
         database.removeDocuments(currentDoc);
     }
+
+    /**
+     *
+     * @throws Exception
+     */
     @FXML
     public void back() throws Exception {
         EditForm mainForm = new EditForm();
