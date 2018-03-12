@@ -127,7 +127,7 @@ public class AuthorizationForm {
         }
         int i = usersListView.getSelectionModel().getSelectedIndex();
         if( i > -1){
-            selectedUser = database.getUserCard(database.getUsercardsID()[i]);
+            selectedUser = database.getUserCard(database.getUserСardsID()[i]);
         }
     }
 
