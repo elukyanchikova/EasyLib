@@ -144,12 +144,21 @@ public class modifyUserForm {
         }
     }
 
+    /**
+     * choose a user for starting new session
+     * @param id - id of the UserCard
+     * @return UserCard with the particular id
+     */
     public UserCard selectUser(int id) {
         openUserCardID = id;
         return  databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
     }
 
 
+    /**
+     * Click on button "Save" event
+     * collecting information from textFields(if the textField is not empty) and rewriting the information about the particular doc in the database
+     */
     @FXML
     public void save() {
         //TODO add connection with databaseManager
@@ -193,12 +202,22 @@ public class modifyUserForm {
 
     }
 
+
+    /**
+     * Clock on button "Back" event
+     * come back for the EditForm
+     * @throws Exception
+     */
     @FXML
     void back() throws Exception {
         EditForm mainForm = new EditForm();
         mainForm.startForm(stage, session, databaseManager);
     }
 
+    /**
+     * Click on button "Delete" event
+     * remove the UserCard from the database
+     */
     @FXML
     public void deleteUser() {
         UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);

@@ -59,10 +59,8 @@ public class EditForm {
     }
 
     /**
-     * Click on button "addUser" event
-     * If the User has an access to editing(i.e. librarian) than the inf can be edited by him
+     * Click on button "addFile" event
      */
-
     @FXML
     public void addFile() throws Exception {
 
@@ -70,22 +68,41 @@ public class EditForm {
         mainForm.startForm(stage,session, databaseManager);
 
     }
+
+    /**
+     * Click on button "addUser" event
+     * If the User has an access to editing(i.e. librarian) than the inf can be edited by him
+     */
     @FXML
     public void addUser() throws Exception {
         addUserForm mainForm = new addUserForm();
         mainForm.startForm(stage,session, databaseManager);
     }
+
+    /**
+     * Click on button "modifyUser" event
+     */
     @FXML
     public void modifyUser() throws Exception {
         modifyUserForm mainForm = new modifyUserForm();
         mainForm.startForm(stage,session, databaseManager);
 
     }
+
+    /**
+     * Click on button "modifyFile" event
+     */
     @FXML
     public void modifyFile() throws Exception {
         modifyFileForm mainForm = new modifyFileForm();
         mainForm.startForm(stage,session, databaseManager);
     }
+
+    /**
+     *  Click on button "Back" event
+     *  button for coming back to the MainForm
+     *  @throws Exception
+     */
     @FXML public void back() throws Exception {
         MainForm mainForm = new MainForm();
         mainForm.startForm(stage, session, databaseManager);
