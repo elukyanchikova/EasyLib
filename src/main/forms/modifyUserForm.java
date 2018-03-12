@@ -156,7 +156,7 @@ public class modifyUserForm {
      */
     public UserCard selectUser(int id) {
         openUserCardID = id;
-        return  database.getUserCard(database.getUsercardsID()[openUserCardID]);
+        return  database.getUserCard(database.getUserСardsID()[openUserCardID]);
     }
 
 
@@ -170,27 +170,27 @@ public class modifyUserForm {
 
 
         if (!nameTextField.getText().isEmpty()) {
-            UserCard currentUser = database.getUserCard(database.getUsercardsID()[openUserCardID]);
+            UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
             currentUser.name = nameTextField.getText();
             database.saveUserCard(currentUser);
 
         }
         if (!surnameTextField.getText().isEmpty()) {
-            UserCard currentUser = database.getUserCard(database.getUsercardsID()[openUserCardID]);
+            UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
             currentUser.surname = surnameTextField.getText();
             database.saveUserCard(currentUser);
 
         }
         if (!addressTextField.getText().isEmpty()) {
 
-            UserCard currentUser = database.getUserCard(database.getUsercardsID()[openUserCardID]);
+            UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
             currentUser.address = addressTextField.getText();
             database.saveUserCard(currentUser);
         }
 
 
         if(!userTypeTextField.getText().isEmpty()){
-            UserCard currentUser = database.getUserCard(database.getUsercardsID()[openUserCardID]);
+            UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
             UserType u = UserType.userTypes.get(userTypeTextField.getText());
             if(u != null){
                 currentUser.userType = u;
@@ -200,11 +200,9 @@ public class modifyUserForm {
 
 
         if (!phoneNumberTextField.getText().isEmpty()) {
-            UserCard currentUser = database.getUserCard(database.getUsercardsID()[openUserCardID]);
+            UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
             currentUser.phoneNumb = phoneNumberTextField.getText();
             database.saveUserCard(currentUser);
-
-
         }
 
     }
@@ -227,7 +225,7 @@ public class modifyUserForm {
      */
     @FXML
     public void deleteUser() {
-        UserCard currentUser = database.getUserCard(database.getUsercardsID()[openUserCardID]);
+        UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
         database.removeUserCard(currentUser);
     }
 }

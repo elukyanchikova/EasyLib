@@ -95,7 +95,7 @@ public class UserInfoForm {
 
     public UserCard selectUserCard(int id){
         openUserCardID = id;
-        return database.getUserCard(database.getUsercardsID()[openUserCardID]);
+        return database.getUserCard(database.getUserСardsID()[openUserCardID]);
     }
 
 
