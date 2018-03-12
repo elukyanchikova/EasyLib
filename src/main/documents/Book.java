@@ -1,7 +1,7 @@
 package documents;
 
 import org.json.JSONObject;
-import storage.Database;
+import storage.DatabaseManager;
 
 import java.util.ArrayList;
 
@@ -35,8 +35,8 @@ public class Book extends Document {
         this(++lastID, title, authors, keywords, price,0, new ArrayList<>(), new ArrayList<>(), 1, publisher, year, edition,isBestseller);
     }
 
-    public Book(int id, JSONObject data, Database database){
-        super(id, data,database);
+    public Book(int id, JSONObject data, DatabaseManager databaseManager){
+        super(id, data, databaseManager);
         this.docType = "Book";
         this.isBestseller = data.getBoolean("Bestseller");
         this.publisher = data.getString("Publisher");

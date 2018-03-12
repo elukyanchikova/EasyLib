@@ -1,25 +1,19 @@
 package forms;
 
-import documents.AVMaterial;
-import documents.Book;
-import documents.JournalArticle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import storage.Database;
+import storage.DatabaseManager;
 import users.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class addUserForm {
     private Stage stage;
     private Scene scene;
     private Session session;
-    private Database database;
+    private DatabaseManager databaseManager;
 
     @FXML
     private TextField nameTextField;
@@ -36,10 +30,10 @@ public class addUserForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception {
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
         this.stage = primaryStage;
         this.session = currentSession;
-        this.database = database;
+        this.databaseManager = databaseManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -106,13 +100,13 @@ public class addUserForm {
         } else {
             newUserCard = new UserCard(name, surname, new Guest(), phoneNumber, address,1);
         }
-        database.saveUserCard(newUserCard);
+        databaseManager.saveUserCard(newUserCard);
     }
 
     @FXML
     public void back() throws Exception {
         EditForm mainForm = new EditForm();
-        mainForm.startForm(stage, session, database);
+        mainForm.startForm(stage, session, databaseManager);
     }
 
 }

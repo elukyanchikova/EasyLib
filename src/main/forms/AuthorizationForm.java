@@ -1,7 +1,5 @@
 package forms;
 
-import documents.Document;
-import documents.Storage;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,17 +11,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import storage.Database;
+import storage.DatabaseManager;
 import users.*;
-
-import javax.xml.crypto.Data;
 
 public class AuthorizationForm {
 
     private Stage stage;
     private Scene scene;
     private Session session;
-    private Database database;
+    private DatabaseManager databaseManager;
 
     @FXML private TextField emailTextField;
     @FXML private Button loginAsStudentBtn;
@@ -36,7 +32,7 @@ public class AuthorizationForm {
     void startForm(Stage primaryStage) throws Exception{
         this.stage = primaryStage;
         UserType.load();
-        database = new Database("library");
+        databaseManager = new DatabaseManager("library");
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -57,7 +53,7 @@ public class AuthorizationForm {
         usersListView = (ListView<UserCard>) scene.lookup("#usersListView");
         dateField = (TextField) scene.lookup("#dateField");
 
-        usersListView.setItems(FXCollections.observableArrayList(database.getAllUsers()));
+        usersListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
         usersListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
             public ListCell<UserCard> call(ListView<UserCard> userCardListView) {
                 return new ListCell<UserCard>() {
@@ -103,7 +99,7 @@ public class AuthorizationForm {
             MainForm mainForm = new MainForm();
             Session session = new Session(selectedUser.userType, day,month);
             session.userCard = selectedUser;
-            mainForm.startForm(stage, session,database);
+            mainForm.startForm(stage, session, databaseManager);
         }
     }
 
@@ -127,7 +123,7 @@ public class AuthorizationForm {
         }
         int i = usersListView.getSelectionModel().getSelectedIndex();
         if( i > -1){
-            selectedUser = database.getUserCard(database.getUserСardsID()[i]);
+            selectedUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[i]);
         }
     }
 
@@ -153,6 +149,6 @@ public class AuthorizationForm {
             }
         }
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage,new Session(new Guest(), day,month),database);
+        mainForm.startForm(stage,new Session(new Guest(), day,month), databaseManager);
     }
 }

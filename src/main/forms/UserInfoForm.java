@@ -1,21 +1,17 @@
 package forms;
 
-import documents.Book;
 import documents.Copy;
-import documents.Document;
-import documents.JournalArticle;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import storage.Database;
+import storage.DatabaseManager;
 import users.Session;
 import users.UserCard;
 
@@ -23,7 +19,7 @@ public class UserInfoForm {
     private Stage stage;
     private Scene scene;
     private Session session;
-    private Database database;
+    private DatabaseManager databaseManager;
 
     private int openUserCardID = -1;
 
@@ -43,10 +39,10 @@ public class UserInfoForm {
      * @param primaryStage != null;
      * @param currentSession != null
      */
-    public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
+    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
-        this.database = database;
+        this.databaseManager = databaseManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -64,7 +60,7 @@ public class UserInfoForm {
         this.scene = new Scene(root,1000,700);
         elementsInitialization();
 
-        userListView.setItems(FXCollections.observableArrayList(database.getAllUsers()));
+        userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
             public ListCell<UserCard> call(ListView<UserCard> userListView) {
                 return new ListCell<UserCard>() {
@@ -95,7 +91,7 @@ public class UserInfoForm {
 
     public UserCard selectUserCard(int id){
         openUserCardID = id;
-        return database.getUserCard(database.getUserСardsID()[openUserCardID]);
+        return databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
     }
 
 
@@ -123,7 +119,7 @@ public class UserInfoForm {
 
             StringBuilder stringBuilder = new StringBuilder();
             for(Copy c:chosenUser.checkedOutCopies){
-                stringBuilder.append(database.getDocuments(c.getDocumentID()).title);
+                stringBuilder.append(databaseManager.getDocuments(c.getDocumentID()).title);
                 stringBuilder.append("(" + c.getDueDate());
                 stringBuilder.append("), ");
             }
@@ -134,7 +130,7 @@ public class UserInfoForm {
     @FXML
     public void clickOnBackBtn() throws Exception {
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage, session,database);
+        mainForm.startForm(stage, session, databaseManager);
     }
 
 

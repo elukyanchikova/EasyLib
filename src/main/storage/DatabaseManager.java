@@ -7,20 +7,38 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Database {
+public class DatabaseManager {
+
+    /**
+     * Cached JSON Object that connected with .json file
+     * */
     private JSONObject jsonData;
     private JSONObject userCardData;
     private JSONObject documentsData;
 
-    HashMap<Integer,UserCard> userCards = new HashMap<>();
-    HashMap<Integer,Document> documents = new HashMap<>();
+    /**
+     * Loaded in database manager objects with access in runtime
+     */
+    private HashMap<Integer,UserCard> userCards = new HashMap<>();
+    private HashMap<Integer,Document> documents = new HashMap<>();
 
+    /**
+     * Name of JSON file(database) which manager works with
+     */
     private String fileDataName;
-    public Database(String fileDataName){
+
+    /**
+     * Create database manager which work with database(JSON file)
+     * @param fileDataName is the name of JSON file(database) which manager works with
+     */
+    public DatabaseManager(String fileDataName){
         this.fileDataName  = fileDataName;
         load();
     }
 
+    /**
+     * Load and parse JSON file which manager works with
+     * */
     public void load(){
         File file = new File(fileDataName +".json");
         try {
@@ -52,6 +70,14 @@ public class Database {
         }
     }
 
+    public void resetDatabase(){
+        this.userCardData = new JSONObject();
+        this.documentsData = new JSONObject();
+        Document.resetID();
+        UserCard.resetID();
+        update();
+        load();
+    }
 
     private void update(){
         try {
@@ -64,69 +90,6 @@ public class Database {
         }catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * This method save new state in database
-     * Use it to add or edit user card
-     * @param userCard that should be saved
-     */
-    public void saveUserCard(UserCard userCard){
-        //Update data of userCard
-        userCardData.put(Integer.toString(userCard.getId()), userCard.serialize());
-        update();
-        loadUserCards();
-        loadDocuments();
-    }
-
-    public void removeUserCard(UserCard userCard){
-        userCardData.remove(Integer.toString(userCard.getId()));
-        update();
-        loadUserCards();
-    }
-
-    private void loadUserCards(){
-        userCards.clear();
-        int id;
-        String[] keys = new String[0];
-        keys = userCardData.keySet().toArray(keys);
-        for (String key : keys) {
-            id = Integer.parseInt(key);
-            JSONObject data = userCardData.getJSONObject(Integer.toString(id));
-            UserCard userCard = new UserCard(id, data);
-            userCards.put(id, userCard);
-        }
-    }
-
-    public UserCard getUserCard(int id){
-        return userCards.get(id);
-    }
-
-    public void resetDatabase(){
-        this.userCardData = new JSONObject();
-        this.documentsData = new JSONObject();
-        Document.resetID();
-        UserCard.resetID();
-        update();
-        load();
-    }
-
-    public Integer[] getUserСardsID(){
-        return userCards.keySet().toArray(new Integer[0]);
-    }
-
-
-    public void saveDocuments(Document document){
-        //Update data of userCard
-        documentsData.put(Integer.toString(document.getID()), document.serialize());
-        update();
-        loadDocuments();
-    }
-
-    public void removeDocuments(Document document){
-        documentsData.remove(Integer.toString(document.getID()));
-        update();
-        loadDocuments();
     }
 
     private void loadDocuments(){
@@ -153,8 +116,60 @@ public class Database {
         }
     }
 
+    private void loadUserCards(){
+        userCards.clear();
+        int id;
+        String[] keys = new String[0];
+        keys = userCardData.keySet().toArray(keys);
+        for (String key : keys) {
+            id = Integer.parseInt(key);
+            JSONObject data = userCardData.getJSONObject(Integer.toString(id));
+            UserCard userCard = new UserCard(id, data);
+            userCards.put(id, userCard);
+        }
+    }
+    /**
+     * This method save new state in database
+     * Use it to add or edit user card
+     * @param userCard that should be saved
+     */
+    public void saveUserCard(UserCard userCard){
+        //Update data of userCard
+        userCardData.put(Integer.toString(userCard.getId()), userCard.serialize());
+        update();
+        loadUserCards();
+        loadDocuments();
+    }
+
+    public void removeUserCard(UserCard userCard){
+        userCardData.remove(Integer.toString(userCard.getId()));
+        update();
+        loadUserCards();
+    }
+
+    public void saveDocuments(Document document){
+        //Update data of userCard
+        documentsData.put(Integer.toString(document.getID()), document.serialize());
+        update();
+        loadDocuments();
+    }
+
+    public void removeDocuments(Document document){
+        documentsData.remove(Integer.toString(document.getID()));
+        update();
+        loadDocuments();
+    }
+
+    public UserCard getUserCard(int id){
+        return userCards.get(id);
+    }
+
     public Document getDocuments(int id){
         return documents.get(id);
+    }
+
+    public Integer[] getUserCardsID(){
+        return userCards.keySet().toArray(new Integer[0]);
     }
 
     public Integer[] getDocumentsID(){

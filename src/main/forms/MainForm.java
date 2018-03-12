@@ -12,7 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import storage.Database;
+import storage.DatabaseManager;
 import users.Session;
 
 public class MainForm {
@@ -20,7 +20,7 @@ public class MainForm {
     private Stage stage;
     private Scene scene;
     private Session session;
-    private Database database;
+    private DatabaseManager databaseManager;
 
     private int openDocumentID = -1;
 
@@ -55,10 +55,10 @@ public class MainForm {
      * @param primaryStage != null;
      * @param currentSession != null
      */
-    public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
+    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
-        this.database = database;
+        this.databaseManager = databaseManager;
         updateSession();
         sceneInitialization();
         stage.setScene(scene);
@@ -82,7 +82,7 @@ public class MainForm {
             b3.setVisible(false);
         }
         if(!session.getUser().isHasCheckOutPerm()) checkoutButton.setVisible(false);
-        documentListView.setItems(FXCollections.observableArrayList(database.getAllDocuments()));
+        documentListView.setItems(FXCollections.observableArrayList(databaseManager.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
             public ListCell<Document> call(ListView<Document> documentListView) {
                 return new ListCell<Document>() {
@@ -193,23 +193,23 @@ public class MainForm {
                 //Check number of copies and output it or number of requests
                 boolean flag = true;
                 for (Copy copy : session.userCard.checkedOutCopies) {
-                    if (copy.getDocumentID() == database.getDocuments(database.getDocumentsID()[openDocumentID]).getID()) {
+                    if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
                         flag = false;
                         break;
                     }
                 }
 
-                if(database.getDocuments(database.getDocumentsID()[openDocumentID]).isReference()) flag = false;
-                requestLbl.setText(String.valueOf(database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
+                if(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).isReference()) flag = false;
+                requestLbl.setText(String.valueOf(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
                 if (flag){
-                    if (database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() == 0) {
+                    if (databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() == 0) {
                         checkoutButton.setVisible(true);
-                        if (session.userCard.requestedDocs.contains(database.getDocuments(database.getDocumentsID()[openDocumentID]))) {
+                        if (session.userCard.requestedDocs.contains(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]))) {
                             checkoutButton.setText("Cancel request");
                         } else checkoutButton.setText("Request");
                     } else {
                         checkoutButton.setVisible(true);
-                        requestLbl.setText(String.valueOf(database.getDocuments(database.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
+                        requestLbl.setText(String.valueOf(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
                         checkoutButton.setText("Check out");
                     }
                 }else checkoutButton.setVisible(false);
@@ -223,7 +223,7 @@ public class MainForm {
      */
     @FXML
     public void checkOut(){
-        Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]) ;
+        Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]) ;
         if(currentDoc.getNumberOfAvailableCopies() == 0) {
             if (request(currentDoc)) {
                 checkoutButton.setText("Request");
@@ -246,22 +246,22 @@ public class MainForm {
 
     public Document selectDocument(int id){
         openDocumentID = id;
-        return database.getDocuments(database.getDocumentsID()[openDocumentID]);
+        return databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
     }
 
     public Document selectDocumentByID(int id){
-        return database.getDocuments(id);
+        return databaseManager.getDocuments(id);
     }
 
     public void updateSession(){
-        session.userCard = database.getUserCard(session.userCard.getId());
+        session.userCard = databaseManager.getUserCard(session.userCard.getId());
     }
 
     public boolean checkOut(Document document){
 
         boolean flag = true;
         for (Copy copy : session.userCard.checkedOutCopies) {
-            if (copy.getDocumentID() == database.getDocuments(database.getDocumentsID()[openDocumentID]).getID()) {
+            if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
                 flag = false;
                 break;
             }
@@ -269,8 +269,8 @@ public class MainForm {
 
         if(!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
             document.takeCopy( session.userCard, session);
-            database.saveDocuments(document);
-            database.saveUserCard(session.userCard);
+            databaseManager.saveDocuments(document);
+            databaseManager.saveUserCard(session.userCard);
             return true;
         }
         return false;
@@ -294,23 +294,23 @@ public class MainForm {
     @FXML
     public void clickOnReturnBtn() throws Exception{
         ReturnForm returnForm = new ReturnForm();
-        returnForm.startForm(stage, session,database);
+        returnForm.startForm(stage, session, databaseManager);
     }
 
     @FXML
     public void clickOnEditBtn() throws Exception{
         EditForm editForm = new EditForm();
-        editForm.startForm(stage,session,database);
+        editForm.startForm(stage,session, databaseManager);
     }
 
     @FXML
     public void clickOnUserInfoBtn() throws Exception{
         UserInfoForm userInfoForm = new UserInfoForm();
-        userInfoForm.startForm(stage,session,database);
+        userInfoForm.startForm(stage,session, databaseManager);
     }
 
-    public void setDatabase(Database database){
-        this.database = database;
+    public void setDatabaseManager(DatabaseManager databaseManager){
+        this.databaseManager = databaseManager;
     }
 
 }

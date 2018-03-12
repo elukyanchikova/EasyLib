@@ -6,15 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.IndexRange;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.junit.Test;
-import storage.Database;
+import storage.DatabaseManager;
 import users.Session;
 
-import javax.print.attribute.standard.Copies;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -22,7 +19,7 @@ public class addFileForm {
     private Stage stage;
     private Scene scene;
     private Session session;
-    private Database database;
+    private DatabaseManager databaseManager;
 
     @FXML
     private TextField titleTextField;
@@ -57,10 +54,10 @@ public class addFileForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception {
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
         this.stage = primaryStage;
         this.session = currentSession;
-        this.database = database;
+        this.databaseManager = databaseManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -148,44 +145,44 @@ public class addFileForm {
         if (docTypeTextField.getText().equals("Book")) {
             Book file = new Book(title, authors, keywords, price, publisher,
                     year, edition, isBestseller);
-            database.saveDocuments(file);
+            databaseManager.saveDocuments(file);
 
             int room = 415;
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
                 room++;
-                database.saveDocuments(file);
+                databaseManager.saveDocuments(file);
             }
         } else if (docTypeTextField.getText().equals("AVMaterial")) {
             AVMaterial file = new AVMaterial(title, authors, keywords, price);
-            database.saveDocuments(file);
+            databaseManager.saveDocuments(file);
             int room = 416;
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
                 room++;
-                database.saveDocuments(file);
+                databaseManager.saveDocuments(file);
             }
         } else if (docTypeTextField.getText().equals("JournalArticle")) {
             JournalArticle file = new JournalArticle(title, authors, keywords, price,
                     journalName, editor, Integer.toString(year));
-            database.saveDocuments(file);
+            databaseManager.saveDocuments(file);
 
             int room = 417;
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
                 room++;
-                database.saveDocuments(file);
+                databaseManager.saveDocuments(file);
             }
         } else {
             Book file = new Book(title, authors, keywords, price, publisher,
                     year, edition, isBestseller);
-            database.saveDocuments(file);
+            databaseManager.saveDocuments(file);
 
             int room = 415;
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
                 room++;
-                database.saveDocuments(file);
+                databaseManager.saveDocuments(file);
             }
         }
     }
@@ -194,7 +191,7 @@ public class addFileForm {
     @FXML
     public void back() throws Exception {
         EditForm mainForm = new EditForm();
-        mainForm.startForm(stage, session, database);
+        mainForm.startForm(stage, session, databaseManager);
     }
 
 }

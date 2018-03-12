@@ -4,7 +4,6 @@ import documents.Copy;
 import documents.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import storage.Database;
 
 import java.util.ArrayList;
 
@@ -48,7 +47,7 @@ public class UserCard {
         this(id, name, surname, userType, phoneNumb, address, new ArrayList<>(), new ArrayList<>());
     }
 
-    //public UserCard(int id, JSONObject data, Database database){
+    //public UserCard(int id, JSONObject data, DatabaseManager database){
     public UserCard(int id, JSONObject data){
         this.id = id;
         lastID = lastID < id?id:lastID;

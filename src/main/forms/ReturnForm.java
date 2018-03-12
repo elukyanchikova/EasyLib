@@ -13,11 +13,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import storage.Database;
+import storage.DatabaseManager;
 import users.Session;
 import users.UserCard;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 
 public class ReturnForm {
@@ -25,7 +24,7 @@ public class ReturnForm {
     private Stage stage;
     private Scene scene;
     private Session session;
-    private Database database;
+    private DatabaseManager databaseManager;
 
     //ArrayList<Document> documents = new ArrayList<>();
     //ArrayList<UserCard> users = new ArrayList<>();
@@ -70,10 +69,10 @@ public class ReturnForm {
     @FXML
     private static Button returnButton;
 
-    public void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception {
+    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
         this.session = currentSession;
         this.stage = primaryStage;
-        this.database = database;
+        this.databaseManager = databaseManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -104,7 +103,7 @@ public class ReturnForm {
         returnButton = (Button) scene.lookup("#returnButton");
         backButt = (Button) scene.lookup("backButt");
 
-        documentListView.setItems(FXCollections.observableArrayList(database.getAllDocuments()));
+        documentListView.setItems(FXCollections.observableArrayList(databaseManager.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
             public ListCell<Document> call(ListView<Document> documentListView) {
                 return new ListCell<Document>() {
@@ -119,7 +118,7 @@ public class ReturnForm {
             }
         });
 
-        /*userListView.setItems(FXCollections.observableArrayList(database.getAllUsers()));
+        /*userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
             public ListCell<UserCard> call(ListView<UserCard> userListView) {
                 return new ListCell<UserCard>() {
@@ -148,10 +147,10 @@ public class ReturnForm {
         Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
 
         ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
-        ArrayList<UserCard> all = database.getAllUsers();
+        ArrayList<UserCard> all = databaseManager.getAllUsers();
         for (int i = 0; i < all.size(); i++) {
             for (int j = 0; j < all.get(i).checkedOutCopies.size(); j++) {
-                if (all.get(i).checkedOutCopies.get(j).getDocumentID() == database.getDocumentsID()[openDocumentID]) {
+                if (all.get(i).checkedOutCopies.get(j).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
                     userCardsWithCopy.add(all.get(i));
                 }
             }
@@ -214,7 +213,7 @@ public class ReturnForm {
             //Check number of copies and output it or number of requests
             boolean flag = true;
             for (Copy copy : session.userCard.checkedOutCopies) {
-                if (copy.getDocumentID() == database.getDocuments(database.getDocumentsID()[openDocumentID]).getID()) {
+                if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
                     flag = false;
                     break;
                 }
@@ -225,35 +224,35 @@ public class ReturnForm {
 
     public Document selectDocument(int id) {
         openDocumentID = id;
-        return database.getDocuments(database.getDocumentsID()[openDocumentID]);
+        return databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
     }
 
     @FXML
     public void back() throws Exception {
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage, session, database);
+        mainForm.startForm(stage, session, databaseManager);
     }
 
     public void returnBtn() {
         if (openDocumentID > -1) {
             ArrayList<UserCard> userCardsWithCopy= new ArrayList<>();
-            Document document = database.getDocuments(database.getDocumentsID()[openDocumentID]);
-            ArrayList<UserCard> all = database.getAllUsers();
+            Document document = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
+            ArrayList<UserCard> all = databaseManager.getAllUsers();
             for (int i = 0; i < all.size(); i++) {
                 for (int j = 0; j < all.get(i).checkedOutCopies.size(); j++) {
-                    if (all.get(i).checkedOutCopies.get(j).getDocumentID() == database.getDocumentsID()[openDocumentID]) {
+                    if (all.get(i).checkedOutCopies.get(j).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
                         userCardsWithCopy.add(all.get(i));
                     }
                 }
             }
             UserCard userCard = userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex());
             for (int i = 0; i < userCard.checkedOutCopies.size(); i++) {
-                if (userCard.checkedOutCopies.get(i).getDocumentID() == database.getDocumentsID()[openDocumentID]) {
+                if (userCard.checkedOutCopies.get(i).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
                     document.returnCopy(userCard.checkedOutCopies.get(i));
                     userCard.checkedOutCopies.remove(i);
 
-                    database.saveDocuments(document);
-                    database.saveUserCard(userCard);
+                    databaseManager.saveDocuments(document);
+                    databaseManager.saveUserCard(userCard);
 
                 }
             }

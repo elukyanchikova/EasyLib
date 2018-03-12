@@ -1,6 +1,5 @@
 package forms;
 
-import documents.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,20 +8,16 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import storage.Database;
+import storage.DatabaseManager;
 import users.Session;
-import users.Student;
 import users.UserCard;
 import users.UserType;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class modifyUserForm {
     private Stage stage;
     private Scene scene;
     private Session session;
-    private Database database;
+    private DatabaseManager databaseManager;
 
 
     private int openUserCardID = -1;
@@ -74,9 +69,9 @@ public class modifyUserForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception {
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
         this.session = currentSession;
-        this.database = database;
+        this.databaseManager = databaseManager;
         this.stage = primaryStage;
         sceneInitialization();
         stage.setScene(scene);
@@ -112,7 +107,7 @@ public class modifyUserForm {
         /*checkedOutCopiesTextField = (TextField) scene.lookup("#checkedOutCopiesField");
         requestedDocsTextField = (TextField) scene.lookup("#requestedDocsField");*/
 
-        userListView.setItems(FXCollections.observableArrayList(database.getAllUsers()));
+        userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
             public ListCell<UserCard> call(ListView<UserCard> userListView) {
                 return new ListCell<UserCard>() {
@@ -151,49 +146,49 @@ public class modifyUserForm {
 
     public UserCard selectUser(int id) {
         openUserCardID = id;
-        return  database.getUserCard(database.getUserСardsID()[openUserCardID]);
+        return  databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
     }
 
 
     @FXML
     public void save() {
-        //TODO add connection with database
+        //TODO add connection with databaseManager
 
 
         if (!nameTextField.getText().isEmpty()) {
-            UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
+            UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
             currentUser.name = nameTextField.getText();
-            database.saveUserCard(currentUser);
+            databaseManager.saveUserCard(currentUser);
 
         }
         if (!surnameTextField.getText().isEmpty()) {
-            UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
+            UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
             currentUser.surname = surnameTextField.getText();
-            database.saveUserCard(currentUser);
+            databaseManager.saveUserCard(currentUser);
 
         }
         if (!addressTextField.getText().isEmpty()) {
 
-            UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
+            UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
             currentUser.address = addressTextField.getText();
-            database.saveUserCard(currentUser);
+            databaseManager.saveUserCard(currentUser);
         }
 
 
         if(!userTypeTextField.getText().isEmpty()){
-            UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
+            UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
             UserType u = UserType.userTypes.get(userTypeTextField.getText());
             if(u != null){
                 currentUser.userType = u;
             }
-            database.saveUserCard(currentUser);
+            databaseManager.saveUserCard(currentUser);
         }
 
 
         if (!phoneNumberTextField.getText().isEmpty()) {
-            UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
+            UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
             currentUser.phoneNumb = phoneNumberTextField.getText();
-            database.saveUserCard(currentUser);
+            databaseManager.saveUserCard(currentUser);
         }
 
     }
@@ -201,12 +196,12 @@ public class modifyUserForm {
     @FXML
     void back() throws Exception {
         EditForm mainForm = new EditForm();
-        mainForm.startForm(stage, session,database);
+        mainForm.startForm(stage, session, databaseManager);
     }
 
     @FXML
     public void deleteUser() {
-        UserCard currentUser = database.getUserCard(database.getUserСardsID()[openUserCardID]);
-        database.removeUserCard(currentUser);
+        UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
+        databaseManager.removeUserCard(currentUser);
     }
 }

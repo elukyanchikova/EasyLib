@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import storage.Database;
+import storage.DatabaseManager;
 import users.Session;
 
 public class EditForm {
@@ -14,7 +14,7 @@ public class EditForm {
     private Stage stage;
     private Scene scene;
     private Session session;
-    private Database database;
+    private DatabaseManager databaseManager;
 
     @FXML private Button addFileBtn;
     @FXML private Button deleteFileBtn;
@@ -29,11 +29,11 @@ public class EditForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception{
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
         sceneInitialization();
-        this.database = database;
+        this.databaseManager = databaseManager;
         stage.setScene(scene);
         stage.show();
     }
@@ -67,27 +67,27 @@ public class EditForm {
     public void addFile() throws Exception {
 
         addFileForm mainForm = new addFileForm();
-        mainForm.startForm(stage,session,database);
+        mainForm.startForm(stage,session, databaseManager);
 
     }
     @FXML
     public void addUser() throws Exception {
         addUserForm mainForm = new addUserForm();
-        mainForm.startForm(stage,session,database);
+        mainForm.startForm(stage,session, databaseManager);
     }
     @FXML
     public void modifyUser() throws Exception {
         modifyUserForm mainForm = new modifyUserForm();
-        mainForm.startForm(stage,session,database);
+        mainForm.startForm(stage,session, databaseManager);
 
     }
     @FXML
     public void modifyFile() throws Exception {
         modifyFileForm mainForm = new modifyFileForm();
-        mainForm.startForm(stage,session,database);
+        mainForm.startForm(stage,session, databaseManager);
     }
     @FXML public void back() throws Exception {
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage, session,database);
+        mainForm.startForm(stage, session, databaseManager);
     }
 }

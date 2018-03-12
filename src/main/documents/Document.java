@@ -1,8 +1,7 @@
 package documents;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-import storage.Database;
+import storage.DatabaseManager;
 import users.Session;
 import users.UserCard;
 
@@ -60,7 +59,7 @@ public abstract class Document {
         this(++lastID,title, docType,authors, keywords,price,0, new ArrayList<>(), new ArrayList<>(),1);
     }
 
-    public Document(int id, JSONObject data, Database database){
+    public Document(int id, JSONObject data, DatabaseManager databaseManager){
         this.id = id;
         lastID = lastID < id?id:lastID;
         this.title = data.getString("Title");
@@ -83,7 +82,7 @@ public abstract class Document {
         keys = availableCopiesObj.keySet().toArray(keys);
         for (int i = 0; i < availableCopiesObj.length(); i++){
             copyID = Integer.parseInt(keys[i]);
-            Copy copy = new Copy(availableCopiesObj.getJSONObject(Integer.toString(copyID)), database);
+            Copy copy = new Copy(availableCopiesObj.getJSONObject(Integer.toString(copyID)), databaseManager);
             availableCopies.add(copy);
             this.lastCopyID = copyID > lastCopyID? copyID:lastCopyID;
         }
@@ -91,7 +90,7 @@ public abstract class Document {
         keys = takenCopiesObj.keySet().toArray(keys);
         for (int i = 0; i < takenCopiesObj.length(); i++){
             copyID = Integer.parseInt(keys[i]);
-            Copy copy = new Copy(takenCopiesObj.getJSONObject(Integer.toString(copyID)), database);
+            Copy copy = new Copy(takenCopiesObj.getJSONObject(Integer.toString(copyID)), databaseManager);
             takenCopies.add(copy);
             this.lastCopyID = copyID > lastCopyID? copyID:lastCopyID;
         }

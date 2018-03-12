@@ -2,11 +2,9 @@ package documents;
 
 
 import org.json.JSONObject;
-import storage.Database;
+import storage.DatabaseManager;
 import users.Session;
 import users.UserCard;
-
-import java.util.ArrayList;
 
 public class Copy {
     private int id;
@@ -26,13 +24,13 @@ public class Copy {
         document.setCopy(this);
     }
 
-    public Copy(JSONObject data, Database database){
+    public Copy(JSONObject data, DatabaseManager databaseManager){
         this.id = data.getInt("ID");
         this.documentID = data.getInt("DocumentID");
         this.level = data.getInt("Level");
         this.room = data.getInt("Room");
         if(data.get("CheckedOutBy")!= JSONObject.NULL) {
-            this.checkoutByUser = database.getUserCard(data.getInt("CheckedOutBy"));
+            this.checkoutByUser = databaseManager.getUserCard(data.getInt("CheckedOutBy"));
             if(!checkoutByUser.checkedOutCopies.contains(this)) {
                 checkoutByUser.checkedOutCopies.add(this);
             }

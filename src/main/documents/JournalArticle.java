@@ -1,7 +1,7 @@
 package documents;
 
 import org.json.JSONObject;
-import storage.Database;
+import storage.DatabaseManager;
 
 import java.util.ArrayList;
 
@@ -30,8 +30,8 @@ public class JournalArticle extends Document {
         this(++lastID, title, authors, keywords, price, 0, new ArrayList<>(), new ArrayList<>(), 1, journalName, editor, publicationDate);
     }
 
-    public JournalArticle(int id, JSONObject data, Database database){
-        super(id, data, database);
+    public JournalArticle(int id, JSONObject data, DatabaseManager databaseManager){
+        super(id, data, databaseManager);
         this.docType = "Journal Article";
         this.editor = data.getString("Editor");
         this.publicationDate = data.getString("PublicationDate");

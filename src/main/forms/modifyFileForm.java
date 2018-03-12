@@ -9,11 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import storage.Database;
+import storage.DatabaseManager;
 import users.Session;
-import users.UserCard;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -21,7 +19,7 @@ public class modifyFileForm {
     private Stage stage;
     private Scene scene;
     private Session session;
-    private Database database;
+    private DatabaseManager databaseManager;
     private int openDocumentID = -1;
 
     @FXML
@@ -75,8 +73,8 @@ public class modifyFileForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, Database database) throws Exception {
-        this.database = database;
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
+        this.databaseManager = databaseManager;
         this.session = currentSession;
         this.stage = primaryStage;
         sceneInitialization();
@@ -115,7 +113,7 @@ public class modifyFileForm {
         editorNameTextField = (TextField) scene.lookup("#editorNameField");
         editionTextField = (TextField) scene.lookup("#editionField");
 
-        documentListView.setItems(FXCollections.observableArrayList(database.getAllDocuments()));
+        documentListView.setItems(FXCollections.observableArrayList(databaseManager.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
             public ListCell<Document> call(ListView<Document> documentListView) {
                 return new ListCell<Document>() {
@@ -151,7 +149,7 @@ public class modifyFileForm {
     }}
     public Document selectFile(int id){
         openDocumentID = id;
-        return database.getDocuments(database.getDocumentsID()[openDocumentID]);
+        return databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
 
     }
 
@@ -160,39 +158,39 @@ public class modifyFileForm {
     public void save() {
 
         if (!titleTextField.getText().isEmpty()) {
-            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);;
+            Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);;
             currentDoc.title = titleTextField.getText();
-            database.saveDocuments(currentDoc);
+            databaseManager.saveDocuments(currentDoc);
         }
 
         if (!authorsTextField.getText().isEmpty()) {
-            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
             ArrayList<String> authors = new ArrayList<String>(Arrays.asList(authorsTextField.getText().toLowerCase().replace(',', ';').split(";")));
             currentDoc.authors = authors;
-            database.saveDocuments(currentDoc);
+            databaseManager.saveDocuments(currentDoc);
         }
         if (!keywordsTextField.getText().isEmpty()) {
-            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
             ArrayList<String> keywords = new ArrayList<String>(Arrays.asList(keywordsTextField.getText().toLowerCase().replace(',', ';').split(";")));
             currentDoc.keywords = keywords;
-            database.saveDocuments(currentDoc);
+            databaseManager.saveDocuments(currentDoc);
         }
         if (!priceTextField.getText().isEmpty()) {
-            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
             currentDoc.price = Integer.parseInt(priceTextField.getText());
-            database.saveDocuments(currentDoc);
+            databaseManager.saveDocuments(currentDoc);
         }
 
         if (!publisherTextField.getText().isEmpty()) {
-            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
             if (currentDoc.getClass().equals(Book.class)) {
                 ((Book) currentDoc).publisher = publisherTextField.getText();
             }
-            database.saveDocuments(currentDoc);
+            databaseManager.saveDocuments(currentDoc);
         }
 
         if (!yearTextField.getText().isEmpty()) {
-            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
             if (currentDoc.getClass().equals(Book.class)) {
 
                 ((Book) currentDoc).year = Integer.parseInt(yearTextField.getText());
@@ -201,24 +199,24 @@ public class modifyFileForm {
 
                 ((JournalArticle) currentDoc).publicationDate = yearTextField.getText();
             }
-            database.saveDocuments(currentDoc);
+            databaseManager.saveDocuments(currentDoc);
         }
         if (!journalNameTextField.getText().isEmpty()) {
-            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
             if (currentDoc.getClass().equals(JournalArticle.class)) {
                 ((JournalArticle) currentDoc).journalName = journalNameTextField.getText();
             }
-            database.saveDocuments(currentDoc);
+            databaseManager.saveDocuments(currentDoc);
         }
         if (!editorNameTextField.getText().isEmpty()) {
-            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
             if (currentDoc.getClass().equals(JournalArticle.class)) {
                 ((JournalArticle) currentDoc).editor = editorNameTextField.getText();
             }
-            database.saveDocuments(currentDoc);
+            databaseManager.saveDocuments(currentDoc);
         }
         if(!editionTextField.getText().isEmpty()){
-            Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);
+            Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
             if (currentDoc.getClass().equals(Book.class)){
                 ((Book)currentDoc).edition = editionTextField.getText();
             }
@@ -228,12 +226,12 @@ public class modifyFileForm {
 
     @FXML
     public void deleteFile() {
-        Document currentDoc = database.getDocuments(database.getDocumentsID()[openDocumentID]);;
-        database.removeDocuments(currentDoc);
+        Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);;
+        databaseManager.removeDocuments(currentDoc);
     }
     @FXML
     public void back() throws Exception {
         EditForm mainForm = new EditForm();
-        mainForm.startForm(stage, session,database);
+        mainForm.startForm(stage, session, databaseManager);
     }
 }
