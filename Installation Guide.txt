@@ -10,6 +10,8 @@
 2.5 You need libs:
     2.5.1 JSON(org.json:json:20180130
     2.5.2 Junit5("junit:junit:5.0-SNAPSHOT")(for test cases)
+2.6 Runs from forms.Main for application
+2.7 Runs from TestCases for tests
 
 3. WHAT IF THERE IS EXCEPTION
     3.1 Try to delete .json files
