@@ -19,7 +19,7 @@ public class UserCard {
 
     public ArrayList<Copy> checkedOutCopies;
     public ArrayList<Document> requestedDocs;
-    public int fine;
+    public int fine; //это надо?
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address,
                     ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs){
