@@ -2,6 +2,7 @@ package storage;
 
 import documents.*;
 import org.json.JSONObject;
+import users.Librarian;
 import users.UserCard;
 import java.io.*;
 import java.util.ArrayList;
@@ -63,10 +64,17 @@ public class DatabaseManager {
                 this.jsonData = new JSONObject();
                 this.userCardData = new JSONObject();
                 this.documentsData = new JSONObject();
+                saveUserCard(new UserCard(0,"Librarian", "Admin", new Librarian(), "None", "None"));
                 update();
             }
         }catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e){
+            this.jsonData = new JSONObject();
+            this.userCardData = new JSONObject();
+            this.documentsData = new JSONObject();
+            saveUserCard(new UserCard(0,"Librarian", "Admin", new Librarian(), "None", "None"));
+            update();
         }
     }
 
