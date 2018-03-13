@@ -92,7 +92,7 @@ public class AuthorizationForm {
                 day = Integer.parseInt(str.substring(0,2));
                 month = Integer.parseInt(str.substring(3,5));
                 if(month > 12 || month < 1) month = 12;
-                if(day > 31 || day<1) month = 28;
+                if(day > 31 || day<1) day = 28;
             }
         }
         if(selectedUser != null ){
@@ -106,21 +106,6 @@ public class AuthorizationForm {
     private UserCard selectedUser;
     @FXML
     public void selectUserOnListView() throws Exception{
-        int day = 1;
-        int month = 1;
-        if(dateField.getText() != null){
-            String str = dateField.getText();
-            if(str.length() == 5 &&
-                    str.charAt(0) >= '0' && str.charAt(0) <= '9' &&
-                    str.charAt(1) >= '0' && str.charAt(1) <= '9' &&
-                    str.charAt(3) >= '0' && str.charAt(3) <= '9' &&
-                    str.charAt(4) >= '0' && str.charAt(4) <= '9'){
-                day = Integer.parseInt(str.substring(0,2));
-                month = Integer.parseInt(str.substring(3,5));
-                if(month > 12 || month < 1) month = 12;
-                if(day > 31 || day<1) month = 28;
-            }
-        }
         int i = usersListView.getSelectionModel().getSelectedIndex();
         if( i > -1){
             selectedUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[i]);
@@ -145,7 +130,7 @@ public class AuthorizationForm {
                 day = Integer.parseInt(str.substring(0,2));
                 month = Integer.parseInt(str.substring(3,5));
                 if(month > 12 || month < 1) month = 12;
-                if(day > 31 || day<1) month = 28;
+                if(day > 31 || day<1) day = 28;
             }
         }
         MainForm mainForm = new MainForm();

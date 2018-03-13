@@ -39,7 +39,7 @@ public class UserCard {
         lastID = lastID < id?id:lastID;
     }
 
-    public UserCard(String name, String surname, UserType userType, String phoneNumb, String address, int libraryID){
+    public UserCard(String name, String surname, UserType userType, String phoneNumb, String address){
         this(name, surname, userType, phoneNumb, address, new ArrayList<>(), new ArrayList<>());
     }
 

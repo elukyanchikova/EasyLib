@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class TestCases2 {
 
+    final static String DATABASE_FILE_NAME = "TestCases";
     /**
      * Initial state:  system does not have any documents, any patron.
      * The system only contains one user who is a librarian.
@@ -24,9 +25,8 @@ public class TestCases2 {
     public void TestCase1() {
 
         //Initial state
-        DatabaseManager databaseManager = new DatabaseManager("Case1");
+        DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
         databaseManager.resetDatabase();
-        databaseManager.load();
 
         ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> l1_requestedDocuments = new ArrayList<Document>();
@@ -113,11 +113,11 @@ public class TestCases2 {
         databaseManager.saveDocuments(av1);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ArrayList<String> av2_keywords = new ArrayList<String>();
-        av1_keywords.add("none");
+        av2_keywords.add("none");
         ArrayList<String> av2_authors = new ArrayList<String>();
-        av1_authors.add("Claude Shannon");
+        av2_authors.add("Claude Shannon");
 
-        AVMaterial av2 = new AVMaterial("Information Entropy", av1_authors, av1_keywords, 0);
+        AVMaterial av2 = new AVMaterial("Information Entropy", av2_authors, av2_keywords, 0);
         databaseManager.saveDocuments(av2);
         av2.setCopy(new Copy(av2, 2, 1));
         databaseManager.saveDocuments(av2);
@@ -162,9 +162,9 @@ public class TestCases2 {
     @Test
     public void TestCase2() {
         //Initial state
-        DatabaseManager databaseManager = new DatabaseManager("Case1");
         TestCase1();
-        databaseManager.load();
+        DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
+
         Session session = new Session((databaseManager.getUserCard(1).userType), 5, 3);
         int a = 0;// number of all copies of all docs i.e. all physically available in library
         for (int i = 1; i <= databaseManager.getAllDocuments().size(); i++) {
@@ -209,9 +209,9 @@ public class TestCases2 {
     @Test
     public void TestCase3() {
         //Initial state
-        DatabaseManager databaseManager = new DatabaseManager("Case1");
         TestCase1();
-        databaseManager.load();
+        DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
+
         Session session = new Session((databaseManager.getUserCard(1).userType), 9, 3);
         int c = 0;// number of all copies of all docs i.e. all physically available in library
         for (int i = 1; i <= databaseManager.getAllDocuments().size(); i++) {
@@ -227,7 +227,6 @@ public class TestCases2 {
         Assert.assertTrue("Number of users equals to 4", (databaseManager.getAllUsers().size() == 4));
         Assert.assertTrue("Session is leading by  librarian", Librarian.class.isAssignableFrom(session.getUser().getClass()));
         // Action and Effect
-        UserCard librarian = databaseManager.getUserCard(1);
         UserCard first = databaseManager.getUserCard(1010);
         UserCard third = databaseManager.getUserCard(1100);
 
@@ -271,10 +270,8 @@ public class TestCases2 {
      */
     @Test
     public void TestCase4() {
-        DatabaseManager databaseManager = new DatabaseManager("Case1");
-        databaseManager.resetDatabase();
         TestCase2();
-        databaseManager.load();
+        DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
 
         Assert.assertNull(databaseManager.getUserCard(1011));
 
@@ -293,10 +290,8 @@ public class TestCases2 {
      */
     @Test
     public void TestCase5() {
-        DatabaseManager databaseManager = new DatabaseManager("Case1");
-        databaseManager.resetDatabase();
         TestCase2();
-        databaseManager.load();
+        DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
 
         Assert.assertNull(databaseManager.getUserCard(1011));
     }
@@ -312,11 +307,8 @@ public class TestCases2 {
      */
     @Test
     public void TestCase6() {
-        DatabaseManager databaseManager = new DatabaseManager("Case1");
-
-        databaseManager.resetDatabase();
         TestCase2();
-        databaseManager.load();
+        DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
 
         Session session = new Session((databaseManager.getUserCard(1010).userType), 5, 3);
         session.userCard = databaseManager.getUserCard(1010);
@@ -366,10 +358,8 @@ public class TestCases2 {
      */
     @Test
     public void TestCase7(){
-        DatabaseManager databaseManager = new DatabaseManager("Case1");
-        databaseManager.resetDatabase();
         TestCase1();
-        databaseManager.load();
+        DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
 
         ///////////////////////////////////////////////////////////////////////////////////////
         Session session = new Session((databaseManager.getUserCard(1010).userType), 5, 3);
@@ -449,10 +439,8 @@ public class TestCases2 {
      */
     @Test
     public void TestCase8() {
-        DatabaseManager databaseManager = new DatabaseManager("Case1");
-        databaseManager.resetDatabase();
         TestCase1();
-        databaseManager.load();
+        DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
 
         Session session = new Session((databaseManager.getUserCard(1010).userType), 9, 2);
         session.userCard = databaseManager.getUserCard(1010);
@@ -516,34 +504,23 @@ public class TestCases2 {
      */
     @Test
     public void TestCase9() {
-        DatabaseManager databaseManager = new DatabaseManager("Case1");
-        databaseManager.resetDatabase();
         TestCase1();
-
-        databaseManager.load();
-
+        DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
 
         Session session = new Session(databaseManager.getUserCard(1).userType, 9, 3);
 
         session.endSession();
 
+        DatabaseManager databaseManager1 = new DatabaseManager(DATABASE_FILE_NAME);
 
-        DatabaseManager databaseManager1 = new DatabaseManager("Case1");
-        databaseManager.resetDatabase();
-        TestCase1();
-
-        databaseManager.load();
-
-        Session session1 = new Session(databaseManager.getUserCard(1).userType,1,1);
-
-        Assert.assertEquals(databaseManager.getDocuments(1).availableCopies.size(), 3);
-        Assert.assertEquals(databaseManager.getDocuments(2).availableCopies.size(), 2);
-        Assert.assertEquals(databaseManager.getDocuments(3).availableCopies.size(), 1);
-        Assert.assertEquals(databaseManager.getDocuments(4).availableCopies.size(), 1);
-        Assert.assertEquals(databaseManager.getDocuments(5).availableCopies.size(), 1);
-        Assert.assertNotNull(databaseManager.getUserCard(1010));
-        Assert.assertNotNull(databaseManager.getUserCard(1011));
-        Assert.assertNotNull(databaseManager.getUserCard(1100));
+        Assert.assertEquals(databaseManager1.getDocuments(1).availableCopies.size(), 3);
+        Assert.assertEquals(databaseManager1.getDocuments(2).availableCopies.size(), 2);
+        Assert.assertEquals(databaseManager1.getDocuments(3).availableCopies.size(), 1);
+        Assert.assertEquals(databaseManager1.getDocuments(4).availableCopies.size(), 1);
+        Assert.assertEquals(databaseManager1.getDocuments(5).availableCopies.size(), 1);
+        Assert.assertNotNull(databaseManager1.getUserCard(1010));
+        Assert.assertNotNull(databaseManager1.getUserCard(1011));
+        Assert.assertNotNull(databaseManager1.getUserCard(1100));
 
     }
 
