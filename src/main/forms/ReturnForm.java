@@ -19,6 +19,10 @@ import users.UserCard;
 
 import java.util.ArrayList;
 
+/**
+ * Return form allows librarian to see the list of documents and users that have checked out it
+ * also allow to return the book for any users
+ */
 public class ReturnForm {
 
     private Stage stage;
@@ -69,6 +73,13 @@ public class ReturnForm {
     @FXML
     private static Button returnButton;
 
+    /**
+     *
+     * @param primaryStage - Stage
+     * @param currentSession - Session
+     * @param databaseManager - brings database link to the current form for modifying
+     * @throws Exception
+     */
     public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
         this.session = currentSession;
         this.stage = primaryStage;
@@ -78,6 +89,12 @@ public class ReturnForm {
         stage.show();
     }
 
+    /**
+     * Scene initialization method
+     * Sets information about chosen book on a labels on a grid pane
+     *
+     * @throws Exception
+     */
     private void sceneInitialization() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ReturnForm.fxml"));
         loader.setController(this);
@@ -136,6 +153,10 @@ public class ReturnForm {
     }
 
     @FXML
+    /**
+     * Method allows to choose the document from the list
+     * passes the chosen document info into scene
+     */
     public void selectDocument() {
         //get selected element
         if (documentListView.getSelectionModel().getSelectedIndex() > -1) {
@@ -144,7 +165,8 @@ public class ReturnForm {
             }
         }
 
-        Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+
+        Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex()); //chosen document
 
         ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
         ArrayList<UserCard> all = databaseManager.getAllUsers();
@@ -178,6 +200,7 @@ public class ReturnForm {
         }
         authorsLbl.setText(stringBuilder.toString());
 
+        //setting for keywords label
         documentTypeLbl.setText(chosenDocument.getDocType());
         priceLbl.setText(String.valueOf(chosenDocument.price));
         StringBuilder stringBuilderKeywords = new StringBuilder();
@@ -187,6 +210,7 @@ public class ReturnForm {
         }
         keywordsLbl.setText(stringBuilderKeywords.toString());
 
+        //setting for additional document info
         if (chosenDocument.getClass().equals(Book.class)) {
             labelAddition1.setText("Publisher: ");
             additionLbl1.setText(((Book) chosenDocument).publisher);
@@ -209,6 +233,7 @@ public class ReturnForm {
             additionLbl3.setText("");
         }
 
+        //return permission button
         if (session.getUser().isHasCheckOutPerm()) {
             //Check number of copies and output it or number of requests
             boolean flag = true;
@@ -222,17 +247,31 @@ public class ReturnForm {
 
     }
 
+    /**
+     * overload for the selectDocument method
+     * @param id - id of the chosen document
+     * @return
+     */
     public Document selectDocument(int id) {
         openDocumentID = id;
         return databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
     }
 
+    /**
+     * Method for Back Button
+     * allow to go to the previous form
+     * @throws Exception
+     */
     @FXML
     public void back() throws Exception {
         MainForm mainForm = new MainForm();
         mainForm.startForm(stage, session, databaseManager);
     }
 
+    /**
+     * Method for Return Button
+     * Allows librarian return patron's book
+     */
     public void returnBtn() {
         if (openDocumentID > -1) {
             ArrayList<UserCard> userCardsWithCopy= new ArrayList<>();
