@@ -14,6 +14,8 @@ import javafx.util.Callback;
 import storage.DatabaseManager;
 import users.*;
 
+import java.net.URL;
+
 public class AuthorizationForm {
 
     private Stage stage;
@@ -42,7 +44,9 @@ public class AuthorizationForm {
      * Initialization scene and scene's elements
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("AuthorizationForm.fxml"));
+        URL url = getClass().getResource("AuthorizationForm.fxml");
+        System.err.println(url);
+        FXMLLoader loader = new FXMLLoader(url);
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root,700,700);
