@@ -45,6 +45,8 @@
         <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelID" text="Lib.card ID: "></Label>
         <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelType" text="Type: "></Label>
         <Label GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="labelCheckedOut" text="Checked out: "></Label>
+        <Label GridPane.rowIndex = "6" GridPane.columnIndex="0" fx:id="labelFine" text="Total fine: "></Label>
+
 
         <Label GridPane.rowIndex = "0"  GridPane.columnIndex="1" fx:id="nameLbl"/>
         <Label GridPane.rowIndex = "1" GridPane.columnIndex="1" fx:id="addressLbl"  ></Label>
@@ -52,6 +54,8 @@
         <Label GridPane.rowIndex = "3" GridPane.columnIndex="1" fx:id="idLbl" ></Label>
         <Label GridPane.rowIndex = "4" GridPane.columnIndex="1" fx:id="typeLbl" ></Label>
         <Label GridPane.rowIndex = "5" GridPane.columnIndex="1" fx:id="checkedOutLbl" ></Label>
+        <Label GridPane.rowIndex = "6" GridPane.columnIndex="1" fx:id="fineLbl" ></Label>
+
 
     </GridPane>
 </GridPane>

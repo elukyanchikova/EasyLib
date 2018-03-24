@@ -34,6 +34,7 @@ public class UserInfoForm {
     @FXML private Label idLbl;
     @FXML private Label typeLbl;
     @FXML private Label checkedOutLbl;
+    @FXML private Label fineLbl;
     /**
      * Initialization and run new scene on the primary stage
      * @param primaryStage != null;
@@ -86,6 +87,7 @@ public class UserInfoForm {
         phoneNumLbl = (Label) scene.lookup("#phoneNumLbl");
         idLbl = (Label) scene.lookup("#idLbl");
         checkedOutLbl = (Label) scene.lookup("#checkedOutLbl");
+        fineLbl = (Label) scene.lookup("#fineLbl");
 
     }
 
@@ -116,6 +118,7 @@ public class UserInfoForm {
             phoneNumLbl.setText(chosenUser.phoneNumb);
             idLbl.setText(Integer.toString(chosenUser.getId()));
             typeLbl.setText(chosenUser.userType.getClass().getName().replace("users.", ""));
+            fineLbl.setText(Integer.toString(chosenUser.fine));
 
             StringBuilder stringBuilder = new StringBuilder();
             for(Copy c:chosenUser.checkedOutCopies){

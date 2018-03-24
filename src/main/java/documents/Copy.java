@@ -46,6 +46,19 @@ public class Copy {
         this.checkoutByUser = user;
     }
 
+    public void setFine(UserCard user,Session currentSession,DatabaseManager databaseManager){
+        int fine = 0;
+
+        for (int i = 1; i <= user.checkedOutCopies.size(); i++) {
+
+   /* The overdue fine is a hundred rubles per item per day, but cannot be
+    higher than the value of the overdue item.*/
+            while(fine<=databaseManager.getAllDocuments().get(i).price){
+            fine = fine + (user.checkedOutCopies.get(i).getOverdue(currentSession) * 100) ;
+            user.fine = fine;}
+        }
+    }
+
     public UserCard getCheckoutByUser(){
         return checkoutByUser;
     }
