@@ -10,6 +10,7 @@ public abstract class UserType {
     boolean hasReturnPerm = false;
     boolean hasLongCheckOutPerm = false;
     boolean hasCheckUserInfoPerm = false;
+    boolean hasMultiRenewPerm = false;
 
     public static void load(){
         UserType.userTypes.put("Faculty", new Faculty());
