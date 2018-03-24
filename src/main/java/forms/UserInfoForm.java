@@ -118,7 +118,7 @@ public class UserInfoForm {
             phoneNumLbl.setText(chosenUser.phoneNumb);
             idLbl.setText(Integer.toString(chosenUser.getId()));
             typeLbl.setText(chosenUser.userType.getClass().getName().replace("users.", ""));
-            fineLbl.setText(Integer.toString(chosenUser.fine));
+            fineLbl.setText(Integer.toString(chosenUser.getFine(chosenUser, session,databaseManager)));
 
             StringBuilder stringBuilder = new StringBuilder();
             for(Copy c:chosenUser.checkedOutCopies){

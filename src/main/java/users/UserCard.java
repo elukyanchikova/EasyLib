@@ -4,6 +4,7 @@ import documents.Copy;
 import documents.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import storage.DatabaseManager;
 
 import java.util.ArrayList;
 
@@ -19,45 +20,45 @@ public class UserCard {
 
     public ArrayList<Copy> checkedOutCopies;
     public ArrayList<Document> requestedDocs;
-    public int fine;
+    //public int fine;
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address,
-                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs){
-        this(++lastID, name,surname, userType, phoneNumb, address, checkedOutCopies, requestedDocs);
+                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs) {
+        this(++lastID, name, surname, userType, phoneNumb, address, checkedOutCopies, requestedDocs);
     }
 
     public UserCard(int id, String name, String surname, UserType userType, String phoneNumb, String address,
-                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs){
-        this.name=name;
-        this.surname=surname;
-        this.userType=userType;
-        this.phoneNumb=phoneNumb;
+                    ArrayList<Copy> checkedOutCopies, ArrayList<Document> requestedDocs) {
+        this.name = name;
+        this.surname = surname;
+        this.userType = userType;
+        this.phoneNumb = phoneNumb;
         this.address = address;
         this.checkedOutCopies = checkedOutCopies;
         this.requestedDocs = requestedDocs;
         this.id = id;
-        lastID = lastID < id?id:lastID;
+        lastID = lastID < id ? id : lastID;
     }
 
-    public UserCard(String name, String surname, UserType userType, String phoneNumb, String address){
+    public UserCard(String name, String surname, UserType userType, String phoneNumb, String address) {
         this(name, surname, userType, phoneNumb, address, new ArrayList<>(), new ArrayList<>());
     }
 
-    public UserCard(int id,String name, String surname, UserType userType, String phoneNumb, String address){
+    public UserCard(int id, String name, String surname, UserType userType, String phoneNumb, String address) {
         this(id, name, surname, userType, phoneNumb, address, new ArrayList<>(), new ArrayList<>());
     }
 
     //public UserCard(int id, JSONObject data, DatabaseManager database){
-    public UserCard(int id, JSONObject data){
+    public UserCard(int id, JSONObject data) {
         this.id = id;
-        lastID = lastID < id?id:lastID;
+        lastID = lastID < id ? id : lastID;
         this.name = data.getString("Name");
         this.surname = data.getString("Surname");
         this.userType = UserType.userTypes.get(data.getString("UserType"));
         this.phoneNumb = data.getString("PhoneNumber");
         this.address = data.getString("Address");
         JSONArray requestedDocsObj = data.getJSONArray("RequestedDocs");
-        for(int i = 0; i < requestedDocsObj.toList().size(); i++){
+        for (int i = 0; i < requestedDocsObj.toList().size(); i++) {
             //database.getDocument(requestedBooksObj.get(i))
         }
         requestedDocs = new ArrayList<>();
@@ -68,7 +69,7 @@ public class UserCard {
         return id;
     }
 
-    public JSONObject serialize(){
+    public JSONObject serialize() {
         JSONObject data = new JSONObject();
 
         data.put("Name", name);
@@ -77,14 +78,35 @@ public class UserCard {
         data.put("PhoneNumber", phoneNumb);
         data.put("Address", address);
         JSONArray requestedBooksObj = new JSONArray();
-        for(int i = 0; i < requestedDocs.size(); i++){
+        for (int i = 0; i < requestedDocs.size(); i++) {
             requestedBooksObj.put(requestedDocs.get(i).getID());
         }
         data.put("RequestedDocs", requestedBooksObj);
         return data;
     }
 
-    public static void resetID(){
+    public int getFine(UserCard user, Session currentSession, DatabaseManager databaseManager) {
+        int fine = 0;
+        int priceOfTheBook = 0;
+        int possibleFine = 0;
+        for (int i = 1; i <= user.checkedOutCopies.size(); i++) {
+            priceOfTheBook = databaseManager.getDocuments(user.checkedOutCopies.get(i).getDocumentID()).price;
+            possibleFine = user.checkedOutCopies.get(i).getOverdue(currentSession) * 100;
+            if (priceOfTheBook < possibleFine) {
+                fine = fine + priceOfTheBook;
+
+            } else {
+                fine = fine + possibleFine;
+            }
+            priceOfTheBook = 0;
+            possibleFine=0;
+
+        }
+        return fine;
+    }
+
+
+    public static void resetID() {
         lastID = 0;
     }
 }

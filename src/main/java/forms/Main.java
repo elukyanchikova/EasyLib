@@ -17,4 +17,5 @@ public class Main extends Application {
         AuthorizationForm authorizationForm = new AuthorizationForm();
         authorizationForm.startForm(primaryStage);
     }
+
 }
