@@ -5,7 +5,9 @@ import storage.DatabaseManager;
 import users.Session;
 import users.UserCard;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public abstract class Document {
 
@@ -21,9 +23,9 @@ public abstract class Document {
     public ArrayList<Copy> availableCopies;
     public ArrayList<Copy> takenCopies;
     protected int checkOutTime;
+    public PriorityQueue<UserCard> requestedBy = new PriorityQueue<UserCard>();
 
     boolean reference = false;
-
     int lastCopyID = 0;
 
     /**
@@ -43,7 +45,6 @@ public abstract class Document {
         lastID = lastID < id?id:lastID;
         this.lastCopyID = lastCopyID;
     }
-
     /**
      * The constructor is used for creating object and fill copies
      */
@@ -51,7 +52,6 @@ public abstract class Document {
                     ArrayList<Copy> copies){
         this(++lastID,title, docType,authors, keywords,price,0, copies, new ArrayList<>(),1);
     }
-
     /**
      * The constructor is used for creating object without copies
      */
@@ -97,13 +97,16 @@ public abstract class Document {
 
     }
 
-
     public int getID(){
         return id;
     }
 
     public String getDocType(){
         return docType;
+    }
+
+    public void putInPQ(UserCard user,Document document){
+        
     }
 
     public int getNumberOfRequests() {
@@ -118,7 +121,6 @@ public abstract class Document {
         if(numberOfRequests > 0)
             numberOfRequests--;
     }
-
 
     public int getNumberOfAllCopies() {
         return getNumberOfAvailableCopies() + getNumberOfTakenCopies();
