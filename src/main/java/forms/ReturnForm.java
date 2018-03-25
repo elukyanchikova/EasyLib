@@ -301,7 +301,7 @@ public class ReturnForm {
         }
     }
 
-    public void renewBtn() {
+    public boolean renewBtn() {
         if (openDocumentID > -1) {
             ArrayList<UserCard> userCardsWithCopy= new ArrayList<>();
             Document document = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
@@ -327,6 +327,21 @@ public class ReturnForm {
 
         }
 
+//        boolean flag = true;
+//        for (Copy copy : session.userCard.checkedOutCopies) {
+//            if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
+//                flag = false;
+//                break;
+//            }
+//        }
+//
+//        if(!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
+//            document.takeCopy( session.userCard, session);
+//            databaseManager.saveDocuments(document);
+//            databaseManager.saveUserCard(session.userCard);
+//            return true;
+//        }
+//        return false;
 
 
     }
