@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Return form allows librarian to see the list of documents and users that have checked out it
  * also allow to return the book for any users
  */
-public class ReturnForm {
+public class RenewForm {
 
     private Stage stage;
     private Scene scene;
@@ -96,7 +96,7 @@ public class ReturnForm {
      * @throws Exception
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ReturnForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("RenewForm.fxml"));
         loader.setController(this);
         AnchorPane root = loader.load();
         this.scene = new Scene(root, 1000, 700);
@@ -301,3 +301,4 @@ public class ReturnForm {
         }
     }
 }
+
