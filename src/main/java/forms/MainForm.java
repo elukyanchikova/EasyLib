@@ -190,6 +190,8 @@ public class MainForm {
                 additionLbl3.setText("");
             }
 
+            requestLbl.setText(String.valueOf(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
+
             if(session.getUser().isHasCheckOutPerm()) {
                 //Check number of copies and output it or number of requests
                 boolean flag = true;
@@ -210,7 +212,6 @@ public class MainForm {
                         } else checkoutButton.setText("Request");
                     } else {
                         checkoutButton.setVisible(true);
-                        requestLbl.setText(String.valueOf(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
                         checkoutButton.setText("Check out");
                     }
                 }else checkoutButton.setVisible(false);
