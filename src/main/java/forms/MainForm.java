@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.DatabaseManager;
+import users.Guest;
 import users.Session;
 
 public class MainForm {
@@ -254,7 +255,8 @@ public class MainForm {
     }
 
     public void updateSession(){
-        session.userCard = databaseManager.getUserCard(session.userCard.getId());
+        if(session.getUser().getClass() != Guest.class)
+            session.userCard = databaseManager.getUserCard(session.userCard.getId());
     }
 
     public boolean checkOut(Document document){
