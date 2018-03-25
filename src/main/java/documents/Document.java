@@ -6,6 +6,7 @@ import users.Session;
 import users.UserCard;
 
 import javax.jws.soap.SOAPBinding;
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
@@ -105,8 +106,9 @@ public abstract class Document {
         return docType;
     }
 
-    public void putInPQ(UserCard user,Document document){
-        
+    public void putInPQ(UserCard user, Document document, DatabaseManager databaseManager){
+       // databaseManager.getDocuments(document.id).
+
     }
 
     public int getNumberOfRequests() {
