@@ -87,20 +87,16 @@ public class UserCard {
 
     public int getFine(UserCard user, Session currentSession, DatabaseManager databaseManager) {
         int fine = 0;
-        int priceOfTheBook = 0;
-        int possibleFine = 0;
-        for (int i = 1; i <= user.checkedOutCopies.size(); i++) {
+        int priceOfTheBook ;
+        int possibleFine ;
+        for (int i = 0; i < user.checkedOutCopies.size(); i++) {
             priceOfTheBook = databaseManager.getDocuments(user.checkedOutCopies.get(i).getDocumentID()).price;
             possibleFine = user.checkedOutCopies.get(i).getOverdue(currentSession) * 100;
             if (priceOfTheBook < possibleFine) {
                 fine = fine + priceOfTheBook;
-
             } else {
                 fine = fine + possibleFine;
             }
-            priceOfTheBook = 0;
-            possibleFine=0;
-
         }
         return fine;
     }
