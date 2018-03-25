@@ -26,7 +26,7 @@ public abstract class Document {
     public ArrayList<Copy> availableCopies;
     public ArrayList<Copy> takenCopies;
     protected int checkOutTime;
-    public PriorityQueue<UserCard> requestedBy = new PriorityQueue<UserCard>(10, comparator);
+    public PriorityQueue<UserCard> requestedBy = new PriorityQueue<UserCard>(10);
 
     boolean reference = false;
     int lastCopyID = 0;
@@ -122,16 +122,16 @@ public abstract class Document {
             // probably be more robust
             // You could also just return x.length() - y.length(),
             // which would be more efficient.
-           /* if (x.length() < y.length())
+            if (x.priority < y.priority)
             {
                 return -1;
             }
-            if (x.length() > y.length())
+            if (x.priority > y.priority)
             {
                 return 1;
             }
-            return 0;*/
-       ; }
+            return 0;
+       }
     }
     public int getNumberOfRequests() {
         return numberOfRequests;
