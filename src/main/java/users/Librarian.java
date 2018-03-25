@@ -10,6 +10,7 @@ public class Librarian extends UserType {
        hasReturnPerm = true;
        hasCheckOverdueDocPerm = true;
        hasCheckUserInfoPerm = true;
+       priority = 1;
     }
 
 }

@@ -8,5 +8,6 @@ public class VisitingProfessor extends Patron {
         hasReturnPerm = true;
         hasLongCheckOutPerm = true;
         hasMultiRenewPerm = true;
+        priority = 3;
     }
 }

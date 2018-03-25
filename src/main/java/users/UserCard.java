@@ -101,7 +101,6 @@ public class UserCard {
         return fine;
     }
 
-
     public static void resetID() {
         lastID = 0;
     }
