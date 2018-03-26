@@ -300,4 +300,49 @@ public class ReturnForm {
 
         }
     }
+
+    public boolean renewBtn() {
+        if (openDocumentID > -1) {
+            ArrayList<UserCard> userCardsWithCopy= new ArrayList<>();
+            Document document = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
+            ArrayList<UserCard> all = databaseManager.getAllUsers();
+            for (int i = 0; i < all.size(); i++) {
+                for (int j = 0; j < all.get(i).checkedOutCopies.size(); j++) {
+                    if (all.get(i).checkedOutCopies.get(j).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
+                        userCardsWithCopy.add(all.get(i));
+                    }
+                }
+            }
+            UserCard userCard = userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex());
+            for (int i = 0; i < userCard.checkedOutCopies.size(); i++) {
+                if (userCard.checkedOutCopies.get(i).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
+                    document.returnCopy(userCard.checkedOutCopies.get(i));
+                    userCard.checkedOutCopies.remove(i);
+
+                    databaseManager.saveDocuments(document);
+                    databaseManager.saveUserCard(userCard);
+
+                }
+            }
+
+        }
+
+//        boolean flag = true;
+//        for (Copy copy : session.userCard.checkedOutCopies) {
+//            if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
+//                flag = false;
+//                break;
+//            }
+//        }
+//
+//        if(!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
+//            document.takeCopy( session.userCard, session);
+//            databaseManager.saveDocuments(document);
+//            databaseManager.saveUserCard(session.userCard);
+//            return true;
+//        }
+        return false;
+
+
+    }
 }
