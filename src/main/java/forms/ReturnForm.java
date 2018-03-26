@@ -74,9 +74,8 @@ public class ReturnForm {
     private static Button returnButton;
 
     /**
-     *
-     * @param primaryStage - Stage
-     * @param currentSession - Session
+     * @param primaryStage    - Stage
+     * @param currentSession  - Session
      * @param databaseManager - brings database link to the current form for modifying
      * @throws Exception
      */
@@ -185,7 +184,7 @@ public class ReturnForm {
                     @Override
                     protected void updateItem(UserCard userCard, boolean flag) {
                         super.updateItem(userCard, flag);
-                        if(userCard != null)
+                        if (userCard != null)
                             setText(userCard.name);
                     }
                 };
@@ -249,6 +248,7 @@ public class ReturnForm {
 
     /**
      * overload for the selectDocument method
+     *
      * @param id - id of the chosen document
      * @return
      */
@@ -260,6 +260,7 @@ public class ReturnForm {
     /**
      * Method for Back Button
      * allow to go to the previous form
+     *
      * @throws Exception
      */
     @FXML
@@ -276,7 +277,7 @@ public class ReturnForm {
     @FXML
     public void returnBtn() {
         if (openDocumentID > -1) {
-            ArrayList<UserCard> userCardsWithCopy= new ArrayList<>();
+            ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
             Document document = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
             ArrayList<UserCard> all = databaseManager.getAllUsers();
             for (int i = 0; i < all.size(); i++) {
@@ -301,9 +302,10 @@ public class ReturnForm {
         }
     }
 
+    @FXML
     public boolean renewBtn() {
         if (openDocumentID > -1) {
-            ArrayList<UserCard> userCardsWithCopy= new ArrayList<>();
+            ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
             Document document = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
             ArrayList<UserCard> all = databaseManager.getAllUsers();
             for (int i = 0; i < all.size(); i++) {
@@ -325,22 +327,22 @@ public class ReturnForm {
                 }
             }
 
-        }
 
-//        boolean flag = true;
-//        for (Copy copy : session.userCard.checkedOutCopies) {
-//            if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
-//                flag = false;
-//                break;
-//            }
-//        }
-//
-//        if(!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
-//            document.takeCopy( session.userCard, session);
-//            databaseManager.saveDocuments(document);
-//            databaseManager.saveUserCard(session.userCard);
-//            return true;
-//        }
+            boolean flag = true;
+            for (Copy copy : userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()).checkedOutCopies) {
+                if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
+                    flag = false;
+                    break;
+                }
+            }
+
+            if (!databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).isReference() && databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() > 0 && flag) {
+                databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).takeCopy(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()), session);
+                databaseManager.saveDocuments(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]));
+                databaseManager.saveUserCard(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()));
+                return true;
+            }
+        }
         return false;
 
 
