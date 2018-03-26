@@ -327,20 +327,20 @@ public class ReturnForm {
 
         }
 
-//        boolean flag = true;
-//        for (Copy copy : session.userCard.checkedOutCopies) {
-//            if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
-//                flag = false;
-//                break;
-//            }
-//        }
-//
-//        if(!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
-//            document.takeCopy( session.userCard, session);
-//            databaseManager.saveDocuments(document);
-//            databaseManager.saveUserCard(session.userCard);
-//            return true;
-//        }
+        boolean flag = true;
+        for (Copy copy : session.userCard.checkedOutCopies) {
+            if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
+                flag = false;
+                break;
+            }
+        }
+
+        if(!databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).isReference() && databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() > 0 && flag) {
+            databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).takeCopy( session.userCard, session);
+            databaseManager.saveDocuments(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]));
+            databaseManager.saveUserCard(session.userCard);
+            return true;
+        }
         return false;
 
 
