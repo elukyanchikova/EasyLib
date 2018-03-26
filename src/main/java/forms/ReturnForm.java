@@ -302,6 +302,7 @@ public class ReturnForm {
         }
     }
 
+    @FXML
     public boolean renewBtn() {
         if (openDocumentID > -1) {
             ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
