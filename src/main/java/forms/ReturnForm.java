@@ -341,7 +341,7 @@ public class ReturnForm {
 //            databaseManager.saveUserCard(session.userCard);
 //            return true;
 //        }
-//        return false;
+        return false;
 
 
     }
