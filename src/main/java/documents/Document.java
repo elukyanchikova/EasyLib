@@ -26,7 +26,8 @@ public abstract class Document {
     public ArrayList<Copy> availableCopies;
     public ArrayList<Copy> takenCopies;
     protected int checkOutTime;
-    public PriorityQueue<UserCard> requestedBy = new PriorityQueue<UserCard>(10);
+    Comparator<UserCard> comparator = new UserTypeComparator();
+    public PriorityQueue<UserCard> requestedBy = new PriorityQueue<UserCard>(10,comparator);
 
     boolean reference = false;
     int lastCopyID = 0;
@@ -109,24 +110,21 @@ public abstract class Document {
     }
 
     public void putInPQ(UserCard user, Document document, DatabaseManager databaseManager){
-       // databaseManager.getDocuments(document.id).
-        Comparator<UserType> comparator = new UserTypeComparator();
-        PriorityQueue<UserCard> queue =  document.requestedBy;
-        queue.add(user);
+       document.requestedBy.add(user);
     }
 
-    protected class UserTypeComparator implements Comparator<UserType> {
+    protected class UserTypeComparator implements Comparator<UserCard> {
         @Override
-        public int compare(UserType x, UserType y) {
+        public int compare(UserCard x, UserCard y) {
             // Assume neither string is null. Real code should
             // probably be more robust
             // You could also just return x.length() - y.length(),
             // which would be more efficient.
-            if (x.priority < y.priority)
+            if (x.userType.priority < y.userType.priority)
             {
                 return -1;
             }
-            if (x.priority > y.priority)
+            if (x.userType.priority > y.userType.priority)
             {
                 return 1;
             }
