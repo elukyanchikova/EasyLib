@@ -45,9 +45,9 @@ public class MainForm {
     @FXML private Label additionLbl2;
     @FXML private Label additionLbl3;
 
-    @FXML private Button b1;
-    @FXML private  Button b2;
-    @FXML private  Button b3;
+    @FXML private Button returnBtn;
+    @FXML private Button editBtn;
+    @FXML private Button infoBtn;
 
     @FXML private static Button checkoutButton;
 
@@ -66,9 +66,8 @@ public class MainForm {
         stage.show();
     }
 
-    //TODO refactor after adding storage
     /**
-     * Initialization scene and scene's elements
+     * Initialization scene
      * All elements will be initialized
      */
     private void sceneInitialization() throws Exception {
@@ -78,9 +77,9 @@ public class MainForm {
         this.scene = new Scene(root,1000,700);
         elementsInitialization();
         if(!session.getUser().isHasEditPerm()){
-            b1.setVisible(false);
-            b2.setVisible(false);
-            b3.setVisible(false);
+            returnBtn.setVisible(false);
+            editBtn.setVisible(false);
+            infoBtn.setVisible(false);
         }
         if(!session.getUser().isHasCheckOutPerm()) checkoutButton.setVisible(false);
         documentListView.setItems(FXCollections.observableArrayList(databaseManager.getAllDocuments()));
@@ -100,6 +99,10 @@ public class MainForm {
 
     }
 
+    /**
+     * Initialization scenes' elements
+     * All elements will be initialized
+     */
     private void elementsInitialization(){
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
@@ -119,147 +122,45 @@ public class MainForm {
         labelAddition2 = (Label) scene.lookup("#labelAddition2");
         labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
-        b1 = (Button) scene.lookup("#returnButton");
-        b2 = (Button) scene.lookup("#editButton");
-        b3 = (Button) scene.lookup("#userInfoButton");
+        returnBtn = (Button) scene.lookup("#returnButton");
+        editBtn = (Button) scene.lookup("#editButton");
+        infoBtn = (Button) scene.lookup("#userInfoButton");
 
         checkoutButton = (Button) scene.lookup("#checkoutButton");
     }
 
-    //TODO change process of output
-
     /**
-     * Select element of Document List View Event
+     * Set new database manager to the form
      */
-    @FXML
-    public void selectDocumentListViewButton(){
-        //get selected element
-        if(!session.getUser().isHasEditPerm()){
-            b1.setVisible(false);
-            b2.setVisible(false);
-            b3.setVisible(false);
-        }
-        if(documentListView.getSelectionModel().getSelectedIndex() > -1) {
-            //If no document was opened
-            if(openDocumentID == -1){
-                documentInfoPane.setVisible(true);
-            }
-
-            //Set document info
-            Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
-
-            titleLbl.setText(chosenDocument.title);
-
-            StringBuilder stringBuilder = new StringBuilder();
-            for(String p:chosenDocument.authors){
-                stringBuilder.append(p);
-                stringBuilder.append(", ");
-            }
-            authorsLbl.setText(stringBuilder.toString());
-
-            documentTypeLbl.setText(chosenDocument.getDocType());
-            priceLbl.setText(String.valueOf(chosenDocument.price));
-            StringBuilder stringBuilderKeywords = new StringBuilder();
-            for(String s:chosenDocument.keywords){
-                stringBuilderKeywords.append(s);
-                stringBuilderKeywords.append(", ");
-            }
-            keywordsLbl.setText(stringBuilderKeywords.toString());
-
-            if(chosenDocument.getClass().equals(Book.class)){
-                labelAddition1.setText("Publisher: ");
-                additionLbl1.setText(((Book)chosenDocument).publisher);
-                labelAddition2.setText("Publication Year: ");
-                additionLbl2.setText(String.valueOf(((Book)chosenDocument).year));
-                if(((Book) chosenDocument).isBestseller) labelAddition3.setText("Bestseller");
-                else labelAddition3.setText("");
-                additionLbl3.setText("");
-            }else if(chosenDocument.getClass().equals(JournalArticle.class)){
-                labelAddition1.setText("Journal: ");
-                additionLbl1.setText(((JournalArticle)chosenDocument).journalName);
-                labelAddition2.setText("Editor: ");
-                additionLbl2.setText(String.valueOf(((JournalArticle)chosenDocument).editor));
-                labelAddition3.setText("Publication Date: ");
-                additionLbl3.setText(String.valueOf(((JournalArticle)chosenDocument).publicationDate));
-            }else{
-                labelAddition1.setText("");
-                labelAddition2.setText("");
-                labelAddition3.setText("");
-                additionLbl1.setText("");
-                additionLbl2.setText("");
-                additionLbl3.setText("");
-            }
-
-            requestLbl.setText(String.valueOf(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
-
-            if(session.getUser().isHasCheckOutPerm()) {
-                //Check number of copies and output it or number of requests
-                boolean flag = true;
-                for (Copy copy : session.userCard.checkedOutCopies) {
-                    if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
-                        flag = false;
-                        break;
-                    }
-                }
-
-                if(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).isReference()) flag = false;
-                requestLbl.setText(String.valueOf(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
-                if (flag){
-                    if (databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() == 0) {
-                        checkoutButton.setVisible(true);
-                        if (session.userCard.requestedDocs.contains(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]))) {
-                            checkoutButton.setText("Cancel request");
-                        } else checkoutButton.setText("Request");
-                    } else {
-                        checkoutButton.setVisible(true);
-                        checkoutButton.setText("Check out");
-                    }
-                }else checkoutButton.setVisible(false);
-            }else checkoutButton.setVisible(false);
-        }
+    public void setDatabaseManager(DatabaseManager databaseManager){
+        this.databaseManager = databaseManager;
     }
 
     /**
-     * Click on check out button event.
-     * Check out or request(temp) document
+     * Set new session to the form
      */
-    @FXML
-    public void checkOut(){
-        Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]) ;
-        if(currentDoc.getNumberOfAvailableCopies() == 0) {
-            if (request(currentDoc)) {
-                checkoutButton.setText("Request");
-            } else {
-                checkoutButton.setText("Cancel request");
-            }
-        }else{
-            checkOut(currentDoc);
-            requestLbl.setText(String.valueOf(currentDoc.getNumberOfAvailableCopies()));
-            if(currentDoc.getNumberOfAvailableCopies() == 0) {
-                checkoutButton.setText("Request");
-            }
-            checkoutButton.setVisible(false);
-        }
-    }
-
     public void setSession(Session session){
         this.session = session;
     }
 
+    //TODO: make easy to select
     public Document selectDocument(int id){
         openDocumentID = id;
         return databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
     }
 
-    public Document selectDocumentByID(int id){
-        return databaseManager.getDocuments(id);
-    }
-
+    /**
+     * Update the user card for current session
+     */
     public void updateSession(){
         if(session.getUser().getClass() != Guest.class)
             session.userCard = databaseManager.getUserCard(session.userCard.getId());
     }
 
+    /**
+     * Check out the document
+     * @return true if the document has checked out
+     */
     public boolean checkOut(Document document){
 
         boolean flag = true;
@@ -280,6 +181,10 @@ public class MainForm {
 
     }
 
+    /**
+     * Request the document
+     * @return true if the document has requested
+     */
     public boolean request(Document document){
 
         boolean requested = session.userCard.requestedDocs.contains(document);
@@ -294,26 +199,148 @@ public class MainForm {
         }
     }
 
+    /**
+     * Select element of Document List View Event
+     */
+    @FXML
+    public void clickOnDocumentListView() {
+
+        //get selected element
+        if (documentListView.getSelectionModel().getSelectedIndex() > -1) {
+            //If no document was opened
+            if (openDocumentID == -1) {
+                documentInfoPane.setVisible(true);
+            }
+
+            //Set document info
+            Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+
+            titleLbl.setText(chosenDocument.title);
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String p : chosenDocument.authors) {
+                stringBuilder.append(p);
+                stringBuilder.append(", ");
+            }
+            authorsLbl.setText(stringBuilder.toString());
+
+            documentTypeLbl.setText(chosenDocument.getDocType());
+            priceLbl.setText(String.valueOf(chosenDocument.price));
+            StringBuilder stringBuilderKeywords = new StringBuilder();
+            for (String s : chosenDocument.keywords) {
+                stringBuilderKeywords.append(s);
+                stringBuilderKeywords.append(", ");
+            }
+            keywordsLbl.setText(stringBuilderKeywords.toString());
+
+            if (chosenDocument.getClass().equals(Book.class)) {
+                labelAddition1.setText("Publisher: ");
+                additionLbl1.setText(((Book) chosenDocument).publisher);
+                labelAddition2.setText("Publication Year: ");
+                additionLbl2.setText(String.valueOf(((Book) chosenDocument).year));
+                if (((Book) chosenDocument).isBestseller) labelAddition3.setText("Bestseller");
+                else labelAddition3.setText("");
+                additionLbl3.setText("");
+            } else if (chosenDocument.getClass().equals(JournalArticle.class)) {
+                labelAddition1.setText("Journal: ");
+                additionLbl1.setText(((JournalArticle) chosenDocument).journalName);
+                labelAddition2.setText("Editor: ");
+                additionLbl2.setText(String.valueOf(((JournalArticle) chosenDocument).editor));
+                labelAddition3.setText("Publication Date: ");
+                additionLbl3.setText(String.valueOf(((JournalArticle) chosenDocument).publicationDate));
+            } else {
+                labelAddition1.setText("");
+                labelAddition2.setText("");
+                labelAddition3.setText("");
+                additionLbl1.setText("");
+                additionLbl2.setText("");
+                additionLbl3.setText("");
+            }
+
+            requestLbl.setText(String.valueOf(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
+
+            if (session.getUser().isHasCheckOutPerm()) {
+                //Check number of copies and output it or number of requests
+                boolean flag = true;
+                for (Copy copy : session.userCard.checkedOutCopies) {
+                    if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
+                        flag = false;
+                        break;
+                    }
+                    if (flag) {
+                        for (Document requested : session.userCard.requestedDocs) {
+                            if (requested.getID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    requestLbl.setText(String.valueOf(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies()));
+
+                    if (databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).isReference()) {
+                        flag = false;
+                        requestLbl.setText("");
+                        labelRequests.setText("Reference book");
+                    }
+
+                    if (flag) {
+                        checkoutButton.setVisible(true);
+                    }else checkoutButton.setVisible(false);
+                }
+            }
+        }
+    }
+
+    /**
+     * Click on check out button event.
+     * Check out or request(temp) document
+     */
+    @FXML
+    public void clickOnRequestBtn(){
+        Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]) ;
+        currentDoc.putInPQ(session.userCard, currentDoc, databaseManager);
+        session.userCard.requestedDocs.add(currentDoc);
+        checkoutButton.setVisible(false);
+    }
+
+    /**
+     * Click on return button event.
+     * Open Return Form
+     */
     @FXML
     public void clickOnReturnBtn() throws Exception{
         ReturnForm returnForm = new ReturnForm();
         returnForm.startForm(stage, session, databaseManager);
     }
 
+    /**
+     * Click on edit button event.
+     * Open Edit Form
+     */
     @FXML
     public void clickOnEditBtn() throws Exception{
         EditForm editForm = new EditForm();
         editForm.startForm(stage,session, databaseManager);
     }
 
+    /**
+     * Click on user info button event.
+     * Open UserInfo Form
+     */
     @FXML
     public void clickOnUserInfoBtn() throws Exception{
         UserInfoForm userInfoForm = new UserInfoForm();
         userInfoForm.startForm(stage,session, databaseManager);
     }
 
-    public void setDatabaseManager(DatabaseManager databaseManager){
-        this.databaseManager = databaseManager;
+    /**
+     * Click on requests button event.
+     * Open Booking Requests Form
+     */
+    @FXML
+    public void clickOnRequestsBtn() throws Exception{
+        UserInfoForm userInfoForm = new UserInfoForm();
+        userInfoForm.startForm(stage,session, databaseManager);
     }
-
 }

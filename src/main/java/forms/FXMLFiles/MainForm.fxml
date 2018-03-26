@@ -23,17 +23,22 @@
     </columnConstraints>
     <rowConstraints>
         <RowConstraints
-        minHeight="150" prefHeight="400" vgrow="ALWAYS"></RowConstraints>
+        minHeight="150" prefHeight="400" vgrow="ALWAYS"/>
     </rowConstraints>
 
     <ListView GridPane.columnIndex="0" fx:id="documentListView"
               minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
-              onMouseClicked="#selectDocumentListViewButton"
+              onMouseClicked="#clickOnDocumentListView"
     />
 
-    <Button GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="returnButton" text="Return" onMouseClicked="#clickOnReturnBtn"></Button>
-    <Button GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="editButton" text="Edit" onMouseClicked="#clickOnEditBtn"></Button>
-    <Button GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="userInfoButton" text="Users" onMouseClicked="#clickOnUserInfoBtn"></Button>
+    <Button GridPane.rowIndex = "3" GridPane.columnIndex="0"
+            fx:id="returnButton" text="Return" onMouseClicked="#clickOnReturnBtn"/>
+    <Button GridPane.rowIndex = "4" GridPane.columnIndex="0"
+            fx:id="requestsButton" text="Requests" onMouseClicked="#clickOnRequestsBtn"/>
+    <Button GridPane.rowIndex = "5" GridPane.columnIndex="0"
+            fx:id="editButton" text="Edit" onMouseClicked="#clickOnEditBtn"/>
+    <Button GridPane.rowIndex = "6" GridPane.columnIndex="0"
+            fx:id="userInfoButton" text="Users" onMouseClicked="#clickOnUserInfoBtn"/>
 
     <GridPane GridPane.columnIndex="1" fx:id="documentInfoPane"
                minWidth="100"
@@ -42,30 +47,32 @@
                maxWidth="Infinity"
               visible="false">
 
-        <Label GridPane.rowIndex = "0" GridPane.columnIndex="0" fx:id="labelTitle" text="Title: "></Label>
-        <Label GridPane.rowIndex = "1" GridPane.columnIndex="0" fx:id="labelAuthors" text="Author(s): " ></Label>
-        <Label GridPane.rowIndex = "2" GridPane.columnIndex="0" fx:id="labelType" text="Type: "></Label>
-        <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelPrice" text="Price: "></Label>
-        <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelKeywords" text="Keywords: "></Label>
-        <Label GridPane.rowIndex = "8" GridPane.columnIndex="0" fx:id="labelRequests" text="Copies: "></Label>
+        <Label GridPane.rowIndex = "0" GridPane.columnIndex="0" fx:id="labelTitle" text="Title: "/>
+        <Label GridPane.rowIndex = "1" GridPane.columnIndex="0" fx:id="labelAuthors" text="Author(s): "/>
+        <Label GridPane.rowIndex = "2" GridPane.columnIndex="0" fx:id="labelType" text="Type: "/>
+        <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelPrice" text="Price: "/>
+        <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelKeywords" text="Keywords: "/>
+        <Label GridPane.rowIndex = "8" GridPane.columnIndex="0" fx:id="labelRequests" text="Copies: "/>
 
-        <Label GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="labelAddition1" ></Label>
-        <Label GridPane.rowIndex = "6" GridPane.columnIndex="0" fx:id="labelAddition2" ></Label>
-        <Label GridPane.rowIndex = "7" GridPane.columnIndex="0" fx:id="labelAddition3" ></Label>
+        <Label GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="labelAddition1" />
+        <Label GridPane.rowIndex = "6" GridPane.columnIndex="0" fx:id="labelAddition2" />
+        <Label GridPane.rowIndex = "7" GridPane.columnIndex="0" fx:id="labelAddition3" />
 
         <Label GridPane.rowIndex = "0"  GridPane.columnIndex="1" fx:id="titleLbl" text="Title"/>
-        <Label GridPane.rowIndex = "1" GridPane.columnIndex="1" fx:id="authorsLbl" text="Author(s)" ></Label>
-        <Label GridPane.rowIndex = "2" GridPane.columnIndex="1" fx:id="documentTypeLbl" text ="Book"></Label>
-        <Label GridPane.rowIndex = "3" GridPane.columnIndex="1" fx:id="priceLbl" text="Price"></Label>
-        <Label GridPane.rowIndex = "4" GridPane.columnIndex="1" fx:id="keywordsLbl" text="Keyword, keyword, keyword"></Label>
+        <Label GridPane.rowIndex = "1" GridPane.columnIndex="1" fx:id="authorsLbl" text="Author(s)" />
+        <Label GridPane.rowIndex = "2" GridPane.columnIndex="1" fx:id="documentTypeLbl" text ="Book"/>
+        <Label GridPane.rowIndex = "3" GridPane.columnIndex="1" fx:id="priceLbl" text="Price"/>
+        <Label GridPane.rowIndex = "4" GridPane.columnIndex="1" fx:id="keywordsLbl" text="Keyword, keyword, keyword"/>
 
-        <Label GridPane.rowIndex = "5" GridPane.columnIndex="1" fx:id="additionLbl1"  ></Label>
-        <Label GridPane.rowIndex = "6" GridPane.columnIndex="1" fx:id="additionLbl2"  ></Label>
-        <Label GridPane.rowIndex = "7" GridPane.columnIndex="1" fx:id="additionLbl3"  ></Label>
+        <Label GridPane.rowIndex = "5" GridPane.columnIndex="1" fx:id="additionLbl1" />
+        <Label GridPane.rowIndex = "6" GridPane.columnIndex="1" fx:id="additionLbl2" />
+        <Label GridPane.rowIndex = "7" GridPane.columnIndex="1" fx:id="additionLbl3" />
 
-        <Label GridPane.rowIndex = "8" GridPane.columnIndex="1" fx:id="requestLbl" text="0"></Label>
+        <Label GridPane.rowIndex = "8" GridPane.columnIndex="1"
+               fx:id="requestLbl" text="0"/>
 
-        <Button GridPane.rowIndex = "10" GridPane.columnIndex="1" fx:id="checkoutButton" text="Requested" onMouseClicked="#checkOut"></Button>
+        <Button GridPane.rowIndex = "10" GridPane.columnIndex="1"
+                fx:id="requestButton" text="Request" onMouseClicked="#clickOnRequestBtn"/>
 
     </GridPane>
 </GridPane>
