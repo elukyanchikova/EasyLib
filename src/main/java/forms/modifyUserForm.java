@@ -82,7 +82,7 @@ public class modifyUserForm {
      * Initialization scene and scene's elements
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("modifyUserForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/modifyUserForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root, 700, 700);

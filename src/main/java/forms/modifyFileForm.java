@@ -86,7 +86,7 @@ public class modifyFileForm {
      * Initialization scene and scene's elements
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("modifyFileForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/modifyFileForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root, 700, 700);

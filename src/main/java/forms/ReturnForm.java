@@ -95,7 +95,7 @@ public class ReturnForm {
      * @throws Exception
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ReturnForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/ReturnForm.fxml"));
         loader.setController(this);
         AnchorPane root = loader.load();
         this.scene = new Scene(root, 1000, 700);

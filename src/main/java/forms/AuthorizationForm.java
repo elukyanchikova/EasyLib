@@ -31,7 +31,7 @@ public class AuthorizationForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage) throws Exception{
+    public void startForm(Stage primaryStage) throws Exception{
         this.stage = primaryStage;
         UserType.load();
         databaseManager = new DatabaseManager("library");
@@ -44,7 +44,7 @@ public class AuthorizationForm {
      * Initialization scene and scene's elements
      */
     private void sceneInitialization() throws Exception {
-        URL url = getClass().getResource("AuthorizationForm.fxml");
+        URL url = getClass().getResource("FXMLFiles/AuthorizationForm.fxml");
         System.err.println(url);
         FXMLLoader loader = new FXMLLoader(url);
         loader.setController(this);

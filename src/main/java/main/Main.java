@@ -1,5 +1,6 @@
-package forms;
+package main;
 
+import forms.AuthorizationForm;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

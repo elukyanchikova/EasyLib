@@ -43,7 +43,7 @@ public class addUserForm {
      * Initialization scene and scene's elements
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("addUserForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/addUserForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root, 700, 700);

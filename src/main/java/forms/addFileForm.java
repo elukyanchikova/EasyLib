@@ -67,7 +67,7 @@ public class addFileForm {
      * Initialization scene and scene's elements
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("addFileForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/addFileForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root, 700, 700);
