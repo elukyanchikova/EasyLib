@@ -103,6 +103,7 @@ public abstract class Document {
         this.numberOfRequests = data.getInt("NumberOfRequest");
         this.availableCopies = new ArrayList<>();
         this.takenCopies = new ArrayList<>();
+        this.bookedCopies = new ArrayList<>();
         int copyID;
         String[] keys = new String[0];
         JSONObject availableCopiesObj = data.getJSONObject("AvailableCopies");
