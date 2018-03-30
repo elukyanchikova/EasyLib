@@ -141,8 +141,8 @@ public abstract class Document {
         return docType;
     }
 
-    public void putInPQ(UserCard user, Document document, DatabaseManager databaseManager){
-       document.requestedBy.add(user);
+    public void putInPQ(UserCard user, DatabaseManager databaseManager){
+       this.requestedBy.add(user);
     }
 
     public int getNumberOfRequests() {
@@ -268,7 +268,7 @@ public abstract class Document {
     }
 
     public void deletePQ(){
-        PriorityQueue<UserCard> newPQ = new PriorityQueue<UserCard>;
+        PriorityQueue<UserCard> newPQ = new PriorityQueue<>();
         this.requestedBy = newPQ;
     }
 }

@@ -340,7 +340,7 @@ public class MainForm {
      */
     @FXML
     public void clickOnRequestsBtn() throws Exception{
-        UserInfoForm userInfoForm = new UserInfoForm();
-        userInfoForm.startForm(stage,session, databaseManager);
+        ManagementForm managementForm = new ManagementForm();
+        managementForm.startForm(stage,session, databaseManager);
     }
 }
