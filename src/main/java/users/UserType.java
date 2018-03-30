@@ -11,6 +11,9 @@ public abstract class UserType {
     boolean hasLongCheckOutPerm = false;
     boolean hasCheckUserInfoPerm = false;
     boolean hasMultiRenewPerm = false;
+
+    boolean hasUserPerm = false;
+
     public  int priority = -1;
 
     public static void load(){
@@ -47,6 +50,10 @@ public abstract class UserType {
     public boolean isHasCheckUserInfoPerm(){
         return hasCheckUserInfoPerm;
     }
+
+    public boolean isHasMultiRenewPerm(){ return hasMultiRenewPerm;}
+
+    public boolean isHasUserPerm() { return  hasUserPerm; }
 
     public static HashMap<String, UserType> userTypes = new HashMap<>();
 
