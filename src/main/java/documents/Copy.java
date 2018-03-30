@@ -46,7 +46,6 @@ public class Copy {
         this.checkoutByUser = user;
     }
 
-
     public UserCard getCheckoutByUser(){
         return checkoutByUser;
     }

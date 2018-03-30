@@ -327,7 +327,6 @@ public class ReturnForm {
                 }
             }
 
-
             boolean flag = true;
             for (Copy copy : userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()).checkedOutCopies) {
                 if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
@@ -344,8 +343,6 @@ public class ReturnForm {
             }
         }
         return false;
-
-
     }
 
     // calling a doc back

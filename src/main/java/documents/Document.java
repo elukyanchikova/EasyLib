@@ -131,6 +131,11 @@ public abstract class Document {
             bookedCopies.add(copy);
             this.lastCopyID = copyID > lastCopyID? copyID:lastCopyID;
         }
+        JSONObject requestedByObj = data.getJSONObject("Requests");
+        keys = requestedByObj.keySet().toArray(keys);
+        for (int i = 0; i < requestedByObj.length(); i++){
+            this.putInPQ(databaseManager.getUserCard(Integer.parseInt(keys[i])));
+        }
     }
 
     public int getID(){
@@ -141,7 +146,7 @@ public abstract class Document {
         return docType;
     }
 
-    public void putInPQ(UserCard user, DatabaseManager databaseManager){
+    public void putInPQ(UserCard user){
        this.requestedBy.add(user);
     }
 
@@ -175,9 +180,10 @@ public abstract class Document {
         lastCopyID++;
     }
 
-    public void setReference(boolean isRefernce){
-        this.reference = isRefernce;
+    public void setReference(boolean isReference){
+        this.reference = isReference;
     }
+
     public void setCopy(Copy copy){
         if (copy.getDocumentID() == id){
             availableCopies.add(copy);
@@ -239,6 +245,13 @@ public abstract class Document {
             takenCopiesObj.put(Integer.toString(bookedCopies.get(i).getID()), bookedCopies.get(i).serialize());
         }
         data.put("BookedCopies", bookedCopiesObj);
+
+        JSONObject requestsCopiesObj = new JSONObject();
+        while ( 0 < requestedBy.size()){
+            requestsCopiesObj.put(Integer.toString(requestedBy.peek().getId()), requestedBy.poll().serialize());
+        }
+        data.put("Requests", requestsCopiesObj);
+
         data.put("DocumentType" , docType);
         data.put("Reference", reference);
         return data;

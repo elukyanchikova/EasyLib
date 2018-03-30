@@ -14,6 +14,8 @@ public class Session {
      */
     public  Session(UserType user, int day, int month){
         this.authorizedUser = user;
+        if(day < 1 || day > 31) day = 1;
+        if(month < 1 || month > 12) month = 12;
         this.day = day;
         this.month = month;
     }

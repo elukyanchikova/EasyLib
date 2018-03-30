@@ -133,8 +133,8 @@ public class AuthorizationForm {
                     str.charAt(4) >= '0' && str.charAt(4) <= '9'){
                 day = Integer.parseInt(str.substring(0,2));
                 month = Integer.parseInt(str.substring(3,5));
-                if(month > 12 || month < 1) month = 12;
-                if(day > 31 || day<1) day = 28;
+                if(month > 12 || month < 1) month = 1;
+                if(day > 31 || day<1) day = 1;
             }
         }
         MainForm mainForm = new MainForm();
