@@ -16,6 +16,7 @@ import javafx.util.Callback;
 import storage.DatabaseManager;
 import users.Session;
 import users.UserCard;
+import users.UserType;
 
 import java.util.ArrayList;
 
@@ -167,17 +168,19 @@ public class ManagementForm {
 
         Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex()); //chosen document
 
+
+
         ArrayList<UserCard> userCardsBooked = new ArrayList<>();
-        ArrayList<UserCard> all = databaseManager.getAllUsers();
-        for (int i = 0; i < all.size(); i++) {
-            for (int j = 0; j < all.get(i).checkedOutCopies.size(); j++) {
-                if (all.get(i).checkedOutCopies.get(j).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
-                    userCardsBooked.add(all.get(i));
-                }
+
+        for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
+            UserCard temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser();
+            if (temp != null){
+                userCardsBooked.add(temp);
             }
         }
 
         userListView.setItems(FXCollections.observableArrayList(userCardsBooked));
+
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
             public ListCell<UserCard> call(ListView<UserCard> userListView) {
                 return new ListCell<UserCard>() {
