@@ -7,6 +7,7 @@ import users.UserCard;
 import users.UserType;
 
 import javax.jws.soap.SOAPBinding;
+import javax.print.Doc;
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -264,5 +265,10 @@ public abstract class Document {
             }
             return 0;
         }
+    }
+
+    public void deletePQ(){
+        PriorityQueue<UserCard> newPQ = new PriorityQueue<UserCard>;
+        this.requestedBy = newPQ;
     }
 }
