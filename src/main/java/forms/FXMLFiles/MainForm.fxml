@@ -34,7 +34,7 @@
     <Button GridPane.rowIndex = "3" GridPane.columnIndex="0"
             fx:id="returnButton" text="Return" onMouseClicked="#clickOnReturnBtn"/>
     <Button GridPane.rowIndex = "4" GridPane.columnIndex="0"
-            fx:id="requestsButton" text="Requests" onMouseClicked="#clickOnRequestsBtn"/>
+            fx:id="manageButton" text="Manage" onMouseClicked="#clickOnManageBtn"/>
     <Button GridPane.rowIndex = "5" GridPane.columnIndex="0"
             fx:id="editButton" text="Edit" onMouseClicked="#clickOnEditBtn"/>
     <Button GridPane.rowIndex = "6" GridPane.columnIndex="0"
@@ -52,7 +52,7 @@
         <Label GridPane.rowIndex = "2" GridPane.columnIndex="0" fx:id="labelType" text="Type: "/>
         <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelPrice" text="Price: "/>
         <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelKeywords" text="Keywords: "/>
-        <Label GridPane.rowIndex = "8" GridPane.columnIndex="0" fx:id="labelRequests" text="Copies: "/>
+        <Label GridPane.rowIndex = "8" GridPane.columnIndex="0" fx:id="labelCopies" text="Copies: "/>
 
         <Label GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="labelAddition1" />
         <Label GridPane.rowIndex = "6" GridPane.columnIndex="0" fx:id="labelAddition2" />
@@ -69,10 +69,14 @@
         <Label GridPane.rowIndex = "7" GridPane.columnIndex="1" fx:id="additionLbl3" />
 
         <Label GridPane.rowIndex = "8" GridPane.columnIndex="1"
-               fx:id="requestLbl" text="0"/>
+               fx:id="copiesLbl" text="0"/>
 
         <Button GridPane.rowIndex = "10" GridPane.columnIndex="1"
                 fx:id="requestButton" text="Request" onMouseClicked="#clickOnRequestBtn"/>
+        <Button GridPane.rowIndex = "10" GridPane.columnIndex="1"
+                fx:id="checkOutButton" text="Check Out" onMouseClicked="#clickOnCheckOutBtn"/>
+        <Button GridPane.rowIndex = "10" GridPane.columnIndex="1"
+                fx:id="bookButton" text="Book" onMouseClicked="#clickOnBookBtn"/>
 
     </GridPane>
 </GridPane>
