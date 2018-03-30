@@ -279,8 +279,28 @@ public class ManagementForm {
 
     @FXML
     public void acceptBtn() {
+        ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
+
+        boolean flag = true;
+        for (Copy copy : userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()).checkedOutCopies) {
+            if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
+                flag = false;
+                break;
+            }
+        }
+
+        if (!databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).isReference() && databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() > 0 && flag) {
+            databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).takeCopy(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()), session);
+            databaseManager.saveDocuments(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]));
+            databaseManager.saveUserCard(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()));
+        }
+
+        
 
     }
+
+
+
 
     // calling a doc back
     public void outstandingRequest(Document doc){
