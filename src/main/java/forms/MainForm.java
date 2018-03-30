@@ -299,7 +299,7 @@ public class MainForm {
     @FXML
     public void clickOnRequestBtn(){
         Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]) ;
-        currentDoc.putInPQ(session.userCard, currentDoc, databaseManager);
+        currentDoc.putInPQ(session.userCard, databaseManager);
         session.userCard.requestedDocs.add(currentDoc);
         checkoutButton.setVisible(false);
     }

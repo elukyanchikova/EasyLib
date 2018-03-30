@@ -295,6 +295,8 @@ public class ManagementForm {
             databaseManager.saveUserCard(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()));
         }
 
+        
+
     }
 
 
