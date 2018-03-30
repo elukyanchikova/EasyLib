@@ -347,4 +347,9 @@ public class ReturnForm {
 
 
     }
-}
+
+    // calling a doc back
+    public void outstandingRequest(Document doc){
+        doc.deletePQ();
+        databaseManager.saveDocuments(doc);
+    }}
