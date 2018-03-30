@@ -268,7 +268,7 @@ public abstract class Document {
     }
 
     public void deletePQ(){
-        PriorityQueue<UserCard> newPQ = new PriorityQueue<UserCard>;
+        PriorityQueue<UserCard> newPQ = new PriorityQueue<>();
         this.requestedBy = newPQ;
     }
 }
