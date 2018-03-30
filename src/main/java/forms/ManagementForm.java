@@ -280,25 +280,63 @@ public class ManagementForm {
     @FXML
     public void acceptBtn() {
         ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
+        Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+        ArrayList<UserCard> userCardsBooked = new ArrayList<>();
 
-        boolean flag = true;
-        for (Copy copy : userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()).checkedOutCopies) {
-            if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
-                flag = false;
-                break;
+        for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
+            UserCard temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser();
+            if (temp != null){
+                userCardsBooked.add(temp);
             }
         }
 
-        if (!databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).isReference() && databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() > 0 && flag) {
-            databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).takeCopy(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()), session);
-            databaseManager.saveDocuments(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]));
-            databaseManager.saveUserCard(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()));
-        }
+        for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
+            UserCard temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser();
+            if (temp == userListView.getSelectionModel().getSelectedItem()){
 
-        
+                boolean flag = true;
+                for (Copy copy : userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()).checkedOutCopies) {
+                    if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
+                        flag = false;
+                        break;
+                    }
+                }
+
+                if (!databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).isReference() && databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() > 0 && flag) {
+                    databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).takeCopy(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()), session);
+                    databaseManager.saveDocuments(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]));
+                    databaseManager.saveUserCard(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()));
+                }
+
+                chosenDocument.bookedCopies.get(i).returnCopy();
+            }
+        }
 
     }
 
+    @FXML
+    public void rejectBtn() {
+
+        ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
+        Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+        ArrayList<UserCard> userCardsBooked = new ArrayList<>();
+
+        for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
+            UserCard temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser();
+            if (temp != null){
+                userCardsBooked.add(temp);
+            }
+        }
+
+        for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
+            UserCard temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser();
+            if (temp == userListView.getSelectionModel().getSelectedItem()){
+                chosenDocument.bookedCopies.get(i).returnCopy();
+            }
+        }
+
+
+    }
 
 
 
