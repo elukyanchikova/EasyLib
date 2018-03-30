@@ -22,10 +22,14 @@ public abstract class Document {
     public ArrayList<String> authors;
     public ArrayList<String> keywords;
     public int price;
+
     protected int numberOfRequests = 0;
     public ArrayList<Copy> availableCopies;
     public ArrayList<Copy> takenCopies;
+    public ArrayList<Copy> bookedCopies;
+
     protected int checkOutTime;
+
     Comparator<UserCard> comparator = new UserTypeComparator();
     public PriorityQueue<UserCard> requestedBy = new PriorityQueue<UserCard>(10,comparator);
 
@@ -35,8 +39,12 @@ public abstract class Document {
     /**
      * The constructor is used for restoring object from all existing information about document
      */
-    public Document(int id, String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
-                    int numberOfRequests, ArrayList<Copy> availableCopies, ArrayList<Copy> takenCopies, int lastCopyID) {
+    public Document(int id,
+                    String title, String docType,
+                    ArrayList<String> authors, ArrayList<String> keywords,
+                    int price, int numberOfRequests,
+                    ArrayList<Copy> availableCopies, ArrayList<Copy> takenCopies, ArrayList<Copy> bookedCopies,
+                    int lastCopyID) {
         this.title = title;
         this.authors = authors;
         this.keywords = keywords;
@@ -46,23 +54,38 @@ public abstract class Document {
         this.docType = docType;
         this.availableCopies = availableCopies;
         this.takenCopies = takenCopies;
+        this.bookedCopies = bookedCopies;
         lastID = lastID < id?id:lastID;
         this.lastCopyID = lastCopyID;
     }
+
     /**
      * The constructor is used for creating object and fill copies
      */
-    public Document(String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price,
+    public Document(String title, String docType,
+                    ArrayList<String> authors, ArrayList<String> keywords,
+                    int price,
                     ArrayList<Copy> copies){
-        this(++lastID,title, docType,authors, keywords,price,0, copies, new ArrayList<>(),1);
+        this(++lastID,title, docType,authors, keywords,price,0,
+                copies, new ArrayList<>(), new ArrayList<>(),1);
     }
+
     /**
      * The constructor is used for creating object without copies
      */
-    public Document(String title, String docType, ArrayList<String> authors, ArrayList<String> keywords, int price){
-        this(++lastID,title, docType,authors, keywords,price,0, new ArrayList<>(), new ArrayList<>(),1);
+    public Document(String title, String docType,
+                    ArrayList<String> authors, ArrayList<String> keywords,
+                    int price){
+        this(++lastID, title, docType, authors, keywords, price, 0,
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),1);
     }
 
+    /**
+     * The constructor is used for creating object using information from JSON File
+     * @param id of document
+     * @param data is JSON object which stores information about JSON
+     * @param databaseManager is the current database manager
+     */
     public Document(int id, JSONObject data, DatabaseManager databaseManager){
         this.id = id;
         lastID = lastID < id?id:lastID;
@@ -98,7 +121,14 @@ public abstract class Document {
             takenCopies.add(copy);
             this.lastCopyID = copyID > lastCopyID? copyID:lastCopyID;
         }
-
+        JSONObject bookedCopiesObj = data.getJSONObject("BookedCopies");
+        keys = bookedCopiesObj.keySet().toArray(keys);
+        for (int i = 0; i < bookedCopiesObj.length(); i++){
+            copyID = Integer.parseInt(keys[i]);
+            Copy copy = new Copy(bookedCopiesObj.getJSONObject(Integer.toString(copyID)), databaseManager);
+            bookedCopies.add(copy);
+            this.lastCopyID = copyID > lastCopyID? copyID:lastCopyID;
+        }
     }
 
     public int getID(){
@@ -113,24 +143,6 @@ public abstract class Document {
        document.requestedBy.add(user);
     }
 
-    protected class UserTypeComparator implements Comparator<UserCard> {
-        @Override
-        public int compare(UserCard x, UserCard y) {
-            // Assume neither string is null. Real code should
-            // probably be more robust
-            // You could also just return x.length() - y.length(),
-            // which would be more efficient.
-            if (x.userType.priority < y.userType.priority)
-            {
-                return -1;
-            }
-            if (x.userType.priority > y.userType.priority)
-            {
-                return 1;
-            }
-            return 0;
-       }
-    }
     public int getNumberOfRequests() {
         return numberOfRequests;
     }
@@ -220,6 +232,11 @@ public abstract class Document {
             takenCopiesObj.put(Integer.toString(takenCopies.get(i).getID()), takenCopies.get(i).serialize());
         }
         data.put("TakenCopies", takenCopiesObj);
+        JSONObject bookedCopiesObj = new JSONObject();
+        for(int i = 0; i < bookedCopies.size(); i++){
+            takenCopiesObj.put(Integer.toString(bookedCopies.get(i).getID()), bookedCopies.get(i).serialize());
+        }
+        data.put("BookedCopies", bookedCopiesObj);
         data.put("DocumentType" , docType);
         data.put("Reference", reference);
         return data;
@@ -231,5 +248,20 @@ public abstract class Document {
 
     public boolean isReference(){
         return reference;
+    }
+
+    protected class UserTypeComparator implements Comparator<UserCard> {
+        @Override
+        public int compare(UserCard x, UserCard y) {
+            if (x.userType.priority < y.userType.priority)
+            {
+                return -1;
+            }
+            if (x.userType.priority > y.userType.priority)
+            {
+                return 1;
+            }
+            return 0;
+        }
     }
 }

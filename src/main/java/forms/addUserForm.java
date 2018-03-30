@@ -53,8 +53,6 @@ public class addUserForm {
         userTypeTextField = (TextField) scene.lookup("#userTypeField");
         phoneNumberTextField = (TextField) scene.lookup("#phoneNumberField");
         addressTextField = (TextField) scene.lookup("#addressField");
-
-
     }
 
     /**

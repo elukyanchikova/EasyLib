@@ -11,11 +11,20 @@ public class Book extends Document {
     public String edition;
     public boolean isBestseller;
 
-    public Book(int id, String title, ArrayList<String> authors, ArrayList<String> keywords, int price,
-                 int numberOfRequests, ArrayList<Copy> availableCopies, ArrayList<Copy> takenCopies, int lastCopyID,
-                 String publisher, int year,String edition, boolean isBestseller) {
+    /**
+     * The constructor is used for restoring object from all existing information about book
+     */
+    public Book(int id,
+                String title,
+                ArrayList<String> authors, ArrayList<String> keywords,
+                int price,
+                int numberOfRequests,
+                ArrayList<Copy> availableCopies, ArrayList<Copy> takenCopies, ArrayList<Copy> bookedCopies,
+                int lastCopyID,
+                String publisher, int year, String edition, boolean isBestseller) {
 
-        super(id, title, "Book", authors, keywords, price, numberOfRequests, availableCopies, takenCopies, lastCopyID);
+        super(id, title, "Book", authors, keywords, price, numberOfRequests,
+                availableCopies, takenCopies, bookedCopies, lastCopyID);
         this.publisher = publisher;
         this.year = year;
         this.edition = edition;
@@ -23,18 +32,38 @@ public class Book extends Document {
         this.checkOutTime = 21;
     }
 
-    public Book(String title, ArrayList<String> authors, ArrayList<String> keywords, int price,
-                ArrayList<Copy> copies, String publisher, int year,String edition, boolean isBestseller) {
+    /**
+     * The constructor is used for creating object and fill copies
+     */
+    public Book(String title,
+                ArrayList<String> authors, ArrayList<String> keywords, int price,
+                ArrayList<Copy> copies, String publisher,
+                int year, String edition, boolean isBestseller) {
 
-        this(++lastID, title, authors, keywords, price,0, copies, new ArrayList<>(), 1, publisher, year,edition, isBestseller);
+        this(++lastID, title, authors, keywords, price, 0,
+                copies, new ArrayList<>(), new ArrayList<>(), 1,
+                publisher, year,edition, isBestseller);
     }
 
-    public Book(String title, ArrayList<String> authors, ArrayList<String> keywords, int price,
-                 String publisher, int year, String edition, boolean isBestseller) {
+    /**
+     * The constructor is used for creating object without copies
+     */
+    public Book(String title,
+                ArrayList<String> authors, ArrayList<String> keywords, int price,
+                String publisher, int year, String edition, boolean isBestseller) {
 
-        this(++lastID, title, authors, keywords, price,0, new ArrayList<>(), new ArrayList<>(), 1, publisher, year, edition,isBestseller);
+        this(++lastID, title,
+                authors, keywords, price, 0,
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 1,
+                publisher, year, edition,isBestseller );
     }
 
+    /**
+     * The constructor is used for creating object using information from JSON File
+     * @param id of document
+     * @param data is JSON object which stores information about JSON
+     * @param databaseManager is the current database manager
+     */
     public Book(int id, JSONObject data, DatabaseManager databaseManager){
         super(id, data, databaseManager);
         this.docType = "Book";
