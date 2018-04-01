@@ -60,9 +60,9 @@
 
       <Button fx:id="backbutt" layoutX="933.0" layoutY="510.0" mnemonicParsing="false" text="Back" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
 
-      <Button fx:id="acceptButton" layoutX="652.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#acceptBtn" prefHeight="31.0" prefWidth="136.0" text="Accept" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Button fx:id="acceptButton" layoutX="652.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#accept" prefHeight="31.0" prefWidth="136.0" text="Accept" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
       <ListView fx:id="userListView" layoutX="444.0" layoutY="10.0" prefHeight="528.0" prefWidth="391.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <Button fx:id="rejectButton" layoutX="865.0" layoutY="49.0" mnemonicParsing="false" onMouseClicked="#rejectBtn" prefHeight="31.0" prefWidth="136.0" text="Reject" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
-      <Button fx:id="outstandingBtn" layoutX="190.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#acceptBtn" prefHeight="31.0" prefWidth="210.0" text="Outstanding request" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="190.0" />
+      <Button fx:id="rejectButton" layoutX="865.0" layoutY="49.0" mnemonicParsing="false" onMouseClicked="#reject" prefHeight="31.0" prefWidth="136.0" text="Reject" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
+      <Button fx:id="outstandingRequestBtn"  layoutX="190.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#outstandingRequest" prefHeight="31.0" prefWidth="210.0" text="Outstanding request" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="190.0" />
    </children>
 </AnchorPane>

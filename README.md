@@ -18,3 +18,10 @@ in place of old mock functions
 ### Elena Lukyanchikova
 * Add, delete, modify features implementation
 * Add, delete, modify features interfaces implementation
+
+
+## 3rd delivery
+
+### Svetlana Kabirova
+### Jameel Mukhutdinov
+### Elena Lukyanchikova

@@ -73,6 +73,8 @@ public class ManagementForm {
     private static Button backButt;
     @FXML
     private static Button returnButton;
+    @FXML
+    private static Button outstandingRequestBtn;
 
     /**
      * @param primaryStage    - Stage
@@ -276,9 +278,8 @@ public class ManagementForm {
      * Method for Return Button
      * Allows librarian return patron's book
      */
-
     @FXML
-    public void acceptBtn() {
+    public void accept() {
         ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
         Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
         ArrayList<UserCard> userCardsBooked = new ArrayList<>();
@@ -316,7 +317,7 @@ public class ManagementForm {
     }
 
     @FXML
-    public void rejectBtn() {
+    public void reject() {
 
         ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
         Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
@@ -342,6 +343,7 @@ public class ManagementForm {
 
 
     // calling a doc back
+    @FXML
     public void outstandingRequest(Document doc){
         doc.deletePQ();
         databaseManager.saveDocuments(doc);
