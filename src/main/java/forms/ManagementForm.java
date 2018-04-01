@@ -340,11 +340,12 @@ public class ManagementForm {
 
     }
 
-
-
     // calling a doc back
     @FXML
     public void outstandingRequest(Document doc){
         doc.deletePQ();
+        for (int i = 0; i <doc.bookedCopies.size() ; i++) {
+            doc.availableCopies.add(doc.bookedCopies.get(i));
+        };
         databaseManager.saveDocuments(doc);
     }}
