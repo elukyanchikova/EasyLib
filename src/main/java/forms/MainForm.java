@@ -37,6 +37,8 @@ public class MainForm {
     @FXML private Label copiesLbl;
     @FXML private Label labelCopies;
 
+    @FXML private Label notificationLabel;
+
     @FXML private Label labelAddition1;
     @FXML private Label labelAddition2;
     @FXML private Label labelAddition3;
@@ -79,6 +81,7 @@ public class MainForm {
             document.takeCopy( session.userCard, session);
             databaseManager.saveDocuments(document);
             databaseManager.saveUserCard(session.userCard);
+            databaseManager.load();
             updateSession();
             return true;
         }
@@ -94,6 +97,7 @@ public class MainForm {
             document.availableCopies.remove(0);
             databaseManager.saveDocuments(document);
             databaseManager.saveUserCard(session.userCard);
+            databaseManager.load();
             updateSession();
             return true;
         }
@@ -199,6 +203,8 @@ public class MainForm {
         checkOutBtn = (Button) scene.lookup("#checkOutButton");
         requestBtn = (Button) scene.lookup("#requestButton");
         bookBtn = (Button) scene.lookup("#bookButton");
+
+        notificationLabel = (Label) scene.lookup("#notificationLabel");
     }
 
     /**
@@ -349,6 +355,8 @@ public class MainForm {
     public void clickOnBookBtn(){
         book(databaseManager.getDocuments(openDocumentID));
         loadAvailableAction();
+        copiesLbl.setText(String.valueOf(databaseManager.getDocuments(openDocumentID).getNumberOfAvailableCopies()));
+
     }
 
     /**
