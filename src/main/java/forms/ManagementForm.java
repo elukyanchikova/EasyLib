@@ -113,7 +113,7 @@ public class ManagementForm {
         priceLbl = (Label) scene.lookup("#priceLbl");
         keywordsLbl = (Label) scene.lookup("#keywordsLbl");
 
-        outstandingRequestBtn = (Button) scene.lookup("#outstandingRequest");
+        outstandingRequestBtn = (Button) scene.lookup("#outstandingRequestBtn");
 
         additionLbl1 = (Label) scene.lookup("#additionLbl1");
         additionLbl2 = (Label) scene.lookup("#additionLbl2");
