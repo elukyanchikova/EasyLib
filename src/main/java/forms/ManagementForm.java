@@ -308,7 +308,8 @@ public class ManagementForm {
                     databaseManager.saveUserCard(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()));
                 }
 
-                chosenDocument.bookedCopies.get(i).returnCopy();
+                chosenDocument.availableCopies.add(chosenDocument.bookedCopies.get(i));
+                chosenDocument.bookedCopies.remove(chosenDocument.bookedCopies.get(i));
             }
         }
 
@@ -331,7 +332,8 @@ public class ManagementForm {
         for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
             UserCard temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser();
             if (temp == userListView.getSelectionModel().getSelectedItem()){
-                chosenDocument.bookedCopies.get(i).returnCopy();
+                chosenDocument.availableCopies.add(chosenDocument.bookedCopies.get(i));
+                chosenDocument.bookedCopies.remove(chosenDocument.bookedCopies.get(i));
             }
         }
 
