@@ -244,9 +244,10 @@ public abstract class Document {
             takenCopiesObj.put(Integer.toString(takenCopies.get(i).getID()), takenCopies.get(i).serialize());
         }
         data.put("TakenCopies", takenCopiesObj);
+
         JSONObject bookedCopiesObj = new JSONObject();
         for(int i = 0; i < bookedCopies.size(); i++){
-            takenCopiesObj.put(Integer.toString(bookedCopies.get(i).getID()), bookedCopies.get(i).serialize());
+           bookedCopiesObj.put(Integer.toString(bookedCopies.get(i).getID()), bookedCopies.get(i).serialize());
         }
         data.put("BookedCopies", bookedCopiesObj);
 

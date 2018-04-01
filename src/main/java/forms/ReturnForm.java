@@ -168,14 +168,11 @@ public class ReturnForm {
         Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex()); //chosen document
 
         ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
-        ArrayList<UserCard> all = databaseManager.getAllUsers();
-        for (int i = 0; i < all.size(); i++) {
-            for (int j = 0; j < all.get(i).checkedOutCopies.size(); j++) {
-                if (all.get(i).checkedOutCopies.get(j).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
-                    userCardsWithCopy.add(all.get(i));
-                }
-            }
+
+        for (int i = 0; i < chosenDocument.takenCopies.size(); i++) {
+            userCardsWithCopy.add(chosenDocument.takenCopies.get(i).getCheckoutByUser());
         }
+
 
         userListView.setItems(FXCollections.observableArrayList(userCardsWithCopy));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {

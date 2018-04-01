@@ -39,6 +39,8 @@
             fx:id="editButton" text="Edit" onMouseClicked="#clickOnEditBtn"/>
     <Button GridPane.rowIndex = "6" GridPane.columnIndex="0"
             fx:id="userInfoButton" text="Users" onMouseClicked="#clickOnUserInfoBtn"/>
+    <Label GridPane.rowIndex = "7" GridPane.columnIndex="0"
+            fx:id="notificationLabel"/>
 
     <GridPane GridPane.columnIndex="1" fx:id="documentInfoPane"
                minWidth="100"
