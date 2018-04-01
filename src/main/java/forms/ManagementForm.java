@@ -320,13 +320,12 @@ public class ManagementForm {
 
         ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
         Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
-        ArrayList<UserCard> userCardsBooked = new ArrayList<>();
+        ArrayList<Integer> userCardsBooked = new ArrayList<>();
 
         for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
-            UserCard temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser();
-            if (temp != null){
-                userCardsBooked.add(temp);
-            }
+            int temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser().getId();
+            userCardsBooked.add(temp);
+
         }
 
         for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
