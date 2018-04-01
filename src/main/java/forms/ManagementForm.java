@@ -42,6 +42,8 @@ public class ManagementForm {
     private ListView<Document> documentListView;
     @FXML
     private ListView<UserCard> userListView;
+    @FXML
+    private ListView <UserCard> requestedByListView;
 
     @FXML
     private Label titleLbl;
@@ -111,6 +113,8 @@ public class ManagementForm {
         priceLbl = (Label) scene.lookup("#priceLbl");
         keywordsLbl = (Label) scene.lookup("#keywordsLbl");
 
+        outstandingRequestBtn = (Button) scene.lookup("#outstandingRequestBtn");
+
         additionLbl1 = (Label) scene.lookup("#additionLbl1");
         additionLbl2 = (Label) scene.lookup("#additionLbl2");
         additionLbl3 = (Label) scene.lookup("#additionLbl3");
@@ -120,7 +124,7 @@ public class ManagementForm {
         labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
         returnButton = (Button) scene.lookup("#returnButton");
-        backButt = (Button) scene.lookup("backButt");
+        backButt = (Button) scene.lookup("#backButt");
 
         documentListView.setItems(FXCollections.observableArrayList(databaseManager.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
@@ -340,7 +344,6 @@ public class ManagementForm {
 
     }
 
-    // calling a doc back
     @FXML
     public void outstandingRequest(Document doc){
         doc.deletePQ();
