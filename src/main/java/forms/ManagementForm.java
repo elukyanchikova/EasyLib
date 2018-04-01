@@ -329,8 +329,8 @@ public class ManagementForm {
         }
 
         for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
-            UserCard temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser();
-            if (temp == userListView.getSelectionModel().getSelectedItem()){
+            int temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser().getId();
+            if (temp == userListView.getSelectionModel().getSelectedItem().getId()){
                 chosenDocument.availableCopies.add(chosenDocument.bookedCopies.get(i));
                 chosenDocument.bookedCopies.remove(chosenDocument.bookedCopies.get(i));
             }
