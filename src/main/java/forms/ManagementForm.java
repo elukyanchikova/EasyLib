@@ -322,7 +322,7 @@ public class ManagementForm {
         Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
         ArrayList<Integer> userCardsBooked = new ArrayList<>();
 
-        for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
+        for (int i = 0; i < chosenDocument.bookedCopies.size(); i++) {
             int temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser().getId();
             userCardsBooked.add(temp);
 
