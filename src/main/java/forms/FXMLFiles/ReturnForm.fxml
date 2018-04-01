@@ -63,5 +63,6 @@
       <Button fx:id="returnButton" layoutX="652.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#returnBtn" prefHeight="31.0" prefWidth="136.0" text="Return" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
       <ListView fx:id="userListView" layoutX="444.0" layoutY="10.0" prefHeight="528.0" prefWidth="391.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
       <Button fx:id="renewButton" layoutX="865.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#renewBtn" prefHeight="31.0" prefWidth="136.0" text="Renew" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
+      <Button fx:id="outstandingBtn" layoutX="206.0" layoutY="536.0" mnemonicParsing="false" onMouseClicked="#renewBtn" prefHeight="31.0" prefWidth="196.0" text="Outstanding request" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="200.0" />
    </children>
 </AnchorPane>
