@@ -164,7 +164,7 @@ public abstract class Document {
     }
 
     public int getNumberOfAllCopies() {
-        return getNumberOfAvailableCopies() + getNumberOfTakenCopies();
+        return getNumberOfAvailableCopies() + getNumberOfTakenCopies() + getNumberOfBookedCopies();
     }
 
     public int getNumberOfAvailableCopies(){
@@ -173,6 +173,10 @@ public abstract class Document {
 
     public int getNumberOfTakenCopies(){
         return takenCopies.size();
+    }
+
+    public int getNumberOfBookedCopies(){
+        return bookedCopies.size();
     }
 
     public void setCopy(int level, int room){
