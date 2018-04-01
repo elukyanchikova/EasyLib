@@ -74,7 +74,9 @@ public class ManagementForm {
     @FXML
     private static Button backButt;
     @FXML
-    private static Button returnButton;
+    private static Button acceptButton;
+    @FXML
+    private static Button rejectButton;
     @FXML
     private static Button outstandingRequestBtn;
 
@@ -106,6 +108,7 @@ public class ManagementForm {
         this.scene = new Scene(root, 1000, 700);
 
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
+        userListView = (ListView<UserCard>) scene.lookup("#userListView");
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
         titleLbl = (Label) scene.lookup("#titleLbl");
         authorsLbl = (Label) scene.lookup("#authorsLbl");
@@ -123,8 +126,10 @@ public class ManagementForm {
         labelAddition2 = (Label) scene.lookup("#labelAddition2");
         labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
-        returnButton = (Button) scene.lookup("#returnButton");
+        acceptButton = (Button) scene.lookup("#acceptButton");
+        rejectButton = (Button) scene.lookup("#rejectButton");
         backButt = (Button) scene.lookup("#backButt");
+
 
         documentListView.setItems(FXCollections.observableArrayList(databaseManager.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
@@ -251,7 +256,7 @@ public class ManagementForm {
                     break;
                 }
             }
-        } else returnButton.setVisible(false);
+        } else acceptButton.setVisible(false);
 
     }
 
@@ -323,7 +328,6 @@ public class ManagementForm {
     @FXML
     public void reject() {
 
-        ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
         Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
         ArrayList<Integer> userCardsBooked = new ArrayList<>();
 
