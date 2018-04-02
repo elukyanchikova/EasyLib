@@ -276,25 +276,20 @@ public class ReturnForm {
         if (openDocumentID > -1) {
             ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
             Document document = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
-            ArrayList<UserCard> all = databaseManager.getAllUsers();
-            for (int i = 0; i < all.size(); i++) {
-                for (int j = 0; j < all.get(i).checkedOutCopies.size(); j++) {
-                    if (all.get(i).checkedOutCopies.get(j).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
-                        userCardsWithCopy.add(all.get(i));
-                    }
-                }
+            for (int i = 0; i < document.takenCopies.size(); i++) {
+                userCardsWithCopy.add(document.takenCopies.get(i).getCheckoutByUser());
             }
             UserCard userCard = userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex());
-            for (int i = 0; i < userCard.checkedOutCopies.size(); i++) {
-                if (userCard.checkedOutCopies.get(i).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
-                    document.returnCopy(userCard.checkedOutCopies.get(i));
-                    userCard.checkedOutCopies.remove(i);
-
-                    databaseManager.saveDocuments(document);
-                    databaseManager.saveUserCard(userCard);
-
+            for (int i = 0; i < document.takenCopies.size(); i++) {
+                if (document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId())
+                {
+                    userCard.checkedOutCopies.remove(document.takenCopies.get(i));
+                    document.returnCopy(document.takenCopies.get(i));
                 }
             }
+
+            databaseManager.saveDocuments(document);
+            databaseManager.saveUserCard(userCard);
 
         }
     }
@@ -304,19 +299,14 @@ public class ReturnForm {
         if (openDocumentID > -1) {
             ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
             Document document = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
-            ArrayList<UserCard> all = databaseManager.getAllUsers();
-            for (int i = 0; i < all.size(); i++) {
-                for (int j = 0; j < all.get(i).checkedOutCopies.size(); j++) {
-                    if (all.get(i).checkedOutCopies.get(j).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
-                        userCardsWithCopy.add(all.get(i));
-                    }
-                }
+            for (int i = 0; i < document.takenCopies.size(); i++) {
+                userCardsWithCopy.add(document.takenCopies.get(i).getCheckoutByUser());
             }
             UserCard userCard = userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex());
-            for (int i = 0; i < userCard.checkedOutCopies.size(); i++) {
-                if (userCard.checkedOutCopies.get(i).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
-                    document.returnCopy(userCard.checkedOutCopies.get(i));
-                    userCard.checkedOutCopies.remove(i);
+            for (int i = 0; i < document.takenCopies.size(); i++) {
+                if (document.takenCopies.get(i).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
+                    document.returnCopy(document.takenCopies.get(i));
+                    document.takenCopies.remove(i);
 
                     databaseManager.saveDocuments(document);
                     databaseManager.saveUserCard(userCard);

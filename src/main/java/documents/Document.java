@@ -220,6 +220,7 @@ public abstract class Document {
     public void returnCopy( Copy copy){
         availableCopies.add(copy);
         takenCopies.remove(copy);
+        copy.checkoutBy(null);
         copy.returnCopy();
     }
 
