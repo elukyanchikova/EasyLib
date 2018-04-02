@@ -106,6 +106,8 @@ public class ManagementForm {
         this.scene = new Scene(root, 1000, 700);
 
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
+        userListView = (ListView<UserCard>) scene.lookup("#userListView");
+        requestedByListView = (ListView<UserCard>) scene.lookup("#requestedByListView");
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
         titleLbl = (Label) scene.lookup("#titleLbl");
         authorsLbl = (Label) scene.lookup("#authorsLbl");
@@ -141,7 +143,25 @@ public class ManagementForm {
             }
         });
 
-        /*userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
+       // requestedByListView.setItems(FXCollections.observableArrayList(databaseManager.);
+       /* requestedByListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
+            public ListCell<UserCard> call(ListView<UserCard> userCardListView) {
+                return new ListCell<UserCard>() {
+                    @Override
+                    protected void updateItem(UserCard user, boolean flag) {
+                        super.updateItem(user, flag);
+                        if (user != null) {
+                            setText(user.userType.getClass().getName() + " " + user.name + " " + user.surname);
+                        }
+                    }
+                };
+            }
+        });*/
+   // }
+
+
+
+      userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
             public ListCell<UserCard> call(ListView<UserCard> userListView) {
                 return new ListCell<UserCard>() {
@@ -154,7 +174,7 @@ public class ManagementForm {
                   }
                 };
             }
-        });*/
+        });
 
     }
 
@@ -279,8 +299,8 @@ public class ManagementForm {
     }
 
     /**
-     * Method for Return Button
-     * Allows librarian return patron's book
+     * Method for accept Button
+     * Allows librarian accept patron's request for book
      */
     @FXML
     public void accept() {
@@ -320,6 +340,10 @@ public class ManagementForm {
 
     }
 
+    /**
+     * Method for reject Button
+     * Allows librarian reject patron's request for book
+     */
     @FXML
     public void reject() {
 
@@ -344,6 +368,10 @@ public class ManagementForm {
 
     }
 
+    /**
+     * Method for outstandingRequest Button
+     * Allows librarian to call back all the copies of the doc and delete a PQ for the document
+     */
     @FXML
     public void outstandingRequest(Document doc){
         doc.deletePQ();

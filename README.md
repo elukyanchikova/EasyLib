@@ -23,5 +23,12 @@ in place of old mock functions
 ## 3rd delivery
 
 ### Svetlana Kabirova
+* Fine feature implementation
+* Various changes
 ### Jameel Mukhutdinov
+* Management form and its functional inmplementation
+* Renew method implementation
 ### Elena Lukyanchikova
+* PriorityQueue implementation
+* OutstandingRequest implementation
+* Various changes
