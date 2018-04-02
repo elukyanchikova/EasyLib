@@ -110,10 +110,9 @@ public class ManagementForm {
 
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
         userListView = (ListView<UserCard>) scene.lookup("#userListView");
-<<<<<<< HEAD
+
         requestedByListView = (ListView<UserCard>) scene.lookup("#requestedByListView");
-=======
->>>>>>> 989b3b0a159b44cfd6ac833a01f75a04cc230dc0
+
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
         titleLbl = (Label) scene.lookup("#titleLbl");
         authorsLbl = (Label) scene.lookup("#authorsLbl");

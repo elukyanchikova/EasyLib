@@ -101,6 +101,7 @@ public class ReturnForm {
         this.scene = new Scene(root, 1000, 700);
 
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
+        userListView = (ListView<UserCard>) scene.lookup("#userListView");
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
         titleLbl = (Label) scene.lookup("#titleLbl");
         authorsLbl = (Label) scene.lookup("#authorsLbl");
