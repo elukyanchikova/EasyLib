@@ -14,9 +14,11 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.DatabaseManager;
+import users.Notification;
 import users.Session;
 import users.UserCard;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -84,7 +86,7 @@ public class ManageForm {
 
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
 
-        outstandingRequestBtn = (Button) scene.lookup("#outstandingRequestBtn");
+        outstandingRequestBtn = (Button) scene.lookup("#outstandingRequestButton");
 
         acceptBtn = (Button) scene.lookup("#acceptBtn");
         rejectBtn = (Button) scene.lookup("#rejectBtn");
@@ -162,6 +164,65 @@ public class ManageForm {
     public Document selectDocument(int id) {
         openDocumentID = id;
         return databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
+    }
+
+    @FXML
+    public void outstbtn(){
+        outstandingRequest(selectDocument(documentListView.getSelectionModel().getSelectedIndex()));
+    }
+
+    @FXML
+    public void clickOnAcceptBtn(){
+        Document chosenDoc = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+        ArrayList<UserCard> userCardsBookedCopy = new ArrayList<>();
+
+        for (int i = 0; i < chosenDoc.bookedCopies.size(); i++) {
+            userCardsBookedCopy.add(chosenDoc.bookedCopies.get(i).getCheckoutByUser());
+        }
+
+        UserCard user = databaseManager.getUserCard(userCardsBookedCopy.get(userBookingListView.getSelectionModel().getSelectedIndex()).getId());
+        for(int i = 0; i < chosenDoc.bookedCopies.size(); i++){
+            if(chosenDoc.bookedCopies.get(i).getCheckoutByUser().getId() == user.getId()){
+                chosenDoc.takenCopies.add(chosenDoc.bookedCopies.get(i));
+                user.checkedOutCopies.add(chosenDoc.bookedCopies.get(i));
+                chosenDoc.bookedCopies.remove(chosenDoc.bookedCopies.get(i));
+                user.notifications.add(new Notification(Notification.ACCEPT_NOTIFICATION, chosenDoc.getID()));
+                databaseManager.saveUserCard(user);
+                databaseManager.saveDocuments(chosenDoc);
+            }
+        }
+    }
+
+    @FXML
+    public void clickOnRejectBtn(){
+        Document chosenDoc = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+        ArrayList<UserCard> userCardsBookedCopy = new ArrayList<>();
+        for (int i = 0; i < chosenDoc.bookedCopies.size(); i++) {
+            userCardsBookedCopy.add(chosenDoc.bookedCopies.get(i).getCheckoutByUser());
+        }
+
+        UserCard user = databaseManager.getUserCard(userCardsBookedCopy.get(userBookingListView.getSelectionModel().getSelectedIndex()).getId());
+        for(int i = 0; i < chosenDoc.bookedCopies.size(); i++){
+            if(chosenDoc.bookedCopies.get(i).getCheckoutByUser().getId() == user.getId()){
+                chosenDoc.availableCopies.add(chosenDoc.bookedCopies.get(i));
+                chosenDoc.bookedCopies.get(i).checkoutBy(null);
+                chosenDoc.bookedCopies.remove(chosenDoc.bookedCopies.get(i));
+                user.notifications.add(new Notification(Notification.REQECT_NOTIFICATION, chosenDoc.getID()));
+                databaseManager.saveUserCard(user);
+                databaseManager.saveDocuments(chosenDoc);
+            }
+        }
+    }
+
+    public void outstandingRequest(Document doc){
+        UserCard[] users = new UserCard[0];
+        users = doc.requestedBy.toArray(users);
+        for(int i = 0; i < users.length; i++){
+            users[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION, doc.getID()));
+            databaseManager.saveUserCard(users[i]);
+        }
+        doc.deletePQ();
+        databaseManager.saveDocuments(doc);
     }
 
 
