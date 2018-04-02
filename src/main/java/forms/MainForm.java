@@ -419,9 +419,9 @@ public class MainForm {
      * Open Booking Requests Form
      */
     @FXML
-    public void clickOnManageBtn() throws Exception {
-        ManagementForm managementForm = new ManagementForm();
-        managementForm.startForm(stage, session, databaseManager);
+    public void clickOnManageBtn() throws Exception{
+        ManageForm manageForm = new ManageForm();
+        manageForm.startForm(stage,session, databaseManager);
     }
 
     Label notificationLbl;
@@ -459,8 +459,5 @@ public class MainForm {
             if (lastInd <= 0) notificationBtn.setVisible(false);
             notificationLbl.setText(session.userCard.notifications.get(lastInd).getMessage(databaseManager));
         }
-    public void clickOnManageBtn() throws Exception{
-        ManageForm manageForm = new ManageForm();
-        manageForm.startForm(stage,session, databaseManager);
     }
 }
