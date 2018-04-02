@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.DatabaseManager;
@@ -25,43 +26,64 @@ public class MainForm {
 
     private int openDocumentID = -1;
 
-    @FXML private GridPane documentInfoPane;
+    @FXML
+    private GridPane documentInfoPane;
 
-    @FXML private ListView<Document> documentListView;
+    @FXML
+    private ListView<Document> documentListView;
 
-    @FXML private Label titleLbl;
-    @FXML private Label authorsLbl;
-    @FXML private Label documentTypeLbl;
-    @FXML private Label priceLbl;
-    @FXML private Label keywordsLbl;
-    @FXML private Label copiesLbl;
-    @FXML private Label labelCopies;
+    @FXML
+    private Label titleLbl;
+    @FXML
+    private Label authorsLbl;
+    @FXML
+    private Label documentTypeLbl;
+    @FXML
+    private Label priceLbl;
+    @FXML
+    private Label keywordsLbl;
+    @FXML
+    private Label copiesLbl;
+    @FXML
+    private Label labelCopies;
 
-    @FXML private Label notificationLabel;
+    @FXML
+    private Label labelAddition1;
+    @FXML
+    private Label labelAddition2;
+    @FXML
+    private Label labelAddition3;
 
-    @FXML private Label labelAddition1;
-    @FXML private Label labelAddition2;
-    @FXML private Label labelAddition3;
+    @FXML
+    private Label additionLbl1;
+    @FXML
+    private Label additionLbl2;
+    @FXML
+    private Label additionLbl3;
 
-    @FXML private Label additionLbl1;
-    @FXML private Label additionLbl2;
-    @FXML private Label additionLbl3;
+    @FXML
+    private Button returnBtn;
+    @FXML
+    private Button editBtn;
+    @FXML
+    private Button infoBtn;
+    @FXML
+    private Button manageBtn;
 
-    @FXML private Button returnBtn;
-    @FXML private Button editBtn;
-    @FXML private Button infoBtn;
-    @FXML private Button manageBtn;
-
-    @FXML private static Button checkOutBtn;
-    @FXML private static Button requestBtn;
-    @FXML private static Button bookBtn;
+    @FXML
+    private static Button checkOutBtn;
+    @FXML
+    private static Button requestBtn;
+    @FXML
+    private static Button bookBtn;
 
     /**
      * Initialization and run new scene on the primary stage
-     * @param primaryStage != null;
+     *
+     * @param primaryStage   != null;
      * @param currentSession != null
      */
-    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception{
+    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
         this.session = currentSession;
         this.stage = primaryStage;
         this.databaseManager = databaseManager;
@@ -69,16 +91,18 @@ public class MainForm {
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
+        if (session.userCard.notifications.size() > 0) showNotification();
     }
 
     /**
      * Check out the document
+     *
      * @return true if the document has checked out
      */
-    public boolean checkOut(Document document){
+    public boolean checkOut(Document document) {
         boolean flag = isAvailableForUser(document);
-        if(!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
-            document.takeCopy( session.userCard, session);
+        if (!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
+            document.takeCopy(session.userCard, session);
             databaseManager.saveDocuments(document);
             databaseManager.saveUserCard(session.userCard);
             databaseManager.load();
@@ -88,10 +112,10 @@ public class MainForm {
         return false;
     }
 
-    public boolean book(Document document){
+    public boolean book(Document document) {
         boolean flag = isAvailableForUser(document);
 
-        if(!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
+        if (!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
             document.bookedCopies.add(document.availableCopies.get(0));
             document.availableCopies.get(0).checkoutBy(session.userCard);
             document.availableCopies.remove(0);
@@ -106,12 +130,13 @@ public class MainForm {
 
     /**
      * Request the document
+     *
      * @return true if the document has requested
      */
-    public boolean request(Document document){
+    public boolean request(Document document) {
         boolean flag = isAvailableForUser(document);
 
-        if(!document.isReference() && document.getNumberOfAvailableCopies() == 0 && flag) {
+        if (!document.isReference() && document.getNumberOfAvailableCopies() == 0 && flag) {
             document.putInPQ(session.userCard);
             databaseManager.saveDocuments(document);
             databaseManager.saveUserCard(session.userCard);
@@ -121,40 +146,41 @@ public class MainForm {
         return false;
     }
 
-    public Document selectDocument(int id){
+    public Document selectDocument(int id) {
         openDocumentID = id;
         return databaseManager.getDocuments(openDocumentID);
     }
 
-    private boolean isAvailableForUser(Document document){
-        for(int i = 0; i < session.userCard.checkedOutCopies.size(); i++){
-            if(session.userCard.checkedOutCopies.get(i).getDocumentID() == openDocumentID)
+    private boolean isAvailableForUser(Document document) {
+        for (int i = 0; i < session.userCard.checkedOutCopies.size(); i++) {
+            if (session.userCard.checkedOutCopies.get(i).getDocumentID() == openDocumentID)
                 return false;
         }
 
-        for(int i = 0; i < document.bookedCopies.size(); i++){
-            if(document.bookedCopies.get(i).getCheckoutByUser().getId() == session.userCard.getId())
+        for (int i = 0; i < document.bookedCopies.size(); i++) {
+            if (document.bookedCopies.get(i).getCheckoutByUser().getId() == session.userCard.getId())
                 return false;
         }
 
-        for(int i = 0; i < document.requestedBy.size(); i++){
-            if(document.requestedBy.contains(databaseManager.getUserCard(session.userCard.getId())))
+        for (int i = 0; i < document.requestedBy.size(); i++) {
+            if (document.requestedBy.contains(databaseManager.getUserCard(session.userCard.getId())))
                 return false;
         }
 
         return true;
     }
+
     /**
      * Set new database manager to the form
      */
-    public void setDatabaseManager(DatabaseManager databaseManager){
+    public void setDatabaseManager(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
     }
 
     /**
      * Set new session to the form
      */
-    public void setSession(Session session){
+    public void setSession(Session session) {
         this.session = session;
     }
 
@@ -166,7 +192,7 @@ public class MainForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/MainForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
-        this.scene = new Scene(root,1000,700);
+        this.scene = new Scene(root, 1000, 700);
         elementsInitialization();
         loadHighPermissionInterface();
         updateDocumentListView();
@@ -176,7 +202,7 @@ public class MainForm {
      * Initialization scenes' elements
      * All elements will be initialized
      */
-    private void elementsInitialization(){
+    private void elementsInitialization() {
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
         titleLbl = (Label) scene.lookup("#titleLbl");
@@ -204,13 +230,12 @@ public class MainForm {
         requestBtn = (Button) scene.lookup("#requestButton");
         bookBtn = (Button) scene.lookup("#bookButton");
 
-        notificationLabel = (Label) scene.lookup("#notificationLabel");
     }
 
     /**
      * Load special permission buttons' state
      */
-    private void loadHighPermissionInterface(){
+    private void loadHighPermissionInterface() {
         editBtn.setVisible(session.getUser().isHasEditPerm());
         returnBtn.setVisible(session.getUser().isHasReturnPerm());
         infoBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
@@ -220,15 +245,15 @@ public class MainForm {
     /**
      * Load buttons' state of document info panel
      */
-    private void loadAvailableAction(){
+    private void loadAvailableAction() {
         checkOutBtn.setVisible(false);
         bookBtn.setVisible(false);
         requestBtn.setVisible(false);
 
-        if(session.getUser().isHasUserPerm()) {
+        if (session.getUser().isHasUserPerm()) {
             boolean flag = isAvailableForUser(databaseManager.getDocuments(openDocumentID));
 
-            if(flag) {
+            if (flag) {
                 if (databaseManager.getDocuments(openDocumentID).availableCopies.size() > 0) {
                     checkOutBtn.setVisible(session.getUser().isHasCheckOutPerm());
                     bookBtn.setVisible(!session.getUser().isHasCheckOutPerm());
@@ -237,7 +262,7 @@ public class MainForm {
         }
     }
 
-    private void updateDocumentListView(){
+    private void updateDocumentListView() {
         documentListView.setItems(FXCollections.observableArrayList(databaseManager.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
             public ListCell<Document> call(ListView<Document> documentListView) {
@@ -257,8 +282,8 @@ public class MainForm {
     /**
      * Update the user card for current session
      */
-    public void updateSession(){
-        if(session.getUser().getClass() != Guest.class)
+    public void updateSession() {
+        if (session.getUser().getClass() != Guest.class)
             session.userCard = databaseManager.getUserCard(session.userCard.getId());
     }
 
@@ -282,7 +307,7 @@ public class MainForm {
         }
     }
 
-    private void loadInfoOnPanel(Document chosenDocument){
+    private void loadInfoOnPanel(Document chosenDocument) {
         titleLbl.setText(chosenDocument.title);
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -305,7 +330,7 @@ public class MainForm {
 
             copiesLbl.setText("");
             labelCopies.setText("Reference book");
-        }else copiesLbl.setText(String.valueOf(chosenDocument.getNumberOfAvailableCopies()));
+        } else copiesLbl.setText(String.valueOf(chosenDocument.getNumberOfAvailableCopies()));
 
 
         if (chosenDocument.getClass().equals(Book.class)) {
@@ -338,21 +363,21 @@ public class MainForm {
      * Check out or request(temp) document
      */
     @FXML
-    public void clickOnRequestBtn(){
-       request(databaseManager.getDocuments(openDocumentID));
-       loadAvailableAction();
-       copiesLbl.setText(String.valueOf(databaseManager.getDocuments(openDocumentID).getNumberOfAvailableCopies()));
+    public void clickOnRequestBtn() {
+        request(databaseManager.getDocuments(openDocumentID));
+        loadAvailableAction();
+        copiesLbl.setText(String.valueOf(databaseManager.getDocuments(openDocumentID).getNumberOfAvailableCopies()));
     }
 
     @FXML
-    public void clickOnCheckOutBtn(){
+    public void clickOnCheckOutBtn() {
         checkOut(databaseManager.getDocuments(openDocumentID));
         loadAvailableAction();
         copiesLbl.setText(String.valueOf(databaseManager.getDocuments(openDocumentID).getNumberOfAvailableCopies()));
     }
 
     @FXML
-    public void clickOnBookBtn(){
+    public void clickOnBookBtn() {
         book(databaseManager.getDocuments(openDocumentID));
         loadAvailableAction();
         copiesLbl.setText(String.valueOf(databaseManager.getDocuments(openDocumentID).getNumberOfAvailableCopies()));
@@ -364,7 +389,7 @@ public class MainForm {
      * Open Return Form
      */
     @FXML
-    public void clickOnReturnBtn() throws Exception{
+    public void clickOnReturnBtn() throws Exception {
         ReturnForm returnForm = new ReturnForm();
         returnForm.startForm(stage, session, databaseManager);
     }
@@ -374,9 +399,9 @@ public class MainForm {
      * Open Edit Form
      */
     @FXML
-    public void clickOnEditBtn() throws Exception{
+    public void clickOnEditBtn() throws Exception {
         EditForm editForm = new EditForm();
-        editForm.startForm(stage,session, databaseManager);
+        editForm.startForm(stage, session, databaseManager);
     }
 
     /**
@@ -384,9 +409,9 @@ public class MainForm {
      * Open UserInfo Form
      */
     @FXML
-    public void clickOnUserInfoBtn() throws Exception{
+    public void clickOnUserInfoBtn() throws Exception {
         UserInfoForm userInfoForm = new UserInfoForm();
-        userInfoForm.startForm(stage,session, databaseManager);
+        userInfoForm.startForm(stage, session, databaseManager);
     }
 
     /**
@@ -394,6 +419,46 @@ public class MainForm {
      * Open Booking Requests Form
      */
     @FXML
+    public void clickOnManageBtn() throws Exception {
+        ManagementForm managementForm = new ManagementForm();
+        managementForm.startForm(stage, session, databaseManager);
+    }
+
+    Label notificationLbl;
+    Button notificationBtn;
+
+    public void showNotification() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/Notification.fxml"));
+            loader.setController(this);
+            GridPane layout = loader.load();
+            Scene secondScene = new Scene(layout, 300, 100);
+            Stage notificationStage = new Stage();
+            notificationLbl = (Label) secondScene.lookup("#notificationLabel");
+            notificationBtn = (Button) secondScene.lookup("#nextButton");
+
+            int lastInd = session.userCard.notifications.size() - 1;
+            if (lastInd <= 0) notificationBtn.setVisible(false);
+            notificationLbl.setText(session.userCard.notifications.get(lastInd).getMessage(databaseManager));
+
+            notificationStage.setTitle("Notification");
+            notificationStage.setScene(secondScene);
+            notificationStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clickOnNextNotificationBtn() {
+        if (session.userCard.notifications.size() > 0)
+            session.userCard.notifications.remove(session.userCard.notifications.size() - 1);
+        databaseManager.saveUserCard(session.userCard);
+        updateSession();
+        if (session.userCard.notifications.size() > 0) {
+            int lastInd = session.userCard.notifications.size() - 1;
+            if (lastInd <= 0) notificationBtn.setVisible(false);
+            notificationLbl.setText(session.userCard.notifications.get(lastInd).getMessage(databaseManager));
+        }
     public void clickOnManageBtn() throws Exception{
         ManageForm manageForm = new ManageForm();
         manageForm.startForm(stage,session, databaseManager);

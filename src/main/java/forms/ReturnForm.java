@@ -14,9 +14,11 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.DatabaseManager;
+import users.Notification;
 import users.Session;
 import users.UserCard;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 
 /**
@@ -134,22 +136,6 @@ public class ReturnForm {
                 };
             }
         });
-
-        /*userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
-        userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
-            public ListCell<UserCard> call(ListView<UserCard> userListView) {
-                return new ListCell<UserCard>() {
-                  @Override
-                  protected void updateItem(UserCard userCard, boolean flag){
-                      super.updateItem(userCard,flag);
-                      if (userCard != null && userCard.checkedOutCopies != null){
-                          setText(userCard.name);
-                      }
-                  }
-                };
-            }
-        });*/
-
     }
 
     @FXML
@@ -284,13 +270,14 @@ public class ReturnForm {
             for (int i = 0; i < document.takenCopies.size(); i++) {
                 if (document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId())
                 {
-                    userCard.checkedOutCopies.remove(document.takenCopies.get(i));
-                    document.returnCopy(document.takenCopies.get(i));
+                    databaseManager.getUserCard(userCard.getId()).checkedOutCopies.remove(document.takenCopies.get(i));
+                    databaseManager.getDocuments(document.getID()).returnCopy(document.takenCopies.get(i));
+                    this.autobooking( databaseManager.getDocuments(document.getID()));
                 }
             }
 
-            databaseManager.saveDocuments(document);
-            databaseManager.saveUserCard(userCard);
+            databaseManager.saveDocuments( databaseManager.getDocuments(document.getID()));
+            databaseManager.saveUserCard(databaseManager.getUserCard(userCard.getId()));
 
         }
     }
@@ -335,6 +322,28 @@ public class ReturnForm {
 
     // calling a doc back
     public void outstandingRequest(Document doc){
+        UserCard[] users = new UserCard[0];
+        users = doc.requestedBy.toArray(users);
+        for(int i = 0; i < users.length; i++){
+            users[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION, doc.getID()));
+            databaseManager.saveUserCard(users[i]);
+        }
         doc.deletePQ();
         databaseManager.saveDocuments(doc);
-    }}
+    }
+
+    private void autobooking(Document document){
+        UserCard userCard = document.requestedBy.poll();
+        if(userCard != null) {
+            userCard.notifications.add(new Notification(Notification.GET_COPY_NOTIFICATION, document.getID()));
+            if (!document.isReference() && document.getNumberOfAvailableCopies() > 0) {
+                document.bookedCopies.add(document.availableCopies.get(0));
+                document.availableCopies.get(0).checkoutBy(userCard);
+                document.availableCopies.remove(0);
+                databaseManager.saveDocuments(document);
+                databaseManager.saveUserCard(userCard);
+                databaseManager.load();
+            }
+        }
+    }
+}

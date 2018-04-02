@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<GridPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           prefHeight="100.0" prefWidth="300.0">
+
+    <Label GridPane.rowIndex="0" fx:id="notificationLabel"/>
+    <Button fx:id = "nextButton"
+            GridPane.rowIndex="1" text="NEXT" onMouseClicked="#clickOnNextNotificationBtn"/>
+</GridPane>
