@@ -20,6 +20,7 @@ public class UserCard {
 
     public ArrayList<Copy> checkedOutCopies;
     public ArrayList<Document> requestedDocs;
+    public ArrayList<Notification> notifications = new ArrayList<>();
     //public int fine;
 
     public UserCard(String name, String surname, UserType userType, String phoneNumb, String address,
@@ -61,6 +62,10 @@ public class UserCard {
         for (int i = 0; i < requestedDocsObj.toList().size(); i++) {
             //database.getDocument(requestedBooksObj.get(i))
         }
+        JSONArray notificationsObj = data.getJSONArray("Notifications");
+        for (int i = 0; i < notificationsObj.toList().size(); i++) {
+            notifications.add(new Notification(notificationsObj.getJSONObject(i)));
+        }
         requestedDocs = new ArrayList<>();
         checkedOutCopies = new ArrayList<>();
     }
@@ -82,6 +87,11 @@ public class UserCard {
             requestedBooksObj.put(requestedDocs.get(i).getID());
         }
         data.put("RequestedDocs", requestedBooksObj);
+        JSONArray notificationsObj = new JSONArray();
+        for (int i = 0; i < notifications.size(); i++) {
+            notificationsObj.put(notifications.get(i).serialize());
+        }
+        data.put("Notifications", notificationsObj);
         return data;
     }
 
