@@ -395,7 +395,7 @@ public class MainForm {
      */
     @FXML
     public void clickOnManageBtn() throws Exception{
-        ManagementForm managementForm = new ManagementForm();
-        managementForm.startForm(stage,session, databaseManager);
+        ManageForm manageForm = new ManageForm();
+        manageForm.startForm(stage,session, databaseManager);
     }
 }
