@@ -99,6 +99,27 @@ public class addUserForm {
                     phoneNumber,
                     address);
 
+        } else if (userTypeTextField.getText().toLowerCase().equals("ta")) {
+            newUserCard = new UserCard(nameTextField.getText(),
+                    surname,
+                    new TA(),
+                    phoneNumber,
+                    address);
+
+        } else if (userTypeTextField.getText().toLowerCase().equals(("visitingprofessor"))) {
+            newUserCard = new UserCard(nameTextField.getText(),
+                    surname,
+                    new VisitingProfessor(),
+                    phoneNumber,
+                    address);
+
+        } else if (userTypeTextField.getText().toLowerCase().equals("professor")) {
+            newUserCard = new UserCard(nameTextField.getText(),
+                    surname,
+                    new Professor(),
+                    phoneNumber,
+                    address);
+
         } else {
             newUserCard = new UserCard(name, surname, new Guest(), phoneNumber, address);
         }
