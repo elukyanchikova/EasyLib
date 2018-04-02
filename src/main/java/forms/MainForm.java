@@ -459,5 +459,8 @@ public class MainForm {
             if (lastInd <= 0) notificationBtn.setVisible(false);
             notificationLbl.setText(session.userCard.notifications.get(lastInd).getMessage(databaseManager));
         }
+    public void clickOnManageBtn() throws Exception{
+        ManageForm manageForm = new ManageForm();
+        manageForm.startForm(stage,session, databaseManager);
     }
 }

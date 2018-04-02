@@ -42,8 +42,8 @@ public class ManagementForm {
     private ListView<Document> documentListView;
     @FXML
     private ListView<UserCard> userListView;
-    @FXML
-    private ListView <UserCard> requestedByListView;
+   /* @FXML
+    private ListView <UserCard> requestedByListView;*/
 
     @FXML
     private Label titleLbl;
@@ -111,7 +111,7 @@ public class ManagementForm {
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
         userListView = (ListView<UserCard>) scene.lookup("#userListView");
 
-        requestedByListView = (ListView<UserCard>) scene.lookup("#requestedByListView");
+       // requestedByListView = (ListView<UserCard>) scene.lookup("#requestedByListView");
 
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
         titleLbl = (Label) scene.lookup("#titleLbl");
@@ -385,4 +385,10 @@ public class ManagementForm {
             doc.availableCopies.add(doc.bookedCopies.get(i));
         };
         databaseManager.saveDocuments(doc);
-    }}
+    }
+
+    @FXML
+    public UserCard user (ArrayList<UserCard> users){ return null;}
+/*@FXML
+public void requestedBy(){;}*/
+}
