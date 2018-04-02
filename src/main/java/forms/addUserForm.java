@@ -120,6 +120,13 @@ public class addUserForm {
                     phoneNumber,
                     address);
 
+        } else  if (userTypeTextField.getText().toLowerCase().equals("instructor")) {
+            newUserCard = new UserCard(nameTextField.getText(),
+                    surname,
+                    new Instructor(),
+                    phoneNumber,
+                    address);
+
         } else {
             newUserCard = new UserCard(name, surname, new Guest(), phoneNumber, address);
         }

@@ -21,6 +21,14 @@ public abstract class UserType {
         UserType.userTypes.put("Student", new Student());
         UserType.userTypes.put("Librarian", new Librarian());
         UserType.userTypes.put("Guest", new Guest());
+        UserType.userTypes.put("Professor", new Professor());
+        UserType.userTypes.put("VisitingProfessor", new VisitingProfessor());
+        UserType.userTypes.put("TA", new TA());
+        UserType.userTypes.put("Instructor", new Instructor());
+        UserType.userTypes.put("users.Professor", new Professor());
+        UserType.userTypes.put("users.VisitingProfessor", new VisitingProfessor());
+        UserType.userTypes.put("users.TA", new TA());
+        UserType.userTypes.put("users.Instructor", new Instructor());
         UserType.userTypes.put("users.Faculty", new Faculty());
         UserType.userTypes.put("users.Student", new Student());
         UserType.userTypes.put("users.Librarian", new Librarian());
