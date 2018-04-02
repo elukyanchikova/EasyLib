@@ -124,7 +124,6 @@ public class ManageForm {
         rejectBtn = (Button) scene.lookup("#rejectBtn");
         backBtn = (Button) scene.lookup("#backBtn");
 
-
         documentListView.setItems(FXCollections.observableArrayList(databaseManager.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
             public ListCell<Document> call(ListView<Document> documentListView) {
