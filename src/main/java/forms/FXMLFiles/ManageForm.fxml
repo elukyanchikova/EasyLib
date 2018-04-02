@@ -38,13 +38,14 @@
         <ListView GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="userBookingListView"
                   minHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
         <Button GridPane.rowIndex = "3" GridPane.columnIndex="0"
-                fx:id="AcceptButton" text="Accept" />
+                fx:id="AcceptButton" text="Accept" onMouseClicked="#clickOnAcceptBtn" />
         <Button GridPane.rowIndex = "4" GridPane.columnIndex="0"
-                fx:id="RejectButton" text="Reject" />
+                fx:id="RejectButton" text="Reject" onMouseClicked="#clickOnRejectBtn" />
         <Label GridPane.rowIndex="0" GridPane.columnIndex="1" text="Queue"/>
         <ListView GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="userRequestsListView"
                   minHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
     </GridPane>
     <Button GridPane.rowIndex = "10" GridPane.columnIndex="0"
-            fx:id="OutstandingRequestButton" text="Outstanding Request" />
+            fx:id="outstandingRequestButton" text="Outstanding Request"
+            onMouseClicked="#outstbtn"/>
 </GridPane>

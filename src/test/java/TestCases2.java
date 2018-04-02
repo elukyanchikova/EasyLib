@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class TestCases2 {
 
-    final static String DATABASE_FILE_NAME = "TestCases";
+   /** final static String DATABASE_FILE_NAME = "TestCases";
     /**
      * Initial state:  system does not have any documents, any patron.
      * The system only contains one user who is a librarian.
@@ -21,7 +21,7 @@ public class TestCases2 {
      * * patrons p1, p2 and p3
      * Effect: number of documents in the System is 8 and the number of users is 4.
      */
-    @Test
+   /** @Test
     public void TestCase1() {
 
         //Initial state
@@ -159,8 +159,8 @@ public class TestCases2 {
      * * patron p2
      * Effect:  number of documents in the System is 5 and the number of users is 3.
      */
-    @Test
-    public void TestCase2() {
+    //@Test
+  /*  public void TestCase2() {
         //Initial state
         TestCase1();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
@@ -206,8 +206,8 @@ public class TestCases2 {
      * Action: librarian checks the information of patron p1 and p3
      * Effect: got all the information
      */
-    @Test
-    public void TestCase3() {
+   /*  @Test
+   public void TestCase3() {
         //Initial state
         TestCase1();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
@@ -268,7 +268,7 @@ public class TestCases2 {
      * Action: The librarian checks the information of patron p2 and p3
      * Effect: got the information about p3 but not p3
      */
-    @Test
+   /* @Test
     public void TestCase4() {
         TestCase2();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
@@ -288,7 +288,7 @@ public class TestCases2 {
      * Action: Patron p2 checks out book b1
      * Effect: nothing happen
      */
-    @Test
+    /*@Test
     public void TestCase5() {
         TestCase2();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
@@ -305,7 +305,7 @@ public class TestCases2 {
      * the librarian checks the information of p1 and p3
      * Effect: correct information about users
      */
-    @Test
+   /* @Test
     public void TestCase6() {
         TestCase2();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
@@ -356,7 +356,7 @@ public class TestCases2 {
      * the librarian checks the information of p1 and p2
      * Effect: correct information about users
      */
-    @Test
+    /*@Test
     public void TestCase7(){
         TestCase1();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
@@ -437,7 +437,7 @@ public class TestCases2 {
      * the librarian checks the due dates of documents checked out by p2
      * Effect: overdue should be right
      */
-    @Test
+    /*@Test
     public void TestCase8() {
         TestCase1();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
@@ -502,7 +502,7 @@ public class TestCases2 {
      * the librarian checks patrons and documents of the system
      * Effect: all information should be saved
      */
-    @Test
+   /* @Test
     public void TestCase9() {
         TestCase1();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
@@ -523,5 +523,6 @@ public class TestCases2 {
         Assert.assertNotNull(databaseManager1.getUserCard(1100));
 
     }
-
+*/
 }
+
