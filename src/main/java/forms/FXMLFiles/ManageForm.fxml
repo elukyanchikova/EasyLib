@@ -42,7 +42,7 @@
         <Button GridPane.rowIndex = "4" GridPane.columnIndex="0"
                 fx:id="RejectButton" text="Reject" />
         <Label GridPane.rowIndex="0" GridPane.columnIndex="1" text="Queue"/>
-        <ListView GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="userRequests0ListView"
+        <ListView GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="userRequestsListView"
                   minHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
     </GridPane>
     <Button GridPane.rowIndex = "10" GridPane.columnIndex="0"

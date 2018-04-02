@@ -18,6 +18,8 @@ import users.Session;
 import users.UserCard;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Return form allows librarian to see the list of documents and users that have checked out it
@@ -40,33 +42,9 @@ public class ManageForm {
     @FXML
     private ListView<Document> documentListView;
     @FXML
-    private ListView<UserCard> userListView;
-
+    private ListView<UserCard> userBookingListView;
     @FXML
-    private Label titleLbl;
-    @FXML
-    private Label authorsLbl;
-    @FXML
-    private Label documentTypeLbl;
-    @FXML
-    private Label priceLbl;
-    @FXML
-    private Label keywordsLbl;
-
-
-    @FXML
-    private Label labelAddition1;
-    @FXML
-    private Label labelAddition2;
-    @FXML
-    private Label labelAddition3;
-
-    @FXML
-    private Label additionLbl1;
-    @FXML
-    private Label additionLbl2;
-    @FXML
-    private Label additionLbl3;
+    private ListView<UserCard> userRequestsListView;
 
     @FXML
     private static Button backBtn;
@@ -99,26 +77,14 @@ public class ManageForm {
         this.scene = new Scene(root, 1000, 700);
 
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
-        userListView = (ListView<UserCard>) scene.lookup("#userListView");
+        userBookingListView = (ListView<UserCard>) scene.lookup("#userBookingListView");
+        userRequestsListView = (ListView<UserCard>) scene.lookup("#userRequestsListView");
 
         // requestedByListView = (ListView<UserCard>) scene.lookup("#requestedByListView");
 
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
-        titleLbl = (Label) scene.lookup("#titleLbl");
-        authorsLbl = (Label) scene.lookup("#authorsLbl");
-        documentTypeLbl = (Label) scene.lookup("#documentTypeLbl");
-        priceLbl = (Label) scene.lookup("#priceLbl");
-        keywordsLbl = (Label) scene.lookup("#keywordsLbl");
 
         outstandingRequestBtn = (Button) scene.lookup("#outstandingRequestBtn");
-
-        additionLbl1 = (Label) scene.lookup("#additionLbl1");
-        additionLbl2 = (Label) scene.lookup("#additionLbl2");
-        additionLbl3 = (Label) scene.lookup("#additionLbl3");
-
-        labelAddition1 = (Label) scene.lookup("#labelAddition1");
-        labelAddition2 = (Label) scene.lookup("#labelAddition2");
-        labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
         acceptBtn = (Button) scene.lookup("#acceptBtn");
         rejectBtn = (Button) scene.lookup("#rejectBtn");
@@ -140,21 +106,6 @@ public class ManageForm {
         });
 
 
-/*        userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
-        userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
-            public ListCell<UserCard> call(ListView<UserCard> userListView) {
-                return new ListCell<UserCard>() {
-                    @Override
-                    protected void updateItem(UserCard userCard, boolean flag){
-                        super.updateItem(userCard,flag);
-                        if (userCard != null && userCard.checkedOutCopies != null){
-                            setText(userCard.name);
-                        }
-                    }
-                };
-            }
-        });
-*/
     }
 
     @FXML
@@ -167,6 +118,51 @@ public class ManageForm {
                 documentInfoPane.setVisible(true);
             }
         }
+
+        Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex()); //chosen document
+
+        ArrayList<UserCard> userCardsBookedCopy = new ArrayList<>();
+
+        for (int i = 0; i < chosenDocument.bookedCopies.size(); i++) {
+            userCardsBookedCopy.add(chosenDocument.bookedCopies.get(i).getCheckoutByUser());
+        }
+
+        userBookingListView.setItems(FXCollections.observableArrayList(userCardsBookedCopy));
+        userBookingListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
+            public ListCell<UserCard> call(ListView<UserCard> userListView) {
+                return new ListCell<UserCard>() {
+                    @Override
+                    protected void updateItem(UserCard userCard, boolean flag) {
+                        super.updateItem(userCard, flag);
+                        if (userCard != null)
+                            setText(userCard.name);
+                    }
+                };
+            }
+        });
+
+        ArrayList<UserCard> userCardsRequested = new ArrayList<>();
+        userCardsRequested.addAll((chosenDocument.requestedBy));
+
+        userRequestsListView.setItems(FXCollections.observableArrayList(userCardsRequested));
+        userRequestsListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
+            public ListCell<UserCard> call(ListView<UserCard> userListView) {
+                return new ListCell<UserCard>() {
+                    @Override
+                    protected void updateItem(UserCard userCard, boolean flag) {
+                        super.updateItem(userCard, flag);
+                        if (userCard != null)
+                            setText(userCard.name);
+                    }
+                };
+            }
+        });
     }
+
+    public Document selectDocument(int id) {
+        openDocumentID = id;
+        return databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
+    }
+
 
 }
