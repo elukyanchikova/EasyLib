@@ -93,9 +93,9 @@ public class ManageForm {
     }
 
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/ManagementForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/ManageForm.fxml"));
         loader.setController(this);
-        AnchorPane root = loader.load();
+        GridPane root = loader.load();
         this.scene = new Scene(root, 1000, 700);
 
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
@@ -140,7 +140,7 @@ public class ManageForm {
         });
 
 
-        userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
+/*        userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
             public ListCell<UserCard> call(ListView<UserCard> userListView) {
                 return new ListCell<UserCard>() {
@@ -154,7 +154,19 @@ public class ManageForm {
                 };
             }
         });
+*/
+    }
 
+    @FXML
+    public void clickOnDocumentListView() {
+
+        //get selected element
+        if (documentListView.getSelectionModel().getSelectedIndex() > -1) {
+            //If no document was opened
+            if (openDocumentID == -1) {
+                documentInfoPane.setVisible(true);
+            }
+        }
     }
 
 }
