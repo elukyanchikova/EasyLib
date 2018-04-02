@@ -256,8 +256,10 @@ public class ReturnForm {
     /**
      * Method for Return Button
      * Allows librarian return patron's book
+     * removes a copy from checked out copies array list
+     *
+     * void
      */
-
     @FXML
     public void returnBtn() {
         if (openDocumentID > -1) {
@@ -282,6 +284,14 @@ public class ReturnForm {
         }
     }
 
+    /**
+     * renews the document for chosen user
+     * Work order:
+     * 1) returns the book
+     * 2) checks out book for new date
+     * Allows to prolong due date
+     * @return
+     */
     @FXML
     public boolean renewBtn() {
         if (openDocumentID > -1) {
@@ -320,6 +330,19 @@ public class ReturnForm {
         return false;
     }
 
+    /**
+     * calling a doc back
+     */
+    public void outstandingRequest(Document doc){
+        UserCard[] users = new UserCard[0];
+        users = doc.requestedBy.toArray(users);
+        for(int i = 0; i < users.length; i++){
+            users[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION, doc.getID()));
+            databaseManager.saveUserCard(users[i]);
+        }
+        doc.deletePQ();
+        databaseManager.saveDocuments(doc);
+    }
 
     private void autobooking(Document document){
         UserCard userCard = document.requestedBy.poll();

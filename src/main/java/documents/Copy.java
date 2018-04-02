@@ -88,6 +88,7 @@ public class Copy {
                 days += m[i-1];
             }
         }
+        if(checkOutDay==session.day) return 0;
         return days<(checkOutTime)? -1: (days-checkOutTime);
     }
 
