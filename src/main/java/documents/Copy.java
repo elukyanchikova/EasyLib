@@ -80,7 +80,7 @@ public class Copy {
     public int getOverdue(Session session){
         int days = 0;
         int[] m = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
-        if(checkOutMonth > session.month) return -1;
+        if(checkOutMonth > session.month) return 0;
         days = session.day - checkOutDay;
         if(checkOutMonth < session.month){
             int[] months = new int[session.month - checkOutMonth];
@@ -89,7 +89,7 @@ public class Copy {
             }
         }
         if(checkOutDay==session.day) return 0;
-        return days<(checkOutTime)? -1: (days-checkOutTime);
+        return days<(checkOutTime)? 0: (days-checkOutTime);
     }
 
     public String getDueDate(){
