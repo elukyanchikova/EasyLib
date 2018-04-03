@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import documents.Book;
 import documents.Copy;
 import documents.Document;
@@ -145,4 +146,7 @@ public class TestCases3 {
     @Test
     public void Test10(){}
 
+=======
+public class TestCases3 {
+>>>>>>> 676f896aecb7ef74e8bb683e9857334d2e778f37
 }
