@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import documents.Book;
 import documents.Copy;
 import documents.Document;
@@ -12,9 +11,9 @@ import java.util.ArrayList;
 public class TestCases3 {
 
     @Test
-    public void Test1(){
+    public void Test1() {
 
-    DatabaseManager databaseManager = new DatabaseManager("Test3");
+        DatabaseManager databaseManager = new DatabaseManager("Test3");
         databaseManager.resetDatabase();
 
         ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
@@ -93,7 +92,7 @@ public class TestCases3 {
         b3_keywords.add("none");
 
         Book b3 = new Book("Null References: The Billion Dollar Mistake", b3_authors,
-                b3_keywords, 700, b3_copies, "none",2018, "none", false);
+                b3_keywords, 700, b3_copies, "none", 2018, "none", false);
         b3.setReference(true);
         b3.setCopy(new Copy(b3, 1, 1));
         b3.setCopy(new Copy(b3, 1, 2));
@@ -105,48 +104,70 @@ public class TestCases3 {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         p1.checkedOutCopies.add(b1.availableCopies.get(1));
+        databaseManager.saveDocuments(b1);
+        databaseManager.saveUserCard(p1);
         p1.checkedOutCopies.add(b2.availableCopies.get(1));
+        databaseManager.saveDocuments(b2);
+        databaseManager.saveUserCard(p1);
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /**Action**/
-        Session curSession = new Session(librarian_1.userType, 2,4);
+        Session curSession = new Session(librarian_1.userType, 2, 4);
         Assert.assertTrue("Session is leading by  librarian.", Librarian.class.isAssignableFrom(session.getUser().getClass()));
-        int a = p1.getFine(p1, curSession,databaseManager);
-        int b = p1.checkedOutCopies.get(0).getOverdue(curSession);
-        p1.checkedOutCopies.get(0).returnCopy();
+       // int a = p1.getFine(p1, curSession, databaseManager);
+        //int b = p1.checkedOutCopies.get(0).getOverdue(curSession);
+        b1.returnCopy(p1.checkedOutCopies.get(1));
+        int s = b1.takenCopies.size();
+        b1.takenCopies.remove(1);
+        databaseManager.saveDocuments(b1);
+        databaseManager.saveUserCard(p1);
 
+       // int c = p1.checkedOutCopies.size();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /**Effect**/
 
-        Assert.assertTrue("Fine of p1 is equal 0",a == 0 );
-        Assert.assertTrue("Overdue of p1 is equal 0",b ==0 );
-        Assert.assertTrue("p1 have only one cheched out copies", p1.checkedOutCopies.size()==1);
-
-
+       // Assert.assertTrue("Fine of p1 is equal 0", a == 0);
+        //Assert.assertTrue("Overdue of p1 is equal 0", b == 0);
+        Assert.assertTrue("p1 have only one cheched out copies", p1.checkedOutCopies.size() == 1);
 
 
     }
-    @Test
-    public void Test2(){}
-    @Test
-    public void Test3(){}
-    @Test
-    public void Test4(){}
-    @Test
-    public void Test5(){}
-    @Test
-    public void Test6(){}
-    @Test
-    public void Test7(){}
-    @Test
-    public void Test8(){}
-    @Test
-    public void Test9(){}
-    @Test
-    public void Test10(){}
 
-=======
-public class TestCases3 {
->>>>>>> 676f896aecb7ef74e8bb683e9857334d2e778f37
+    @Test
+    public void Test2() {
+    }
+
+    @Test
+    public void Test3() {
+    }
+
+    @Test
+    public void Test4() {
+    }
+
+    @Test
+    public void Test5() {
+    }
+
+    @Test
+    public void Test6() {
+    }
+
+    @Test
+    public void Test7() {
+    }
+
+    @Test
+    public void Test8() {
+    }
+
+    @Test
+    public void Test9() {
+    }
+
+    @Test
+    public void Test10() {
+    }
 }
