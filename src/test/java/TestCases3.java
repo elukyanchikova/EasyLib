@@ -130,7 +130,7 @@ public class TestCases3 {
 
        // Assert.assertTrue("Fine of p1 is equal 0", a == 0);
         //Assert.assertTrue("Overdue of p1 is equal 0", b == 0);
-        Assert.assertTrue("p1 have only one cheched out copies", p1.checkedOutCopies.size() == 1);
+        Assert.assertTrue("p1 have only one checked out copies", p1.checkedOutCopies.size() == 1);
 
 
     }
