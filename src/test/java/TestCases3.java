@@ -1,19 +1,33 @@
 import documents.Book;
 import documents.Copy;
 import documents.Document;
+import forms.MainForm;
 import org.junit.Assert;
 import org.junit.Test;
 import storage.DatabaseManager;
 import users.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TestCases3 {
+
+
+    private DatabaseManager databaseManager = new DatabaseManager("TestCases3");
+
+    public void initialState(){
+        Book d1 = new Book( "Introduction to Algorithms",
+                new ArrayList<>(Arrays.asList("Thomas H. Cormen", "Charles E. Leiserson", "Ronald L. Rivest", "Clifford Stein")),
+                new ArrayList<>(), 5000, "MIT Press", 2009, "Third edition",false);
+        d1.setCopy(new Copy(d1, 3, 310));
+        databaseManager.saveDocuments(d1);
+
+
+    }
 
     @Test
     public void Test1() {
 
-        DatabaseManager databaseManager = new DatabaseManager("Test3");
         databaseManager.resetDatabase();
 
         ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
@@ -160,13 +174,21 @@ public class TestCases3 {
         DatabaseManager databaseManager = new DatabaseManager("TestCases3");
         UserCard userCard = databaseManager.getUserCard(1010);
         Document document = databaseManager.getDocuments(1);
+
+        Session session = new Session(userCard.userType, 26, 3);
+        session.userCard = userCard;
+        MainForm mainForm = new MainForm();
+        mainForm.setSession(session);
+
+        mainForm.checkOut(document);
+
         Copy copy = null;
         for(int i = 0; i < document.takenCopies.size(); i++){
             if(document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId())
                 copy = document.takenCopies.get(i);
         }
         Assert.assertNotNull(copy);
-        // Assert.assertEquals(copy.getCheckOutDate(), "26 March");
+        Assert.assertEquals(copy.getCheckedOutDate(), "26 March");
 
     }
 
