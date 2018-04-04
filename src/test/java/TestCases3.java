@@ -728,20 +728,46 @@ public class TestCases3 {
         Session session = new Session(userCard.userType, 26, 3);
         session.userCard = userCard;
         mainForm.setSession(session);
-        mainForm.checkOut(document);
+        if(document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
 
         UserCard userCard2 = databaseManager.getUserCard(1011);
         Session session2 = new Session(userCard2.userType, 26, 3);
         session2.userCard = userCard2;
         mainForm.setSession(session2);
-        mainForm.checkOut(document);
+        if(document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
 
         UserCard userCard3 = databaseManager.getUserCard(1101);
         Session session3 = new Session(userCard3.userType, 26, 3);
         session3.userCard = userCard3;
         mainForm.setSession(session3);
-        mainForm.checkOut(document);
+        if(document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
 
+        UserCard userCard4 = databaseManager.getUserCard(1110);
+        Session session4 = new Session(userCard4.userType, 26, 3);
+        session4.userCard = userCard4;
+        mainForm.setSession(session4);
+        if(document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
+
+        UserCard userCard5 = databaseManager.getUserCard(1100);
+        Session session5 = new Session(userCard5.userType, 26, 3);
+        session5.userCard = userCard5;
+        mainForm.setSession(session5);
+        if(document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
+
+        /*UserCard[] userCards = document.requestedBy.toArray(new UserCard[0]);
+        for(int i = 0; i < userCards.length; i++){
+            Assert.assertEquals(userCard3);
+        }*/
     }
 
     @Test
