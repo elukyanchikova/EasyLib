@@ -807,7 +807,7 @@ public class TestCases3 {
         Session session2 = new Session(userCard2.userType, 26, 3);
         session2.userCard = userCard2;
         mainForm.setSession(session2);
-        
+
         if (document.availableCopies.size() > 0)
             mainForm.checkOut(document);
         else mainForm.request(document);

@@ -20,6 +20,7 @@ import users.UserCard;
 
 import javax.print.Doc;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Return form allows librarian to see the list of documents and users that have checked out it
@@ -349,15 +350,18 @@ public class ReturnForm {
     }
 
     private void autobooking(Document document){
-        UserCard userCard = document.requestedBy.poll();
-        if(userCard != null) {
-            userCard.notifications.add(new Notification(Notification.GET_COPY_NOTIFICATION, document.getID()));
+        UserCard[] userCards = document.requestedBy.toArray(new UserCard[0]);
+        document.requestedBy.poll();
+        Arrays.sort(userCards);
+        int ind =userCards.length-1;
+        if(userCards.length > 0) {
+            userCards[ind].notifications.add(new Notification(Notification.GET_COPY_NOTIFICATION, document.getID()));
             if (!document.isReference() && document.getNumberOfAvailableCopies() > 0) {
                 document.bookedCopies.add(document.availableCopies.get(0));
-                document.availableCopies.get(0).checkoutBy(userCard);
+                document.availableCopies.get(0).checkoutBy(userCards[ind]);
                 document.availableCopies.remove(0);
                 databaseManager.saveDocuments(document);
-                databaseManager.saveUserCard(userCard);
+                databaseManager.saveUserCard(userCards[ind]);
                 databaseManager.load();
             }
         }
