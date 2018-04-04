@@ -1,3 +1,4 @@
+import documents.AVMaterial;
 import documents.Book;
 import documents.Copy;
 import documents.Document;
@@ -10,6 +11,7 @@ import users.*;
 import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class TestCases3 {
 
@@ -17,6 +19,7 @@ public class TestCases3 {
     private DatabaseManager databaseManager = new DatabaseManager("TestCases3");
 
     public void initialState(){
+        databaseManager.resetDatabase();
         Book d1 = new Book( "Introduction to Algorithms",
                 new ArrayList<>(Arrays.asList("Thomas H. Cormen", "Charles E. Leiserson", "Ronald L. Rivest", "Clifford Stein")),
                 new ArrayList<>(), 5000, "MIT Press", 2009, "Third edition",false);
@@ -25,18 +28,36 @@ public class TestCases3 {
         databaseManager.saveDocuments(d1);
 
         Book d2 = new Book( "Design Patterns: Elements of Reusable Object-Oriented Software",
-                new ArrayList<>(Arrays.asList("Thomas H. Cormen", "Charles E. Leiserson", "Ronald L. Rivest", "Clifford Stein")),
-                new ArrayList<>(), 5000, "MIT Press", 2009, "Third edition",false);
+                new ArrayList<>(Arrays.asList("Erich Gamma", "Ralph Johnson", "John Vlissides", "Richard Helm")),
+                new ArrayList<>(), 1700, "Addison-Wesley Professional", 2003, "First edition",true);
         for(int i = 0; i < 3; i++)
-            d1.setCopy(new Copy(d1, 3, 310));
-        databaseManager.saveDocuments(d1);
+            d1.setCopy(new Copy(d2, 4, 412));
+        databaseManager.saveDocuments(d2);
 
+        AVMaterial d3 =  new AVMaterial( "Null References: The Billion Dollar Mistake",
+                new ArrayList<>(Collections.singletonList("Tony Hoare")), new ArrayList<>(), 700 );
+        for(int i = 0; i < 2; i++)
+            d1.setCopy(new Copy(d3, 2, 201));
+        databaseManager.saveDocuments(d3);
+
+        UserCard p1 = new UserCard(1010, "Sergey", "Afonso", new Professor(), "30001", "Via Margutta, 3");
+        databaseManager.saveUserCard(p1);
+
+        UserCard p2 = new UserCard(1011, "Nadia", "Teixeira", new Professor(), "30002", "Via Sacra, 13");
+        databaseManager.saveUserCard(p2);
+
+        UserCard p3 = new UserCard(1100, "Elvira", "Espindola", new Professor(), "30003", "Via del Corso, 22");
+        databaseManager.saveUserCard(p3);
+
+        UserCard s = new UserCard(1101, "Andrey", "Velo",  new Student(), "30004", "Avenida Mazatlan 250");
+        databaseManager.saveUserCard(s);
+
+        UserCard v = new UserCard(1110, "Veronika", "Rama", new VisitingProfessor(), "30005", "Stret Atocha, 27");
+        databaseManager.saveUserCard(v);
     }
 
     @Test
     public void Test1() {
-
-        databaseManager.resetDatabase();
 
         ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> l1_requestedDocuments = new ArrayList<Document>();
