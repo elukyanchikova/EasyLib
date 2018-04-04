@@ -206,11 +206,11 @@ public abstract class Document {
     public boolean takeCopy(UserCard user, Session session){
         if(availableCopies.size() > 0){
             availableCopies.get(0).checkoutBy(user);
-            availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.userType.isHasLongCheckOutPerm());
+            availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.userType.isHasLongCheckOutPerm(),user.userType.isHasLowerCheckOut());
             availableCopies.get(0).checkOutDay = session.day;
             availableCopies.get(0).checkOutMonth = session.month;
             user.checkedOutCopies.add(availableCopies.get(0));
-            availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.userType.isHasLongCheckOutPerm());
+            availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.userType.isHasLongCheckOutPerm(),user.userType.isHasLowerCheckOut());
             takenCopies.add(availableCopies.get(0));
             availableCopies.remove(0);
             return true;
@@ -225,7 +225,8 @@ public abstract class Document {
         copy.returnCopy();
     }
 
-    public int getCheckOutTime(boolean longCheckOutPermission){
+    public int getCheckOutTime(boolean longCheckOutPermission, boolean lowerCheckOut){
+        if(lowerCheckOut) return 7;
         return checkOutTime;
     }
 

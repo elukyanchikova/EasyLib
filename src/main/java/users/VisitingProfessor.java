@@ -5,6 +5,7 @@ public class VisitingProfessor extends Patron {
         super();
         UserType.userTypes.put(getClass().getName(), this);
         hasMultiRenewPerm = true;
+        hasLowerCheckOut = true;
         priority = 3;
     }
 }

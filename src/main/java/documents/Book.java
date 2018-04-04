@@ -76,8 +76,9 @@ public class Book extends Document {
 
 
     @Override
-    public int getCheckOutTime(boolean longCheckOutPermission){
+    public int getCheckOutTime(boolean longCheckOutPermission, boolean lowerCheckOut){
         if(longCheckOutPermission) return 28;
+        if(lowerCheckOut) return 7;
         if(isBestseller) return 14;
         return checkOutTime;
     }
