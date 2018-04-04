@@ -217,6 +217,25 @@ public class ManageForm {
                 user.notifications.add(new Notification(Notification.REQECT_NOTIFICATION, chosenDoc.getID()));
                 databaseManager.saveUserCard(user);
                 databaseManager.saveDocuments(chosenDoc);
+                autobooking(chosenDoc);
+            }
+        }
+    }
+
+    private void autobooking(Document document){
+        UserCard[] userCards = document.requestedBy.toArray(new UserCard[0]);
+        Arrays.sort(userCards);
+        int ind =userCards.length-1;
+        if(userCards.length > 0) {
+            userCards[ind].notifications.add(new Notification(Notification.GET_COPY_NOTIFICATION, document.getID()));
+            if (!document.isReference() && document.getNumberOfAvailableCopies() > 0) {
+                document.bookedCopies.add(document.availableCopies.get(0));
+                document.availableCopies.get(0).checkoutBy(userCards[ind]);
+                document.availableCopies.remove(0);
+                document.requestedBy.remove(userCards[ind]);
+                databaseManager.saveDocuments(document);
+                databaseManager.saveUserCard(userCards[ind]);
+                databaseManager.load();
             }
         }
     }

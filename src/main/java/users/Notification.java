@@ -22,7 +22,7 @@ public class Notification {
     public JSONObject serialize(){
         JSONObject data = new JSONObject();
         data.put("NotificationID", id);
-        data.put("DocumentID", id);
+        data.put("DocumentID", docID);
         return data;
     }
 

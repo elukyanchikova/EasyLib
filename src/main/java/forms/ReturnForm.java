@@ -338,7 +338,6 @@ public class ReturnForm {
      * calling a doc back
      */
 
-
     public void outstandingRequest(Document doc){
         UserCard[] users = new UserCard[0];
         users = doc.requestedBy.toArray(users);
@@ -351,7 +350,6 @@ public class ReturnForm {
 
     private void autobooking(Document document){
         UserCard[] userCards = document.requestedBy.toArray(new UserCard[0]);
-        document.requestedBy.poll();
         Arrays.sort(userCards);
         int ind =userCards.length-1;
         if(userCards.length > 0) {
@@ -365,5 +363,6 @@ public class ReturnForm {
                 databaseManager.load();
             }
         }
+        document.requestedBy.remove(userCards[ind]);
     }
 }

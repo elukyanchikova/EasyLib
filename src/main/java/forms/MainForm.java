@@ -103,9 +103,9 @@ public class MainForm {
         boolean flag = isAvailableForUser(document);
         if (!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
             document.takeCopy(session.userCard, session);
-            databaseManager.saveDocuments(document);
             databaseManager.saveUserCard(session.userCard);
-            databaseManager.load();
+            databaseManager.saveDocuments(document);
+            //databaseManager.load();
             updateSession();
             return true;
         }
@@ -440,6 +440,9 @@ public class MainForm {
             int lastInd = session.userCard.notifications.size() - 1;
             if (lastInd <= 0) notificationBtn.setVisible(false);
             notificationLbl.setText(session.userCard.notifications.get(lastInd).getMessage(databaseManager));
+            session.userCard.notifications.remove(lastInd);
+
+            databaseManager.saveUserCard(session.userCard);
 
             notificationStage.setTitle("Notification");
             notificationStage.setScene(secondScene);
@@ -450,14 +453,13 @@ public class MainForm {
     }
 
     public void clickOnNextNotificationBtn() {
-        if (session.userCard.notifications.size() > 0)
-            session.userCard.notifications.remove(session.userCard.notifications.size() - 1);
         databaseManager.saveUserCard(session.userCard);
         updateSession();
         if (session.userCard.notifications.size() > 0) {
             int lastInd = session.userCard.notifications.size() - 1;
-            if (lastInd <= 0) notificationBtn.setVisible(false);
             notificationLbl.setText(session.userCard.notifications.get(lastInd).getMessage(databaseManager));
+            session.userCard.notifications.remove(session.userCard.notifications.size() - 1);
         }
+        if(session.userCard.notifications.size() <= 0) notificationBtn.setVisible(false);
     }
 }

@@ -31,12 +31,8 @@ public class Copy {
         this.room = data.getInt("Room");
         if(data.get("CheckedOutBy")!= JSONObject.NULL) {
             this.checkoutByUser = databaseManager.getUserCard(data.getInt("CheckedOutBy"));
+            databaseManager.getUserCard(checkoutByUser.getId()).checkedOutCopies.add(this);
 
-            for(int i = 0; i < checkoutByUser.checkedOutCopies.size(); i++){
-                if(checkoutByUser.checkedOutCopies.get(i).documentID != documentID)
-                    checkoutByUser.checkedOutCopies.add(this);
-
-            }
         }
         this.checkOutDay = data.getInt("CheckedOutDay");
         this.checkOutMonth = data.getInt("CheckedOutMonth");
