@@ -340,7 +340,6 @@ public class ReturnForm {
             databaseManager.saveUserCard(users[i]);
         }
         doc.deletePQ();
-        databaseManager.saveDocuments(doc);
     }
 
     private void autobooking(Document document){
