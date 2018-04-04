@@ -8,7 +8,7 @@ import storage.DatabaseManager;
 
 import java.util.ArrayList;
 
-public class UserCard {
+public class UserCard implements Comparable<UserCard> {
     private static int lastID = 0;
 
     private int id;
@@ -114,4 +114,11 @@ public class UserCard {
     public static void resetID() {
         lastID = 0;
     }
+
+    @Override
+    public int compareTo(UserCard o) {
+        return Integer.compare(userType.priority, o.userType.priority);
+    }
+
+
 }
