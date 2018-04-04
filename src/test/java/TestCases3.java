@@ -780,7 +780,7 @@ public class TestCases3 {
     public void Test7() {
         databaseManager.resetDatabase();
         Test6();
-        Session session = new Session((databaseManager.getUserCard(1).userType), 26, 3);
+        Session session = new Session((databaseManager.getUserCard(1011).userType), 26, 3);
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /**Action*/
@@ -788,18 +788,19 @@ public class TestCases3 {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ManageForm manageForm = new ManageForm();
         manageForm.setSession(session);
-        manageForm.outstandingRequest(databaseManager.getDocuments(2));
+        manageForm.setDatabaseManager(databaseManager);
+        manageForm.outstandingRequest(databaseManager.getDocuments(3));
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /**Effect*/
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Assert.assertTrue("Waiting list for d3 is empty", databaseManager.getDocuments(2).requestedBy.isEmpty());
-        /*Assert.assertTrue("User p1 got notification", ((databaseManager.getUserCard(0).notifications.equals("Sorry, \"" + databaseManager.getDocuments(2).title + "\" is not available now. Please, return the copy, if you have it, immediately!"))));
-        Assert.assertTrue("User p2 got notification", (databaseManager.getUserCard(1).notifications.equals("Sorry, \"" + databaseManager.getDocuments(2).title + "\" is not available now. Please, return the copy, if you have it, immediately!")));
-        Assert.assertTrue("User p3 got notification", (databaseManager.getUserCard(2).notifications.equals("Sorry, \"" + databaseManager.getDocuments(2).title + "\" is not available now. Please, return the copy, if you have it, immediately!")));
-        Assert.assertTrue("User s got notification", (!(databaseManager.getUserCard(3).notifications.isEmpty())));
-        Assert.assertTrue("User v got notification", (!(databaseManager.getUserCard(4).notifications.isEmpty())));*/
+        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION, databaseManager.getUserCard(1100).notifications.get(0).id);
+        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION, databaseManager.getUserCard(1101).notifications.get(0).id);
+        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION, databaseManager.getUserCard(1110).notifications.get(0).id);
+        Assert.assertEquals(0, databaseManager.getUserCard(1011).notifications.size());
+        Assert.assertEquals(0, databaseManager.getUserCard(1010).notifications.size());
     }
 
     @Test

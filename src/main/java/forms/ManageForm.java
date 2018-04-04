@@ -232,5 +232,8 @@ public class ManageForm {
         databaseManager.saveDocuments(doc);
     }
 
+    public void setDatabaseManager(DatabaseManager databaseManager){
+        this.databaseManager = databaseManager;
+    }
 
 }
