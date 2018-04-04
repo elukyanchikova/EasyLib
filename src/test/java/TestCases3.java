@@ -666,124 +666,51 @@ public class TestCases3 {
 
     }
 
-    //  @Test
-   /* public void Test5() {
-
-        /*initialState();
-
-        ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
-        ArrayList<Document> l1_requestedDocuments = new ArrayList<Document>();
-
-        UserCard librarian_1 = new UserCard("Irma", "Pins", new Librarian(), "8981351785", "north of London",
-                l1_checkedOutCopies, l1_requestedDocuments);
-        databaseManager.saveUserCard(librarian_1);
-        Session session = new Session(databaseManager.getUserCard(librarian_1.getId()).userType, 29, 3);
-        session.userCard = librarian_1;
-
-        ArrayList<Copy> p1_checkedOutCopies = new ArrayList<Copy>();
-        ArrayList<Document> p1_requestedDocs = new ArrayList<Document>();
-        UserCard p1 = new UserCard(1010, "Sergey", "Afonso", new Faculty(), "30001", "Via Margutta, 3", p1_checkedOutCopies, p1_requestedDocs);
-        databaseManager.saveUserCard(p1);
-
-        /////////////////////////////////////////////////////////////////
-
-        ArrayList<Copy> s_checkedOutCopies = new ArrayList<Copy>();
-        ArrayList<Document> s_requestedDocs = new ArrayList<Document>();
-        UserCard s = new UserCard(1101, "Andrey", "Velo", new Student(), "30004", "Avenida Mazatlan 250", s_checkedOutCopies, s_requestedDocs);
-        databaseManager.saveUserCard(s);
-
-        //////////////////////////////////////////////////////////////////
-
-        ArrayList<Copy> v_checkedOutCopies = new ArrayList<Copy>();
-        ArrayList<Document> v_requestedDocs = new ArrayList<Document>();
-        UserCard v = new UserCard(1110, "Veronika", "Rama", new VisitingProfessor(), "30005", "Stret Atocha, 27", v_checkedOutCopies, v_requestedDocs);
-        databaseManager.saveUserCard(v);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ArrayList<Copy> b1_copies = new ArrayList<Copy>();
-
-        ArrayList<String> b1_authors = new ArrayList<String>();
-        b1_authors.add("Thomas H. Cormen");
-        b1_authors.add("Charles E. Leiserson");
-        b1_authors.add("Ronald L. Rivest");
-        b1_authors.add("Clifford Stein");
-
-        ArrayList<String> b1_keywords = new ArrayList<String>();
-        b1_keywords.add("none");
-
-        Book b1 = new Book("Introduction to Algorithms", b1_authors,
-                b1_keywords, 5000, b1_copies, "MIT Press", 2009, "Third edition", false);
-        databaseManager.saveDocuments(b1);
-
-        b1.setCopy(new Copy(b1, 1, 1));
-        b1.setCopy(new Copy(b1, 2, 1));
-        b1.setCopy(new Copy(b1, 3, 1));
-
-        databaseManager.saveDocuments(b1);
-
-        /////////////////////////////////////////////////////////////
-        ArrayList<Copy> b2_copies = new ArrayList<Copy>();
-
-        ArrayList<String> b2_authors = new ArrayList<String>();
-        b2_authors.add("Erich Gamma");
-        b2_authors.add("Ralph Johnson");
-        b2_authors.add("John Vlissides");
-        b2_authors.add("Richard Helm");
-
-        ArrayList<String> b2_keywords = new ArrayList<String>();
-        b2_keywords.add("none");
-
-        Book b2 = new Book("Design Patterns: Elements of Reusable Object-Oriented Software", b2_authors,
-                b2_keywords, 1700, b2_copies, "Addison-Wesley Professional", 2003, "First edition", true);
-        databaseManager.saveDocuments(b2);
-        b2.setCopy(new Copy(b2, 1, 1));
-        b2.setCopy(new Copy(b2, 2, 1));
-        b2.setCopy(new Copy(b2, 3, 1));
-
-        databaseManager.saveDocuments(b2);
-
-        ///////////////////////////////////////////////////////////////
-        ArrayList<Copy> b3_copies = new ArrayList<Copy>();
-
-        ArrayList<String> b3_authors = new ArrayList<String>();
-        b3_authors.add("Tony Hoare");
-
-        ArrayList<String> b3_keywords = new ArrayList<String>();
-        b3_keywords.add("none");
-
-        Book b3 = new Book("Null References: The Billion Dollar Mistake", b3_authors,
-                b3_keywords, 700, b3_copies, "none", 2018, "none", false);
-        b3.setReference(true);
-        b3.setCopy(new Copy(b3, 1, 1));
-        b3.setCopy(new Copy(b3, 1, 2));
-
-        databaseManager.saveDocuments(b3);
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //initialState
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        b3.takeCopy(p1, session);
-        databaseManager.saveDocuments(b3);
-        databaseManager.saveUserCard(p1);
-        b3.takeCopy(s, session);
-        databaseManager.saveDocuments(b3);
-        databaseManager.saveUserCard(s);
+    @Test
+    public void Test5() {
+        initialState();
         MainForm mainForm = new MainForm();
+        mainForm.setDatabaseManager(databaseManager);
 
-        session = new Session(v.userType, 29, 3);
-        session.userCard = v;
+        UserCard userCard = databaseManager.getUserCard(1010);
+        Document document = databaseManager.getDocuments(3);
+        Session session = new Session(userCard.userType, 26, 3);
+        session.userCard = userCard;
         mainForm.setSession(session);
-        mainForm.request(b3);
 
-        session = new Session(databaseManager.getUserCard(librarian_1.getId()).userType, 29, 3);
-        session.userCard = librarian_1;
+        if (document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
+        document = databaseManager.getDocuments(document.getID());
 
 
-        Assert.assertEquals(v,b3.requestedBy.peek());
-*/
 
-    //}
+        UserCard userCard3 = databaseManager.getUserCard(1101);
+        Session session3 = new Session(userCard3.userType, 26, 3);
+        session3.userCard = userCard3;
+        mainForm.setSession(session3);
+
+        if (document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
+        document = databaseManager.getDocuments(document.getID());
+
+        UserCard userCard4 = databaseManager.getUserCard(1110);
+        Session session4 = new Session(userCard4.userType, 26, 3);
+        session4.userCard = userCard4;
+        mainForm.setSession(session4);
+
+        if (document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
+        document = databaseManager.getDocuments(document.getID());
+
+        UserCard[] userCards = document.requestedBy.toArray(new UserCard[0]);
+        Arrays.sort(userCards);
+        Assert.assertEquals(1, userCards.length);
+        Assert.assertEquals(userCard4.getId(), userCards[0].getId());
+
+    }
 
     @Test
     public void Test6() {
@@ -843,6 +770,7 @@ public class TestCases3 {
 
         UserCard[] userCards = document.requestedBy.toArray(new UserCard[0]);
         Arrays.sort(userCards);
+        Assert.assertEquals(3, userCards.length);
         Assert.assertEquals(userCard3.getId(), userCards[2].getId());
         Assert.assertEquals(userCard4.getId(), userCards[1].getId());
         Assert.assertEquals(userCard5.getId(), userCards[0].getId());
