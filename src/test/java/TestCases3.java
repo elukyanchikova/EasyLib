@@ -712,9 +712,14 @@ public class TestCases3 {
         session = new Session(databaseManager.getUserCard(librarian_1.getId()).userType, 29, 3);
         session.userCard = librarian_1;
 
+        UserCard[] pq = new UserCard[b3.requestedBy.size()];
+        pq = b3.requestedBy.toArray(pq);
+        UserCard[] pqcheck = new UserCard[pq.length];
+
 
         Assert.assertEquals(v,b3.requestedBy.peek());
 */
+
 
     }
 
