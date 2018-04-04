@@ -285,12 +285,26 @@ public class ReturnForm {
     }
 
     /**
+     * Set new session to the form
+     */
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    public void renew(UserCard userCard, Copy copy){
+        if(!copy.hasRenewed || userCard.userType.isHasMultiRenewPerm()){
+            copy.checkOutDay = session.day;
+            copy.checkOutMonth = session.month;
+            copy.hasRenewed = true;
+        }
+    }
+
+    /**
      * renews the document for chosen user
      * Work order:
      * 1) returns the book
      * 2) checks out book for new date
      * Allows to prolong due date
-     * @return
      */
     @FXML
     public boolean renewBtn() {
