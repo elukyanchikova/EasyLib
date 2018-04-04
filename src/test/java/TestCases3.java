@@ -42,6 +42,7 @@ public class TestCases3 {
                 new ArrayList<>(Collections.singletonList("Tony Hoare")), new ArrayList<>(), 700 );
         for(int i = 0; i < 2; i++)
             d1.setCopy(new Copy(d3, 2, 201));
+            d3.setCopy(new Copy(d3, 2, 201));
         databaseManager.saveDocuments(d3);
 
         UserCard p1 = new UserCard(1010, "Sergey", "Afonso", new Professor(), "30001", "Via Margutta, 3");
@@ -610,6 +611,7 @@ public class TestCases3 {
    /* public void Test5() {
 
         initialState();
+        /*initialState();
 
         Session session = new Session(databaseManager.getUserCard(librarian_1.getId()).userType, 29, 3);
         session.userCard = librarian_1;
@@ -721,6 +723,7 @@ public class TestCases3 {
 
     @Test
     public void Test6() {
+        initialState();
         MainForm mainForm = new MainForm();
         mainForm.setDatabaseManager(databaseManager);
 
@@ -730,12 +733,20 @@ public class TestCases3 {
         session.userCard = userCard;
         mainForm.setSession(session);
         mainForm.checkOut(document);
+        if(document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
+        document = databaseManager.getDocuments(document.getID());
 
         UserCard userCard2 = databaseManager.getUserCard(1011);
         Session session2 = new Session(userCard2.userType, 26, 3);
         session2.userCard = userCard2;
         mainForm.setSession(session2);
         mainForm.checkOut(document);
+        if(document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
+        document = databaseManager.getDocuments(document.getID());
 
         UserCard userCard3 = databaseManager.getUserCard(1101);
         Session session3 = new Session(userCard3.userType, 26, 3);
@@ -743,6 +754,34 @@ public class TestCases3 {
         mainForm.setSession(session3);
         mainForm.checkOut(document);
 
+        if(document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
+        document = databaseManager.getDocuments(document.getID());
+
+        UserCard userCard4 = databaseManager.getUserCard(1110);
+        Session session4 = new Session(userCard4.userType, 26, 3);
+        session4.userCard = userCard4;
+        mainForm.setSession(session4);
+        if(document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
+        document = databaseManager.getDocuments(document.getID());
+
+        UserCard userCard5 = databaseManager.getUserCard(1100);
+        Session session5 = new Session(userCard5.userType, 26, 3);
+        session5.userCard = userCard5;
+        mainForm.setSession(session5);
+        if(document.availableCopies.size() > 0)
+            mainForm.checkOut(document);
+        else mainForm.request(document);
+        document = databaseManager.getDocuments(document.getID());
+
+        UserCard[] userCards = document.requestedBy.toArray(new UserCard[0]);
+        Arrays.sort(userCards);
+        Assert.assertEquals(userCard3.getId(), userCards[2].getId());
+        Assert.assertEquals(userCard4.getId(), userCards[1].getId());
+        Assert.assertEquals(userCard5.getId(), userCards[0].getId());
     }
 
     @Test
