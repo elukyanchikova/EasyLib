@@ -59,7 +59,7 @@ public class TestCases3 {
 
     @Test
     public void Test1() {
-
+        initialState();
         databaseManager.resetDatabase();
 
         ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
