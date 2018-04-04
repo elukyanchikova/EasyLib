@@ -291,6 +291,10 @@ public class ReturnForm {
         this.session = session;
     }
 
+    public void setDatabaseManager(DatabaseManager databaseManager){
+        this.databaseManager = databaseManager;
+    }
+
     public void renew(UserCard userCard, Copy copy){
         if(!copy.hasRenewed || userCard.userType.isHasMultiRenewPerm()){
             copy.checkOutDay = session.day;
@@ -307,7 +311,7 @@ public class ReturnForm {
      * Allows to prolong due date
      */
     @FXML
-    public boolean renewBtn() {
+    public void renewBtn() {
         if (openDocumentID > -1) {
             ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
             Document document = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
@@ -316,32 +320,13 @@ public class ReturnForm {
             }
             UserCard userCard = userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex());
             for (int i = 0; i < document.takenCopies.size(); i++) {
-                if (document.takenCopies.get(i).getDocumentID() == databaseManager.getDocumentsID()[openDocumentID]) {
-                    document.returnCopy(document.takenCopies.get(i));
-                    document.takenCopies.remove(i);
-
+                if (document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId()) {
+                    renew(userCard, document.takenCopies.get(i));
                     databaseManager.saveDocuments(document);
                     databaseManager.saveUserCard(userCard);
-
                 }
-            }
-
-            boolean flag = true;
-            for (Copy copy : userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()).checkedOutCopies) {
-                if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
-                    flag = false;
-                    break;
-                }
-            }
-
-            if (!databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).isReference() && databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() > 0 && flag) {
-                databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).takeCopy(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()), session);
-                databaseManager.saveDocuments(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]));
-                databaseManager.saveUserCard(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()));
-                return true;
             }
         }
-        return false;
     }
 
     /**
