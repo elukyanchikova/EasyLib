@@ -14,6 +14,7 @@ public class Copy {
     public int checkOutTime =0 ;
     public int checkOutDay = 0;
     public int checkOutMonth = 0;
+    public boolean hasRenewed = false;
     private UserCard checkoutByUser;
 
     public Copy(Document document, int level, int room){
@@ -21,7 +22,6 @@ public class Copy {
         this.level = level;
         this.room = room;
         id = document.lastCopyID;
-        document.setCopy(this);
     }
 
     public Copy(JSONObject data, DatabaseManager databaseManager){
@@ -31,14 +31,17 @@ public class Copy {
         this.room = data.getInt("Room");
         if(data.get("CheckedOutBy")!= JSONObject.NULL) {
             this.checkoutByUser = databaseManager.getUserCard(data.getInt("CheckedOutBy"));
-            if(!checkoutByUser.checkedOutCopies.contains(this)) {
-                checkoutByUser.checkedOutCopies.add(this);
+
+            for(int i = 0; i < checkoutByUser.checkedOutCopies.size(); i++){
+                if(checkoutByUser.checkedOutCopies.get(i).documentID != documentID)
+                    checkoutByUser.checkedOutCopies.add(this);
+
             }
         }
         this.checkOutDay = data.getInt("CheckedOutDay");
         this.checkOutMonth = data.getInt("CheckedOutMonth");
         this.checkOutTime = data.getInt("CheckedOutTime");
-
+        this.hasRenewed = data.getBoolean("Renewed");
     }
 
     //TODO bound with user
@@ -66,6 +69,7 @@ public class Copy {
         data.put("CheckedOutDay", checkOutDay);
         data.put("CheckedOutMonth", checkOutMonth);
         data.put("CheckedOutTime",checkOutTime);
+        data.put("Renewed", hasRenewed);
         return data;
     }
 
@@ -95,7 +99,7 @@ public class Copy {
     public String getDueDate(){
         int day=checkOutDay;
         int month = checkOutMonth;
-        day += checkOutTime-1;
+        day += checkOutTime;
         return getStringFromData(day, month);
     }
 
