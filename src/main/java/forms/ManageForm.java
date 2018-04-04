@@ -145,6 +145,7 @@ public class ManageForm {
 
         ArrayList<UserCard> userCardsRequested = new ArrayList<>();
         userCardsRequested.addAll((chosenDocument.requestedBy));
+        Collections.sort(userCardsRequested);
 
         userRequestsListView.setItems(FXCollections.observableArrayList(userCardsRequested));
         userRequestsListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {

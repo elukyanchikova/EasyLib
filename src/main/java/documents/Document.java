@@ -32,7 +32,7 @@ public abstract class Document {
     protected int checkOutTime;
 
     Comparator<UserCard> comparator = new UserTypeComparator();
-    public PriorityQueue<UserCard> requestedBy = new PriorityQueue<UserCard>(10,comparator);
+    public PriorityQueue<UserCard> requestedBy = new PriorityQueue<UserCard>(10);
 
     boolean reference = false;
     int lastCopyID = 0;
