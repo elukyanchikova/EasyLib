@@ -3,6 +3,7 @@ import documents.Book;
 import documents.Copy;
 import documents.Document;
 import forms.MainForm;
+import forms.ManageForm;
 import forms.ReturnForm;
 import main.Main;
 import org.junit.Assert;
@@ -594,8 +595,9 @@ public class TestCases3 {
         //initialState();
         ///////////////////////////////////////////////////////////////////////////
 
+        ManageForm manageForm = new ManageForm();
         ReturnForm returnForm = new ReturnForm();
-        returnForm.setSession(session);
+        manageForm.setSession(session);
         returnForm.outstandingRequest(b2);
 
         session = new Session(p1.userType, 29, 3);
