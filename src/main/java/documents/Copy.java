@@ -14,6 +14,7 @@ public class Copy {
     public int checkOutTime =0 ;
     public int checkOutDay = 0;
     public int checkOutMonth = 0;
+    public boolean hasRenewed = false;
     private UserCard checkoutByUser;
 
     public Copy(Document document, int level, int room){
@@ -37,7 +38,7 @@ public class Copy {
         this.checkOutDay = data.getInt("CheckedOutDay");
         this.checkOutMonth = data.getInt("CheckedOutMonth");
         this.checkOutTime = data.getInt("CheckedOutTime");
-
+        this.hasRenewed = data.getBoolean("Renewed");
     }
 
     //TODO bound with user
@@ -65,6 +66,7 @@ public class Copy {
         data.put("CheckedOutDay", checkOutDay);
         data.put("CheckedOutMonth", checkOutMonth);
         data.put("CheckedOutTime",checkOutTime);
+        data.put("Renewed", hasRenewed);
         return data;
     }
 

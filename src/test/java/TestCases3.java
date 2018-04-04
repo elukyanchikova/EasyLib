@@ -3,6 +3,7 @@ import documents.Book;
 import documents.Copy;
 import documents.Document;
 import forms.MainForm;
+import forms.ReturnForm;
 import org.junit.Assert;
 import org.junit.Test;
 import storage.DatabaseManager;
@@ -195,13 +196,16 @@ public class TestCases3 {
 
     @Test
     public void Test7() {
-        DatabaseManager databaseManager = new DatabaseManager("TestCases3");
+        initialState();
+
+        MainForm mainForm = new MainForm();
+        mainForm.setDatabaseManager(databaseManager);
+
         UserCard userCard = databaseManager.getUserCard(1010);
         Document document = databaseManager.getDocuments(1);
 
         Session session = new Session(userCard.userType, 26, 3);
         session.userCard = userCard;
-        MainForm mainForm = new MainForm();
         mainForm.setSession(session);
 
         mainForm.checkOut(document);
@@ -214,6 +218,11 @@ public class TestCases3 {
         Assert.assertNotNull(copy);
         Assert.assertEquals(copy.getCheckedOutDate(), "26 March");
 
+        Session session2 = new Session(userCard.userType, 29, 3);
+        session2.userCard = userCard;
+        mainForm.setSession(session2);
+        ReturnForm form = new ReturnForm();
+        form.setSession(session2);
     }
     @Test
     public void Test8() {
