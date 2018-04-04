@@ -157,6 +157,17 @@ public class TestCases3 {
 
     @Test
     public void Test7() {
+        DatabaseManager databaseManager = new DatabaseManager("TestCases3");
+        UserCard userCard = databaseManager.getUserCard(1010);
+        Document document = databaseManager.getDocuments(1);
+        Copy copy = null;
+        for(int i = 0; i < document.takenCopies.size(); i++){
+            if(document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId())
+                copy = document.takenCopies.get(i);
+        }
+        Assert.assertNotNull(copy);
+        // Assert.assertEquals(copy.getCheckOutDate(), "26 March");
+
     }
 
     @Test
