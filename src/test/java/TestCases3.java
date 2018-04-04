@@ -7,6 +7,7 @@ import org.junit.Test;
 import storage.DatabaseManager;
 import users.*;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,9 +20,16 @@ public class TestCases3 {
         Book d1 = new Book( "Introduction to Algorithms",
                 new ArrayList<>(Arrays.asList("Thomas H. Cormen", "Charles E. Leiserson", "Ronald L. Rivest", "Clifford Stein")),
                 new ArrayList<>(), 5000, "MIT Press", 2009, "Third edition",false);
-        d1.setCopy(new Copy(d1, 3, 310));
+        for(int i = 0; i < 3; i++)
+            d1.setCopy(new Copy(d1, 3, 310));
         databaseManager.saveDocuments(d1);
 
+        Book d2 = new Book( "Design Patterns: Elements of Reusable Object-Oriented Software",
+                new ArrayList<>(Arrays.asList("Thomas H. Cormen", "Charles E. Leiserson", "Ronald L. Rivest", "Clifford Stein")),
+                new ArrayList<>(), 5000, "MIT Press", 2009, "Third edition",false);
+        for(int i = 0; i < 3; i++)
+            d1.setCopy(new Copy(d1, 3, 310));
+        databaseManager.saveDocuments(d1);
 
     }
 
@@ -37,6 +45,7 @@ public class TestCases3 {
                 l1_checkedOutCopies, l1_requestedDocuments);
         databaseManager.saveUserCard(librarian_1);
         Session session = new Session(databaseManager.getUserCard(librarian_1.getId()).userType, 5, 3);
+        session.userCard = librarian_1;
 
         ArrayList<Copy> p1_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> p1_requestedDocs = new ArrayList<Document>();
@@ -117,10 +126,10 @@ public class TestCases3 {
         /**Initial state**/
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        p1.checkedOutCopies.add(b1.availableCopies.get(1));
+        b1.takeCopy(p1, session);
         databaseManager.saveDocuments(b1);
         databaseManager.saveUserCard(p1);
-        p1.checkedOutCopies.add(b2.availableCopies.get(1));
+        p1.checkedOutCopies.add(b2.availableCopies.get(0));
         databaseManager.saveDocuments(b2);
         databaseManager.saveUserCard(p1);
 
@@ -131,9 +140,8 @@ public class TestCases3 {
         Assert.assertTrue("Session is leading by  librarian.", Librarian.class.isAssignableFrom(session.getUser().getClass()));
        // int a = p1.getFine(p1, curSession, databaseManager);
         //int b = p1.checkedOutCopies.get(0).getOverdue(curSession);
-        b1.returnCopy(p1.checkedOutCopies.get(1));
+        b1.returnCopy(p1.checkedOutCopies.get(0));
         int s = b1.takenCopies.size();
-        b1.takenCopies.remove(1);
         databaseManager.saveDocuments(b1);
         databaseManager.saveUserCard(p1);
 

@@ -217,7 +217,8 @@ public abstract class Document {
         }else return false;
     }
 
-    public void returnCopy( Copy copy){
+    public void returnCopy(Copy copy){
+        copy.getCheckoutByUser().checkedOutCopies.remove(copy);
         availableCopies.add(copy);
         takenCopies.remove(copy);
         copy.checkoutBy(null);
