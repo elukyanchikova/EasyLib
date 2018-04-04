@@ -5,6 +5,7 @@ import documents.Document;
 import forms.MainForm;
 import forms.ManageForm;
 import forms.ReturnForm;
+import main.Main;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -594,11 +595,74 @@ public class TestCases3 {
         //initialState();
         ///////////////////////////////////////////////////////////////////////////
 
-        b2.deletePQ();
-        for (int i = 0; i <b2.bookedCopies.size() ; i++) {
-            b2.availableCopies.add(b2.bookedCopies.get(i));
-        };
-        databaseManager.saveDocuments(b2);
+        ReturnForm returnForm = new ReturnForm();
+        returnForm.setSession(session);
+        returnForm.outstandingRequest(b2);
+
+        session = new Session(p1.userType, 29, 3);
+        session.userCard = p1;
+        returnForm.setSession(session);
+        for (int i = 0; i < b1.takenCopies.size(); i++) {
+            if (b1.takenCopies.get(i).getCheckoutByUser().getId() == p1.getId()) {
+                returnForm.renew(p1,b1.takenCopies.get(i));
+            }
+        }
+
+        session = new Session(s.userType, 29, 3);
+        session.userCard = s;
+        returnForm.setSession(session);
+        for (int i = 0; i < b2.takenCopies.size(); i++) {
+            if (b2.takenCopies.get(i).getCheckoutByUser().getId() == s.getId()) {
+                returnForm.renew(s,b2.takenCopies.get(i));
+            }
+        }
+
+        session = new Session(v.userType, 29, 3);
+        session.userCard = v;
+        returnForm.setSession(session);
+        for (int i = 0; i < b2.takenCopies.size(); i++) {
+            if (b2.takenCopies.get(i).getCheckoutByUser().getId() == v.getId()) {
+                returnForm.renew(v,b2.takenCopies.get(i));
+            }
+        }
+
+        session = new Session(databaseManager.getUserCard(librarian_1.getId()).userType, 29, 3);
+        session.userCard = librarian_1;
+
+        Assert.assertEquals("users.Faculty",p1.userType.getClass().getName());
+        Assert.assertEquals(1010,p1.getId());
+        Assert.assertEquals("Sergey",p1.name);
+        Assert.assertEquals("Afonso",p1.surname);
+        for (int i = 0; i < b1.takenCopies.size(); i++) {
+            if (b1.takenCopies.get(i).getCheckoutByUser().getId() == p1.getId()) {
+
+                Assert.assertTrue(p1.checkedOutCopies.contains(b1.takenCopies.get(i)));
+            }
+        }
+
+
+        Assert.assertEquals("users.Student",p1.userType.getClass().getName());
+        Assert.assertEquals(1101,p1.getId());
+        Assert.assertEquals("Andrey",p1.name);
+        Assert.assertEquals("Velo",p1.surname);
+        for (int i = 0; i < b2.takenCopies.size(); i++) {
+            if (b2.takenCopies.get(i).getCheckoutByUser().getId() == s.getId()) {
+                Assert.assertTrue(p1.checkedOutCopies.contains(b2.takenCopies.get(i)));
+            }
+        }
+
+
+        Assert.assertEquals("users.VisitingProfessor",p1.userType.getClass().getName());
+        Assert.assertEquals(1110,p1.getId());
+        Assert.assertEquals("Veronika",p1.name);
+        Assert.assertEquals("Rama",p1.surname);
+        for (int i = 0; i < b2.takenCopies.size(); i++) {
+            if (b2.takenCopies.get(i).getCheckoutByUser().getId() == v.getId()) {
+                Assert.assertTrue(p1.checkedOutCopies.contains(b2.takenCopies.get(i)));
+            }
+        }
+
+
 
 
 
@@ -611,6 +675,12 @@ public class TestCases3 {
 
         /*initialState();
 
+        ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
+        ArrayList<Document> l1_requestedDocuments = new ArrayList<Document>();
+
+        UserCard librarian_1 = new UserCard("Irma", "Pins", new Librarian(), "8981351785", "north of London",
+                l1_checkedOutCopies, l1_requestedDocuments);
+        databaseManager.saveUserCard(librarian_1);
         Session session = new Session(databaseManager.getUserCard(librarian_1.getId()).userType, 29, 3);
         session.userCard = librarian_1;
 
