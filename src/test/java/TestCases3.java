@@ -455,8 +455,7 @@ public class TestCases3 {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Session curSession = new Session(librarian_1.userType, 2, 4);
         ReturnForm returnForm = new ReturnForm();
-<<<<<<< HEAD
-=======
+
         returnForm.setSession(session);
 
         returnForm.renew(p1,p1_checkedOutCopies.get(0));
@@ -483,8 +482,6 @@ public class TestCases3 {
 
         int c = v.checkedOutCopies.get(0).getOverdue(curSession);
         Assert.assertTrue("Overdue v(b2) is equal 0", c==0);
->>>>>>> 9c89cbec3f29e76c9c317c2a9a47270c753710bb
-
     }
 
     @Test
