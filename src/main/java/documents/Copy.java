@@ -96,6 +96,14 @@ public class Copy {
         int day=checkOutDay;
         int month = checkOutMonth;
         day += checkOutTime-1;
+        return getStringFromData(day, month);
+    }
+
+    public String getCheckedOutDate(){
+        return getStringFromData(checkOutDay, checkOutMonth);
+    }
+
+    private String getStringFromData(int day, int month){
         switch (month){
             case 1:
                 if(day > 31) {
