@@ -166,17 +166,17 @@ public class TestCases3 {
 
         ArrayList<Copy> p1_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> p1_requestedDocs = new ArrayList<Document>();
-        UserCard p1 = new UserCard(1010, "Sergey", "Afonso", new Faculty(), "30001", "Via Margutta, 3", p1_checkedOutCopies, p1_requestedDocs);
+        UserCard p1 = new UserCard(1010, "Sergey", "Afonso", new Professor(), "30001", "Via Margutta, 3", p1_checkedOutCopies, p1_requestedDocs);
         databaseManager.saveUserCard(p1);
         /////////////////////////////////////////////////////////////////
         ArrayList<Copy> p2_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> p2_requestedDocs = new ArrayList<Document>();
-        UserCard p2 = new UserCard(1011, "Nadia", "Teixeira", new Student(), "30002", "Via Sacra, 13", p2_checkedOutCopies, p2_requestedDocs);
+        UserCard p2 = new UserCard(1011, "Nadia", "Teixeira", new Professor(), "30002", "Via Sacra, 13", p2_checkedOutCopies, p2_requestedDocs);
         databaseManager.saveUserCard(p2);
         //////////////////////////////////////////////////////////////////
         ArrayList<Copy> p3_checkedOutCopies = new ArrayList<Copy>();
         ArrayList<Document> p3_requestedDocs = new ArrayList<Document>();
-        UserCard p3 = new UserCard(1100, "Elvira", "Espindola", new Student(), "30003", "Via del Corso, 22", p3_checkedOutCopies, p3_requestedDocs);
+        UserCard p3 = new UserCard(1100, "Elvira", "Espindola", new Professor(), "30003", "Via del Corso, 22", p3_checkedOutCopies, p3_requestedDocs);
         databaseManager.saveUserCard(p3);
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,8 +281,8 @@ public class TestCases3 {
         Session curSession = new Session(librarian_1.userType, 2, 4);
         Assert.assertTrue("Session is leading by  librarian.", Librarian.class.isAssignableFrom(session.getUser().getClass()));
 
-       int x1 = p1.getFine(p1, curSession, databaseManager);
-       int y1 = p1.checkedOutCopies.get(0).getOverdue(curSession) + p1.checkedOutCopies.get(1).getOverdue(curSession);
+        int x1 = p1.getFine(p1, curSession, databaseManager);
+        int y1 = p1.checkedOutCopies.get(0).getOverdue(curSession)  + p1.checkedOutCopies.get(1).getOverdue(curSession);
 
         int x2 = s.getFine(s, curSession, databaseManager);
         int y2 = s.checkedOutCopies.get(0).getOverdue(curSession) + s.checkedOutCopies.get(1).getOverdue(curSession);
@@ -294,16 +294,14 @@ public class TestCases3 {
         /**Effect*/
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-       //Assert.assertTrue("Fine of p1 is equal 0", x1 == 0);
-      // Assert.assertTrue("Overdue of p1 is equal 0", y1 == 0);
+        Assert.assertTrue("Fine of p1 is equal 0", x1 == 0);
+        Assert.assertTrue("Overdue of p1 is equal 0", y1 == 0);
 
         Assert.assertTrue("Fine of s is equal 2100", x2 == 2100);
         Assert.assertTrue("Overdue of s is equal 7+14=21 days", y2 == 21);
 
         Assert.assertTrue("Fine of s is equal 2100+1700 = 3800", x3 == 3800);
         Assert.assertTrue("Overdue of s is equal 21+21 days", y3 == 42);
-
-
     }
 
     @Test
