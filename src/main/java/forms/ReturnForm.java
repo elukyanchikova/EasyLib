@@ -272,9 +272,7 @@ public class ReturnForm {
             for (int i = 0; i < document.takenCopies.size(); i++) {
                 if (document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId())
                 {
-                    databaseManager.getUserCard(userCard.getId()).checkedOutCopies.remove(document.takenCopies.get(i));
-                    databaseManager.getDocuments(document.getID()).returnCopy(document.takenCopies.get(i));
-                    this.autobooking( databaseManager.getDocuments(document.getID()));
+                    returnCopy(document.takenCopies.get(i), databaseManager.getUserCard(userCard.getId()));
                 }
             }
 
@@ -282,6 +280,12 @@ public class ReturnForm {
             databaseManager.saveUserCard(databaseManager.getUserCard(userCard.getId()));
 
         }
+    }
+
+    public void returnCopy(Copy copy, UserCard userCard){
+        databaseManager.getUserCard(userCard.getId()).checkedOutCopies.remove(copy);
+        databaseManager.getDocuments(databaseManager.getDocuments(copy.getDocumentID()).getID()).returnCopy(copy);
+        this.autobooking(databaseManager.getDocuments(copy.getDocumentID()));
     }
 
     /**
@@ -332,16 +336,7 @@ public class ReturnForm {
     /**
      * calling a doc back
      */
-    public void outstandingRequest(Document doc){
-        UserCard[] users = new UserCard[0];
-        users = doc.requestedBy.toArray(users);
-        for(int i = 0; i < users.length; i++){
-            users[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION, doc.getID()));
-            databaseManager.saveUserCard(users[i]);
-        }
-        doc.deletePQ();
-        databaseManager.saveDocuments(doc);
-    }
+
 
     private void autobooking(Document document){
         UserCard userCard = document.requestedBy.poll();

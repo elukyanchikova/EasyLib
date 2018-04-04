@@ -788,6 +788,28 @@ public class TestCases3 {
 
     @Test
     public void Test8() {
+        initialState();
+        Test6();
+
+        MainForm mainForm = new MainForm();
+        mainForm.setDatabaseManager(databaseManager);
+        UserCard userCard = databaseManager.getUserCard(1011);
+        Document document = databaseManager.getDocuments(3);
+        Session session = new Session(userCard.userType, 26, 3);
+        session.userCard = userCard;
+        mainForm.setSession(session);
+
+        Copy copy = null;
+        for(int i = 0; i < document.takenCopies.size(); i++){
+            if(document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId())
+                copy = document.takenCopies.get(i);
+        }
+        Assert.assertNotNull(copy);
+        ReturnForm returnForm = new ReturnForm();
+        returnForm.setSession(session);
+        returnForm.setDatabaseManager(databaseManager);
+        returnForm.returnCopy(copy,userCard);
+        Assert.assertEquals(Notification.GET_COPY_NOTIFICATION,databaseManager.getUserCard(1101).notifications.get(0).id);
     }
 
     @Test
