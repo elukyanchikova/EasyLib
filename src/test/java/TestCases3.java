@@ -5,6 +5,7 @@ import documents.Document;
 import forms.MainForm;
 import forms.ReturnForm;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import storage.DatabaseManager;
 import users.*;
@@ -448,7 +449,7 @@ public class TestCases3 {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ReturnForm returnForm = new ReturnForm();
-        returnForm.
+
     }
 
     @Test
@@ -465,6 +466,18 @@ public class TestCases3 {
 
     @Test
     public void Test7() {
+    }
+
+    @Test
+    public void Test8() {
+    }
+
+    @Test
+    public void Test9() {
+    }
+
+    @Test
+    public void Test10() {
         initialState();
 
         MainForm mainForm = new MainForm();
@@ -494,17 +507,35 @@ public class TestCases3 {
         returnForm.setSession(session2);
         returnForm.renew(userCard, copy);
         Assert.assertEquals(copy.getCheckedOutDate(), "29 March");
-    }
 
-    @Test
-    public void Test8() {
-    }
 
-    @Test
-    public void Test9() {
-    }
+        UserCard userCard2 = databaseManager.getUserCard(1110);
 
-    @Test
-    public void Test10() {
+        Session session3 = new Session(userCard2.userType, 26, 3);
+        session3.userCard = userCard2;
+        mainForm.setSession(session3);
+
+        mainForm.checkOut(document);
+
+        Copy copy2 = null;
+        for(int i = 0; i < document.takenCopies.size(); i++){
+            if(document.takenCopies.get(i).getCheckoutByUser().getId() == userCard2.getId())
+                copy2 = document.takenCopies.get(i);
+        }
+        Assert.assertNotNull(copy2);
+        Assert.assertEquals(copy2.getCheckedOutDate(), "26 March");
+
+        Session session4 = new Session(userCard2.userType, 29, 3);
+        session2.userCard = userCard2;
+        mainForm.setSession(session4);
+        returnForm.setSession(session4);
+        returnForm.renew(userCard2, copy2);
+        Assert.assertEquals(copy2.getCheckedOutDate(), "29 March");
+
+        Assert.assertEquals( 1, userCard.checkedOutCopies.size());
+        Assert.assertEquals("26 April", copy.getDueDate());
+
+        Assert.assertEquals( 1, userCard.checkedOutCopies.size());
+        Assert.assertEquals("5 April", copy2.getDueDate());
     }
 }
