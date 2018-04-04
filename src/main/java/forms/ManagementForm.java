@@ -14,18 +14,17 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.DatabaseManager;
-import users.Notification;
 import users.Session;
 import users.UserCard;
+import users.UserType;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 
 /**
  * Return form allows librarian to see the list of documents and users that have checked out it
  * also allow to return the book for any users
  */
-public class ReturnForm {
+public class ManagementForm {
 
     private Stage stage;
     private Scene scene;
@@ -43,6 +42,8 @@ public class ReturnForm {
     private ListView<Document> documentListView;
     @FXML
     private ListView<UserCard> userListView;
+   /* @FXML
+    private ListView <UserCard> requestedByListView;*/
 
     @FXML
     private Label titleLbl;
@@ -74,6 +75,11 @@ public class ReturnForm {
     private static Button backButt;
     @FXML
     private static Button returnButton;
+    private static Button acceptButton;
+    @FXML
+    private static Button rejectButton;
+    @FXML
+    private static Button outstandingRequestBtn;
 
     /**
      * @param primaryStage    - Stage
@@ -97,19 +103,24 @@ public class ReturnForm {
      * @throws Exception
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/ReturnForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/ManagementForm.fxml"));
         loader.setController(this);
         AnchorPane root = loader.load();
         this.scene = new Scene(root, 1000, 700);
 
         documentListView = (ListView<Document>) scene.lookup("#documentListView");
         userListView = (ListView<UserCard>) scene.lookup("#userListView");
+
+       // requestedByListView = (ListView<UserCard>) scene.lookup("#requestedByListView");
+
         documentInfoPane = (GridPane) scene.lookup("#documentInfoPane");
         titleLbl = (Label) scene.lookup("#titleLbl");
         authorsLbl = (Label) scene.lookup("#authorsLbl");
         documentTypeLbl = (Label) scene.lookup("#documentTypeLbl");
         priceLbl = (Label) scene.lookup("#priceLbl");
         keywordsLbl = (Label) scene.lookup("#keywordsLbl");
+
+        outstandingRequestBtn = (Button) scene.lookup("#outstandingRequestBtn");
 
         additionLbl1 = (Label) scene.lookup("#additionLbl1");
         additionLbl2 = (Label) scene.lookup("#additionLbl2");
@@ -119,8 +130,10 @@ public class ReturnForm {
         labelAddition2 = (Label) scene.lookup("#labelAddition2");
         labelAddition3 = (Label) scene.lookup("#labelAddition3");
 
-        returnButton = (Button) scene.lookup("#returnButton");
-        backButt = (Button) scene.lookup("backButt");
+        acceptButton = (Button) scene.lookup("#acceptButton");
+        rejectButton = (Button) scene.lookup("#rejectButton");
+        backButt = (Button) scene.lookup("#backButt");
+
 
         documentListView.setItems(FXCollections.observableArrayList(databaseManager.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
@@ -136,6 +149,40 @@ public class ReturnForm {
                 };
             }
         });
+
+       // requestedByListView.setItems(FXCollections.observableArrayList(databaseManager.);
+       /* requestedByListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
+            public ListCell<UserCard> call(ListView<UserCard> userCardListView) {
+                return new ListCell<UserCard>() {
+                    @Override
+                    protected void updateItem(UserCard user, boolean flag) {
+                        super.updateItem(user, flag);
+                        if (user != null) {
+                            setText(user.userType.getClass().getName() + " " + user.name + " " + user.surname);
+                        }
+                    }
+                };
+            }
+        });*/
+   // }
+
+
+
+      userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
+        userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
+            public ListCell<UserCard> call(ListView<UserCard> userListView) {
+                return new ListCell<UserCard>() {
+                  @Override
+                  protected void updateItem(UserCard userCard, boolean flag){
+                      super.updateItem(userCard,flag);
+                      if (userCard != null && userCard.checkedOutCopies != null){
+                          setText(userCard.name);
+                      }
+                  }
+                };
+            }
+        });
+
     }
 
     @FXML
@@ -154,14 +201,19 @@ public class ReturnForm {
 
         Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex()); //chosen document
 
-        ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
 
-        for (int i = 0; i < chosenDocument.takenCopies.size(); i++) {
-            userCardsWithCopy.add(chosenDocument.takenCopies.get(i).getCheckoutByUser());
+
+        ArrayList<UserCard> userCardsBooked = new ArrayList<>();
+
+        for (int i = 0; i < chosenDocument.bookedCopies.size(); i++) {
+            UserCard temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser();
+            if (temp != null){
+                userCardsBooked.add(temp);
+            }
         }
 
+        userListView.setItems(FXCollections.observableArrayList(userCardsBooked));
 
-        userListView.setItems(FXCollections.observableArrayList(userCardsWithCopy));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
             public ListCell<UserCard> call(ListView<UserCard> userListView) {
                 return new ListCell<UserCard>() {
@@ -226,7 +278,7 @@ public class ReturnForm {
                     break;
                 }
             }
-        } else returnButton.setVisible(false);
+        } else acceptButton.setVisible(false);
 
     }
 
@@ -254,112 +306,89 @@ public class ReturnForm {
     }
 
     /**
-     * Method for Return Button
-     * Allows librarian return patron's book
-     * removes a copy from checked out copies array list
-     *
-     * void
+     * Method for accept Button
+     * Allows librarian accept patron's request for book
      */
     @FXML
-    public void returnBtn() {
-        if (openDocumentID > -1) {
-            ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
-            Document document = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
-            for (int i = 0; i < document.takenCopies.size(); i++) {
-                userCardsWithCopy.add(document.takenCopies.get(i).getCheckoutByUser());
+    public void accept() {
+        ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
+        Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+        ArrayList<UserCard> userCardsBooked = new ArrayList<>();
+
+        for (int i = 0; i < chosenDocument.bookedCopies.size(); i++) {
+            UserCard temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser();
+            if (temp != null){
+                userCardsBooked.add(temp);
             }
-            UserCard userCard = userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex());
-            for (int i = 0; i < document.takenCopies.size(); i++) {
-                if (document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId())
-                {
-                    returnCopy(document.takenCopies.get(i), databaseManager.getUserCard(userCard.getId()));
+        }
+
+        for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
+            UserCard temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser();
+            if (temp == userListView.getSelectionModel().getSelectedItem()){
+
+                boolean flag = true;
+                for (Copy copy : userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()).checkedOutCopies) {
+                    if (copy.getDocumentID() == databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getID()) {
+                        flag = false;
+                        break;
+                    }
                 }
+
+                if (!databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).isReference() && databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).getNumberOfAvailableCopies() > 0 && flag) {
+                    databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]).takeCopy(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()), session);
+                    databaseManager.saveDocuments(databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]));
+                    databaseManager.saveUserCard(userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex()));
+                }
+
+                chosenDocument.availableCopies.add(chosenDocument.bookedCopies.get(i));
+                chosenDocument.bookedCopies.remove(chosenDocument.bookedCopies.get(i));
             }
-
-            databaseManager.saveDocuments( databaseManager.getDocuments(document.getID()));
-            databaseManager.saveUserCard(databaseManager.getUserCard(userCard.getId()));
-
         }
-    }
 
-    public void returnCopy(Copy copy, UserCard userCard){
-        databaseManager.getUserCard(userCard.getId()).checkedOutCopies.remove(copy);
-        databaseManager.getDocuments(databaseManager.getDocuments(copy.getDocumentID()).getID()).returnCopy(copy);
-        this.autobooking(databaseManager.getDocuments(copy.getDocumentID()));
     }
 
     /**
-     * Set new session to the form
-     */
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
-    public void setDatabaseManager(DatabaseManager databaseManager){
-        this.databaseManager = databaseManager;
-    }
-
-    public void renew(UserCard userCard, Copy copy){
-        if(!copy.hasRenewed || userCard.userType.isHasMultiRenewPerm()){
-            copy.checkOutDay = session.day;
-            copy.checkOutMonth = session.month;
-            copy.hasRenewed = true;
-        }
-    }
-
-    /**
-     * renews the document for chosen user
-     * Work order:
-     * 1) returns the book
-     * 2) checks out book for new date
-     * Allows to prolong due date
+     * Method for reject Button
+     * Allows librarian reject patron's request for book
      */
     @FXML
-    public void renewBtn() {
-        if (openDocumentID > -1) {
-            ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
-            Document document = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
-            for (int i = 0; i < document.takenCopies.size(); i++) {
-                userCardsWithCopy.add(document.takenCopies.get(i).getCheckoutByUser());
-            }
-            UserCard userCard = userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex());
-            for (int i = 0; i < document.takenCopies.size(); i++) {
-                if (document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId()) {
-                    renew(userCard, document.takenCopies.get(i));
-                    databaseManager.saveDocuments(document);
-                    databaseManager.saveUserCard(userCard);
-                }
+    public void reject() {
+
+        Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex());
+        ArrayList<Integer> userCardsBooked = new ArrayList<>();
+
+        for (int i = 0; i < chosenDocument.bookedCopies.size(); i++) {
+            int temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser().getId();
+            userCardsBooked.add(temp);
+
+        }
+
+        for (int i = 0; i < chosenDocument.getNumberOfAllCopies(); i++) {
+            int temp = chosenDocument.bookedCopies.get(i).getCheckoutByUser().getId();
+            if (temp == userListView.getSelectionModel().getSelectedItem().getId()){
+                chosenDocument.availableCopies.add(chosenDocument.bookedCopies.get(i));
+                chosenDocument.bookedCopies.remove(chosenDocument.bookedCopies.get(i));
             }
         }
+
+
     }
 
     /**
-     * calling a doc back
+     * Method for outstandingRequest Button
+     * Allows librarian to call back all the copies of the doc and delete a PQ for the document
      */
-
-=======
+    @FXML
     public void outstandingRequest(Document doc){
-        UserCard[] users = new UserCard[0];
-        users = doc.requestedBy.toArray(users);
-        for(int i = 0; i < users.length; i++){
-            users[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION, doc.getID()));
-            databaseManager.saveUserCard(users[i]);
-        }
         doc.deletePQ();
+        for (int i = 0; i <doc.bookedCopies.size() ; i++) {
+            doc.availableCopies.add(doc.bookedCopies.get(i));
+        };
+        databaseManager.saveDocuments(doc);
     }
 
-    private void autobooking(Document document){
-        UserCard userCard = document.requestedBy.poll();
-        if(userCard != null) {
-            userCard.notifications.add(new Notification(Notification.GET_COPY_NOTIFICATION, document.getID()));
-            if (!document.isReference() && document.getNumberOfAvailableCopies() > 0) {
-                document.bookedCopies.add(document.availableCopies.get(0));
-                document.availableCopies.get(0).checkoutBy(userCard);
-                document.availableCopies.remove(0);
-                databaseManager.saveDocuments(document);
-                databaseManager.saveUserCard(userCard);
-                databaseManager.load();
-            }
-        }
-    }
+    @FXML
+    public UserCard user (ArrayList<UserCard> users){ return null;}
+/*@FXML
+public void requestedBy(){;}*/
 }

@@ -3,7 +3,9 @@ import documents.Book;
 import documents.Copy;
 import documents.Document;
 import forms.MainForm;
+import forms.ManageForm;
 import forms.ReturnForm;
+import main.Main;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -593,11 +595,75 @@ public class TestCases3 {
         //initialState();
         ///////////////////////////////////////////////////////////////////////////
 
-        b2.deletePQ();
-        for (int i = 0; i <b2.bookedCopies.size() ; i++) {
-            b2.availableCopies.add(b2.bookedCopies.get(i));
-        };
-        databaseManager.saveDocuments(b2);
+        ManageForm manageForm = new ManageForm();
+        ReturnForm returnForm = new ReturnForm();
+        manageForm.setSession(session);
+        returnForm.outstandingRequest(b2);
+
+        session = new Session(p1.userType, 29, 3);
+        session.userCard = p1;
+        returnForm.setSession(session);
+        for (int i = 0; i < b1.takenCopies.size(); i++) {
+            if (b1.takenCopies.get(i).getCheckoutByUser().getId() == p1.getId()) {
+                returnForm.renew(p1,b1.takenCopies.get(i));
+            }
+        }
+
+        session = new Session(s.userType, 29, 3);
+        session.userCard = s;
+        returnForm.setSession(session);
+        for (int i = 0; i < b2.takenCopies.size(); i++) {
+            if (b2.takenCopies.get(i).getCheckoutByUser().getId() == s.getId()) {
+                returnForm.renew(s,b2.takenCopies.get(i));
+            }
+        }
+
+        session = new Session(v.userType, 29, 3);
+        session.userCard = v;
+        returnForm.setSession(session);
+        for (int i = 0; i < b2.takenCopies.size(); i++) {
+            if (b2.takenCopies.get(i).getCheckoutByUser().getId() == v.getId()) {
+                returnForm.renew(v,b2.takenCopies.get(i));
+            }
+        }
+
+        session = new Session(databaseManager.getUserCard(librarian_1.getId()).userType, 29, 3);
+        session.userCard = librarian_1;
+
+        Assert.assertEquals("users.Faculty",p1.userType.getClass().getName());
+        Assert.assertEquals(1010,p1.getId());
+        Assert.assertEquals("Sergey",p1.name);
+        Assert.assertEquals("Afonso",p1.surname);
+        for (int i = 0; i < b1.takenCopies.size(); i++) {
+            if (b1.takenCopies.get(i).getCheckoutByUser().getId() == p1.getId()) {
+
+                Assert.assertTrue(p1.checkedOutCopies.contains(b1.takenCopies.get(i)));
+            }
+        }
+
+
+        Assert.assertEquals("users.Student",p1.userType.getClass().getName());
+        Assert.assertEquals(1101,p1.getId());
+        Assert.assertEquals("Andrey",p1.name);
+        Assert.assertEquals("Velo",p1.surname);
+        for (int i = 0; i < b2.takenCopies.size(); i++) {
+            if (b2.takenCopies.get(i).getCheckoutByUser().getId() == s.getId()) {
+                Assert.assertTrue(p1.checkedOutCopies.contains(b2.takenCopies.get(i)));
+            }
+        }
+
+
+        Assert.assertEquals("users.VisitingProfessor",p1.userType.getClass().getName());
+        Assert.assertEquals(1110,p1.getId());
+        Assert.assertEquals("Veronika",p1.name);
+        Assert.assertEquals("Rama",p1.surname);
+        for (int i = 0; i < b2.takenCopies.size(); i++) {
+            if (b2.takenCopies.get(i).getCheckoutByUser().getId() == v.getId()) {
+                Assert.assertTrue(p1.checkedOutCopies.contains(b2.takenCopies.get(i)));
+            }
+        }
+
+
 
 
 
@@ -605,11 +671,17 @@ public class TestCases3 {
 
     }
 
-    @Test
-    public void Test5() {
+  //  @Test
+   /* public void Test5() {
 
         /*initialState();
 
+        ArrayList<Copy> l1_checkedOutCopies = new ArrayList<Copy>();
+        ArrayList<Document> l1_requestedDocuments = new ArrayList<Document>();
+
+        UserCard librarian_1 = new UserCard("Irma", "Pins", new Librarian(), "8981351785", "north of London",
+                l1_checkedOutCopies, l1_requestedDocuments);
+        databaseManager.saveUserCard(librarian_1);
         Session session = new Session(databaseManager.getUserCard(librarian_1.getId()).userType, 29, 3);
         session.userCard = librarian_1;
 
@@ -712,16 +784,11 @@ public class TestCases3 {
         session = new Session(databaseManager.getUserCard(librarian_1.getId()).userType, 29, 3);
         session.userCard = librarian_1;
 
-        UserCard[] pq = new UserCard[b3.requestedBy.size()];
-        pq = b3.requestedBy.toArray(pq);
-        UserCard[] pqcheck = new UserCard[pq.length];
-
 
         Assert.assertEquals(v,b3.requestedBy.peek());
 */
 
-
-    }
+    //}
 
     @Test
     public void Test6() {
@@ -734,6 +801,7 @@ public class TestCases3 {
         Session session = new Session(userCard.userType, 26, 3);
         session.userCard = userCard;
         mainForm.setSession(session);
+        mainForm.checkOut(document);
         if(document.availableCopies.size() > 0)
             mainForm.checkOut(document);
         else mainForm.request(document);
@@ -743,6 +811,7 @@ public class TestCases3 {
         Session session2 = new Session(userCard2.userType, 26, 3);
         session2.userCard = userCard2;
         mainForm.setSession(session2);
+        mainForm.checkOut(document);
         if(document.availableCopies.size() > 0)
             mainForm.checkOut(document);
         else mainForm.request(document);
@@ -752,6 +821,8 @@ public class TestCases3 {
         Session session3 = new Session(userCard3.userType, 26, 3);
         session3.userCard = userCard3;
         mainForm.setSession(session3);
+        mainForm.checkOut(document);
+
         if(document.availableCopies.size() > 0)
             mainForm.checkOut(document);
         else mainForm.request(document);
@@ -784,10 +855,33 @@ public class TestCases3 {
 
     @Test
     public void Test7() {
+        databaseManager.resetDatabase();
+        Test6();
+        Session session = new Session((databaseManager.getUserCard(1).userType), 26, 3);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /**Action*/
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ManageForm manageForm = new ManageForm();
+        manageForm.setSession(session);
+        manageForm.outstandingRequest(databaseManager.getDocuments(2));
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /**Effect*/
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Assert.assertTrue("Waiting list for d3 is empty", databaseManager.getDocuments(2).requestedBy.isEmpty());
+        /*Assert.assertTrue("User p1 got notification", ((databaseManager.getUserCard(0).notifications.equals("Sorry, \"" + databaseManager.getDocuments(2).title + "\" is not available now. Please, return the copy, if you have it, immediately!"))));
+        Assert.assertTrue("User p2 got notification", (databaseManager.getUserCard(1).notifications.equals("Sorry, \"" + databaseManager.getDocuments(2).title + "\" is not available now. Please, return the copy, if you have it, immediately!")));
+        Assert.assertTrue("User p3 got notification", (databaseManager.getUserCard(2).notifications.equals("Sorry, \"" + databaseManager.getDocuments(2).title + "\" is not available now. Please, return the copy, if you have it, immediately!")));
+        Assert.assertTrue("User s got notification", (!(databaseManager.getUserCard(3).notifications.isEmpty())));
+        Assert.assertTrue("User v got notification", (!(databaseManager.getUserCard(4).notifications.isEmpty())));*/
     }
 
     @Test
     public void Test8() {
+<<<<<<< HEAD
         initialState();
         Test6();
 
@@ -811,9 +905,51 @@ public class TestCases3 {
         returnForm.returnCopy(copy,userCard);
         Assert.assertEquals(Notification.GET_COPY_NOTIFICATION,databaseManager.getUserCard(1101).notifications.get(0).id);
     }
+=======
+        databaseManager.resetDatabase();
+        Test6();
+        Session session = new Session((databaseManager.getUserCard(1).userType), 26, 3);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /**Action*/
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        databaseManager.getDocuments(2).returnCopy(databaseManager.getUserCard(1).checkedOutCopies.get(0));
+        databaseManager.saveDocuments(databaseManager.getDocuments(2));
+        databaseManager.saveUserCard(databaseManager.getUserCard(1));
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /**Effect*/
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Assert.assertTrue("User s got notification", (!(databaseManager.getUserCard(3).notifications.isEmpty())));
+        Assert.assertTrue("s does not have any checked out doc", databaseManager.getUserCard(1).checkedOutCopies.isEmpty());
+       }
+>>>>>>> 1655c34df7252d0e870fb4064bd082e21ed7158b
 
     @Test
     public void Test9() {
+        databaseManager.resetDatabase();
+        Test6();
+        Session session = new Session((databaseManager.getUserCard(1).userType), 26, 3);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /**Action*/
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ReturnForm returnForm = new ReturnForm();
+        returnForm.setSession(session);
+        returnForm.renew(databaseManager.getUserCard(0),databaseManager.getUserCard(1).checkedOutCopies.get(0));
+        databaseManager.saveDocuments(databaseManager.getDocuments(2));
+        databaseManager.saveUserCard(databaseManager.getUserCard(0));
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /**Effect*/
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        String g = databaseManager.getUserCard(1).checkedOutCopies.get(0).getDueDate();
+        Assert.assertTrue("Correct information about p3", (true));
+
     }
 
     @Test

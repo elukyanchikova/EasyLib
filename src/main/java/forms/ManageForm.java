@@ -71,6 +71,12 @@ public class ManageForm {
         stage.setScene(scene);
         stage.show();
     }
+    /**
+     * Set new session to the form
+     */
+    public void setSession(Session session) {
+        this.session = session;
+    }
 
     private void sceneInitialization() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/ManageForm.fxml"));

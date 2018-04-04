@@ -72,3 +72,4 @@ buildNumber.properties
 !/target/*with-dependencies.jar
 
 *.json
+*.json
