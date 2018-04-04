@@ -832,26 +832,43 @@ public class TestCases3 {
 
     @Test
     public void Test9() {
-        databaseManager.resetDatabase();
+        initialState();
         Test6();
-        Session session = new Session((databaseManager.getUserCard(1).userType), 26, 3);
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /**Action*/
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        MainForm mainForm = new MainForm();
+        mainForm.setDatabaseManager(databaseManager);
+        UserCard userCard = databaseManager.getUserCard(1010);
+        Document document = databaseManager.getDocuments(3);
+        Session session = new Session(userCard.userType, 2, 4);
+        session.userCard = userCard;
+        mainForm.setSession(session);
+
+        Copy copy = null;
+        for(int i = 0; i < document.takenCopies.size(); i++){
+            if(document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId())
+                copy = document.takenCopies.get(i);
+        }
+        Assert.assertNotNull(copy);
+
         ReturnForm returnForm = new ReturnForm();
         returnForm.setSession(session);
-        returnForm.renew(databaseManager.getUserCard(0),databaseManager.getUserCard(1).checkedOutCopies.get(0));
-        databaseManager.saveDocuments(databaseManager.getDocuments(2));
-        databaseManager.saveUserCard(databaseManager.getUserCard(0));
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /**Effect*/
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        String g = databaseManager.getUserCard(1).checkedOutCopies.get(0).getDueDate();
-        Assert.assertTrue("Correct information about p3", (true));
+        returnForm.renew(userCard, copy);
+
+        document = databaseManager.getDocuments(document.getID());
+        userCard = databaseManager.getUserCard(userCard.getId());
+        for(int i = 0; i < document.takenCopies.size(); i++){
+            if(document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId())
+                copy = document.takenCopies.get(i);
+        }
+
+        UserCard[] userCards = document.requestedBy.toArray(new UserCard[0]);
+        Arrays.sort(userCards);
+        Assert.assertEquals(3, userCards.length);
+        Assert.assertEquals(1101, userCards[2].getId());
+        Assert.assertEquals(1110, userCards[1].getId());
+        Assert.assertEquals(1100, userCards[0].getId());
+
+        Assert.assertEquals("16 April", copy.getDueDate());
 
     }
 
