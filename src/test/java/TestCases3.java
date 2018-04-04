@@ -642,24 +642,24 @@ public class TestCases3 {
         }
 
 
-        Assert.assertEquals("users.Student",p1.userType.getClass().getName());
-        Assert.assertEquals(1101,p1.getId());
-        Assert.assertEquals("Andrey",p1.name);
-        Assert.assertEquals("Velo",p1.surname);
+        Assert.assertEquals("users.Student",s.userType.getClass().getName());
+        Assert.assertEquals(1101,s.getId());
+        Assert.assertEquals("Andrey",s.name);
+        Assert.assertEquals("Velo",s.surname);
         for (int i = 0; i < b2.takenCopies.size(); i++) {
             if (b2.takenCopies.get(i).getCheckoutByUser().getId() == s.getId()) {
-                Assert.assertTrue(p1.checkedOutCopies.contains(b2.takenCopies.get(i)));
+                Assert.assertTrue(s.checkedOutCopies.contains(b2.takenCopies.get(i)));
             }
         }
 
 
-        Assert.assertEquals("users.VisitingProfessor",p1.userType.getClass().getName());
-        Assert.assertEquals(1110,p1.getId());
-        Assert.assertEquals("Veronika",p1.name);
-        Assert.assertEquals("Rama",p1.surname);
+        Assert.assertEquals("users.VisitingProfessor",v.userType.getClass().getName());
+        Assert.assertEquals(1110,v.getId());
+        Assert.assertEquals("Veronika",v.name);
+        Assert.assertEquals("Rama",v.surname);
         for (int i = 0; i < b2.takenCopies.size(); i++) {
             if (b2.takenCopies.get(i).getCheckoutByUser().getId() == v.getId()) {
-                Assert.assertTrue(p1.checkedOutCopies.contains(b2.takenCopies.get(i)));
+                Assert.assertTrue(v.checkedOutCopies.contains(b2.takenCopies.get(i)));
             }
         }
 
@@ -801,7 +801,13 @@ public class TestCases3 {
         Session session = new Session(userCard.userType, 26, 3);
         session.userCard = userCard;
         mainForm.setSession(session);
+<<<<<<< HEAD
         mainForm.checkOut(document);
+=======
+
+        mainForm.checkOut(document);
+
+>>>>>>> af0e5d67ecd5dfc486826a92f8811172ee23037c
         if(document.availableCopies.size() > 0)
             mainForm.checkOut(document);
         else mainForm.request(document);
@@ -811,6 +817,8 @@ public class TestCases3 {
         Session session2 = new Session(userCard2.userType, 26, 3);
         session2.userCard = userCard2;
         mainForm.setSession(session2);
+        mainForm.checkOut(document);
+
         mainForm.checkOut(document);
         if(document.availableCopies.size() > 0)
             mainForm.checkOut(document);
@@ -823,6 +831,7 @@ public class TestCases3 {
         mainForm.setSession(session3);
         mainForm.checkOut(document);
 
+        mainForm.checkOut(document);
         if(document.availableCopies.size() > 0)
             mainForm.checkOut(document);
         else mainForm.request(document);
