@@ -21,7 +21,6 @@ public class Copy {
         this.level = level;
         this.room = room;
         id = document.lastCopyID;
-        document.setCopy(this);
     }
 
     public Copy(JSONObject data, DatabaseManager databaseManager){
