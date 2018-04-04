@@ -150,29 +150,24 @@ public class TestCases3 {
         b1.takeCopy(p1, session);
         databaseManager.saveDocuments(b1);
         databaseManager.saveUserCard(p1);
-        p1.checkedOutCopies.add(b2.availableCopies.get(0));
+        b2.takeCopy(p1, session);
         databaseManager.saveDocuments(b2);
         databaseManager.saveUserCard(p1);
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /**Action**/
         Session curSession = new Session(librarian_1.userType, 2, 4);
         Assert.assertTrue("Session is leading by  librarian.", Librarian.class.isAssignableFrom(session.getUser().getClass()));
-       // int a = p1.getFine(p1, curSession, databaseManager);
-        //int b = p1.checkedOutCopies.get(0).getOverdue(curSession);
+        int a = p1.getFine(p1, curSession, databaseManager);
+        int b = p1.checkedOutCopies.get(0).getOverdue(curSession);
         b1.returnCopy(p1.checkedOutCopies.get(0));
-        int s = b1.takenCopies.size();
         databaseManager.saveDocuments(b1);
         databaseManager.saveUserCard(p1);
-
-       // int c = p1.checkedOutCopies.size();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /**Effect**/
-
-       // Assert.assertTrue("Fine of p1 is equal 0", a == 0);
-        //Assert.assertTrue("Overdue of p1 is equal 0", b == 0);
+        Assert.assertTrue("Fine of p1 is equal 0", a == 0);
+        Assert.assertTrue("Overdue of p1 is equal 0", b == 0);
         Assert.assertTrue("p1 have only one checked out copies", p1.checkedOutCopies.size() == 1);
 
 
@@ -220,7 +215,6 @@ public class TestCases3 {
         Assert.assertEquals(copy.getCheckedOutDate(), "26 March");
 
     }
-
     @Test
     public void Test8() {
     }
