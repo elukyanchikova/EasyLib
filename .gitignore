@@ -71,3 +71,4 @@ buildNumber.properties
 !/.mvn/wrapper/maven-wrapper.jar
 !/target/*with-dependencies.jar
 
+*.json
