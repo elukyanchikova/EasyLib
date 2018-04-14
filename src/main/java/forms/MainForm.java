@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.DatabaseManager;
-import users.UserTypes.Guest;
+import users.userTypes.Guest;
 import users.Session;
 
 public class MainForm {

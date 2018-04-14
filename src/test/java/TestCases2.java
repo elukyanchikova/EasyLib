@@ -1,5 +1,5 @@
 import documents.*;
-import forms.MainForm;
+import users.userTypes.*;
 import org.junit.Assert;
 import org.junit.Test;
 import storage.DatabaseManager;
@@ -276,7 +276,7 @@ public class TestCases2 {
         Assert.assertEquals(databaseManager.getUserCard(1100).name,"Elvira");
         Assert.assertEquals(databaseManager.getUserCard(1100).address,"Via del Corso, 22");
         Assert.assertEquals(databaseManager.getUserCard(1100).phoneNumb,"30003");
-        Assert.assertEquals(databaseManager.getUserCard(1100).userType.getClass().getName().replace("users.",""),"Student");
+        Assert.assertEquals(databaseManager.getUserCard(1100).userType.getClass().getName().replace("users.userTypes",""),"Student");
         Assert.assertEquals(databaseManager.getUserCard(1100).getId(),1100);
 
     }
