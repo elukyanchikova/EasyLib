@@ -4,11 +4,7 @@ import org.json.JSONObject;
 import storage.DatabaseManager;
 import users.Session;
 import users.UserCard;
-import users.UserType;
 
-import javax.jws.soap.SOAPBinding;
-import javax.print.Doc;
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;

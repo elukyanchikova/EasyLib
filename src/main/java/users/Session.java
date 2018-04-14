@@ -1,5 +1,7 @@
 package users;
 
+import users.UserTypes.UserType;
+
 public class Session {
 
     private UserType authorizedUser;

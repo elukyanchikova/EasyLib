@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.DatabaseManager;
 import users.*;
+import users.UserTypes.Guest;
+import users.UserTypes.UserType;
 
 import java.net.URL;
 

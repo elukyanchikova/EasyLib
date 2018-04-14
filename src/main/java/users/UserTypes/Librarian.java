@@ -1,4 +1,4 @@
-package users;
+package users.UserTypes;
 
 public class Librarian extends UserType {
 

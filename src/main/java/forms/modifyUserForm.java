@@ -11,7 +11,7 @@ import javafx.util.Callback;
 import storage.DatabaseManager;
 import users.Session;
 import users.UserCard;
-import users.UserType;
+import users.UserTypes.UserType;
 
 public class modifyUserForm {
     private Stage stage;

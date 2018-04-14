@@ -1,4 +1,4 @@
-package users;
+package users.UserTypes;
 
 public class Instructor extends Faculty {
     public Instructor(){

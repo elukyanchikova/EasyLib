@@ -1,4 +1,4 @@
-package users;
+package users.UserTypes;
 
 import java.util.HashMap;
 
@@ -26,14 +26,14 @@ public abstract class UserType {
         UserType.userTypes.put("VisitingProfessor", new VisitingProfessor());
         UserType.userTypes.put("TA", new TA());
         UserType.userTypes.put("Instructor", new Instructor());
-        UserType.userTypes.put("users.Professor", new Professor());
-        UserType.userTypes.put("users.VisitingProfessor", new VisitingProfessor());
-        UserType.userTypes.put("users.TA", new TA());
-        UserType.userTypes.put("users.Instructor", new Instructor());
-        UserType.userTypes.put("users.Faculty", new Faculty());
-        UserType.userTypes.put("users.Student", new Student());
-        UserType.userTypes.put("users.Librarian", new Librarian());
-        UserType.userTypes.put("users.Guest", new Guest());
+        UserType.userTypes.put("users.UserTypes.Professor", new Professor());
+        UserType.userTypes.put("users.UserTypes.VisitingProfessor", new VisitingProfessor());
+        UserType.userTypes.put("users.UserTypes.TA", new TA());
+        UserType.userTypes.put("users.UserTypes.Instructor", new Instructor());
+        UserType.userTypes.put("users.UserTypes.Faculty", new Faculty());
+        UserType.userTypes.put("users.UserTypes.Student", new Student());
+        UserType.userTypes.put("users.UserTypes.Librarian", new Librarian());
+        UserType.userTypes.put("users.UserTypes.Guest", new Guest());
     }
 
     public boolean isHasCheckOutPerm() {

@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import storage.DatabaseManager;
 import users.*;
+import users.UserTypes.*;
 
 public class addUserForm {
     private Stage stage;
