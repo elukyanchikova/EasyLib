@@ -5,19 +5,26 @@ import java.util.HashMap;
 public abstract class UserType {
     //Permissions of the user
     boolean hasCheckOverdueDocPerm = false;
-    boolean hasEditPerm = false;
+
+    //boolean hasEditPerm = false;
+    boolean hasAddPerm = false;
+    boolean hasModifyPerm = false;
+    boolean hasDeletePerm = false;
+    boolean hasAccessPerm = false;
+
     boolean hasCheckOutPerm = false;
     boolean hasReturnPerm = false;
     boolean hasLongCheckOutPerm = false;
     boolean hasCheckUserInfoPerm = false;
     boolean hasMultiRenewPerm = false;
     boolean hasLowerCheckOut = false;
+    boolean hasEditingLibrarianPerm = false;
 
     boolean hasUserPerm = false;
 
-    public  int priority = -1;
+    public int priority = -1;
 
-    public static void load(){
+    public static void load() {
         UserType.userTypes.put("Faculty", new Faculty());
         UserType.userTypes.put("Student", new Student());
         UserType.userTypes.put("Librarian", new Librarian());
@@ -36,13 +43,29 @@ public abstract class UserType {
         UserType.userTypes.put("users.UserTypes.Guest", new Guest());
     }
 
+    public boolean isHasAddPerm() {
+        return hasAddPerm;
+    }
+
+    public boolean isHasModifyPerm() {
+        return hasModifyPerm;
+    }
+
+    public boolean isHasDeletePerm() {
+        return hasDeletePerm;
+    }
+
+    public boolean isHasAccessPerm() {
+        return hasAccessPerm;
+    }
+
     public boolean isHasCheckOutPerm() {
         return hasCheckOutPerm;
     }
 
-    public boolean isHasEditPerm() {
+    /*public boolean isHasEditPerm() {
         return hasEditPerm;
-    }
+    }*/
 
     public boolean isHasLongCheckOutPerm() {
         return hasLongCheckOutPerm;
@@ -56,15 +79,25 @@ public abstract class UserType {
         return hasCheckOverdueDocPerm;
     }
 
-    public boolean isHasCheckUserInfoPerm(){
+    public boolean isHasCheckUserInfoPerm() {
         return hasCheckUserInfoPerm;
     }
 
-    public boolean isHasMultiRenewPerm(){ return hasMultiRenewPerm;}
+    public boolean isHasMultiRenewPerm() {
+        return hasMultiRenewPerm;
+    }
 
-    public boolean isHasUserPerm() { return  hasUserPerm; }
+    public boolean isHasUserPerm() {
+        return hasUserPerm;
+    }
 
-    public boolean isHasLowerCheckOut(){ return hasLowerCheckOut;}
+    public boolean isHasLowerCheckOut() {
+        return hasLowerCheckOut;
+    }
+
+    public boolean isHasEditingLibrarianPerm() {
+        return hasEditingLibrarianPerm;
+    }
 
     public static HashMap<String, UserType> userTypes = new HashMap<>();
 

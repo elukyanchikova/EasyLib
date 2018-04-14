@@ -6,7 +6,7 @@ public class Librarian extends UserType {
        super();
        UserType.userTypes.put(getClass().getName(), this);
        hasCheckOutPerm = true;
-       hasEditPerm = true;
+       //hasEditPerm = true;
        hasReturnPerm = true;
        hasCheckOverdueDocPerm = true;
        hasCheckUserInfoPerm = true;
