@@ -26,23 +26,25 @@
         minHeight="150" prefHeight="400" vgrow="ALWAYS"/>
     </rowConstraints>
 
-    <ListView GridPane.columnIndex="0" fx:id="documentListView"
+    <ComboBox GridPane.columnIndex="0" fx:id="bookTypeComboBox"
+    minHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+    <ListView GridPane.columnIndex="1" fx:id="documentListView"
               minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
               onMouseClicked="#clickOnDocumentListView"
     />
 
-    <Button GridPane.rowIndex = "3" GridPane.columnIndex="0"
+    <Button GridPane.rowIndex = "3" GridPane.columnIndex="1"
             fx:id="returnButton" text="Return" onMouseClicked="#clickOnReturnBtn"/>
-    <Button GridPane.rowIndex = "4" GridPane.columnIndex="0"
+    <Button GridPane.rowIndex = "4" GridPane.columnIndex="1"
             fx:id="manageButton" text="Manage" onMouseClicked="#clickOnManageBtn"/>
-    <Button GridPane.rowIndex = "5" GridPane.columnIndex="0"
+    <Button GridPane.rowIndex = "5" GridPane.columnIndex="1"
             fx:id="editButton" text="Edit" onMouseClicked="#clickOnEditBtn"/>
-    <Button GridPane.rowIndex = "6" GridPane.columnIndex="0"
+    <Button GridPane.rowIndex = "6" GridPane.columnIndex="1"
             fx:id="userInfoButton" text="Users" onMouseClicked="#clickOnUserInfoBtn"/>
-    <Label GridPane.rowIndex = "7" GridPane.columnIndex="0"
+    <Label GridPane.rowIndex = "7" GridPane.columnIndex="1"
             fx:id="notificationLabel"/>
 
-    <GridPane GridPane.columnIndex="1" fx:id="documentInfoPane"
+    <GridPane GridPane.columnIndex="2" fx:id="documentInfoPane"
                minWidth="100"
                minHeight="50" prefHeight="300"
                maxHeight="Infinity"

@@ -1,4 +1,4 @@
-package users.UserTypes;
+package users.userTypes;
 
 import java.util.HashMap;
 
@@ -33,14 +33,14 @@ public abstract class UserType {
         UserType.userTypes.put("VisitingProfessor", new VisitingProfessor());
         UserType.userTypes.put("TA", new TA());
         UserType.userTypes.put("Instructor", new Instructor());
-        UserType.userTypes.put("users.UserTypes.Professor", new Professor());
-        UserType.userTypes.put("users.UserTypes.VisitingProfessor", new VisitingProfessor());
-        UserType.userTypes.put("users.UserTypes.TA", new TA());
-        UserType.userTypes.put("users.UserTypes.Instructor", new Instructor());
-        UserType.userTypes.put("users.UserTypes.Faculty", new Faculty());
-        UserType.userTypes.put("users.UserTypes.Student", new Student());
-        UserType.userTypes.put("users.UserTypes.Librarian", new Librarian());
-        UserType.userTypes.put("users.UserTypes.Guest", new Guest());
+        UserType.userTypes.put("users.userTypes.Professor", new Professor());
+        UserType.userTypes.put("users.userTypes.VisitingProfessor", new VisitingProfessor());
+        UserType.userTypes.put("users.userTypes.TA", new TA());
+        UserType.userTypes.put("users.userTypes.Instructor", new Instructor());
+        UserType.userTypes.put("users.userTypes.Faculty", new Faculty());
+        UserType.userTypes.put("users.userTypes.Student", new Student());
+        UserType.userTypes.put("users.userTypes.Librarian", new Librarian());
+        UserType.userTypes.put("users.userTypes.Guest", new Guest());
     }
 
     public boolean isHasAddPerm() {

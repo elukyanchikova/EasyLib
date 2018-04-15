@@ -1,6 +1,6 @@
 package users;
 
-import users.UserTypes.UserType;
+import users.userTypes.UserType;
 
 public class Session {
 

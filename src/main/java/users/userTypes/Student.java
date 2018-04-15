@@ -1,4 +1,4 @@
-package users.UserTypes;
+package users.userTypes;
 
 public class Student extends Patron {
 

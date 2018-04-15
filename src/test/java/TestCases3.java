@@ -5,15 +5,11 @@ import documents.Document;
 import forms.MainForm;
 import forms.ManageForm;
 import forms.ReturnForm;
-import main.Main;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import storage.DatabaseManager;
 import users.*;
-
-import javax.jws.soap.SOAPBinding;
-import javax.print.Doc;
+import users.userTypes.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

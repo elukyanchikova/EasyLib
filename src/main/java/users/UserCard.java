@@ -5,7 +5,7 @@ import documents.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import storage.DatabaseManager;
-import users.UserTypes.UserType;
+import users.userTypes.UserType;
 
 import java.util.ArrayList;
 
