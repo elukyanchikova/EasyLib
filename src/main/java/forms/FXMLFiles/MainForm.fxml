@@ -15,23 +15,44 @@
 
     <columnConstraints>
         <ColumnConstraints minWidth="100"
+                           percentWidth="20.0">
+        </ColumnConstraints>
+        <ColumnConstraints minWidth="200" prefWidth="200"
                            percentWidth="30.0">
         </ColumnConstraints>
         <ColumnConstraints minWidth="200" prefWidth="200"
-                           percentWidth="70.0">
+                           percentWidth="50.0">
         </ColumnConstraints>
     </columnConstraints>
-    <rowConstraints>
-        <RowConstraints
-        minHeight="150" prefHeight="400" vgrow="ALWAYS"/>
-    </rowConstraints>
 
-    <ComboBox GridPane.columnIndex="0" fx:id="bookTypeComboBox"
-    minHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+
+    <GridPane GridPane.columnIndex="0" fx:id="searchPanel"
+              minWidth="100"
+              minHeight="50" prefHeight="300"
+              maxHeight="Infinity"
+              maxWidth="Infinity"
+              hgap="10" vgap="10">
+
+        <ComboBox GridPane.columnIndex="0"  GridPane.rowIndex="0" fx:id="documentTypeComboBox" maxWidth="Infinity"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentKeywordsTextField" GridPane.rowIndex="1" promptText = "Keyword1, Keyword2"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentTitleTextField" GridPane.rowIndex="2" promptText = "Title"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentAuthorsTextField" GridPane.rowIndex="3" promptText = "Author1, Author2"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentMinPriceTextField" GridPane.rowIndex="4" promptText = "Minimal price"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentMaxPriceTextField" GridPane.rowIndex="5" promptText = "Maximal price"/>
+
+        <TextField GridPane.columnIndex="0" fx:id="documentPublicationYearTextField" GridPane.rowIndex="7" promptText = "Publication Year"/>
+
+        <TextField GridPane.columnIndex="0" fx:id="documentPublisherTextField" GridPane.rowIndex="6" promptText = "Publisher"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentJournalNameTextField" GridPane.rowIndex="6" promptText = "Journal Name"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentEditorTextField" GridPane.rowIndex="7" promptText = "Editor"/>
+
+        <Button GridPane.columnIndex="0" fx:id="documentFilterButton" GridPane.rowIndex="9" text="Filter"/>
+    </GridPane>
+
+
     <ListView GridPane.columnIndex="1" fx:id="documentListView"
               minHeight="50" maxWidth="Infinity" maxHeight="Infinity"
-              onMouseClicked="#clickOnDocumentListView"
-    />
+              onMouseClicked="#clickOnDocumentListView"/>
 
     <Button GridPane.rowIndex = "3" GridPane.columnIndex="1"
             fx:id="returnButton" text="Return" onMouseClicked="#clickOnReturnBtn"/>
