@@ -11,6 +11,7 @@ import javafx.util.Callback;
 import storage.DatabaseManager;
 import users.Session;
 import users.UserCard;
+import users.userTypes.Librarian;
 import users.userTypes.UserType;
 
 public class modifyUserForm {
@@ -65,6 +66,13 @@ public class modifyUserForm {
     @FXML
     private TextField requestedDocsTextField;*/
 
+   @FXML
+   private CheckBox checkBoxPriv1;
+    @FXML
+    private CheckBox checkBoxPriv2;
+    @FXML
+    private CheckBox checkBoxPriv3;
+
 
     /**
      * Initialization and run new scene on the primary stage
@@ -85,6 +93,7 @@ public class modifyUserForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/modifyUserForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
+       // loadHighPermissionInterface();
         this.scene = new Scene(root, 700, 700);
 
         deleteUserBtn = (Button) scene.lookup("#deleteUserBtn");
@@ -106,6 +115,10 @@ public class modifyUserForm {
         addressTextField = (TextField) scene.lookup("#addressField");
         /*checkedOutCopiesTextField = (TextField) scene.lookup("#checkedOutCopiesField");
         requestedDocsTextField = (TextField) scene.lookup("#requestedDocsField");*/
+        checkBoxPriv1 = (CheckBox) scene.lookup("#checkBoxPriv1") ;
+        checkBoxPriv2 = (CheckBox) scene.lookup("#checkBoxPriv2") ;
+        checkBoxPriv3 = (CheckBox) scene.lookup("#checkBoxPriv3") ;
+
 
         userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
@@ -123,6 +136,16 @@ public class modifyUserForm {
         });
 
     }
+
+    /**
+     * Load special permission buttons' state
+     */
+    private void loadHighPermissionInterface() {
+
+    /*    checkBoxPriv1.setVisible(session.getUser().isHasEditingLibrarianPerm() &&Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())  );
+        checkBoxPriv2.setVisible(session.getUser().isHasEditingLibrarianPerm() && Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass()));
+        checkBoxPriv3.setVisible(session.getUser().isHasEditingLibrarianPerm() && Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass()));
+   */ }
 
     /**
      * Select element of Document List View Event
@@ -222,5 +245,29 @@ public class modifyUserForm {
     public void deleteUser() {
         UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
         databaseManager.removeUserCard(currentUser);
+    }
+
+    @FXML
+    public void setPrivilege1(){
+        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
+           if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
+               ((Librarian)us.userType).setPriv1();
+           }
+        }
+
+    @FXML
+    public void setPrivilege2(){
+        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
+        if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
+            ((Librarian)us.userType).setPriv2();
+        }
+    }
+
+    @FXML
+    public void setPrivilege3(){
+        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
+        if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
+            ((Librarian)us.userType).setPriv3();
+        }
     }
 }

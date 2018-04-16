@@ -16,6 +16,8 @@ import storage.DatabaseManager;
 import users.userTypes.Guest;
 import users.Session;
 
+import java.util.Objects;
+
 public class MainForm {
 
     private Stage stage;
@@ -235,9 +237,9 @@ public class MainForm {
      * Load special permission buttons' state
      */
     private void loadHighPermissionInterface() {
-        editBtn.setVisible(session.getUser().isHasAccessPerm() && (session.getUser().isHasDeletePerm() ||
+        editBtn.setVisible(session.getUser().isHasEditPerm() /*&& session.getUser().isHasAccessPerm() && (session.getUser().isHasDeletePerm() ||
                 session.getUser().isHasAddPerm() ||
-                session.getUser().isHasModifyPerm()));
+                session.getUser().isHasModifyPerm())*/);
         returnBtn.setVisible(session.getUser().isHasReturnPerm());
         infoBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
         manageBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
@@ -284,8 +286,9 @@ public class MainForm {
      * Update the user card for current session
      */
     public void updateSession() {
-        if (session.getUser().getClass() != Guest.class)
+        if (!Objects.equals(session.getUser().getClass(), Guest.class)) {
             session.userCard = databaseManager.getUserCard(session.userCard.getId());
+        }
     }
 
 

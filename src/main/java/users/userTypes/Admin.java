@@ -22,16 +22,5 @@ public class Admin extends UserType{
         hasEditingLibrarianPerm = true;
         priority = 1;
     }
-    public void setModifyPerm(Librarian libraian, Boolean perm){
-        libraian.hasModifyPerm = perm;
-    }
-    public void setAccessPerm(Librarian librarian, Boolean perm){
-        librarian.hasAccessPerm = perm;
-    }
-    public void setDeletePerm(Librarian librarian, Boolean perm){
-        librarian.hasDeletePerm = perm;
-    }
-    public void setAddPerm(Librarian librarian, boolean perm){
-        librarian.hasAddPerm = perm;
-    }
+
 }

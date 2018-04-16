@@ -6,7 +6,7 @@ public abstract class UserType {
     //Permissions of the user
     boolean hasCheckOverdueDocPerm = false;
 
-    //boolean hasEditPerm = false;
+    boolean hasEditPerm = false;
     boolean hasAddPerm = false;
     boolean hasModifyPerm = false;
     boolean hasDeletePerm = false;
@@ -63,9 +63,9 @@ public abstract class UserType {
         return hasCheckOutPerm;
     }
 
-    /*public boolean isHasEditPerm() {
+    public boolean isHasEditPerm() {
         return hasEditPerm;
-    }*/
+    }
 
     public boolean isHasLongCheckOutPerm() {
         return hasLongCheckOutPerm;

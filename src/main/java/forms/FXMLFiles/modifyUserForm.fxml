@@ -45,6 +45,12 @@
         <Label GridPane.rowIndex = "3" GridPane.columnIndex="0" fx:id="labelAddress" text="Address: "></Label>
         <Label GridPane.rowIndex = "4" GridPane.columnIndex="0" fx:id="labelUserType" text="UserType: "></Label>
         <Label GridPane.rowIndex = "5" GridPane.columnIndex="0" fx:id="labelPublisher" text="PhoneNumber: "></Label>
+        <CheckBox GridPane.rowIndex="6" GridPane.columnIndex="0" fx:id="checkBoxPriv1" text="Privilege 1: Access and Modify permissions" onMouseClicked="#setPrivilege1"></CheckBox>
+        <CheckBox GridPane.rowIndex="7" GridPane.columnIndex="0" fx:id="checkBoxPriv2" text="Privilege 1 + Add permission" onMouseClicked="#setPrivilege2"></CheckBox>
+        <CheckBox GridPane.rowIndex="8" GridPane.columnIndex="0" fx:id="checkBoxPriv3" text="Privelege 3 + Delete permission" onMouseClicked="#setPrivilege3"></CheckBox>
+
+
+
         <!--<Label GridPane.rowIndex = "6" GridPane.columnIndex="0" fx:id="labelCheckedOutCopies" text="Checked out copies: " ></Label>-->
 <!--
         <Label GridPane.rowIndex = "8" GridPane.columnIndex="0" fx:id="labelRequestedDocs" text="Requested docs: "></Label>
