@@ -93,7 +93,6 @@ public class modifyUserForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/modifyUserForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
-       // loadHighPermissionInterface();
         this.scene = new Scene(root, 700, 700);
 
         deleteUserBtn = (Button) scene.lookup("#deleteUserBtn");
@@ -142,10 +141,10 @@ public class modifyUserForm {
      */
     private void loadHighPermissionInterface() {
 
-    /*    checkBoxPriv1.setVisible(session.getUser().isHasEditingLibrarianPerm() &&Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())  );
-        checkBoxPriv2.setVisible(session.getUser().isHasEditingLibrarianPerm() && Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass()));
-        checkBoxPriv3.setVisible(session.getUser().isHasEditingLibrarianPerm() && Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass()));
-   */ }
+        checkBoxPriv1.setVisible(session.getUser().isHasEditingLibrarianPerm());
+        checkBoxPriv2.setVisible(session.getUser().isHasEditingLibrarianPerm());
+        checkBoxPriv3.setVisible(session.getUser().isHasEditingLibrarianPerm());
+    }
 
     /**
      * Select element of Document List View Event
@@ -156,8 +155,10 @@ public class modifyUserForm {
             if (openUserCardID == -1) {
                 userInfoPane.setVisible(true);//If no user card was opened
             }
-
             UserCard chosenUser = selectUser(userListView.getSelectionModel().getSelectedIndex());
+
+            if(Librarian.class.isAssignableFrom(chosenUser.getClass())) { loadHighPermissionInterface();}
+
             nameTextField.setText(chosenUser.name);
             surnameTextField.setText(chosenUser.surname);
             addressTextField.setText(chosenUser.address);
