@@ -251,6 +251,12 @@ public class ManageForm {
         databaseManager.saveDocuments(doc);
     }
 
+    @FXML
+    public void back() throws Exception {
+        MainForm mainForm = new MainForm();
+        mainForm.startForm(stage, session, databaseManager);
+    }
+
     public void setDatabaseManager(DatabaseManager databaseManager){
         this.databaseManager = databaseManager;
     }
