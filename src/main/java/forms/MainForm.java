@@ -419,6 +419,16 @@ public class MainForm {
     }
 
     /**
+     * Click on log button event.
+     * Open Log Form
+     */
+    @FXML
+    public void clickOnLogBtn() throws Exception {
+        LogForm logForm = new LogForm();
+        logForm.startForm(stage, session, databaseManager);
+    }
+
+    /**
      * Click on requests button event.
      * Open Booking Requests Form
      */

@@ -20,7 +20,7 @@ public class ActionManager {
     //TODO isAvailiable for user , updateSession
     public boolean checkOut(Document document) {
         //boolean flag = isAvailableForUser(document);
-        if (!document.isReference() && document.getNumberOfAvailableCopies() > 0 &&/* flag*/) {
+        if (!document.isReference() && document.getNumberOfAvailableCopies() > 0 /*&& flag*/) {
             document.takeCopy(session.userCard, session);
             databaseManager.saveUserCard(session.userCard);
             databaseManager.saveDocuments(document);
