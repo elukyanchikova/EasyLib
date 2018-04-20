@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
@@ -33,20 +30,24 @@
               maxWidth="Infinity"
               hgap="10" vgap="10">
 
-        <ComboBox GridPane.columnIndex="0"  GridPane.rowIndex="0" fx:id="documentTypeComboBox" maxWidth="Infinity"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentKeywordsTextField" GridPane.rowIndex="1" promptText = "Keyword1, Keyword2"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentTitleTextField" GridPane.rowIndex="2" promptText = "Title"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentAuthorsTextField" GridPane.rowIndex="3" promptText = "Author1, Author2"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentMinPriceTextField" GridPane.rowIndex="4" promptText = "Minimal price"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentMaxPriceTextField" GridPane.rowIndex="5" promptText = "Maximal price"/>
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Search"/>
+        <ComboBox GridPane.columnIndex="0"  GridPane.rowIndex="1" fx:id="documentSearchTypeComboBox" maxWidth="Infinity"
+        onHidden="#selectSearchTypeComboBox"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchKeywordsTextField" GridPane.rowIndex="2" promptText = "Keyword1, Keyword2"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchTitleTextField" GridPane.rowIndex="3" promptText = "Title"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchAuthorsTextField" GridPane.rowIndex="4" promptText = "Author1, Author2"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchMinPriceTextField" GridPane.rowIndex="5" promptText = "Minimal price"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchMaxPriceTextField" GridPane.rowIndex="6" promptText = "Maximal price"/>
 
-        <TextField GridPane.columnIndex="0" fx:id="documentPublicationYearTextField" GridPane.rowIndex="7" promptText = "Publication Year"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchPublisherTextField" GridPane.rowIndex="7" promptText = "Publisher"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchPublicationYearTextField" GridPane.rowIndex="8" promptText = "Publication Year"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchJournalNameTextField" GridPane.rowIndex="9" promptText = "Journal Name"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchEditorTextField" GridPane.rowIndex="10" promptText = "Editor"/>
 
-        <TextField GridPane.columnIndex="0" fx:id="documentPublisherTextField" GridPane.rowIndex="6" promptText = "Publisher"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentJournalNameTextField" GridPane.rowIndex="6" promptText = "Journal Name"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentEditorTextField" GridPane.rowIndex="7" promptText = "Editor"/>
+        <CheckBox GridPane.columnIndex="0" fx:id="documentSearchIsBestsellerCheckBox" GridPane.rowIndex="11" text="Bestseller"/>
+        <CheckBox GridPane.columnIndex="0" fx:id="documentSearchIsAvailableCheckBox" GridPane.rowIndex="12" text="Available"/>
 
-        <Button GridPane.columnIndex="0" fx:id="documentFilterButton" GridPane.rowIndex="9" text="Filter"/>
+        <Button GridPane.columnIndex="0" fx:id="documentSearchFilterButton" GridPane.rowIndex="14" text="Filter"/>
     </GridPane>
 
 

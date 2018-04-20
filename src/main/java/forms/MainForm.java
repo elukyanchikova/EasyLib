@@ -2,13 +2,11 @@ package forms;
 
 import documents.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -16,6 +14,8 @@ import storage.DatabaseManager;
 import users.userTypes.Guest;
 import users.Session;
 
+import javax.print.Doc;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainForm {
@@ -32,6 +32,31 @@ public class MainForm {
 
     @FXML
     private ListView<Document> documentListView;
+
+    @FXML
+    private ComboBox<String> documentSearchTypeBox;
+    @FXML
+    private TextField documentSearchKeywordsTxt;
+    @FXML
+    private TextField documentSearchTitleTxt;
+    @FXML
+    private TextField documentSearchAuthorsTxt;
+    @FXML
+    private TextField documentSearchMinPriceTxt;
+    @FXML
+    private TextField documentSearchMaxPriceTxt;
+    @FXML
+    private TextField documentSearchPublicationYearTxt;
+    @FXML
+    private TextField documentSearchPublisherTxt;
+    @FXML
+    private TextField documentSearchJournalNameTxt;
+    @FXML
+    private TextField documentSearchEditorTxt;
+    @FXML
+    private CheckBox documentSearchIsBestsellerCheck;
+    @FXML
+    private CheckBox documentSearchIsAvailableCheck;
 
     @FXML
     private Label titleLbl;
@@ -95,6 +120,7 @@ public class MainForm {
         if (session.userCard.notifications.size() > 0) showNotification();
     }
 
+    //TODO move to action manager
     /**
      * Check out the document
      *
@@ -113,6 +139,8 @@ public class MainForm {
         return false;
     }
 
+    //TODO move to action manager
+    //TODO add doc
     public boolean book(Document document) {
         boolean flag = isAvailableForUser(document);
 
@@ -129,9 +157,10 @@ public class MainForm {
         return false;
     }
 
+
+    //TODO move to action manager
     /**
      * Request the document
-     *
      * @return true if the document has requested
      */
     public boolean request(Document document) {
@@ -147,11 +176,15 @@ public class MainForm {
         return false;
     }
 
+    //TODO move to action manager
+    //TODO add doc
     public Document selectDocument(int id) {
         openDocumentID = id;
         return databaseManager.getDocuments(openDocumentID);
     }
 
+    //TODO move to action manager
+    //TODO add doc
     private boolean isAvailableForUser(Document document) {
         for (int i = 0; i < session.userCard.checkedOutCopies.size(); i++) {
             if (session.userCard.checkedOutCopies.get(i).getDocumentID() == openDocumentID)
@@ -171,6 +204,7 @@ public class MainForm {
         return true;
     }
 
+    //TODO move to action manager
     /**
      * Set new database manager to the form
      */
@@ -178,6 +212,7 @@ public class MainForm {
         this.databaseManager = databaseManager;
     }
 
+    //TODO move to action manager
     /**
      * Set new session to the form
      */
@@ -194,7 +229,9 @@ public class MainForm {
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root, 1000, 700);
+
         elementsInitialization();
+        loadSearchPane();
         loadHighPermissionInterface();
         updateDocumentListView();
     }
@@ -231,8 +268,22 @@ public class MainForm {
         requestBtn = (Button) scene.lookup("#requestButton");
         bookBtn = (Button) scene.lookup("#bookButton");
 
+        documentSearchTypeBox = (ComboBox<String>) scene.lookup("#documentSearchTypeComboBox");
+        documentSearchKeywordsTxt = (TextField) scene.lookup("#documentSearchKeywordsTextField");
+        documentSearchTitleTxt = (TextField) scene.lookup("#documentSearchTitleTextField");
+        documentSearchAuthorsTxt = (TextField) scene.lookup("#documentSearchAuthorsTextField");
+        documentSearchMinPriceTxt = (TextField) scene.lookup("#documentSearchMinPriceTextField");
+        documentSearchMaxPriceTxt = (TextField) scene.lookup("#documentSearchMaxPriceTextField");
+        documentSearchPublicationYearTxt = (TextField) scene.lookup("#documentSearchPublicationYearTextField");
+        documentSearchPublisherTxt = (TextField) scene.lookup("#documentSearchPublisherTextField");
+        documentSearchJournalNameTxt = (TextField) scene.lookup("#documentSearchJournalNameTextField");
+        documentSearchEditorTxt = (TextField) scene.lookup("#documentSearchEditorTextField");
+        documentSearchIsBestsellerCheck = (CheckBox) scene.lookup("#documentSearchIsBestsellerCheckBox");
+        documentSearchIsAvailableCheck = (CheckBox) scene.lookup("#documentSearchAvailableCheckBox");
+
     }
 
+    //TODO: update because of adding new permissions
     /**
      * Load special permission buttons' state
      */
@@ -245,8 +296,33 @@ public class MainForm {
         manageBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
     }
 
+    //TODO: add doc
+    //TODO: move list of types to document
+    private void loadSearchPane(){
+        ArrayList<String> documentTypes = new ArrayList<>();
+        documentTypes.add("");
+        documentTypes.add(Book.class.getName().replace("documents.", ""));
+        documentTypes.add(AVMaterial.class.getName().replace("documents.", ""));
+        documentTypes.add(JournalArticle.class.getName().replace("documents.", ""));
+        documentSearchTypeBox.setItems(FXCollections.observableArrayList(documentTypes));
+        documentSearchTypeBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> param) {
+                return new ListCell<String>(){
+                    @Override
+                    protected void updateItem(String type, boolean flag) {
+                        super.updateItem(type, flag);
+                        if(type != null)
+                            setText(type);
+                    }
+                };
+            }
+        });
+        documentSearchTypeBox.getSelectionModel().selectFirst();
+    }
+
     /**
-     * Load buttons' state of document info panel
+     * Load buttons' state of document info panel when state of document is updated
      */
     private void loadAvailableAction() {
         checkOutBtn.setVisible(false);
@@ -265,6 +341,7 @@ public class MainForm {
         }
     }
 
+    //TODO: add java doc
     private void updateDocumentListView() {
         documentListView.setItems(FXCollections.observableArrayList(databaseManager.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
@@ -282,6 +359,7 @@ public class MainForm {
         });
     }
 
+    //TODO: move to Action Manager
     /**
      * Update the user card for current session
      */
@@ -311,6 +389,7 @@ public class MainForm {
         }
     }
 
+    //TODO: add java doc
     private void loadInfoOnPanel(Document chosenDocument) {
         titleLbl.setText(chosenDocument.title);
 
@@ -362,6 +441,7 @@ public class MainForm {
         }
     }
 
+    //TODO: reduce java doc
     /**
      * Click on check out button event
      * Check out or request(temp) document
@@ -438,6 +518,8 @@ public class MainForm {
         manageForm.startForm(stage,session, databaseManager);
     }
 
+    //TODO: add java doc
+    //TODO: make method in action manager that return the first notification and remove it after
     Label notificationLbl;
     Button notificationBtn;
 
@@ -475,5 +557,42 @@ public class MainForm {
             session.userCard.notifications.remove(session.userCard.notifications.size() - 1);
         }
         if(session.userCard.notifications.size() <= 0) notificationBtn.setVisible(false);
+    }
+
+    //TODO: add doc
+    //TODO: move list of types in document
+    @FXML
+    public void selectSearchTypeComboBox(){
+
+        switch (documentSearchTypeBox.getSelectionModel().getSelectedIndex()){
+            case 0:
+                documentSearchPublicationYearTxt.setVisible(true);
+                documentSearchPublisherTxt.setVisible(true);
+                documentSearchJournalNameTxt.setVisible(true);
+                documentSearchEditorTxt.setVisible(true);
+                documentSearchIsBestsellerCheck.setVisible(true);
+                break;
+            case 1:
+                documentSearchPublicationYearTxt.setVisible(true);
+                documentSearchPublisherTxt.setVisible(true);
+                documentSearchJournalNameTxt.setVisible(false);
+                documentSearchEditorTxt.setVisible(false);
+                documentSearchIsBestsellerCheck.setVisible(true);
+                break;
+            case 2:
+                documentSearchPublicationYearTxt.setVisible(false);
+                documentSearchPublisherTxt.setVisible(false);
+                documentSearchJournalNameTxt.setVisible(false);
+                documentSearchEditorTxt.setVisible(false);
+                documentSearchIsBestsellerCheck.setVisible(false);
+                break;
+            case 3:
+                documentSearchPublicationYearTxt.setVisible(true);
+                documentSearchPublisherTxt.setVisible(false);
+                documentSearchJournalNameTxt.setVisible(true);
+                documentSearchEditorTxt.setVisible(true);
+                documentSearchIsBestsellerCheck.setVisible(false);
+                break;
+        }
     }
 }
