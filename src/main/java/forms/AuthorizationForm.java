@@ -1,5 +1,6 @@
 package forms;
 
+import Core.ActionManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -105,7 +106,8 @@ public class AuthorizationForm {
             MainForm mainForm = new MainForm();
             Session session = new Session(selectedUser.userType, day,month);
             session.userCard = selectedUser;
-            mainForm.startForm(stage, session, databaseManager);
+            mainForm.startForm(stage, session, databaseManager, new ActionManager(databaseManager,session));
+
         }
     }
 
@@ -140,6 +142,6 @@ public class AuthorizationForm {
             }
         }
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage,new Session(new Guest(), day,month), databaseManager);
+        mainForm.startForm(stage,new Session(new Guest(), day,month), databaseManager, new ActionManager(databaseManager, session));
     }
 }

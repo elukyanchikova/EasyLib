@@ -1,5 +1,6 @@
 package forms;
 
+import Core.ActionManager;
 import documents.Copy;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ public class UserInfoForm {
     private Scene scene;
     private Session session;
     private DatabaseManager databaseManager;
+    private ActionManager actionManager;
 
     private int openUserCardID = -1;
 
@@ -40,10 +42,11 @@ public class UserInfoForm {
      * @param primaryStage != null;
      * @param currentSession != null
      */
-    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception{
+    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
         this.databaseManager = databaseManager;
+        this.actionManager = actionManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -133,7 +136,7 @@ public class UserInfoForm {
     @FXML
     public void clickOnBackBtn() throws Exception {
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage, session, databaseManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
     }
 
 

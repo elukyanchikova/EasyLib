@@ -4,6 +4,7 @@ import documents.Copy;
 import documents.Document;
 import javafx.fxml.FXML;
 import storage.DatabaseManager;
+import storage.Filter;
 import users.Session;
 import users.UserCard;
 
@@ -12,6 +13,13 @@ import java.util.ArrayList;
 public class ActionManager {
     private DatabaseManager databaseManager;
     private Session session;
+
+
+    public ActionManager(DatabaseManager databaseManager, Session session){
+        this.databaseManager = databaseManager;
+        this.session = session;
+    }
+
     /* *
      * Check out the document
      *
@@ -67,5 +75,9 @@ public class ActionManager {
         //this.autobooking(databaseManager.getDocuments(copy.getDocumentID()));
     }
     //TODO request  search
+
+    public ArrayList<Document> filter(Filter filter){
+        return null;
+    }
 
 }

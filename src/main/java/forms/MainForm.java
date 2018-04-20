@@ -1,5 +1,6 @@
 package forms;
 
+import Core.ActionManager;
 import documents.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,7 @@ public class MainForm {
     private Scene scene;
     private Session session;
     private DatabaseManager databaseManager;
+    private ActionManager actionManager;
 
     private int openDocumentID = -1;
 
@@ -49,6 +51,8 @@ public class MainForm {
     private TextField documentSearchPublicationYearTxt;
     @FXML
     private TextField documentSearchPublisherTxt;
+    @FXML
+    private TextField documentSearchEditionTxt;
     @FXML
     private TextField documentSearchJournalNameTxt;
     @FXML
@@ -109,10 +113,11 @@ public class MainForm {
      * @param primaryStage   != null;
      * @param currentSession != null
      */
-    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
+    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception {
         this.session = currentSession;
         this.stage = primaryStage;
         this.databaseManager = databaseManager;
+        this.actionManager = actionManager;
         updateSession();
         sceneInitialization();
         stage.setScene(scene);
@@ -220,6 +225,11 @@ public class MainForm {
         this.session = session;
     }
 
+    //TODO: add doc
+    public void setActionManager(ActionManager actionManager){
+        this.actionManager = actionManager;
+    }
+
     /**
      * Initialization scene
      * All elements will be initialized
@@ -276,6 +286,7 @@ public class MainForm {
         documentSearchMaxPriceTxt = (TextField) scene.lookup("#documentSearchMaxPriceTextField");
         documentSearchPublicationYearTxt = (TextField) scene.lookup("#documentSearchPublicationYearTextField");
         documentSearchPublisherTxt = (TextField) scene.lookup("#documentSearchPublisherTextField");
+        documentSearchEditionTxt = (TextField) scene.lookup("#documentSearchEditionTextField");
         documentSearchJournalNameTxt = (TextField) scene.lookup("#documentSearchJournalNameTextField");
         documentSearchEditorTxt = (TextField) scene.lookup("#documentSearchEditorTextField");
         documentSearchIsBestsellerCheck = (CheckBox) scene.lookup("#documentSearchIsBestsellerCheckBox");
@@ -495,7 +506,7 @@ public class MainForm {
     @FXML
     public void clickOnUserInfoBtn() throws Exception {
         UserInfoForm userInfoForm = new UserInfoForm();
-        userInfoForm.startForm(stage, session, databaseManager);
+        userInfoForm.startForm(stage, session, databaseManager, actionManager);
     }
 
     /**
@@ -516,6 +527,11 @@ public class MainForm {
     public void clickOnManageBtn() throws Exception{
         ManageForm manageForm = new ManageForm();
         manageForm.startForm(stage,session, databaseManager);
+    }
+
+    @FXML
+    public void clickOnFilterBtn(){
+
     }
 
     //TODO: add java doc
@@ -568,6 +584,7 @@ public class MainForm {
             case 0:
                 documentSearchPublicationYearTxt.setVisible(true);
                 documentSearchPublisherTxt.setVisible(true);
+                documentSearchEditionTxt.setVisible(true);
                 documentSearchJournalNameTxt.setVisible(true);
                 documentSearchEditorTxt.setVisible(true);
                 documentSearchIsBestsellerCheck.setVisible(true);
@@ -575,6 +592,7 @@ public class MainForm {
             case 1:
                 documentSearchPublicationYearTxt.setVisible(true);
                 documentSearchPublisherTxt.setVisible(true);
+                documentSearchEditionTxt.setVisible(true);
                 documentSearchJournalNameTxt.setVisible(false);
                 documentSearchEditorTxt.setVisible(false);
                 documentSearchIsBestsellerCheck.setVisible(true);
@@ -582,6 +600,7 @@ public class MainForm {
             case 2:
                 documentSearchPublicationYearTxt.setVisible(false);
                 documentSearchPublisherTxt.setVisible(false);
+                documentSearchEditionTxt.setVisible(false);
                 documentSearchJournalNameTxt.setVisible(false);
                 documentSearchEditorTxt.setVisible(false);
                 documentSearchIsBestsellerCheck.setVisible(false);
@@ -589,6 +608,7 @@ public class MainForm {
             case 3:
                 documentSearchPublicationYearTxt.setVisible(true);
                 documentSearchPublisherTxt.setVisible(false);
+                documentSearchEditionTxt.setVisible(false);
                 documentSearchJournalNameTxt.setVisible(true);
                 documentSearchEditorTxt.setVisible(true);
                 documentSearchIsBestsellerCheck.setVisible(false);

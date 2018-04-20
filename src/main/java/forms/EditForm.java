@@ -1,5 +1,6 @@
 package forms;
 
+import Core.ActionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ public class EditForm {
     private Scene scene;
     private Session session;
     private DatabaseManager databaseManager;
+    private ActionManager actionManager;
 
     @FXML private Button addFileBtn;
     @FXML private Button deleteFileBtn;
@@ -105,6 +107,6 @@ public class EditForm {
      */
     @FXML public void back() throws Exception {
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage, session, databaseManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
     }
 }
