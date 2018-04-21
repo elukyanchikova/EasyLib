@@ -26,6 +26,7 @@ public abstract class UserType {
     public int priority = -1;
 
     public static void load() {
+        UserType.userTypes.put("Admin", new Admin());
         UserType.userTypes.put("Faculty", new Faculty());
         UserType.userTypes.put("Student", new Student());
         UserType.userTypes.put("Librarian", new Librarian());
@@ -34,6 +35,7 @@ public abstract class UserType {
         UserType.userTypes.put("VisitingProfessor", new VisitingProfessor());
         UserType.userTypes.put("TA", new TA());
         UserType.userTypes.put("Instructor", new Instructor());
+        UserType.userTypes.put("users.userTypes.Admin", new Admin());
         UserType.userTypes.put("users.userTypes.Professor", new Professor());
         UserType.userTypes.put("users.userTypes.VisitingProfessor", new VisitingProfessor());
         UserType.userTypes.put("users.userTypes.TA", new TA());
