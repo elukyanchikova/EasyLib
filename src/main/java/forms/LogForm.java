@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import storage.DatabaseManager;
@@ -24,8 +25,6 @@ public class LogForm {
 
     @FXML
     private static Button backBtn;
-    @FXML
-    private static Button refreshBtn;
 
     public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception {
         this.session = currentSession;
@@ -43,15 +42,17 @@ public class LogForm {
 
     private void sceneInitialization() throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/logForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/LogForm.fxml"));
         loader.setController(this);
-        GridPane root = loader.load();
+        AnchorPane root = loader.load();
         this.scene = new Scene(root, 1000, 700);
 
+
         backBtn = (Button) scene.lookup("#backBtn");
-        refreshBtn = (Button) scene.lookup("#refreshBtn");
 
         logTextArea = (TextArea) scene.lookup("#logTextArea");
+
+        refresh("owowowowow \nowowowowoow");
 
     }
 
@@ -61,8 +62,8 @@ public class LogForm {
         mainForm.startForm(stage, session, databaseManager, actionManager);
     }
 
-    public void refresh(String textToView) throws Exception {
-        logTextArea.setText(textToView);
+    public void refresh(String toTextArea){
+        logTextArea.setText(toTextArea);
     }
 
 
