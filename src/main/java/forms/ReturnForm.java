@@ -1,5 +1,6 @@
 package forms;
 
+import core.ActionManager;
 import documents.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -18,7 +19,6 @@ import users.Notification;
 import users.Session;
 import users.UserCard;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -32,6 +32,7 @@ public class ReturnForm {
     private Scene scene;
     private Session session;
     private DatabaseManager databaseManager;
+    private ActionManager actionManager;
 
     //ArrayList<Document> documents = new ArrayList<>();
     //ArrayList<UserCard> users = new ArrayList<>();
@@ -82,10 +83,11 @@ public class ReturnForm {
      * @param databaseManager - brings database link to the current form for modifying
      * @throws Exception
      */
-    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
+    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception {
         this.session = currentSession;
         this.stage = primaryStage;
         this.databaseManager = databaseManager;
+        this.actionManager = actionManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -251,7 +253,7 @@ public class ReturnForm {
     @FXML
     public void back() throws Exception {
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage, session, databaseManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
     }
 
     /**

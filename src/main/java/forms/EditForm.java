@@ -1,6 +1,6 @@
 package forms;
 
-import Core.ActionManager;
+import core.ActionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -31,9 +31,10 @@ public class EditForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception{
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception{
         this.session = currentSession;
         this.stage = primaryStage;
+        this.actionManager = actionManager;
         sceneInitialization();
         this.databaseManager = databaseManager;
         stage.setScene(scene);
@@ -67,7 +68,7 @@ public class EditForm {
     public void addFile() throws Exception {
 
         addFileForm mainForm = new addFileForm();
-        mainForm.startForm(stage,session, databaseManager);
+        mainForm.startForm(stage,session, databaseManager, actionManager);
 
     }
 
@@ -78,7 +79,7 @@ public class EditForm {
     @FXML
     public void addUser() throws Exception {
         addUserForm mainForm = new addUserForm();
-        mainForm.startForm(stage,session, databaseManager);
+        mainForm.startForm(stage,session, databaseManager, actionManager);
     }
 
     /**
@@ -87,7 +88,7 @@ public class EditForm {
     @FXML
     public void modifyUser() throws Exception {
         modifyUserForm mainForm = new modifyUserForm();
-        mainForm.startForm(stage,session, databaseManager);
+        mainForm.startForm(stage,session, databaseManager,actionManager);
 
     }
 
@@ -97,7 +98,7 @@ public class EditForm {
     @FXML
     public void modifyFile() throws Exception {
         modifyFileForm mainForm = new modifyFileForm();
-        mainForm.startForm(stage,session, databaseManager);
+        mainForm.startForm(stage,session, databaseManager, actionManager);
     }
 
     /**

@@ -1,5 +1,6 @@
 package forms;
 
+import core.ActionManager;
 import documents.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ public class modifyFileForm {
     private Scene scene;
     private Session session;
     private DatabaseManager databaseManager;
+    private ActionManager actionManager;
     private int openDocumentID = -1;
 
     @FXML
@@ -73,10 +75,11 @@ public class modifyFileForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception {
         this.databaseManager = databaseManager;
         this.session = currentSession;
         this.stage = primaryStage;
+        this.actionManager = actionManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -244,6 +247,6 @@ public class modifyFileForm {
     @FXML
     public void back() throws Exception {
         EditForm mainForm = new EditForm();
-        mainForm.startForm(stage, session, databaseManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
     }
 }

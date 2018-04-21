@@ -1,5 +1,6 @@
 package forms;
 
+import core.ActionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ public class addUserForm {
     private Scene scene;
     private Session session;
     private DatabaseManager databaseManager;
+    private ActionManager actionManager;
 
     @FXML
     private TextField nameTextField;
@@ -31,10 +33,11 @@ public class addUserForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception {
         this.stage = primaryStage;
         this.session = currentSession;
         this.databaseManager = databaseManager;
+        this.actionManager = actionManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -143,7 +146,7 @@ public class addUserForm {
     @FXML
     public void back() throws Exception {
         EditForm mainForm = new EditForm();
-        mainForm.startForm(stage, session, databaseManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
     }
 
 }

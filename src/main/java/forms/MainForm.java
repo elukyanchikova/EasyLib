@@ -1,9 +1,8 @@
 package forms;
 
-import Core.ActionManager;
+import core.ActionManager;
 import documents.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,7 +14,6 @@ import storage.DatabaseManager;
 import users.userTypes.Guest;
 import users.Session;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -486,7 +484,7 @@ public class MainForm {
     @FXML
     public void clickOnReturnBtn() throws Exception {
         ReturnForm returnForm = new ReturnForm();
-        returnForm.startForm(stage, session, databaseManager);
+        returnForm.startForm(stage, session, databaseManager, actionManager);
     }
 
     /**
@@ -496,7 +494,7 @@ public class MainForm {
     @FXML
     public void clickOnEditBtn() throws Exception {
         EditForm editForm = new EditForm();
-        editForm.startForm(stage, session, databaseManager);
+        editForm.startForm(stage, session, databaseManager, actionManager);
     }
 
     /**
@@ -516,7 +514,7 @@ public class MainForm {
     @FXML
     public void clickOnLogBtn() throws Exception {
         LogForm logForm = new LogForm();
-        logForm.startForm(stage, session, databaseManager);
+        logForm.startForm(stage, session, databaseManager, actionManager);
     }
 
     /**
@@ -526,7 +524,7 @@ public class MainForm {
     @FXML
     public void clickOnManageBtn() throws Exception{
         ManageForm manageForm = new ManageForm();
-        manageForm.startForm(stage,session, databaseManager);
+        manageForm.startForm(stage,session, databaseManager, actionManager);
     }
 
     @FXML

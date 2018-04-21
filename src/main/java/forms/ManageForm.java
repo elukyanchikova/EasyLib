@@ -1,15 +1,14 @@
 package forms;
 
+import core.ActionManager;
 import documents.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -18,7 +17,6 @@ import users.Notification;
 import users.Session;
 import users.UserCard;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,6 +31,7 @@ public class ManageForm {
     private Scene scene;
     private Session session;
     private DatabaseManager databaseManager;
+    private ActionManager actionManager;
 
     //ArrayList<Document> documents = new ArrayList<>();
     //ArrayList<UserCard> users = new ArrayList<>();
@@ -63,10 +62,11 @@ public class ManageForm {
      * @param databaseManager - brings database link to the current form for modifying
      * @throws Exception
      */
-    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
+    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception {
         this.session = currentSession;
         this.stage = primaryStage;
         this.databaseManager = databaseManager;
+        this.actionManager = actionManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -254,7 +254,7 @@ public class ManageForm {
     @FXML
     public void back() throws Exception {
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage, session, databaseManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
     }
 
     public void setDatabaseManager(DatabaseManager databaseManager){

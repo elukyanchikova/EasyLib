@@ -1,5 +1,6 @@
 package forms;
 
+import core.ActionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,6 +17,7 @@ public class LogForm {
     private Scene scene;
     private Session session;
     private DatabaseManager databaseManager;
+    private ActionManager actionManager;
 
     @FXML
     private TextArea logTextArea;
@@ -25,10 +27,11 @@ public class LogForm {
     @FXML
     private static Button refreshBtn;
 
-    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
+    public void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception {
         this.session = currentSession;
         this.stage = primaryStage;
         this.databaseManager = databaseManager;
+        this.actionManager = actionManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -55,7 +58,7 @@ public class LogForm {
     @FXML
     public void back() throws Exception {
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage, session, databaseManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
     }
 
     public void refresh(String textToView) throws Exception {

@@ -1,8 +1,7 @@
-package Core;
+package core;
 
 import documents.Copy;
 import documents.Document;
-import javafx.fxml.FXML;
 import storage.DatabaseManager;
 import storage.Filter;
 import users.Session;

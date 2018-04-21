@@ -1,6 +1,6 @@
 package forms;
 
-import Core.ActionManager;
+import core.ActionManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

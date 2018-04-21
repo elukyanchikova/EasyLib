@@ -1,5 +1,6 @@
 package forms;
 
+import core.ActionManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +20,7 @@ public class modifyUserForm {
     private Scene scene;
     private Session session;
     private DatabaseManager databaseManager;
-
+    private ActionManager actionManager;
 
     private int openUserCardID = -1;
 
@@ -77,10 +78,11 @@ public class modifyUserForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception {
         this.session = currentSession;
         this.databaseManager = databaseManager;
         this.stage = primaryStage;
+        this.actionManager = actionManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -235,7 +237,7 @@ public class modifyUserForm {
     @FXML
     void back() throws Exception {
         EditForm mainForm = new EditForm();
-        mainForm.startForm(stage, session, databaseManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
     }
 
     /**
