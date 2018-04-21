@@ -2,8 +2,11 @@ package storage;
 
 import documents.*;
 import org.json.JSONObject;
+import users.userTypes.Admin;
 import users.userTypes.Librarian;
 import users.UserCard;
+
+import javax.print.Doc;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +67,7 @@ public class DatabaseManager {
                 this.jsonData = new JSONObject();
                 this.userCardData = new JSONObject();
                 this.documentsData = new JSONObject();
-                saveUserCard(new UserCard(0,"Librarian", "Admin", new Librarian(), "None", "None"));
+                saveUserCard(new UserCard(0,"Admin", "Admin", new Admin(), "None", "None"));
                 update();
             }
         }catch (IOException e) {
@@ -73,7 +76,7 @@ public class DatabaseManager {
             this.jsonData = new JSONObject();
             this.userCardData = new JSONObject();
             this.documentsData = new JSONObject();
-            saveUserCard(new UserCard(0,"Librarian", "Admin", new Librarian(), "None", "None"));
+            saveUserCard(new UserCard(0,"Admin", "Admin", new Admin(), "None", "None"));
             update();
         }
     }
@@ -202,5 +205,37 @@ public class DatabaseManager {
             result.add(getUserCard(key));
         }
         return result;
+    }
+
+    public ArrayList<Document> filterDocument(Filter filter){
+        ArrayList<Document> matchDocuments = new ArrayList<>();
+        for(int i = 0; i < documents.size(); i++){
+            if(filter.filter(documents.get(i))){
+                matchDocuments.add(documents.get(i));
+            }
+        }
+        return matchDocuments;
+    }
+
+
+    public void rebalanceForReferenceType(Document doc){
+        DatabaseManager databaseManager = this;
+        if(Book.class.isAssignableFrom(doc.getClass())){
+            if (doc.getNumberOfAvailableCopies()==1){
+                doc.isReference=true;
+            }
+        }
+
+        else if(AVMaterial.class.isAssignableFrom(doc.getClass())){
+            if (doc.getNumberOfAvailableCopies()==0){
+                doc.isReference=true;
+            }
+        }
+        else if(JournalArticle.class.isAssignableFrom(doc.getClass())){
+            if (doc.getNumberOfAvailableCopies()==1){
+                doc.isReference=true;
+            }
+        }
+        databaseManager.saveDocuments(doc);
     }
 }

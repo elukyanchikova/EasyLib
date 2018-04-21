@@ -154,10 +154,16 @@ public class AddFileForm {
                     year, edition, isBestseller);
             databaseManager.saveDocuments(file);
 
-            int room = 415;
+            int room = 417;
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
                 room++;
+                databaseManager.saveDocuments(file);
+            }
+
+            if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
+                    && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
+                file.isReference = true;
                 databaseManager.saveDocuments(file);
             }
         } else if (docTypeTextField.getText().equals("AVMaterial")) {
@@ -169,7 +175,15 @@ public class AddFileForm {
                 room++;
                 databaseManager.saveDocuments(file);
             }
-        } else if (docTypeTextField.getText().equals("JournalArticle")) {
+
+            if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
+                    && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 0)) {
+                file.isReference = true;
+                databaseManager.saveDocuments(file);
+            }
+        }
+
+            else if (docTypeTextField.getText().equals("JournalArticle")) {
             JournalArticle file = new JournalArticle(title, authors, keywords, price,
                     journalName, editor, Integer.toString(year));
             databaseManager.saveDocuments(file);
@@ -178,6 +192,12 @@ public class AddFileForm {
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
                 room++;
+                databaseManager.saveDocuments(file);
+            }
+
+            if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
+                    && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
+                file.isReference = true;
                 databaseManager.saveDocuments(file);
             }
         } else {
@@ -191,12 +211,19 @@ public class AddFileForm {
                 room++;
                 databaseManager.saveDocuments(file);
             }
+            if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
+                    && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
+                file.isReference = true;
+                databaseManager.saveDocuments(file);
+            }
+
         }
     }
 
     /**
      * Click on button "Back"
      * button for coming back to the EditForm
+     *
      * @throws Exception
      */
     @FXML

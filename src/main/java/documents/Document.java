@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import storage.DatabaseManager;
 import users.Session;
 import users.UserCard;
+import users.userTypes.Librarian;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -30,7 +31,7 @@ public abstract class Document {
     Comparator<UserCard> comparator = new UserTypeComparator();
     public PriorityQueue<UserCard> requestedBy = new PriorityQueue<UserCard>(10);
 
-    boolean reference = false;
+    public boolean isReference = false;
     int lastCopyID = 0;
 
     /**
@@ -63,8 +64,10 @@ public abstract class Document {
                     ArrayList<String> authors, ArrayList<String> keywords,
                     int price,
                     ArrayList<Copy> copies){
+
         this(++lastID,title, docType,authors, keywords,price,0,
                 copies, new ArrayList<>(), new ArrayList<>(),1);
+
     }
 
     /**
@@ -95,7 +98,7 @@ public abstract class Document {
         for(int i = 0; i < data.getJSONArray("Keywords").toList().size(); i++ ){
             keywords.add(data.getJSONArray("Keywords").getString(i));
         }
-        this.reference = data.getBoolean("Reference");
+        this.isReference = data.getBoolean("Reference");
         this.price = data.getInt("Price");
         this.numberOfRequests = data.getInt("NumberOfRequest");
         this.availableCopies = new ArrayList<>();
@@ -181,7 +184,7 @@ public abstract class Document {
     }
 
     public void setReference(boolean isReference){
-        this.reference = isReference;
+        this.isReference = isReference;
     }
 
     public void setCopy(Copy copy){
@@ -257,7 +260,7 @@ public abstract class Document {
         data.put("Requests", requestsCopiesObj);
 
         data.put("DocumentType" , docType);
-        data.put("Reference", reference);
+        data.put("Reference", isReference);
         return data;
     }
 
@@ -266,7 +269,7 @@ public abstract class Document {
     }
 
     public boolean isReference(){
-        return reference;
+        return isReference;
     }
 
     protected class UserTypeComparator implements Comparator<UserCard> {
@@ -288,4 +291,6 @@ public abstract class Document {
         PriorityQueue<UserCard> newPQ = new PriorityQueue<>();
         this.requestedBy = newPQ;
     }
+
+
 }

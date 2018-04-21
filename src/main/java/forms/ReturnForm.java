@@ -278,11 +278,12 @@ public class ReturnForm {
                     returnCopy(document.takenCopies.get(i), databaseManager.getUserCard(userCard.getId()));
                 }
             }
-
+            databaseManager.rebalanceForReferenceType(databaseManager.getDocuments(document.getID()));
             databaseManager.saveDocuments( databaseManager.getDocuments(document.getID()));
             databaseManager.saveUserCard(databaseManager.getUserCard(userCard.getId()));
 
         }
+
     }
 
     public void returnCopy(Copy copy, UserCard userCard){

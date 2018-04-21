@@ -1,6 +1,6 @@
 package users.userTypes;
 
-public class Librarian extends users.userTypes.UserType {
+public class  Librarian extends users.userTypes.UserType {
 
    public Librarian() {
        super();

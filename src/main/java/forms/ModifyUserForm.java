@@ -73,7 +73,7 @@ public class ModifyUserForm {
     private CheckBox checkBoxPriv2;
     @FXML
     private CheckBox checkBoxPriv3;
-
+    public UserCard chosenUserSuper;
 
     /**
      * Initialization and run new scene on the primary stage
@@ -142,11 +142,13 @@ public class ModifyUserForm {
      * Load special permission buttons' state
      */
     private void loadHighPermissionInterface() {
-
-        checkBoxPriv1.setVisible(session.getUser().isHasEditingLibrarianPerm());
-        checkBoxPriv2.setVisible(session.getUser().isHasEditingLibrarianPerm());
-        checkBoxPriv3.setVisible(session.getUser().isHasEditingLibrarianPerm());
+        boolean b =(session.getUser().isHasEditingLibrarianPerm()
+               &&  Librarian.class.isAssignableFrom(chosenUserSuper.getClass()));
+        checkBoxPriv1.setVisible(b);
+        checkBoxPriv2.setVisible(b);
+        checkBoxPriv3.setVisible(b);
     }
+
 
     /**
      * Select element of Document List View Event
@@ -158,15 +160,13 @@ public class ModifyUserForm {
                 userInfoPane.setVisible(true);//If no user card was opened
             }
             UserCard chosenUser = selectUser(userListView.getSelectionModel().getSelectedIndex());
-
-            if(Librarian.class.isAssignableFrom(chosenUser.getClass())) { loadHighPermissionInterface();}
-
+            chosenUserSuper = chosenUser;
+            loadHighPermissionInterface();
             nameTextField.setText(chosenUser.name);
             surnameTextField.setText(chosenUser.surname);
             addressTextField.setText(chosenUser.address);
             phoneNumberTextField.setText(chosenUser.phoneNumb);
             userTypeTextField.setText(chosenUser.userType.getClass().getName());
-
         }
     }
 
@@ -227,7 +227,6 @@ public class ModifyUserForm {
         }
 
     }
-
 
     /**
      * Clock on button "Back" event
