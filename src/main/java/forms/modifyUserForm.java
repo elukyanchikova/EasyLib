@@ -15,7 +15,7 @@ import users.UserCard;
 import users.userTypes.Librarian;
 import users.userTypes.UserType;
 
-public class modifyUserForm {
+public class ModifyUserForm {
     private Stage stage;
     private Scene scene;
     private Session session;

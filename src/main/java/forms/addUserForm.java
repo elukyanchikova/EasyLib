@@ -4,6 +4,7 @@ import core.ActionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -11,12 +12,13 @@ import storage.DatabaseManager;
 import users.*;
 import users.userTypes.*;
 
-public class addUserForm {
+public class AddUserForm {
     private Stage stage;
     private Scene scene;
     private Session session;
     private DatabaseManager databaseManager;
     private ActionManager actionManager;
+    int openUserCardID=-1;
 
     @FXML
     private TextField nameTextField;
@@ -29,15 +31,20 @@ public class addUserForm {
     @FXML
     private TextField addressTextField;
 
+    @FXML
+    private CheckBox checkBoxPriv1;
+    @FXML
+    private CheckBox checkBoxPriv2;
+    @FXML
+    private CheckBox checkBoxPriv3;
 
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception {
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
         this.stage = primaryStage;
         this.session = currentSession;
         this.databaseManager = databaseManager;
-        this.actionManager = actionManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -47,7 +54,7 @@ public class addUserForm {
      * Initialization scene and scene's elements
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/addUserForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/AddUserForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root, 700, 700);
@@ -57,6 +64,9 @@ public class addUserForm {
         userTypeTextField = (TextField) scene.lookup("#userTypeField");
         phoneNumberTextField = (TextField) scene.lookup("#phoneNumberField");
         addressTextField = (TextField) scene.lookup("#addressField");
+        checkBoxPriv1 = (CheckBox) scene.lookup("#checkBoxPriv1") ;
+        checkBoxPriv2 = (CheckBox) scene.lookup("#checkBoxPriv2") ;
+        checkBoxPriv3 = (CheckBox) scene.lookup("#checkBoxPriv3") ;
     }
 
     /**
@@ -90,6 +100,14 @@ public class addUserForm {
                     surname, new Librarian(),
                     phoneNumber,
                     address);
+            if(checkBoxPriv1.isSelected()) {
+                    ( (Librarian)newUserCard.userType).setPriv1();
+            }
+            if(checkBoxPriv2.isSelected()) {
+                ( (Librarian)newUserCard.userType).setPriv2();}
+            if(checkBoxPriv3.isSelected()) {
+                ( (Librarian)newUserCard.userType).setPriv3();}
+
         } else if (userTypeTextField.getText().equals("faculty") || userTypeTextField.getText().equals("Faculty")) {
             newUserCard = new UserCard(name,
                     surname,
@@ -135,8 +153,32 @@ public class addUserForm {
             newUserCard = new UserCard(name, surname, new Guest(), phoneNumber, address);
         }
         databaseManager.saveUserCard(newUserCard);
+        openUserCardID=newUserCard.getId();
+    }
+/*
+    @FXML
+    public void setPrivilege1(){
+        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
+        if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
+            ((Librarian)us.userType).setPriv1();
+        }
     }
 
+    @FXML
+    public void setPrivilege2(){
+        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
+        if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
+            ((Librarian)us.userType).setPriv2();
+        }
+    }
+
+    @FXML
+    public void setPrivilege3(){
+        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
+        if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
+            ((Librarian)us.userType).setPriv3();
+        }
+    }*/
     /**
      * Click ob button "back" event
      * button for coming back to the EditForm
@@ -146,7 +188,7 @@ public class addUserForm {
     @FXML
     public void back() throws Exception {
         EditForm mainForm = new EditForm();
-        mainForm.startForm(stage, session, databaseManager, actionManager);
+        mainForm.startForm(stage, session, databaseManager,actionManager);
     }
 
 }

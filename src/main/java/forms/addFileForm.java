@@ -16,7 +16,7 @@ import users.Session;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class addFileForm {
+public class AddFileForm {
     private Stage stage;
     private Scene scene;
     private Session session;
