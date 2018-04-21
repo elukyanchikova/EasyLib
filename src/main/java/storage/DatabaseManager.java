@@ -216,4 +216,26 @@ public class DatabaseManager {
         }
         return matchDocuments;
     }
+
+
+    public void rebalanceForReferenceType(Document doc){
+        DatabaseManager databaseManager = this;
+        if(Book.class.isAssignableFrom(doc.getClass())){
+            if (doc.getNumberOfAvailableCopies()==1){
+                doc.isReference=true;
+            }
+        }
+
+        else if(AVMaterial.class.isAssignableFrom(doc.getClass())){
+            if (doc.getNumberOfAvailableCopies()==0){
+                doc.isReference=true;
+            }
+        }
+        else if(JournalArticle.class.isAssignableFrom(doc.getClass())){
+            if (doc.getNumberOfAvailableCopies()==1){
+                doc.isReference=true;
+            }
+        }
+        databaseManager.saveDocuments(doc);
+    }
 }

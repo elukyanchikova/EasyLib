@@ -17,6 +17,7 @@ import storage.Filter;
 import users.userTypes.Guest;
 import users.Session;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -128,6 +129,7 @@ public class MainForm {
         if (session.userCard.notifications.size() > 0) showNotification();
     }
 
+
     //TODO move to action manager
     /**
      * Check out the document
@@ -138,8 +140,9 @@ public class MainForm {
         boolean flag = isAvailableForUser(document);
         if (!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
             document.takeCopy(session.userCard, session);
+            if (document.getNumberOfAvailableCopies()==1)
             databaseManager.saveUserCard(session.userCard);
-            databaseManager.saveDocuments(document);
+            databaseManager.saveDocuments(document)   ;
             //databaseManager.load();
             updateSession();
             return true;
