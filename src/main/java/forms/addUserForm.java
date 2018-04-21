@@ -100,6 +100,14 @@ public class AddUserForm {
                     surname, new Librarian(),
                     phoneNumber,
                     address);
+            if(checkBoxPriv1.isSelected()) {
+                    ( (Librarian)newUserCard.userType).setPriv1();
+            }
+            if(checkBoxPriv2.isSelected()) {
+                ( (Librarian)newUserCard.userType).setPriv2();}
+            if(checkBoxPriv3.isSelected()) {
+                ( (Librarian)newUserCard.userType).setPriv3();}
+
         } else if (userTypeTextField.getText().equals("faculty") || userTypeTextField.getText().equals("Faculty")) {
             newUserCard = new UserCard(name,
                     surname,
@@ -147,7 +155,7 @@ public class AddUserForm {
         databaseManager.saveUserCard(newUserCard);
         openUserCardID=newUserCard.getId();
     }
-
+/*
     @FXML
     public void setPrivilege1(){
         UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
@@ -170,7 +178,7 @@ public class AddUserForm {
         if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
             ((Librarian)us.userType).setPriv3();
         }
-    }
+    }*/
     /**
      * Click ob button "back" event
      * button for coming back to the EditForm
