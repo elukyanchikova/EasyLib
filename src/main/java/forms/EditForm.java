@@ -67,7 +67,7 @@ public class EditForm {
     @FXML
     public void addFile() throws Exception {
 
-        addFileForm mainForm = new addFileForm();
+        AddFileForm mainForm = new AddFileForm();
         mainForm.startForm(stage,session, databaseManager, actionManager);
 
     }
@@ -87,7 +87,7 @@ public class EditForm {
      */
     @FXML
     public void modifyUser() throws Exception {
-        modifyUserForm mainForm = new modifyUserForm();
+        ModifyUserForm mainForm = new ModifyUserForm();
         mainForm.startForm(stage,session, databaseManager,actionManager);
 
     }
@@ -97,7 +97,7 @@ public class EditForm {
      */
     @FXML
     public void modifyFile() throws Exception {
-        modifyFileForm mainForm = new modifyFileForm();
+        ModifyFileForm mainForm = new ModifyFileForm();
         mainForm.startForm(stage,session, databaseManager, actionManager);
     }
 
