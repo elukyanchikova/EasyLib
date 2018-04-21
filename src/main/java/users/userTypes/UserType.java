@@ -18,6 +18,7 @@ public abstract class UserType {
     boolean hasCheckUserInfoPerm = false;
     boolean hasMultiRenewPerm = false;
     boolean hasLowerCheckOut = false;
+
     boolean hasEditingLibrarianPerm = false;
 
     boolean hasUserPerm = false;
