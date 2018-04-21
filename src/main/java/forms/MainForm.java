@@ -333,9 +333,9 @@ public class MainForm {
      * Load special permission buttons' state
      */
     private void loadHighPermissionInterface() {
-        editBtn.setVisible(session.getUser().isHasEditPerm() /*&& session.getUser().isHasAccessPerm() && (session.getUser().isHasDeletePerm() ||
+        editBtn.setVisible((session.getUser().isHasEditPerm()&& session.getUser().isHasAccessPerm() && (session.getUser().isHasDeletePerm() ||
                 session.getUser().isHasAddPerm() ||
-                session.getUser().isHasModifyPerm())*/);
+                session.getUser().isHasModifyPerm())) ||session.getUser().isHasEditingLibrarianPerm());
         returnBtn.setVisible(session.getUser().isHasReturnPerm());
         infoBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
         manageBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());

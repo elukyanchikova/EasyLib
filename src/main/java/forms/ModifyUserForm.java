@@ -141,9 +141,13 @@ public class ModifyUserForm {
     /**
      * Load special permission buttons' state
      */
-    private void loadHighPermissionInterface() {
-        boolean b =(session.getUser().isHasEditingLibrarianPerm()
-               &&  Librarian.class.isAssignableFrom(chosenUserSuper.getClass()));
+    private void loadHighPermissionInterface(UserCard user) {
+        boolean a =session.getUser().isHasEditingLibrarianPerm();
+        String h =String.valueOf(user.userType);
+                boolean b =String.valueOf(user.userType).contains("Librarian")  ;
+                        boolean c = a&&b;
+   /*     boolean b =(session.getUser().isHasEditingLibrarianPerm()
+               &&  Librarian.class.isAssignableFrom(user.getClass()));*/
         checkBoxPriv1.setVisible(b);
         checkBoxPriv2.setVisible(b);
         checkBoxPriv3.setVisible(b);
@@ -161,7 +165,7 @@ public class ModifyUserForm {
             }
             UserCard chosenUser = selectUser(userListView.getSelectionModel().getSelectedIndex());
             chosenUserSuper = chosenUser;
-            loadHighPermissionInterface();
+            loadHighPermissionInterface(chosenUser);
             nameTextField.setText(chosenUser.name);
             surnameTextField.setText(chosenUser.surname);
             addressTextField.setText(chosenUser.address);
