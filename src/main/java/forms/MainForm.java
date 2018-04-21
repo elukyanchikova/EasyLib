@@ -329,7 +329,7 @@ public class MainForm {
         documentSearchJournalNameTxt = (TextField) scene.lookup("#documentSearchJournalNameTextField");
         documentSearchEditorTxt = (TextField) scene.lookup("#documentSearchEditorTextField");
         documentSearchIsBestsellerCheck = (CheckBox) scene.lookup("#documentSearchIsBestsellerCheckBox");
-        documentSearchIsAvailableCheck = (CheckBox) scene.lookup("#documentSearchAvailableCheckBox");
+        documentSearchIsAvailableCheck = (CheckBox) scene.lookup("#documentSearchIsAvailableCheckBox");
 
     }
 
@@ -604,43 +604,53 @@ public class MainForm {
             if(documentSearchIsBestsellerCheck.isSelected()){
                 filter.isBestseller = true;
             }
+            if(documentSearchPublicationYearTxt.getText().replace(" ", "").length() > 0){
+                filter.publicationYear = Integer.parseInt(documentSearchPublicationYearTxt.getText());
+            }
+            if(documentSearchEditionTxt.getText().replace(" ", "").length() > 0){
+                filter.edition = documentSearchEditionTxt.getText();
+            }
+            if(documentSearchPublisherTxt.getText().replace(" ", "").length() > 0){
+                filter.publisher = documentSearchPublisherTxt.getText().toLowerCase();
+            }
         }
-        /**
-        switch (documentSearchTypeBox.getSelectionModel().getSelectedIndex()){
-            case 0:
-                documentSearchPublicationYearTxt.setVisible(true);
-                documentSearchPublisherTxt.setVisible(true);
-                documentSearchEditionTxt.setVisible(true);
-                documentSearchJournalNameTxt.setVisible(true);
-                documentSearchEditorTxt.setVisible(true);
-                documentSearchIsBestsellerCheck.setVisible(true);
-                break;
-            case 1:
-                documentSearchPublicationYearTxt.setVisible(true);
-                documentSearchPublisherTxt.setVisible(true);
-                documentSearchEditionTxt.setVisible(true);
-                documentSearchJournalNameTxt.setVisible(false);
-                documentSearchEditorTxt.setVisible(false);
-                documentSearchIsBestsellerCheck.setVisible(true);
-                break;
-            case 2:
-                documentSearchPublicationYearTxt.setVisible(false);
-                documentSearchPublisherTxt.setVisible(false);
-                documentSearchEditionTxt.setVisible(false);
-                documentSearchJournalNameTxt.setVisible(false);
-                documentSearchEditorTxt.setVisible(false);
-                documentSearchIsBestsellerCheck.setVisible(false);
-                break;
-            case 3:
-                documentSearchPublicationYearTxt.setVisible(true);
-                documentSearchPublisherTxt.setVisible(false);
-                documentSearchEditionTxt.setVisible(false);
-                documentSearchJournalNameTxt.setVisible(true);
-                documentSearchEditorTxt.setVisible(true);
-                documentSearchIsBestsellerCheck.setVisible(false);
-                break;
+        if(i == 2) filter.documentType = "avmaterial";
+        if(i == 0 || i == 3){
+            if( i == 3) filter.documentType = "journalarticle";
+            if(documentSearchPublicationYearTxt.getText().replace(" ", "").length() > 0){
+                filter.publicationYear = Integer.parseInt(documentSearchPublicationYearTxt.getText());
+            }
+
+            if(documentSearchPublicationMonthTxt.getText().replace(" ", "").length() > 0){
+                filter.publicationMonth = documentSearchPublicationMonthTxt.getText().toLowerCase();
+            }
+            if(documentSearchEditorTxt.getText().replace(" ", "").length() > 0){
+                filter.edition = documentSearchEditorTxt.getText().toLowerCase();
+            }
+            if(documentSearchPublisherTxt.getText().replace(" ", "").length() > 0){
+                filter.publisher = documentSearchPublisherTxt.getText().toLowerCase();
+            }
+            if(documentSearchJournalNameTxt.getText().replace(" ", "").length() > 0){
+                filter.journalName = documentSearchJournalNameTxt.getText().toLowerCase();
+            }
         }
-        **/
+
+        ArrayList<Document> documents = actionManager.filter(filter);
+        documentListView.setItems(FXCollections.observableArrayList(documents));
+        documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
+            public ListCell<Document> call(ListView<Document> documentListView) {
+                return new ListCell<Document>() {
+                    @Override
+                    protected void updateItem(Document document, boolean flag) {
+                        super.updateItem(document, flag);
+                        if (document != null) {
+                            setText(document.title);
+                        }
+                    }
+                };
+            }
+        });
+
     }
 
     //TODO: add java doc
