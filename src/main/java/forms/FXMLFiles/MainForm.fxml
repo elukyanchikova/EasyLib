@@ -67,6 +67,9 @@
             fx:id="userInfoButton" text="Users" onMouseClicked="#clickOnUserInfoBtn"/>
     <Button GridPane.rowIndex = "7" GridPane.columnIndex="1"
             fx:id="LogButton" text="Log" onMouseClicked="#clickOnLogBtn"/>
+    <Button GridPane.rowIndex = "8" GridPane.columnIndex="1"
+            fx:id="logOutButton" text="Log Out" onMouseClicked="#logOut"/>
+
 
     <GridPane GridPane.columnIndex="2" fx:id="documentInfoPane"
                minWidth="100"

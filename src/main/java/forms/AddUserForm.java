@@ -95,7 +95,7 @@ public class AddUserForm {
         }
 
 
-        if (userTypeTextField.getText().equals("librarian") || userTypeTextField.getText().equals("Librarian")) {
+        if (userTypeTextField.getText().toLowerCase().equals("librarian")) {
             newUserCard = new UserCard(name,
                     surname, new Librarian(),
                     phoneNumber,
@@ -108,13 +108,13 @@ public class AddUserForm {
             if(checkBoxPriv3.isSelected()) {
                 ( (Librarian)newUserCard.userType).setPriv3();}
 
-        } else if (userTypeTextField.getText().equals("faculty") || userTypeTextField.getText().equals("Faculty")) {
+        } else if (userTypeTextField.getText().toLowerCase().equals("faculty")) {
             newUserCard = new UserCard(name,
                     surname,
                     new Faculty(),
                     phoneNumber,
                     address);
-        } else if (userTypeTextField.getText().equals("student") || userTypeTextField.getText().equals("Student")) {
+        } else if (userTypeTextField.getText().toLowerCase().equals("student")) {
             newUserCard = new UserCard(nameTextField.getText(),
                     surname,
                     new Student(),
