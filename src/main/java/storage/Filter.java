@@ -31,7 +31,7 @@ public class Filter {
         if (minPrice != null)
             if (document.price < minPrice) return false;
         if (maxPrice != null)
-            if (document.price < maxPrice) return false;
+            if (document.price > maxPrice) return false;
         for (String keyword : keywords) {
             boolean flag = false;
             for (String docKeyword : document.keywords) {
@@ -109,7 +109,6 @@ public class Filter {
                 if (document.getDocType().toLowerCase().equals("book")) {
                     if (((Book) document).isBestseller != isBestseller) return false;
                 }
-                return false;
             }
 
             if (isAvailable != null) {

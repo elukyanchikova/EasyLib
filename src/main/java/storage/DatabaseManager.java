@@ -209,9 +209,10 @@ public class DatabaseManager {
 
     public ArrayList<Document> filterDocument(Filter filter){
         ArrayList<Document> matchDocuments = new ArrayList<>();
-        for(int i = 0; i < documents.size(); i++){
-            if(filter.filter(documents.get(i))){
-                matchDocuments.add(documents.get(i));
+        Integer[] keys = getDocumentsID();
+        for(int i = 0; i < keys.length; i++){
+            if(filter.filter(documents.get(keys[i]))){
+                matchDocuments.add(documents.get(keys[i]));
             }
         }
         return matchDocuments;

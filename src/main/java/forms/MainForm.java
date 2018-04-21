@@ -324,7 +324,7 @@ public class MainForm {
         documentSearchJournalNameTxt = (TextField) scene.lookup("#documentSearchJournalNameTextField");
         documentSearchEditorTxt = (TextField) scene.lookup("#documentSearchEditorTextField");
         documentSearchIsBestsellerCheck = (CheckBox) scene.lookup("#documentSearchIsBestsellerCheckBox");
-        documentSearchIsAvailableCheck = (CheckBox) scene.lookup("#documentSearchAvailableCheckBox");
+        documentSearchIsAvailableCheck = (CheckBox) scene.lookup("#documentSearchIsAvailableCheckBox");
 
     }
 
