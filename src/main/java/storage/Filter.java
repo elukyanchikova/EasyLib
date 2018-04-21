@@ -3,10 +3,7 @@ package storage;
 import documents.Book;
 import documents.Document;
 import documents.JournalArticle;
-
-import javax.print.Doc;
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 public class Filter{
 
@@ -51,7 +48,7 @@ public class Filter{
             if (!flag) return false;
         }
         if(documentType != null){
-           (!documentType.equals("") && !documentType.toLowerCase().equals(document.getDocType().toLowerCase())) return false;
+           if(!documentType.equals("") && !documentType.toLowerCase().equals(document.getDocType().toLowerCase())) return false;
         }
         if(publicationYear != null){
             if(document.getDocType().toLowerCase().equals("book")) {
