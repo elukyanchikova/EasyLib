@@ -7,6 +7,7 @@ import storage.Filter;
 import users.Session;
 import users.UserCard;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 
 public class ActionManager {
@@ -76,7 +77,7 @@ public class ActionManager {
     //TODO request  search
 
     public ArrayList<Document> filter(Filter filter){
-        return null;
+        return databaseManager.filterDocument(filter);
     }
 
 }

@@ -4,6 +4,8 @@ import documents.*;
 import org.json.JSONObject;
 import users.userTypes.Librarian;
 import users.UserCard;
+
+import javax.print.Doc;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -202,5 +204,15 @@ public class DatabaseManager {
             result.add(getUserCard(key));
         }
         return result;
+    }
+
+    public ArrayList<Document> filterDocument(Filter filter){
+        ArrayList<Document> matchDocuments = new ArrayList<>();
+        for(int i = 0; i < documents.size(); i++){
+            if(filter.filter(documents.get(i))){
+                matchDocuments.add(documents.get(i));
+            }
+        }
+        return matchDocuments;
     }
 }

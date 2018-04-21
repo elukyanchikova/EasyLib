@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import storage.DatabaseManager;
+import storage.Filter;
 import users.userTypes.Guest;
 import users.Session;
 
@@ -529,7 +530,43 @@ public class MainForm {
 
     @FXML
     public void clickOnFilterBtn(){
-
+        Filter filter = new Filter();
+        /**
+        switch (documentSearchTypeBox.getSelectionModel().getSelectedIndex()){
+            case 0:
+                documentSearchPublicationYearTxt.setVisible(true);
+                documentSearchPublisherTxt.setVisible(true);
+                documentSearchEditionTxt.setVisible(true);
+                documentSearchJournalNameTxt.setVisible(true);
+                documentSearchEditorTxt.setVisible(true);
+                documentSearchIsBestsellerCheck.setVisible(true);
+                break;
+            case 1:
+                documentSearchPublicationYearTxt.setVisible(true);
+                documentSearchPublisherTxt.setVisible(true);
+                documentSearchEditionTxt.setVisible(true);
+                documentSearchJournalNameTxt.setVisible(false);
+                documentSearchEditorTxt.setVisible(false);
+                documentSearchIsBestsellerCheck.setVisible(true);
+                break;
+            case 2:
+                documentSearchPublicationYearTxt.setVisible(false);
+                documentSearchPublisherTxt.setVisible(false);
+                documentSearchEditionTxt.setVisible(false);
+                documentSearchJournalNameTxt.setVisible(false);
+                documentSearchEditorTxt.setVisible(false);
+                documentSearchIsBestsellerCheck.setVisible(false);
+                break;
+            case 3:
+                documentSearchPublicationYearTxt.setVisible(true);
+                documentSearchPublisherTxt.setVisible(false);
+                documentSearchEditionTxt.setVisible(false);
+                documentSearchJournalNameTxt.setVisible(true);
+                documentSearchEditorTxt.setVisible(true);
+                documentSearchIsBestsellerCheck.setVisible(false);
+                break;
+        }
+        **/
     }
 
     //TODO: add java doc
