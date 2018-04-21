@@ -47,7 +47,7 @@ public class Filter {
             }
             if (!flag) return false;
         }
-<<<<<<< HEAD
+
         if (documentType != null) {
            if  (!documentType.equals("") && !documentType.toLowerCase().equals(document.getDocType().toLowerCase()))
                 return false;
@@ -66,7 +66,7 @@ public class Filter {
                         return false;
                 } else return false;
             }
-=======
+
         if(documentType != null){
            if(!documentType.equals("") && !documentType.toLowerCase().equals(document.getDocType().toLowerCase())) return false;
         }
@@ -82,7 +82,6 @@ public class Filter {
                 if(!((JournalArticle)document).publicationDate.toLowerCase().contains(("" +publicationYear).toLowerCase()))  return false;
             }else return false;
         }
->>>>>>> 0d7356c7cda8289897efdca62fe8f9881e43ef70
 
             if (edition != null) {
                 if (document.getDocType().toLowerCase().equals("book")) {

@@ -67,7 +67,6 @@ public class DatabaseManager {
                 this.jsonData = new JSONObject();
                 this.userCardData = new JSONObject();
                 this.documentsData = new JSONObject();
-                saveUserCard(new UserCard(0,"Librarian", "Admin", new Librarian(), "None", "None"));
                 saveUserCard(new UserCard(0,"Admin", "Admin", new Admin(), "None", "None"));
                 update();
             }
@@ -77,7 +76,6 @@ public class DatabaseManager {
             this.jsonData = new JSONObject();
             this.userCardData = new JSONObject();
             this.documentsData = new JSONObject();
-            saveUserCard(new UserCard(0,"Librarian", "Admin", new Librarian(), "None", "None"));
             saveUserCard(new UserCard(0,"Admin", "Admin", new Admin(), "None", "None"));
             update();
         }

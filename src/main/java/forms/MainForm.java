@@ -140,9 +140,7 @@ public class MainForm {
         boolean flag = isAvailableForUser(document);
         if (!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
             document.takeCopy(session.userCard, session);
-            if (document.getNumberOfAvailableCopies()==1)
             databaseManager.saveUserCard(session.userCard);
-            databaseManager.saveDocuments(document)   ;
             databaseManager.saveDocuments(document);
             //databaseManager.load();
             updateSession();
