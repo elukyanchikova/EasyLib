@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import javafx.scene.control.CheckBox?>
 <GridPane hgap="50" maxWidth="Infinity" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <padding><Insets bottom="20" left="10" right="10" top="20" /></padding>
     <columnConstraints>
@@ -21,6 +22,11 @@
         <TextField fx:id="userTypeField" maxWidth="-Infinity" prefWidth="150" promptText="User type" GridPane.rowIndex="3" />
         <TextField fx:id="phoneNumberField" maxWidth="-Infinity" prefWidth="150" promptText="phone number" GridPane.rowIndex="4" />
         <TextField fx:id="addressField" maxWidth="-Infinity" prefWidth="150" promptText="address" GridPane.rowIndex="5" />
+        <CheckBox GridPane.rowIndex="6" GridPane.columnIndex="0" fx:id="checkBoxPriv1" text="Privilege 1: Access and Modify permissions" onMouseClicked="#setPrivilege1"></CheckBox>
+        <CheckBox GridPane.rowIndex="7" GridPane.columnIndex="0" fx:id="checkBoxPriv2" text="Privilege 1 + Add permission" onMouseClicked="#setPrivilege2"></CheckBox>
+        <CheckBox GridPane.rowIndex="8" GridPane.columnIndex="0" fx:id="checkBoxPriv3" text="Privelege 3 + Delete permission" onMouseClicked="#setPrivilege3"></CheckBox>
+
+
         <Button fx:id="saveFileBtn" maxWidth="-Infinity" onMouseClicked="#save" prefWidth="150" text="Save" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
 
         <Button fx:id="backBtn" maxWidth="-Infinity" onMouseClicked="#back" prefWidth="150" text="Back" GridPane.halignment="CENTER" GridPane.rowIndex="12" />

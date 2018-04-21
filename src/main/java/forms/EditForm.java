@@ -78,8 +78,8 @@ public class EditForm {
      */
     @FXML
     public void addUser() throws Exception {
-        addUserForm mainForm = new addUserForm();
-        mainForm.startForm(stage,session, databaseManager, actionManager);
+        AddUserForm mainForm = new AddUserForm();
+        mainForm.startForm(stage,session, databaseManager);
     }
 
     /**
