@@ -18,7 +18,7 @@ public class AddUserForm {
     private Session session;
     private DatabaseManager databaseManager;
     private ActionManager actionManager;
-    int openUserCardID=-1;
+   //int openUserCardID=-1;
 
     @FXML
     private TextField nameTextField;
@@ -153,32 +153,8 @@ public class AddUserForm {
             newUserCard = new UserCard(name, surname, new Guest(), phoneNumber, address);
         }
         databaseManager.saveUserCard(newUserCard);
-        openUserCardID=newUserCard.getId();
-    }
-/*
-    @FXML
-    public void setPrivilege1(){
-        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
-        if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
-            ((Librarian)us.userType).setPriv1();
-        }
     }
 
-    @FXML
-    public void setPrivilege2(){
-        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
-        if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
-            ((Librarian)us.userType).setPriv2();
-        }
-    }
-
-    @FXML
-    public void setPrivilege3(){
-        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
-        if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
-            ((Librarian)us.userType).setPriv3();
-        }
-    }*/
     /**
      * Click ob button "back" event
      * button for coming back to the EditForm
