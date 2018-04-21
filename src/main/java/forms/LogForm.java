@@ -45,7 +45,7 @@ public class LogForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/LogForm.fxml"));
         loader.setController(this);
         AnchorPane root = loader.load();
-        this.scene = new Scene(root, 1000, 700);
+        this.scene = new Scene(root, 600, 700);
 
 
         backBtn = (Button) scene.lookup("#backBtn");
