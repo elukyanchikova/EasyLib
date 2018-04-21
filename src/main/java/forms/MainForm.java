@@ -2,6 +2,8 @@ package forms;
 
 import core.ActionManager;
 import documents.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,6 +49,8 @@ public class MainForm {
     private TextField documentSearchMinPriceTxt;
     @FXML
     private TextField documentSearchMaxPriceTxt;
+    @FXML
+    private TextField documentSearchPublicationMonthTxt;
     @FXML
     private TextField documentSearchPublicationYearTxt;
     @FXML
@@ -139,6 +143,7 @@ public class MainForm {
             if (document.getNumberOfAvailableCopies()==1)
             databaseManager.saveUserCard(session.userCard);
             databaseManager.saveDocuments(document)   ;
+            databaseManager.saveDocuments(document);
             //databaseManager.load();
             updateSession();
             return true;
@@ -285,10 +290,39 @@ public class MainForm {
         documentSearchTitleTxt = (TextField) scene.lookup("#documentSearchTitleTextField");
         documentSearchAuthorsTxt = (TextField) scene.lookup("#documentSearchAuthorsTextField");
         documentSearchMinPriceTxt = (TextField) scene.lookup("#documentSearchMinPriceTextField");
+        documentSearchMinPriceTxt.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!newValue.matches("\\d{0,7}"))
+                    documentSearchMinPriceTxt.setText(oldValue);
+            }
+        });
         documentSearchMaxPriceTxt = (TextField) scene.lookup("#documentSearchMaxPriceTextField");
+        documentSearchMaxPriceTxt.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!newValue.matches("\\d{0,7}"))
+                    documentSearchMaxPriceTxt.setText(oldValue);
+            }
+        });
+        documentSearchPublicationMonthTxt = (TextField) scene.lookup("#documentSearchPublicationMonthTextField");
         documentSearchPublicationYearTxt = (TextField) scene.lookup("#documentSearchPublicationYearTextField");
+        documentSearchPublicationYearTxt.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!newValue.matches("\\d{0,4}"))
+                    documentSearchPublicationYearTxt.setText(oldValue);
+            }
+        });
         documentSearchPublisherTxt = (TextField) scene.lookup("#documentSearchPublisherTextField");
         documentSearchEditionTxt = (TextField) scene.lookup("#documentSearchEditionTextField");
+        documentSearchEditionTxt.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!newValue.matches("\\d{0,2}"))
+                    documentSearchEditionTxt.setText(oldValue);
+            }
+        });
         documentSearchJournalNameTxt = (TextField) scene.lookup("#documentSearchJournalNameTextField");
         documentSearchEditorTxt = (TextField) scene.lookup("#documentSearchEditorTextField");
         documentSearchIsBestsellerCheck = (CheckBox) scene.lookup("#documentSearchIsBestsellerCheckBox");
@@ -534,6 +568,41 @@ public class MainForm {
     @FXML
     public void clickOnFilterBtn(){
         Filter filter = new Filter();
+        if(documentSearchTitleTxt.getText().replace(" ", "").length() > 0){
+            filter.title = documentSearchTitleTxt.getText().replace(" ", "");
+        }
+        if(documentSearchKeywordsTxt.getText().replace(" ", "").length() > 0){
+            String[] keywords = documentSearchKeywordsTxt.getText().split("[, ]+");
+            for(String keyword: keywords){
+                filter.keywords.add(keyword.toLowerCase());
+            }
+        }
+
+        if(documentSearchAuthorsTxt.getText().replace(" ", "").length() > 0){
+            String[] authors = documentSearchKeywordsTxt.getText().split("[, ]+");
+            for(String author: authors){
+                filter.authors.add(author.toLowerCase());
+            }
+        }
+
+        if(documentSearchMinPriceTxt.getText().replace(" ", "").length() > 0)
+        {
+            filter.minPrice = Integer.parseInt(documentSearchMinPriceTxt.getText());
+        }
+        if(documentSearchMaxPriceTxt.getText().replace(" ", "").length() > 0)
+        {
+            filter.maxPrice = Integer.parseInt(documentSearchMaxPriceTxt.getText());
+        }
+        if(documentSearchIsAvailableCheck.isSelected()){
+            filter.isAvailable = true;
+        }
+        int i = documentSearchTypeBox.getSelectionModel().getSelectedIndex();
+        if( i == 0 || i == 1){
+            if( i == 1) filter.documentType = "book";
+            if(documentSearchIsBestsellerCheck.isSelected()){
+                filter.isBestseller = true;
+            }
+        }
         /**
         switch (documentSearchTypeBox.getSelectionModel().getSelectedIndex()){
             case 0:
@@ -621,6 +690,7 @@ public class MainForm {
         switch (documentSearchTypeBox.getSelectionModel().getSelectedIndex()){
             case 0:
                 documentSearchPublicationYearTxt.setVisible(true);
+                documentSearchPublicationMonthTxt.setVisible(true);
                 documentSearchPublisherTxt.setVisible(true);
                 documentSearchEditionTxt.setVisible(true);
                 documentSearchJournalNameTxt.setVisible(true);
@@ -629,6 +699,7 @@ public class MainForm {
                 break;
             case 1:
                 documentSearchPublicationYearTxt.setVisible(true);
+                documentSearchPublicationMonthTxt.setVisible(false);
                 documentSearchPublisherTxt.setVisible(true);
                 documentSearchEditionTxt.setVisible(true);
                 documentSearchJournalNameTxt.setVisible(false);
@@ -637,6 +708,7 @@ public class MainForm {
                 break;
             case 2:
                 documentSearchPublicationYearTxt.setVisible(false);
+                documentSearchPublicationMonthTxt.setVisible(false);
                 documentSearchPublisherTxt.setVisible(false);
                 documentSearchEditionTxt.setVisible(false);
                 documentSearchJournalNameTxt.setVisible(false);
@@ -645,6 +717,7 @@ public class MainForm {
                 break;
             case 3:
                 documentSearchPublicationYearTxt.setVisible(true);
+                documentSearchPublicationMonthTxt.setVisible(true);
                 documentSearchPublisherTxt.setVisible(false);
                 documentSearchEditionTxt.setVisible(false);
                 documentSearchJournalNameTxt.setVisible(true);
@@ -653,4 +726,5 @@ public class MainForm {
                 break;
         }
     }
+
 }

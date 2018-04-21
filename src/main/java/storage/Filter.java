@@ -3,10 +3,7 @@ package storage;
 import documents.Book;
 import documents.Document;
 import documents.JournalArticle;
-
-import javax.print.Doc;
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 public class Filter {
 
@@ -50,6 +47,7 @@ public class Filter {
             }
             if (!flag) return false;
         }
+<<<<<<< HEAD
         if (documentType != null) {
            if  (!documentType.equals("") && !documentType.toLowerCase().equals(document.getDocType().toLowerCase()))
                 return false;
@@ -68,6 +66,23 @@ public class Filter {
                         return false;
                 } else return false;
             }
+=======
+        if(documentType != null){
+           if(!documentType.equals("") && !documentType.toLowerCase().equals(document.getDocType().toLowerCase())) return false;
+        }
+        if(publicationYear != null){
+            if(document.getDocType().toLowerCase().equals("book")) {
+                if(((Book)document).year != publicationYear)  return false;
+            }else if(document.getDocType().toLowerCase().equals("journalartiacle")){
+                if(!((JournalArticle)document).publicationDate.toLowerCase().contains(("" +publicationYear).toLowerCase()))  return false;
+            }else return false;
+        }
+        if(publicationMonth != null){
+            if(document.getDocType().toLowerCase().equals("journalartiacle")){
+                if(!((JournalArticle)document).publicationDate.toLowerCase().contains(("" +publicationYear).toLowerCase()))  return false;
+            }else return false;
+        }
+>>>>>>> 0d7356c7cda8289897efdca62fe8f9881e43ef70
 
             if (edition != null) {
                 if (document.getDocType().toLowerCase().equals("book")) {

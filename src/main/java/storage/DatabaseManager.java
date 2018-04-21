@@ -2,6 +2,7 @@ package storage;
 
 import documents.*;
 import org.json.JSONObject;
+import users.userTypes.Admin;
 import users.userTypes.Librarian;
 import users.UserCard;
 
@@ -67,6 +68,7 @@ public class DatabaseManager {
                 this.userCardData = new JSONObject();
                 this.documentsData = new JSONObject();
                 saveUserCard(new UserCard(0,"Librarian", "Admin", new Librarian(), "None", "None"));
+                saveUserCard(new UserCard(0,"Admin", "Admin", new Admin(), "None", "None"));
                 update();
             }
         }catch (IOException e) {
@@ -76,6 +78,7 @@ public class DatabaseManager {
             this.userCardData = new JSONObject();
             this.documentsData = new JSONObject();
             saveUserCard(new UserCard(0,"Librarian", "Admin", new Librarian(), "None", "None"));
+            saveUserCard(new UserCard(0,"Admin", "Admin", new Admin(), "None", "None"));
             update();
         }
     }
