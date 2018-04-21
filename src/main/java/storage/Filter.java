@@ -17,6 +17,7 @@ public class Filter {
     public String publisher;
     public String publicationMonth;
     public Integer publicationYear;
+    public String journalName;
     public String editor;
     public Boolean isBestseller;
     public Boolean isAvailable;
@@ -52,20 +53,28 @@ public class Filter {
            if  (!documentType.equals("") && !documentType.toLowerCase().equals(document.getDocType().toLowerCase()))
                 return false;
             }
-            if (publicationYear != null) {
-                if (document.getDocType().toLowerCase().equals("book")) {
-                    if (((Book) document).year != publicationYear) return false;
-                } else if (document.getDocType().toLowerCase().equals("journalartiacle")) {
-                    if (!((JournalArticle) document).publicationDate.toLowerCase().contains(("" + publicationYear).toLowerCase()))
-                        return false;
-                } else return false;
-            }
-            if (publicationMonth != null) {
-                if (document.getDocType().toLowerCase().equals("journalartiacle")) {
-                    if (!((JournalArticle) document).publicationDate.toLowerCase().contains(("" + publicationYear).toLowerCase()))
-                        return false;
-                } else return false;
-            }
+        if (publicationYear != null) {
+            if (document.getDocType().toLowerCase().equals("book")) {
+                if (((Book) document).year != publicationYear) return false;
+            } else if (document.getDocType().toLowerCase().equals("journalartiacle")) {
+                if (!((JournalArticle) document).publicationDate.toLowerCase().contains(("" + publicationYear).toLowerCase()))
+                    return false;
+            } else return false;
+        }
+        if (publicationMonth != null) {
+            if (document.getDocType().toLowerCase().equals("journalartiacle")) {
+                if (!((JournalArticle) document).publicationDate.toLowerCase().contains(("" + publicationYear).toLowerCase()))
+                    return false;
+            } else return false;
+        }
+
+        if (journalName != null) {
+            if (document.getDocType().toLowerCase().equals("journalartiacle")) {
+                if (!((JournalArticle) document).journalName.toLowerCase().contains((journalName).toLowerCase()))
+                    return false;
+            } else return false;
+        }
+
 
         if(documentType != null){
            if(!documentType.equals("") && !documentType.toLowerCase().equals(document.getDocType().toLowerCase())) return false;
