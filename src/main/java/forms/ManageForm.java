@@ -199,6 +199,7 @@ public class ManageForm {
                 databaseManager.saveDocuments(chosenDoc);
                 actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.ACCEPT_REQUEST_ACTION_ID, user, chosenDoc));
                 actionManager.actionNotes.add(new ActionNote(user, session.day, session.month, ActionNote.CHECK_OUT_DOCUMENT_ACTION_ID, chosenDoc));
+                databaseManager.update();
             }
         }
     }
@@ -222,6 +223,7 @@ public class ManageForm {
                 databaseManager.saveDocuments(chosenDoc);
                 actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.REJECT_REQUEST_ACTION_ID, user, chosenDoc));
                 autobooking(chosenDoc);
+                databaseManager.update();
             }
         }
     }
@@ -241,6 +243,7 @@ public class ManageForm {
                 databaseManager.saveUserCard(userCards[ind]);
                 databaseManager.load();
                 actionManager.actionNotes.add(new ActionNote(userCards[ind], session.day, session.month, ActionNote.BOOK_DOCUMENT_ACTION_ID, document));
+                databaseManager.update();
             }
         }
     }
@@ -252,6 +255,7 @@ public class ManageForm {
             users[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION, doc.getID()));
             databaseManager.saveUserCard(users[i]);
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.OUTSTANDING_REQUEST_ACTION_ID, doc));
+            databaseManager.update();
         }
         doc.deletePQ();
         databaseManager.saveDocuments(doc);

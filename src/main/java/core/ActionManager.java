@@ -18,7 +18,7 @@ public class ActionManager {
     public ArrayList<ActionNote> actionNotes= new ArrayList<>();
 
     public void load(JSONObject data, DatabaseManager databaseManager){
-        JSONArray arr = data.getJSONArray("Action");
+        JSONArray arr = data.getJSONArray("Actions");
         for(int i = 0; i < arr.length(); i++){
             actionNotes.add(new ActionNote(arr.getJSONObject(i), databaseManager));
         }
@@ -28,7 +28,7 @@ public class ActionManager {
     public void serialize(JSONObject data){
         JSONArray arr = new JSONArray();
         for (ActionNote actionNote : actionNotes) {
-            actionNote.serialize(arr);
+            arr.put(actionNote.serialize());
         }
         data.put("Actions", arr);
     }

@@ -71,6 +71,7 @@ public class DatabaseManager {
                 this.jsonData = new JSONObject();
                 this.userCardData = new JSONObject();
                 this.documentsData = new JSONObject();
+                this.actionManager = new ActionManager();
                 saveUserCard(new UserCard(0,"Admin", "Admin", new Admin(), "None", "None"));
                 update();
             }
@@ -80,6 +81,7 @@ public class DatabaseManager {
             this.jsonData = new JSONObject();
             this.userCardData = new JSONObject();
             this.documentsData = new JSONObject();
+            this.actionManager = new ActionManager();
             saveUserCard(new UserCard(0,"Admin", "Admin", new Admin(), "None", "None"));
             update();
         }
@@ -94,7 +96,7 @@ public class DatabaseManager {
         load();
     }
 
-    private void update(){
+    public void update(){
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream(
                     new File(fileDataName + ".json")));

@@ -219,6 +219,7 @@ public class AddFileForm {
             }
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month,
                     ActionNote.ADD_DOCUMENT_ACTION_ID, file));
+            databaseManager.update();
         }
     }
 

@@ -148,6 +148,7 @@ public class MainForm {
             databaseManager.saveDocuments(document);
             //databaseManager.load();
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.CHECK_OUT_DOCUMENT_ACTION_ID, document));
+            databaseManager.update();
             updateSession();
             return true;
         }
@@ -168,6 +169,7 @@ public class MainForm {
             databaseManager.load();
             updateSession();
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.BOOK_DOCUMENT_ACTION_ID, document));
+            databaseManager.update();
             return true;
         }
         return false;
@@ -195,6 +197,7 @@ public class MainForm {
             databaseManager.saveUserCard(session.userCard);
             updateSession();
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.REQUEST_DOCUMENT_ACTION_ID, document));
+            databaseManager.update();
             return true;
         }
         return false;

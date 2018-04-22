@@ -233,6 +233,7 @@ public class ModifyFileForm {
         }
         actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.EDIT_DOCUMENT_ACTION_ID,
                 databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID])));
+        databaseManager.update();
     }
 
     /**
@@ -244,6 +245,7 @@ public class ModifyFileForm {
         Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
         databaseManager.removeDocuments(currentDoc);
         actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.DELETE_DOCUMENT_ACTION_ID, currentDoc));
+        databaseManager.update();
     }
 
     /**

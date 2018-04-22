@@ -167,6 +167,7 @@ public class AddUserForm {
         }
         databaseManager.saveUserCard(newUserCard);
         actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.ADD_USER_ACTION_ID, newUserCard));
+        databaseManager.update();
     }
     /**
      * Click ob button "back" event

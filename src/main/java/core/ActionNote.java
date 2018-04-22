@@ -53,22 +53,28 @@ public class ActionNote {
         this.targetDocument = targetDocument;
     }
 
-
-
     public ActionNote(JSONObject action, DatabaseManager databaseManager){
         this.actionID = action.getInt("ActionID");
         this.day = action.getInt("Day");
         this.month = action.getInt("Month");
         this.userCard = databaseManager.getUserCard(action.getInt("UserCardAction"));
+        this.targetUser = databaseManager.getUserCard(action.getInt("TargetUser"));
+        this.targetDocument = databaseManager.getDocuments(action.getInt("TargetDocument"));
     }
 
-    public void serialize(JSONArray data){
+    public JSONObject serialize(){
         JSONObject action = new JSONObject();
         action.put("UserCardAction", userCard.getId());
         action.put("Day", day);
         action.put("Month", month);
-        action.put("ActionID", action);
-        data.put(action);
+        action.put("ActionID", actionID);
+        if(targetUser != null)
+            action.put("TargetUser", targetUser.getId());
+        else  action.put("TargetUser", 0);
+        if(targetDocument != null)
+            action.put("TargetDocument", targetDocument.getID());
+        else  action.put("TargetDocument", 0);
+        return action;
     }
 
     public String createNote(){

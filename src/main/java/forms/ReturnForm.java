@@ -283,6 +283,7 @@ public class ReturnForm {
     public void returnCopy(Copy copy, UserCard userCard){
         actionManager.actionNotes.add(new ActionNote(userCard, session.day, session.month, ActionNote.RETURN_DOCUMENT_ACTION_ID,
                 databaseManager.getDocuments(copy.getDocumentID())));
+        databaseManager.update();
         databaseManager.getUserCard(userCard.getId()).checkedOutCopies.remove(copy);
         databaseManager.getDocuments(databaseManager.getDocuments(copy.getDocumentID()).getID()).returnCopy(copy);
         databaseManager.rebalanceForReferenceType(databaseManager.getDocuments(copy.getID()));
@@ -309,6 +310,7 @@ public class ReturnForm {
             copy.hasRenewed = true;
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.RENEW_DOCUMENT_ACTION_ID,
                     databaseManager.getDocuments(copy.getDocumentID())));
+            databaseManager.update();
             databaseManager.saveDocuments(databaseManager.getDocuments(copy.getDocumentID()));
             databaseManager.saveUserCard(userCard);
         }

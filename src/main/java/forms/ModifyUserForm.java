@@ -179,13 +179,13 @@ public class ModifyUserForm {
 
                 }
 
-
             nameTextField.setText(chosenUser.name);
             surnameTextField.setText(chosenUser.surname);
             addressTextField.setText(chosenUser.address);
             phoneNumberTextField.setText(chosenUser.phoneNumb);
             userTypeTextField.setText(chosenUser.userType.getClass().getName());
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.EDIT_USER_ACTION_ID, chosenUser));
+            databaseManager.update();
 
                 nameTextField.setText(chosenUser.name);
                 surnameTextField.setText(chosenUser.surname);
@@ -290,6 +290,7 @@ public class ModifyUserForm {
         UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
         databaseManager.removeUserCard(currentUser);
         actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.DELETE_USER_ACTION_ID, currentUser));
+        databaseManager.update();
     }
 
     @FXML
