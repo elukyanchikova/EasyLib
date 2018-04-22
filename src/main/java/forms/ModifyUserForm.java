@@ -292,6 +292,9 @@ public class ModifyUserForm {
         actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.DELETE_USER_ACTION_ID, currentUser));
     }
 
+    /**
+     * method for resetting accessPermission, ModifyPermission to the librarian
+     */
     @FXML
     public void setPrivilege1() {
         UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
@@ -300,6 +303,9 @@ public class ModifyUserForm {
         }
     }
 
+    /**
+     * method for setting accessPermission, ModifyPermission, addPermission to the librarian
+     */
     @FXML
     public void setPrivilege2() {
         UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
@@ -308,15 +314,19 @@ public class ModifyUserForm {
         }
     }
 
+    /**
+     * method for setting accessPermission, ModifyPermission, addPermission, deletePermission to the librarian
+     */
+
     @FXML
     public void setPrivilege3() {
         //UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
         if (Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())) {
             ((Librarian) databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType).setPriv3();
         }
-        boolean b1 = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType.isHasAddPerm();
+      /*  boolean b1 = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType.isHasAddPerm();
         boolean b2= databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType.isHasModifyPerm();
         boolean b3= databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType.isHasDeletePerm();
-        boolean b5 = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType.isHasAddPerm();
+        boolean b5 = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType.isHasAddPerm();*/
     }
 }
