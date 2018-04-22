@@ -103,6 +103,8 @@ public class MainForm {
     private Button infoBtn;
     @FXML
     private Button manageBtn;
+    @FXML
+    private Button logBtn;
 
     @FXML
     private static Button checkOutBtn;
@@ -301,7 +303,7 @@ public class MainForm {
         checkOutBtn = (Button) scene.lookup("#checkOutButton");
         requestBtn = (Button) scene.lookup("#requestButton");
         bookBtn = (Button) scene.lookup("#bookButton");
-
+        logBtn = (Button) scene.lookup("#logButton");
         logOutBtn = (Button) scene.lookup("#logOutButton");
 
         documentSearchTypeBox = (ComboBox<String>) scene.lookup("#documentSearchTypeComboBox");
@@ -355,16 +357,14 @@ public class MainForm {
      * Load special permission buttons' state
      */
     private void loadHighPermissionInterface() {
-        boolean b = session.getUser().isHasModifyPerm();
-        boolean b1 = session.getUser().isHasDeletePerm();
-        boolean b2 = session.getUser().isHasAddPerm();
-        boolean b3 = session.getUser().isHasEditingLibrarianPerm();
 
         editBtn.setVisible(session.getUser().isHasEditPerm() || session.getUser().isHasModifyPerm() || session.getUser().isHasDeletePerm() || session.getUser().isHasAddPerm() ||
                 session.getUser().isHasEditingLibrarianPerm());
         returnBtn.setVisible(session.getUser().isHasReturnPerm());
         infoBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
         manageBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
+        logBtn.setVisible(session.getUser().isHasEditingLibrarianPerm());
+
     }
 
     //TODO: add doc
