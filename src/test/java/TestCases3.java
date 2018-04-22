@@ -457,6 +457,9 @@ public class TestCases3 {
 
         returnForm.setSession(session);
 
+        returnForm.setDatabaseManager(databaseManager);
+        returnForm.setActionManager(databaseManager.actionManager);
+
         returnForm.renew(p1, p1_checkedOutCopies.get(0));
         databaseManager.saveDocuments(b1);
         databaseManager.saveUserCard(p1);
@@ -599,6 +602,8 @@ public class TestCases3 {
         session = new Session(p1.userType, 29, 3);
         session.userCard = p1;
         returnForm.setSession(session);
+        returnForm.setDatabaseManager(databaseManager);
+        returnForm.setActionManager(databaseManager.actionManager);
         for (int i = 0; i < b1.takenCopies.size(); i++) {
             if (b1.takenCopies.get(i).getCheckoutByUser().getId() == p1.getId()) {
                 returnForm.renew(p1, b1.takenCopies.get(i));
@@ -779,6 +784,7 @@ public class TestCases3 {
         databaseManager.resetDatabase();
         Test6();
         Session session = new Session((databaseManager.getUserCard(1011).userType), 26, 3);
+        session.userCard = databaseManager.getUserCard(1011);
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /**Action*/
@@ -787,7 +793,8 @@ public class TestCases3 {
         ManageForm manageForm = new ManageForm();
         manageForm.setSession(session);
         manageForm.setDatabaseManager(databaseManager);
-        
+        manageForm.setActionManager(databaseManager.actionManager);
+
         manageForm.outstandingRequest(databaseManager.getDocuments(3));
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -810,6 +817,7 @@ public class TestCases3 {
 
         MainForm mainForm = new MainForm();
         mainForm.setDatabaseManager(databaseManager);
+        mainForm.setActionManager(databaseManager.actionManager);
         UserCard userCard = databaseManager.getUserCard(1011);
         Document document = databaseManager.getDocuments(3);
         Session session = new Session(userCard.userType, 26, 3);
@@ -825,6 +833,7 @@ public class TestCases3 {
         ReturnForm returnForm = new ReturnForm();
         returnForm.setSession(session);
         returnForm.setDatabaseManager(databaseManager);
+        returnForm.setActionManager(databaseManager.actionManager);
         returnForm.returnCopy(copy, userCard);
         Assert.assertEquals(Notification.GET_COPY_NOTIFICATION, databaseManager.getUserCard(1101).notifications.get(0).id);
     }
@@ -836,6 +845,7 @@ public class TestCases3 {
 
         MainForm mainForm = new MainForm();
         mainForm.setDatabaseManager(databaseManager);
+        mainForm.setActionManager(databaseManager.actionManager);
         UserCard userCard = databaseManager.getUserCard(1010);
         Document document = databaseManager.getDocuments(3);
         Session session = new Session(userCard.userType, 2, 4);
@@ -851,6 +861,8 @@ public class TestCases3 {
 
         ReturnForm returnForm = new ReturnForm();
         returnForm.setSession(session);
+        returnForm.setDatabaseManager(databaseManager);
+        returnForm.setActionManager(databaseManager.actionManager);
         returnForm.renew(userCard, copy);
 
         document = databaseManager.getDocuments(document.getID());
@@ -877,6 +889,7 @@ public class TestCases3 {
 
         MainForm mainForm = new MainForm();
         mainForm.setDatabaseManager(databaseManager);
+        mainForm.setActionManager(databaseManager.actionManager);
 
         UserCard userCard = databaseManager.getUserCard(1010);
         Document document = databaseManager.getDocuments(1);
@@ -900,6 +913,9 @@ public class TestCases3 {
         mainForm.setSession(session2);
         ReturnForm returnForm = new ReturnForm();
         returnForm.setSession(session2);
+        returnForm.setDatabaseManager(databaseManager);
+        returnForm.setActionManager(databaseManager.actionManager);
+
         returnForm.renew(userCard, copy);
         Assert.assertEquals(copy.getCheckedOutDate(), "29 March");
 
@@ -921,7 +937,7 @@ public class TestCases3 {
         Assert.assertEquals(copy2.getCheckedOutDate(), "26 March");
 
         Session session4 = new Session(userCard2.userType, 29, 3);
-        session2.userCard = userCard2;
+        session4.userCard = userCard2;
         mainForm.setSession(session4);
         returnForm.setSession(session4);
         returnForm.renew(userCard2, copy2);

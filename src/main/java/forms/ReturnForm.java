@@ -94,6 +94,10 @@ public class ReturnForm {
         stage.show();
     }
 
+    public void setActionManager(ActionManager actionManager) {
+        this.actionManager = actionManager;
+    }
+
     /**
      * Scene initialization method
      * Sets information about chosen book on a labels on a grid pane
