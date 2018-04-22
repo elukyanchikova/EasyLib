@@ -1,4 +1,5 @@
 import documents.*;
+import forms.MainForm;
 import users.userTypes.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -303,7 +304,7 @@ public class TestCases2 {
      * Effect: correct information about users*/
     @Test
     public void TestCase6() {
-        /*TestCase2();
+        TestCase2();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
 
         Session session = new Session((databaseManager.getUserCard(1010).userType), 5, 3);
@@ -341,7 +342,7 @@ public class TestCases2 {
         Assert.assertEquals(databaseManager.getUserCard(1100).getId(),1100);
         Assert.assertEquals(databaseManager.getUserCard(1100).checkedOutCopies.size(), 1);
         Assert.assertEquals(databaseManager.getUserCard(1100).checkedOutCopies.get(0).getDueDate(), "18 March");
-*/
+
     }
 
     /**
