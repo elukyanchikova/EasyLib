@@ -50,6 +50,7 @@ public class ActionManager {
                 for (j = i - 1; j >= 0; j--) {
                     if (actionNotes.get(i).month > notes[j].month) break;
                     if (actionNotes.get(i).month == notes[j].month && actionNotes.get(i).day > notes[j].day) break;
+                    notes[j+1] = notes[j];
                 }
                 j++;
                 notes[j] = actionNotes.get(i);

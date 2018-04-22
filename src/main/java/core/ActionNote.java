@@ -91,19 +91,19 @@ public class ActionNote {
         switch (actionID) {
             case ADD_USER_ACTION_ID:
                 stringBuilder.append("added ");
-                stringBuilder.append(targetUser.userType.getClass().getName().replace("users.userTypes", "") + " ");
+                stringBuilder.append(targetUser.userType.getClass().getName().replace("users.userTypes.", "") + " ");
                 stringBuilder.append(targetUser.name + " " + targetUser.surname);
                 stringBuilder.append("(ID:" + targetUser.getId() + ") ");
                 break;
             case EDIT_USER_ACTION_ID:
                 stringBuilder.append("edited ");
-                stringBuilder.append(targetUser.userType.getClass().getName().replace("users.userTypes", "") + " ");
+                stringBuilder.append(targetUser.userType.getClass().getName().replace("users.userTypes.", "") + " ");
                 stringBuilder.append(targetUser.name + " " + targetUser.surname);
                 stringBuilder.append("(ID:" + targetUser.getId() + ") ");
                 break;
             case DELETE_USER_ACTION_ID:
                 stringBuilder.append("deleted ");
-                stringBuilder.append(targetUser.userType.getClass().getName().replace("users.userTypes", "") + " ");
+                stringBuilder.append(targetUser.userType.getClass().getName().replace("users.userTypes.", "") + " ");
                 stringBuilder.append(targetUser.name + " " + targetUser.surname);
                 stringBuilder.append("(ID:" + targetUser.getId() + ") ");
                 break;
