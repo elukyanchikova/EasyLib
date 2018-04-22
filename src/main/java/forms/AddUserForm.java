@@ -168,8 +168,6 @@ public class AddUserForm {
         databaseManager.saveUserCard(newUserCard);
         actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.ADD_USER_ACTION_ID, newUserCard));
     }
-
-    }
     /**
      * Click ob button "back" event
      * button for coming back to the EditForm

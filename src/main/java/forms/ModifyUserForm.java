@@ -179,18 +179,21 @@ public class ModifyUserForm {
 
                 }
 
+
             nameTextField.setText(chosenUser.name);
             surnameTextField.setText(chosenUser.surname);
             addressTextField.setText(chosenUser.address);
             phoneNumberTextField.setText(chosenUser.phoneNumb);
             userTypeTextField.setText(chosenUser.userType.getClass().getName());
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.EDIT_USER_ACTION_ID, chosenUser));
+
                 nameTextField.setText(chosenUser.name);
                 surnameTextField.setText(chosenUser.surname);
                 addressTextField.setText(chosenUser.address);
                 phoneNumberTextField.setText(chosenUser.phoneNumb);
                 userTypeTextField.setText(chosenUser.userType.getClass().getName());
             }
+
         }
 
 
