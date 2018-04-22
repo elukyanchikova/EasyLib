@@ -27,10 +27,28 @@ in place of old mock functions
 * Notification system implementation
 * Various changes
 ### Jameel Mukhutdinov
-* Management form and its functional inmplementation
+* Management form and its functional implementation
 * Renew method implementation
 ### Elena Lukyanchikova
 * PriorityQueue implementation
 * Fine feature implementation
 * OutstandingRequest implementation
+* Various changes
+
+## 4th delivery
+
+### Svetlana Kabirova
+* Search system implementation
+* Action manager implementation
+* Various changes
+
+### Jameel Mukhutdinov
+* LogForm implementation
+* Forms adaptation for action manager
+* Various changes
+
+### Elena Lukyanchikova
+* Admin class implementation
+* Privileges for Librarian implementation
+* Action Manager implementation
 * Various changes
