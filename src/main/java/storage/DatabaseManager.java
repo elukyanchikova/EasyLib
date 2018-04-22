@@ -88,6 +88,7 @@ public class DatabaseManager {
     }
 
     public void resetDatabase(){
+        this.actionManager = new ActionManager();
         this.userCardData = new JSONObject();
         this.documentsData = new JSONObject();
         Document.resetID();
