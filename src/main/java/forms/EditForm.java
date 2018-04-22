@@ -88,7 +88,7 @@ public class EditForm {
     @FXML
     public void addUser() throws Exception {
         AddUserForm mainForm = new AddUserForm();
-        mainForm.startForm(stage, session, databaseManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
     }
 
     /**

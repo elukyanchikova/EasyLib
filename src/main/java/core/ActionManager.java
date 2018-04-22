@@ -2,82 +2,60 @@ package core;
 
 import documents.Copy;
 import documents.Document;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import storage.DatabaseManager;
 import storage.Filter;
 import users.Session;
 import users.UserCard;
+import users.userTypes.Guest;
 
 import javax.print.Doc;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ActionManager {
-    private DatabaseManager databaseManager;
-    private Session session;
+    public ArrayList<ActionNote> actionNotes= new ArrayList<>();
 
-
-    public ActionManager(DatabaseManager databaseManager, Session session){
-        this.databaseManager = databaseManager;
-        this.session = session;
-    }
-
-    /* *
-     * Check out the document
-     *
-     * @return true if the document has checked out*/
-
-    //TODO isAvailiable for user , updateSession
-    public boolean checkOut(Document document) {
-        //boolean flag = isAvailableForUser(document);
-        if (!document.isReference() && document.getNumberOfAvailableCopies() > 0 /*&& flag*/) {
-            document.takeCopy(session.userCard, session);
-            databaseManager.saveUserCard(session.userCard);
-            databaseManager.saveDocuments(document);
-            databaseManager.load();
-            //   updateSession();
-            return true;
+    public void load(JSONObject data, DatabaseManager databaseManager){
+        JSONArray arr = data.getJSONArray("Action");
+        for(int i = 0; i < arr.length(); i++){
+            actionNotes.add(new ActionNote(arr.getJSONObject(i), databaseManager));
         }
-        return false;
     }
 
-    /**
-     * Method for Return Button
-     * Allows librarian return patron's book
-     * removes a copy from checked out copies array list
-     * <p>
-     * void
-     */
-//TODO openDocumentID  , usersListView
-    public void returnBtn() {
-       /* if (openDocumentID > -1) {
-            ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
-            Document document = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
-            for (int i = 0; i < document.takenCopies.size(); i++) {
-                userCardsWithCopy.add(document.takenCopies.get(i).getCheckoutByUser());
+
+    public void serialize(JSONObject data){
+        JSONArray arr = new JSONArray();
+        for (ActionNote actionNote : actionNotes) {
+            actionNote.serialize(arr);
+        }
+        data.put("Actions", arr);
+    }
+
+    public String getLog(){
+        ActionNote[] actions = sort();
+        StringBuilder stringBuilder = new StringBuilder();
+        for(ActionNote action: actions){
+            stringBuilder.append(action.createNote());
+        }
+        return stringBuilder.toString();
+    }
+
+    private ActionNote[] sort(){
+        ActionNote[] notes = new ActionNote[actionNotes.size()];
+        if(actionNotes.size() > 0) {
+            for (int i = 0; i < actionNotes.size(); i++) {
+                int j;
+                for (j = i - 1; j >= 0; j--) {
+                    if (actionNotes.get(i).month > notes[j].month) break;
+                    if (actionNotes.get(i).month == notes[j].month && actionNotes.get(i).day > notes[j].day) break;
+                }
+                j++;
+                notes[j] = actionNotes.get(i);
             }
-            //UserCard userCard = userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex());
-            for (int i = 0; i < document.takenCopies.size(); i++) {
-                *//*if (document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId())
-                {
-              //      returnCopy(document.takenCopies.get(i), databaseManager.getUserCard(userCard.getId()));
-                }*//*
-            }
-
-            databaseManager.saveDocuments( databaseManager.getDocuments(document.getID()));
-           // databaseManager.saveUserCard(databaseManager.getUserCard(userCard.getId()));
-
-        }*/
-    }
-
-    //TODO autobooking
-    public void returnCopy(Copy copy, UserCard userCard) {
-        databaseManager.getUserCard(userCard.getId()).checkedOutCopies.remove(copy);
-        databaseManager.getDocuments(databaseManager.getDocuments(copy.getDocumentID()).getID()).returnCopy(copy);
-        //this.autobooking(databaseManager.getDocuments(copy.getDocumentID()));
-    }
-    //TODO request  search
-
-    public ArrayList<Document> filter(Filter filter){
-        return databaseManager.filterDocument(filter);
+        }
+        return notes;
     }
 
 }

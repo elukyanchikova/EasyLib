@@ -1,6 +1,7 @@
 package forms;
 
 import core.ActionManager;
+import core.ActionNote;
 import documents.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -233,8 +234,9 @@ public class ModifyFileForm {
             if (currentDoc.getClass().equals(Book.class)) {
                 ((Book) currentDoc).edition = editionTextField.getText();
             }
-
         }
+        actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.EDIT_DOCUMENT_ACTION_ID,
+                databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID])));
     }
 
     /**
@@ -244,8 +246,8 @@ public class ModifyFileForm {
     @FXML
     public void deleteFile() {
         Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
-        ;
         databaseManager.removeDocuments(currentDoc);
+        actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.DELETE_DOCUMENT_ACTION_ID, currentDoc));
     }
 
     /**

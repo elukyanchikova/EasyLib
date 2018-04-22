@@ -1,6 +1,7 @@
 package forms;
 
 import core.ActionManager;
+import core.ActionNote;
 import documents.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -216,7 +217,8 @@ public class AddFileForm {
                 file.isReference = true;
                 databaseManager.saveDocuments(file);
             }
-
+            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month,
+                    ActionNote.ADD_DOCUMENT_ACTION_ID, file));
         }
     }
 

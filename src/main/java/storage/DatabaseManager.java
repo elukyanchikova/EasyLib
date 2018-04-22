@@ -1,5 +1,6 @@
 package storage;
 
+import core.ActionManager;
 import documents.*;
 import org.json.JSONObject;
 import users.userTypes.Admin;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 
 public class DatabaseManager {
 
+    public ActionManager actionManager;
     /**
      * Cached JSON Object that connected with .json file
      * */
@@ -59,6 +61,8 @@ public class DatabaseManager {
                 reader.close();
                 loadUserCards();
                 loadDocuments();
+                actionManager = new ActionManager();
+                actionManager.load(jsonData,this);
 
             }else {
                 if(!file.createNewFile()){
@@ -96,6 +100,7 @@ public class DatabaseManager {
                     new File(fileDataName + ".json")));
             jsonData.put("UserCard", userCardData);
             jsonData.put("Document", documentsData);
+            actionManager.serialize(jsonData);
             pw.write(jsonData.toString());
             pw.close();
         }catch (IOException e) {

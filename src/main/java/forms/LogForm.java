@@ -63,7 +63,7 @@ public class LogForm {
     }
 
     public void refresh(String toTextArea){
-        logTextArea.setText(toTextArea);
+        logTextArea.setText(actionManager.getLog());
     }
 
 
