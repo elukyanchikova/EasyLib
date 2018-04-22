@@ -626,7 +626,7 @@ public class TestCases3 {
         session = new Session(databaseManager.getUserCard(librarian_1.getId()).userType, 29, 3);
         session.userCard = librarian_1;
 
-        Assert.assertEquals("users.Faculty", p1.userType.getClass().getName());
+        Assert.assertEquals("users.userTypes.Faculty", p1.userType.getClass().getName());
         Assert.assertEquals(1010, p1.getId());
         Assert.assertEquals("Sergey", p1.name);
         Assert.assertEquals("Afonso", p1.surname);
@@ -638,7 +638,7 @@ public class TestCases3 {
         }
 
 
-        Assert.assertEquals("users.Student", s.userType.getClass().getName());
+        Assert.assertEquals("users.userTypes.Student", s.userType.getClass().getName());
         Assert.assertEquals(1101, s.getId());
         Assert.assertEquals("Andrey", s.name);
         Assert.assertEquals("Velo", s.surname);
@@ -649,7 +649,7 @@ public class TestCases3 {
         }
 
 
-        Assert.assertEquals("users.VisitingProfessor", v.userType.getClass().getName());
+        Assert.assertEquals("users.userTypes.VisitingProfessor", v.userType.getClass().getName());
         Assert.assertEquals(1110, v.getId());
         Assert.assertEquals("Veronika", v.name);
         Assert.assertEquals("Rama", v.surname);

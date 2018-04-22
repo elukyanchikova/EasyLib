@@ -635,38 +635,38 @@ public class MainForm {
             if (documentSearchPublicationMonthTxt.getText().replace(" ", "").length() > 0) {
                 filter.publicationMonth = documentSearchPublicationMonthTxt.getText().toLowerCase();
             }
-<<<<<<< HEAD
+
             if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
                 filter.edition = documentSearchEditorTxt.getText().toLowerCase();
-=======
-            if(documentSearchEditorTxt.getText().replace(" ", "").length() > 0){
-                filter.editor = documentSearchEditorTxt.getText().toLowerCase();
->>>>>>> 6a7a18e73d6bc64d42333a96a7f0f0dde6028f3e
-            }
-            if (documentSearchPublisherTxt.getText().replace(" ", "").length() > 0) {
-                filter.publisher = documentSearchPublisherTxt.getText().toLowerCase();
-            }
-            if (documentSearchJournalNameTxt.getText().replace(" ", "").length() > 0) {
-                filter.journalName = documentSearchJournalNameTxt.getText().toLowerCase();
-            }
-        }
 
-        ArrayList<Document> documents = actionManager.filter(filter);
-        documentListView.setItems(FXCollections.observableArrayList(documents));
-        documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
-            public ListCell<Document> call(ListView<Document> documentListView) {
-                return new ListCell<Document>() {
-                    @Override
-                    protected void updateItem(Document document, boolean flag) {
-                        super.updateItem(document, flag);
-                        if (document != null) {
-                            setText(document.title);
+                if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
+                    filter.editor = documentSearchEditorTxt.getText().toLowerCase();
+
+                }
+                if (documentSearchPublisherTxt.getText().replace(" ", "").length() > 0) {
+                    filter.publisher = documentSearchPublisherTxt.getText().toLowerCase();
+                }
+                if (documentSearchJournalNameTxt.getText().replace(" ", "").length() > 0) {
+                    filter.journalName = documentSearchJournalNameTxt.getText().toLowerCase();
+                }
+            }
+
+            ArrayList<Document> documents = actionManager.filter(filter);
+            documentListView.setItems(FXCollections.observableArrayList(documents));
+            documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
+                public ListCell<Document> call(ListView<Document> documentListView) {
+                    return new ListCell<Document>() {
+                        @Override
+                        protected void updateItem(Document document, boolean flag) {
+                            super.updateItem(document, flag);
+                            if (document != null) {
+                                setText(document.title);
+                            }
                         }
-                    }
-                };
-            }
-        });
-
+                    };
+                }
+            });
+        }
     }
 
     //TODO: add java doc
@@ -766,4 +766,4 @@ public class MainForm {
         AuthorizationForm mainForm = new AuthorizationForm();
         mainForm.startForm(stage);
     }
-}
+ }
