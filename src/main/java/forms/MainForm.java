@@ -649,36 +649,7 @@ public class MainForm {
 
             if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
                 filter.edition = documentSearchEditorTxt.getText().toLowerCase();
-<<<<<<< HEAD
 
-                if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
-                    filter.editor = documentSearchEditorTxt.getText().toLowerCase();
-
-                }
-                if (documentSearchPublisherTxt.getText().replace(" ", "").length() > 0) {
-                    filter.publisher = documentSearchPublisherTxt.getText().toLowerCase();
-                }
-                if (documentSearchJournalNameTxt.getText().replace(" ", "").length() > 0) {
-                    filter.journalName = documentSearchJournalNameTxt.getText().toLowerCase();
-                }
-            }
-
-            ArrayList<Document> documents = actionManager.filter(filter);
-            documentListView.setItems(FXCollections.observableArrayList(documents));
-            documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
-                public ListCell<Document> call(ListView<Document> documentListView) {
-                    return new ListCell<Document>() {
-                        @Override
-                        protected void updateItem(Document document, boolean flag) {
-                            super.updateItem(document, flag);
-                            if (document != null) {
-                                setText(document.title);
-                            }
-                        }
-                    };
-                }
-            });
-=======
 
                 if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
                     filter.editor = documentSearchEditorTxt.getText().toLowerCase();
@@ -708,9 +679,35 @@ public class MainForm {
                 }
             });
 
->>>>>>> 7e2be82a5f52ec298aad7f7eaf3243351d415e19
+            if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
+                filter.editor = documentSearchEditorTxt.getText().toLowerCase();
+
+            }
+            if (documentSearchPublisherTxt.getText().replace(" ", "").length() > 0) {
+                filter.publisher = documentSearchPublisherTxt.getText().toLowerCase();
+            }
+            if (documentSearchJournalNameTxt.getText().replace(" ", "").length() > 0) {
+                filter.journalName = documentSearchJournalNameTxt.getText().toLowerCase();
+            }
         }
+
+        ArrayList<Document> documents = filter(filter);
+        documentListView.setItems(FXCollections.observableArrayList(documents));
+        documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
+            public ListCell<Document> call(ListView<Document> documentListView) {
+                return new ListCell<Document>() {
+                    @Override
+                    protected void updateItem(Document document, boolean flag) {
+                        super.updateItem(document, flag);
+                        if (document != null) {
+                            setText(document.title);
+                        }
+                    }
+                };
+            }
+        });
     }
+
 
     //TODO: add java doc
     //TODO: make method in action manager that return the first notification and remove it after
