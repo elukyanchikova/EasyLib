@@ -637,6 +637,8 @@ public class MainForm {
             }
             if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
                 filter.edition = documentSearchEditorTxt.getText().toLowerCase();
+            if(documentSearchEditorTxt.getText().replace(" ", "").length() > 0){
+                filter.editor = documentSearchEditorTxt.getText().toLowerCase();
             }
             if (documentSearchPublisherTxt.getText().replace(" ", "").length() > 0) {
                 filter.publisher = documentSearchPublisherTxt.getText().toLowerCase();

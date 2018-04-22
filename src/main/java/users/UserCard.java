@@ -5,6 +5,7 @@ import documents.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import storage.DatabaseManager;
+import users.userTypes.Librarian;
 import users.userTypes.UserType;
 
 import java.util.ArrayList;
@@ -57,6 +58,9 @@ public class UserCard implements Comparable<UserCard> {
         this.name = data.getString("Name");
         this.surname = data.getString("Surname");
         this.userType = UserType.userTypes.get(data.getString("UserType"));
+        if(userType.getClass().isAssignableFrom(Librarian.class)){
+            ((Librarian)userType).setPrivileges(data);
+        }
         this.phoneNumb = data.getString("PhoneNumber");
         this.address = data.getString("Address");
         JSONArray requestedDocsObj = data.getJSONArray("RequestedDocs");
@@ -81,6 +85,9 @@ public class UserCard implements Comparable<UserCard> {
         data.put("Name", name);
         data.put("Surname", surname);
         data.put("UserType", userType.getClass().getName());
+        if(userType.getClass().isAssignableFrom(Librarian.class)){
+            ((Librarian)userType).serializePrivileges(data);
+        }
         data.put("PhoneNumber", phoneNumb);
         data.put("Address", address);
         JSONArray requestedBooksObj = new JSONArray();
