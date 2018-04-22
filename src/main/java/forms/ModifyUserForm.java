@@ -1,6 +1,7 @@
 package forms;
 
 import core.ActionManager;
+import core.ActionNote;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -178,12 +179,21 @@ public class ModifyUserForm {
 
                 }
 
+
+            nameTextField.setText(chosenUser.name);
+            surnameTextField.setText(chosenUser.surname);
+            addressTextField.setText(chosenUser.address);
+            phoneNumberTextField.setText(chosenUser.phoneNumb);
+            userTypeTextField.setText(chosenUser.userType.getClass().getName());
+            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.EDIT_USER_ACTION_ID, chosenUser));
+
                 nameTextField.setText(chosenUser.name);
                 surnameTextField.setText(chosenUser.surname);
                 addressTextField.setText(chosenUser.address);
                 phoneNumberTextField.setText(chosenUser.phoneNumb);
                 userTypeTextField.setText(chosenUser.userType.getClass().getName());
             }
+
         }
 
 
@@ -279,6 +289,7 @@ public class ModifyUserForm {
     public void deleteUser() {
         UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
         databaseManager.removeUserCard(currentUser);
+        actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.DELETE_USER_ACTION_ID, currentUser));
     }
 
     /**

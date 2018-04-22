@@ -1,6 +1,7 @@
 package forms;
 
 import core.ActionManager;
+import core.ActionNote;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -41,10 +42,11 @@ public class AddUserForm {
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager) throws Exception {
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception {
         this.stage = primaryStage;
         this.session = currentSession;
         this.databaseManager = databaseManager;
+        this.actionManager = actionManager;
         sceneInitialization();
         stage.setScene(scene);
         stage.show();
@@ -163,8 +165,8 @@ public class AddUserForm {
                 databaseManager.saveUserCard(newUserCard);
             }
         }
-
-
+        databaseManager.saveUserCard(newUserCard);
+        actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.ADD_USER_ACTION_ID, newUserCard));
     }
     /**
      * Click ob button "back" event

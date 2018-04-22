@@ -1,6 +1,7 @@
 package forms;
 
 import core.ActionManager;
+import core.ActionNote;
 import documents.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -196,6 +197,8 @@ public class ManageForm {
                 user.notifications.add(new Notification(Notification.ACCEPT_NOTIFICATION, chosenDoc.getID()));
                 databaseManager.saveUserCard(user);
                 databaseManager.saveDocuments(chosenDoc);
+                actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.ACCEPT_REQUEST_ACTION_ID, user, chosenDoc));
+                actionManager.actionNotes.add(new ActionNote(user, session.day, session.month, ActionNote.CHECK_OUT_DOCUMENT_ACTION_ID, chosenDoc));
             }
         }
     }
@@ -217,6 +220,7 @@ public class ManageForm {
                 user.notifications.add(new Notification(Notification.REQECT_NOTIFICATION, chosenDoc.getID()));
                 databaseManager.saveUserCard(user);
                 databaseManager.saveDocuments(chosenDoc);
+                actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.REJECT_REQUEST_ACTION_ID, user, chosenDoc));
                 autobooking(chosenDoc);
             }
         }
@@ -236,6 +240,7 @@ public class ManageForm {
                 databaseManager.saveDocuments(document);
                 databaseManager.saveUserCard(userCards[ind]);
                 databaseManager.load();
+                actionManager.actionNotes.add(new ActionNote(userCards[ind], session.day, session.month, ActionNote.BOOK_DOCUMENT_ACTION_ID, document));
             }
         }
     }
@@ -246,6 +251,7 @@ public class ManageForm {
         for(int i = 0; i < users.length; i++){
             users[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION, doc.getID()));
             databaseManager.saveUserCard(users[i]);
+            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.OUTSTANDING_REQUEST_ACTION_ID, doc));
         }
         doc.deletePQ();
         databaseManager.saveDocuments(doc);

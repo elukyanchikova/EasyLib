@@ -1,6 +1,7 @@
 package forms;
 
 import core.ActionManager;
+import core.ActionNote;
 import documents.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,7 +18,6 @@ import storage.Filter;
 import users.userTypes.Guest;
 import users.Session;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -147,6 +147,7 @@ public class MainForm {
             databaseManager.saveUserCard(session.userCard);
             databaseManager.saveDocuments(document);
             //databaseManager.load();
+            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.CHECK_OUT_DOCUMENT_ACTION_ID, document));
             updateSession();
             return true;
         }
@@ -166,9 +167,15 @@ public class MainForm {
             databaseManager.saveUserCard(session.userCard);
             databaseManager.load();
             updateSession();
+            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.BOOK_DOCUMENT_ACTION_ID, document));
             return true;
         }
         return false;
+    }
+
+
+    public ArrayList<Document> filter(Filter filter){
+        return databaseManager.filterDocument(filter);
     }
 
 
@@ -187,6 +194,7 @@ public class MainForm {
             databaseManager.saveDocuments(document);
             databaseManager.saveUserCard(session.userCard);
             updateSession();
+            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.REQUEST_DOCUMENT_ACTION_ID, document));
             return true;
         }
         return false;
@@ -638,6 +646,7 @@ public class MainForm {
 
             if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
                 filter.edition = documentSearchEditorTxt.getText().toLowerCase();
+<<<<<<< HEAD
 
                 if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
                     filter.editor = documentSearchEditorTxt.getText().toLowerCase();
@@ -666,15 +675,46 @@ public class MainForm {
                     };
                 }
             });
+=======
+
+                if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
+                    filter.editor = documentSearchEditorTxt.getText().toLowerCase();
+
+                }
+                if (documentSearchPublisherTxt.getText().replace(" ", "").length() > 0) {
+                    filter.publisher = documentSearchPublisherTxt.getText().toLowerCase();
+                }
+                if (documentSearchJournalNameTxt.getText().replace(" ", "").length() > 0) {
+                    filter.journalName = documentSearchJournalNameTxt.getText().toLowerCase();
+                }
+            }
+
+            ArrayList<Document> documents = filter(filter);
+            documentListView.setItems(FXCollections.observableArrayList(documents));
+            documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
+                public ListCell<Document> call(ListView<Document> documentListView) {
+                    return new ListCell<Document>() {
+                        @Override
+                        protected void updateItem(Document document, boolean flag) {
+                            super.updateItem(document, flag);
+                            if (document != null) {
+                                setText(document.title);
+                            }
+                        }
+                    };
+                }
+            });
+
+>>>>>>> 7e2be82a5f52ec298aad7f7eaf3243351d415e19
         }
     }
 
     //TODO: add java doc
     //TODO: make method in action manager that return the first notification and remove it after
-    Label notificationLbl;
-    Button notificationBtn;
+    private Label notificationLbl;
+    private Button notificationBtn;
 
-    public void showNotification() {
+    private void showNotification() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/Notification.fxml"));
             loader.setController(this);
@@ -698,6 +738,7 @@ public class MainForm {
             e.printStackTrace();
         }
     }
+
 
     public void clickOnNextNotificationBtn() {
         databaseManager.saveUserCard(session.userCard);
@@ -758,8 +799,6 @@ public class MainForm {
     /**
      * Click on button "logOut" event
      * button for coming back to the AuthorizationForm
-     *
-     * @throws Exception
      */
     @FXML
     public void logOut() throws Exception {

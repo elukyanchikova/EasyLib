@@ -18,8 +18,14 @@ public class Session {
         this.authorizedUser = user;
         if(day < 1 || day > 31) day = 1;
         if(month < 1 || month > 12) month = 12;
-        this.day = day;
         this.month = month;
+        int[] months = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
+        if(months[month-1] < day) {
+            day = day - months[month-1];
+            this.month++;
+        }
+
+        this.day = day;
     }
 
     /**

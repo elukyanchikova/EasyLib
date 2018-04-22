@@ -74,6 +74,7 @@ public class Copy {
     }
 
     public void returnCopy(){
+        hasRenewed = false;
         checkoutByUser = null;
     }
 

@@ -1,6 +1,8 @@
 package forms;
 
 import core.ActionManager;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,10 +25,8 @@ public class AuthorizationForm {
 
     private Stage stage;
     private Scene scene;
-    private Session session;
     private DatabaseManager databaseManager;
 
-    @FXML private TextField emailTextField;
     @FXML private Button loginAsStudentBtn;
     @FXML private Button loginAsGuestBtn;
     @FXML private ListView<UserCard> usersListView;
@@ -54,11 +54,23 @@ public class AuthorizationForm {
         GridPane root = loader.load();
         this.scene = new Scene(root,700,700);
 
-        emailTextField = (TextField) scene.lookup("#emailTextField");
         loginAsStudentBtn = (Button) scene.lookup("#loginAsStudentBtn");
         loginAsGuestBtn = (Button) scene.lookup("#loginAsGuestBtn");
+
         usersListView = (ListView<UserCard>) scene.lookup("#usersListView");
         dateField = (TextField) scene.lookup("#dateField");
+        dateField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!newValue.matches("(3[0-1]|[12][0-9]|0[1-9])\\/(1[0-2]|0[1-9])")){
+                    loginAsStudentBtn.setDisable(true);
+                    loginAsGuestBtn.setDisable(true);
+                }else {
+                    loginAsStudentBtn.setDisable(false);
+                    loginAsGuestBtn.setDisable(false);
+                }
+            }
+        });
 
         usersListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
         usersListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
@@ -68,7 +80,7 @@ public class AuthorizationForm {
                     protected void updateItem(UserCard user, boolean flag) {
                         super.updateItem(user, flag);
                         if (user != null) {
-                            setText(user.userType.getClass().getName() + " " + user.name + " " + user.surname);
+                            setText(user.userType.getClass().getName().replace("users.userTypes.", "") + " " + user.name + " " + user.surname);
                         }
                     }
                 };
@@ -84,9 +96,6 @@ public class AuthorizationForm {
     @FXML
     public void loginAsStudent() throws Exception{
 
-        /*if(emailTextField.getText().toLowerCase().contains("@innopolis.ru") &&
-                emailTextField.getText().toLowerCase().replace("@innopolis.ru", "").replace(" ", "").length() != 0)
-        */
         int day = 1;
         int month = 1;
         if(dateField.getText() != null){
@@ -106,7 +115,7 @@ public class AuthorizationForm {
             MainForm mainForm = new MainForm();
             Session session = new Session(selectedUser.userType, day,month);
             session.userCard = selectedUser;
-            mainForm.startForm(stage, session, databaseManager, new ActionManager(databaseManager,session));
+            mainForm.startForm(stage, session, databaseManager, databaseManager.actionManager);
 
         }
     }
@@ -142,6 +151,6 @@ public class AuthorizationForm {
             }
         }
         MainForm mainForm = new MainForm();
-        mainForm.startForm(stage,new Session(new Guest(), day,month), databaseManager, new ActionManager(databaseManager, session));
+        mainForm.startForm(stage,new Session(new Guest(), day,month), databaseManager, databaseManager.actionManager);
     }
 }

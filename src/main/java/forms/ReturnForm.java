@@ -1,6 +1,7 @@
 package forms;
 
 import core.ActionManager;
+import core.ActionNote;
 import documents.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -154,7 +155,6 @@ public class ReturnForm {
             }
         }
 
-
         Document chosenDocument = selectDocument(documentListView.getSelectionModel().getSelectedIndex()); //chosen document
 
         ArrayList<UserCard> userCardsWithCopy = new ArrayList<>();
@@ -162,7 +162,6 @@ public class ReturnForm {
         for (int i = 0; i < chosenDocument.takenCopies.size(); i++) {
             userCardsWithCopy.add(chosenDocument.takenCopies.get(i).getCheckoutByUser());
         }
-
 
         userListView.setItems(FXCollections.observableArrayList(userCardsWithCopy));
         userListView.setCellFactory(new Callback<ListView<UserCard>, ListCell<UserCard>>() {
@@ -273,22 +272,22 @@ public class ReturnForm {
             }
             UserCard userCard = userCardsWithCopy.get(userListView.getSelectionModel().getSelectedIndex());
             for (int i = 0; i < document.takenCopies.size(); i++) {
-                if (document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId())
-                {
+                if (document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId()) {
                     returnCopy(document.takenCopies.get(i), databaseManager.getUserCard(userCard.getId()));
                 }
             }
-            databaseManager.rebalanceForReferenceType(databaseManager.getDocuments(document.getID()));
-            databaseManager.saveDocuments( databaseManager.getDocuments(document.getID()));
-            databaseManager.saveUserCard(databaseManager.getUserCard(userCard.getId()));
-
         }
 
     }
 
     public void returnCopy(Copy copy, UserCard userCard){
+        actionManager.actionNotes.add(new ActionNote(userCard, session.day, session.month, ActionNote.RETURN_DOCUMENT_ACTION_ID,
+                databaseManager.getDocuments(copy.getDocumentID())));
         databaseManager.getUserCard(userCard.getId()).checkedOutCopies.remove(copy);
         databaseManager.getDocuments(databaseManager.getDocuments(copy.getDocumentID()).getID()).returnCopy(copy);
+        databaseManager.rebalanceForReferenceType(databaseManager.getDocuments(copy.getID()));
+        databaseManager.saveDocuments( databaseManager.getDocuments(copy.getID()));
+        databaseManager.saveUserCard(databaseManager.getUserCard(userCard.getId()));
         this.autobooking(databaseManager.getDocuments(copy.getDocumentID()));
     }
 
@@ -308,6 +307,10 @@ public class ReturnForm {
             copy.checkOutDay = session.day;
             copy.checkOutMonth = session.month;
             copy.hasRenewed = true;
+            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.RENEW_DOCUMENT_ACTION_ID,
+                    databaseManager.getDocuments(copy.getDocumentID())));
+            databaseManager.saveDocuments(databaseManager.getDocuments(copy.getDocumentID()));
+            databaseManager.saveUserCard(userCard);
         }
     }
 
@@ -330,8 +333,7 @@ public class ReturnForm {
             for (int i = 0; i < document.takenCopies.size(); i++) {
                 if (document.takenCopies.get(i).getCheckoutByUser().getId() == userCard.getId()) {
                     renew(userCard, document.takenCopies.get(i));
-                    databaseManager.saveDocuments(document);
-                    databaseManager.saveUserCard(userCard);
+
                 }
             }
         }
