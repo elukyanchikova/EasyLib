@@ -59,6 +59,7 @@ public class UserCard implements Comparable<UserCard> {
         this.surname = data.getString("Surname");
         this.userType = UserType.userTypes.get(data.getString("UserType"));
         if(userType.getClass().isAssignableFrom(Librarian.class)){
+            userType = new Librarian();
             ((Librarian)userType).setPrivileges(data);
         }
         this.phoneNumb = data.getString("PhoneNumber");

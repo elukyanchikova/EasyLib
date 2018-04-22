@@ -24,6 +24,7 @@ public class Librarian extends users.userTypes.UserType {
             setPriv2();
         else if (data.getBoolean("Priv1"))
             setPriv1();
+        else setDefault();
     }
 
     public void serializePrivileges(JSONObject data) {
@@ -45,25 +46,37 @@ public class Librarian extends users.userTypes.UserType {
     /**
      * method for setting accessPermission and ModifyPermission to the librarian
      */
-    public void setPriv1() {
+    public void setDefault(){
+        this.hasAddPerm = false;
+        this.hasAccessPerm = false;
+        this.hasModifyPerm = false;
+        this.hasDeletePerm = false;
+    }
 
+    public void setPriv1() {
+        this.hasAddPerm = false;
         this.hasAccessPerm = true;
         this.hasModifyPerm = true;
+        this.hasDeletePerm = false;
     }
 
     /**
      * method for setting accessPermission, ModifyPermission, addPermission to the librarian
      */
     public void setPriv2() {
-        this.setPriv1();
+        this.hasAccessPerm = true;
+        this.hasModifyPerm = true;
         this.hasAddPerm = true;
+        this.hasDeletePerm = false;
     }
 
     /**
      * method for setting accessPermission, ModifyPermission, addPermission, deletePermission to the librarian
      */
     public void setPriv3() {
-        this.setPriv2();
+        this.hasAccessPerm = true;
+        this.hasModifyPerm = true;
+        this.hasAddPerm = true;
         this.hasDeletePerm = true;
     }
 

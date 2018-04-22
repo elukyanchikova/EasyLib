@@ -17,6 +17,7 @@ import javafx.util.Callback;
 import storage.DatabaseManager;
 import users.*;
 import users.userTypes.Guest;
+import users.userTypes.Librarian;
 import users.userTypes.UserType;
 
 import java.net.URL;
@@ -113,8 +114,8 @@ public class AuthorizationForm {
         }
         if(selectedUser != null ){
             MainForm mainForm = new MainForm();
-            Session session = new Session(selectedUser.userType, day,month);
-            session.userCard = selectedUser;
+            Session session = new Session(databaseManager.getUserCard(selectedUser.getId()).userType, day,month);
+            session.userCard = databaseManager.getUserCard(selectedUser.getId());
             mainForm.startForm(stage, session, databaseManager, databaseManager.actionManager);
 
         }
