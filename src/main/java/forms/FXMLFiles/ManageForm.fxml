@@ -48,4 +48,6 @@
     <Button GridPane.rowIndex = "10" GridPane.columnIndex="0"
             fx:id="outstandingRequestButton" text="Outstanding Request"
             onMouseClicked="#outstbtn"/>
+    <Button fx:id="backBtn" onMouseClicked="#back" text="Back" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+
 </GridPane>
