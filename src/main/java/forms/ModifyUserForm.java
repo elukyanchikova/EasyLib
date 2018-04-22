@@ -67,8 +67,8 @@ public class ModifyUserForm {
     @FXML
     private TextField requestedDocsTextField;*/
 
-   @FXML
-   private CheckBox checkBoxPriv1;
+    @FXML
+    private CheckBox checkBoxPriv1;
     @FXML
     private CheckBox checkBoxPriv2;
     @FXML
@@ -116,9 +116,9 @@ public class ModifyUserForm {
         addressTextField = (TextField) scene.lookup("#addressField");
         /*checkedOutCopiesTextField = (TextField) scene.lookup("#checkedOutCopiesField");
         requestedDocsTextField = (TextField) scene.lookup("#requestedDocsField");*/
-        checkBoxPriv1 = (CheckBox) scene.lookup("#checkBoxPriv1") ;
-        checkBoxPriv2 = (CheckBox) scene.lookup("#checkBoxPriv2") ;
-        checkBoxPriv3 = (CheckBox) scene.lookup("#checkBoxPriv3") ;
+        checkBoxPriv1 = (CheckBox) scene.lookup("#checkBoxPriv1");
+        checkBoxPriv2 = (CheckBox) scene.lookup("#checkBoxPriv2");
+        checkBoxPriv3 = (CheckBox) scene.lookup("#checkBoxPriv3");
 
 
         userListView.setItems(FXCollections.observableArrayList(databaseManager.getAllUsers()));
@@ -142,12 +142,9 @@ public class ModifyUserForm {
      * Load special permission buttons' state
      */
     private void loadHighPermissionInterface(UserCard user) {
-        boolean a =session.getUser().isHasEditingLibrarianPerm();
-        String h =String.valueOf(user.userType);
-                boolean b =String.valueOf(user.userType).contains("Librarian")  ;
-                        boolean c = a&&b;
-   /*     boolean b =(session.getUser().isHasEditingLibrarianPerm()
-               &&  Librarian.class.isAssignableFrom(user.getClass()));*/
+        boolean a = session.getUser().isHasEditingLibrarianPerm();
+        boolean c = String.valueOf(user.userType).contains("Librarian");
+        boolean b = a && c;
         checkBoxPriv1.setVisible(b);
         checkBoxPriv2.setVisible(b);
         checkBoxPriv3.setVisible(b);
@@ -166,22 +163,53 @@ public class ModifyUserForm {
             UserCard chosenUser = selectUser(userListView.getSelectionModel().getSelectedIndex());
             chosenUserSuper = chosenUser;
             loadHighPermissionInterface(chosenUser);
+
+            if (session.getUser().isHasEditingLibrarianPerm()) {
+                if (!String.valueOf(chosenUser.userType).contains("Librarian")) {
+                    saveBtn.setVisible(false);
+                    deleteUserBtn.setVisible(false);
+                } else {
+                    saveBtn.setVisible(true);
+                    deleteUserBtn.setVisible(true);
+                }
+            } else {
+                if (session.getUser().isHasModifyPerm()) {
+                    if ((String.valueOf(chosenUser.userType).contains("Librarian"))
+                            || (String.valueOf(chosenUser.userType).contains("Admin"))) {
+                        saveBtn.setVisible(false);
+                    } else {
+                        saveBtn.setVisible(true);
+
+                    }
+                }
+                else if (session.getUser().isHasDeletePerm()) {
+                    if ((String.valueOf(chosenUser.userType).contains("Librarian"))
+                            || (String.valueOf(chosenUser.userType).contains("Admin"))) {
+                        deleteUserBtn.setVisible(false);
+                    } else {
+                        deleteUserBtn.setVisible(true);
+
+                    }
+
+            }
+
             nameTextField.setText(chosenUser.name);
             surnameTextField.setText(chosenUser.surname);
             addressTextField.setText(chosenUser.address);
             phoneNumberTextField.setText(chosenUser.phoneNumb);
             userTypeTextField.setText(chosenUser.userType.getClass().getName());
         }
-    }
+    }}
 
     /**
      * choose a user for starting new session
+     *
      * @param id - id of the UserCard
      * @return UserCard with the particular id
      */
     public UserCard selectUser(int id) {
         openUserCardID = id;
-        return  databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
+        return databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
     }
 
 
@@ -214,10 +242,10 @@ public class ModifyUserForm {
         }
 
 
-        if(!userTypeTextField.getText().isEmpty()){
+        if (!userTypeTextField.getText().isEmpty()) {
             UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
             UserType u = UserType.userTypes.get(userTypeTextField.getText());
-            if(u != null){
+            if (u != null) {
                 currentUser.userType = u;
             }
             databaseManager.saveUserCard(currentUser);
@@ -235,6 +263,7 @@ public class ModifyUserForm {
     /**
      * Clock on button "Back" event
      * come back for the EditForm
+     *
      * @throws Exception
      */
     @FXML
@@ -254,26 +283,26 @@ public class ModifyUserForm {
     }
 
     @FXML
-    public void setPrivilege1(){
+    public void setPrivilege1() {
         UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
-           if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
-               ((Librarian)us.userType).setPriv1();
-           }
-        }
-
-    @FXML
-    public void setPrivilege2(){
-        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
-        if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
-            ((Librarian)us.userType).setPriv2();
+        if (Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())) {
+            ((Librarian) us.userType).setPriv1();
         }
     }
 
     @FXML
-    public void setPrivilege3(){
+    public void setPrivilege2() {
         UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
-        if ( Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())){
-            ((Librarian)us.userType).setPriv3();
+        if (Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())) {
+            ((Librarian) us.userType).setPriv2();
+        }
+    }
+
+    @FXML
+    public void setPrivilege3() {
+        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
+        if (Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())) {
+            ((Librarian) us.userType).setPriv3();
         }
     }
 }

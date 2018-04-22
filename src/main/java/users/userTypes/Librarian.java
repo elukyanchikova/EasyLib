@@ -42,7 +42,7 @@ public class  Librarian extends users.userTypes.UserType {
     }
 
     public void setPriv1(){
-        this.hasAccessPerm=true;
+        this.hasAccessPerm = true;
         this.hasModifyPerm = true;
     }
     public void setPriv2(){

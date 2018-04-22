@@ -18,20 +18,25 @@ public class EditForm {
     private DatabaseManager databaseManager;
     private ActionManager actionManager;
 
-    @FXML private Button addFileBtn;
-    @FXML private Button deleteFileBtn;
-    @FXML private Button modifyFileBtn;
+    @FXML
+    private Button addFileBtn;
+    //@FXML private Button deleteFileBtn;
+    @FXML
+    private Button modifyFileBtn;
 
-    @FXML private Button addUserBtn;
-    @FXML private Button deleteUserBtn;
-    @FXML private Button modifyUserBtn;
+    @FXML
+    private Button addUserBtn;
+    //  @FXML private Button deleteUserBtn;
+    @FXML
+    private Button modifyUserBtn;
 
-    @FXML private Button backBtn;
+    @FXML
+    private Button backBtn;
 
     /**
      * Initialization and run new scene on the primary stage
      */
-    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception{
+    void startForm(Stage primaryStage, Session currentSession, DatabaseManager databaseManager, ActionManager actionManager) throws Exception {
         this.session = currentSession;
         this.stage = primaryStage;
         this.actionManager = actionManager;
@@ -48,16 +53,20 @@ public class EditForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/EditForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
-        this.scene = new Scene(root,700,700);
+        this.scene = new Scene(root, 700, 700);
 
-        deleteFileBtn = (Button) scene.lookup("#deleteFileBtn");
+        //deleteFileBtn = (Button) scene.lookup("#deleteFileBtn");
         addFileBtn = (Button) scene.lookup("#addFileBtn");
         modifyFileBtn = (Button) scene.lookup("#modifyFileBtn");
 
-        deleteUserBtn = (Button) scene.lookup("#deleteUserBtn");
+        //deleteUserBtn = (Button) scene.lookup("#deleteUserBtn");
         addUserBtn = (Button) scene.lookup("#addUserBtn");
         modifyUserBtn = (Button) scene.lookup("#modifyUserBtn");
         backBtn = (Button) scene.lookup("#backBtn");
+        modifyFileBtn.setVisible(!session.getUser().isHasEditingLibrarianPerm());
+        addFileBtn.setVisible(!session.getUser().isHasEditingLibrarianPerm() && session.getUser().isHasAddPerm());
+        addUserBtn.setVisible(session.getUser().isHasAddPerm() ||session.getUser().isHasEditingLibrarianPerm());
+        modifyUserBtn.setVisible(session.getUser().isHasModifyPerm() || session.getUser().isHasEditingLibrarianPerm());
 
     }
 
@@ -68,7 +77,7 @@ public class EditForm {
     public void addFile() throws Exception {
 
         AddFileForm mainForm = new AddFileForm();
-        mainForm.startForm(stage,session, databaseManager, actionManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
 
     }
 
@@ -79,7 +88,7 @@ public class EditForm {
     @FXML
     public void addUser() throws Exception {
         AddUserForm mainForm = new AddUserForm();
-        mainForm.startForm(stage,session, databaseManager);
+        mainForm.startForm(stage, session, databaseManager);
     }
 
     /**
@@ -88,7 +97,7 @@ public class EditForm {
     @FXML
     public void modifyUser() throws Exception {
         ModifyUserForm mainForm = new ModifyUserForm();
-        mainForm.startForm(stage,session, databaseManager,actionManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
 
     }
 
@@ -98,15 +107,17 @@ public class EditForm {
     @FXML
     public void modifyFile() throws Exception {
         ModifyFileForm mainForm = new ModifyFileForm();
-        mainForm.startForm(stage,session, databaseManager, actionManager);
+        mainForm.startForm(stage, session, databaseManager, actionManager);
     }
 
     /**
-     *  Click on button "Back" event
-     *  button for coming back to the MainForm
-     *  @throws Exception
+     * Click on button "Back" event
+     * button for coming back to the MainForm
+     *
+     * @throws Exception
      */
-    @FXML public void back() throws Exception {
+    @FXML
+    public void back() throws Exception {
         MainForm mainForm = new MainForm();
         mainForm.startForm(stage, session, databaseManager, actionManager);
     }

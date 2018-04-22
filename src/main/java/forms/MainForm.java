@@ -111,6 +111,9 @@ public class MainForm {
     @FXML
     private static Button bookBtn;
 
+    @FXML
+    private Button logOutBtn;
+
     /**
      * Initialization and run new scene on the primary stage
      *
@@ -283,6 +286,8 @@ public class MainForm {
         requestBtn = (Button) scene.lookup("#requestButton");
         bookBtn = (Button) scene.lookup("#bookButton");
 
+        logOutBtn = (Button) scene.lookup("#logOutButton");
+
         documentSearchTypeBox = (ComboBox<String>) scene.lookup("#documentSearchTypeComboBox");
         documentSearchKeywordsTxt = (TextField) scene.lookup("#documentSearchKeywordsTextField");
         documentSearchTitleTxt = (TextField) scene.lookup("#documentSearchTitleTextField");
@@ -333,9 +338,8 @@ public class MainForm {
      * Load special permission buttons' state
      */
     private void loadHighPermissionInterface() {
-        editBtn.setVisible((session.getUser().isHasEditPerm()&& session.getUser().isHasAccessPerm() && (session.getUser().isHasDeletePerm() ||
-                session.getUser().isHasAddPerm() ||
-                session.getUser().isHasModifyPerm())) ||session.getUser().isHasEditingLibrarianPerm());
+        editBtn.setVisible(session.getUser().isHasModifyPerm() || session.getUser().isHasDeletePerm() || session.getUser().isHasAddPerm() ||
+        session.getUser().isHasEditingLibrarianPerm());
         returnBtn.setVisible(session.getUser().isHasReturnPerm());
         infoBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
         manageBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
@@ -735,4 +739,15 @@ public class MainForm {
         }
     }
 
+    /**
+     * Click on button "logOut" event
+     * button for coming back to the AuthorizationForm
+     *
+     * @throws Exception
+     */
+    @FXML
+    public void logOut() throws Exception {
+        AuthorizationForm mainForm = new AuthorizationForm();
+        mainForm.startForm(stage);
+    }
 }

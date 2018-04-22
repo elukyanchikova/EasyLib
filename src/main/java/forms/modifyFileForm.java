@@ -35,7 +35,7 @@ public class ModifyFileForm {
     @FXML
     private Button deleteFileBtn;
     @FXML
-    private  Button backBtn;
+    private Button backBtn;
 
     @FXML
     private Label labelTitle;
@@ -138,19 +138,25 @@ public class ModifyFileForm {
      */
     @FXML
     public void selectFile() {
-        if(documentListView.getSelectionModel().getSelectedIndex() > -1) {
-            if(openDocumentID == -1){
+        if (documentListView.getSelectionModel().getSelectedIndex() > -1) {
+            if (openDocumentID == -1) {
                 documentInfoPane.setVisible(true);//If no document was opened
             }
             //Set document info
             Document chosenDocument = selectFile(documentListView.getSelectionModel().getSelectedIndex());
-           titleTextField.setText(chosenDocument.title);
-           priceTextField.setText(Integer.toString(chosenDocument.price));
+            titleTextField.setText(chosenDocument.title);
+            priceTextField.setText(Integer.toString(chosenDocument.price));
+            if (session.getUser().isHasDeletePerm()) {
+                deleteFileBtn.setVisible(true);
+            }
+            if (session.getUser().isHasModifyPerm()) {
+                saveBtn.setVisible(true);
+            }
 
+        }
+    }
 
-
-    }}
-    public Document selectFile(int id){
+    public Document selectFile(int id) {
         openDocumentID = id;
         return databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
 
@@ -164,7 +170,8 @@ public class ModifyFileForm {
     public void save() {
 
         if (!titleTextField.getText().isEmpty()) {
-            Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);;
+            Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
+            ;
             currentDoc.title = titleTextField.getText();
             databaseManager.saveDocuments(currentDoc);
         }
@@ -221,10 +228,10 @@ public class ModifyFileForm {
             }
             databaseManager.saveDocuments(currentDoc);
         }
-        if(!editionTextField.getText().isEmpty()){
+        if (!editionTextField.getText().isEmpty()) {
             Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
-            if (currentDoc.getClass().equals(Book.class)){
-                ((Book)currentDoc).edition = editionTextField.getText();
+            if (currentDoc.getClass().equals(Book.class)) {
+                ((Book) currentDoc).edition = editionTextField.getText();
             }
 
         }
@@ -236,12 +243,12 @@ public class ModifyFileForm {
      */
     @FXML
     public void deleteFile() {
-        Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);;
+        Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
+        ;
         databaseManager.removeDocuments(currentDoc);
     }
 
     /**
-     *
      * @throws Exception
      */
     @FXML
