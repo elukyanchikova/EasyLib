@@ -635,10 +635,13 @@ public class MainForm {
             if (documentSearchPublicationMonthTxt.getText().replace(" ", "").length() > 0) {
                 filter.publicationMonth = documentSearchPublicationMonthTxt.getText().toLowerCase();
             }
+<<<<<<< HEAD
             if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
                 filter.edition = documentSearchEditorTxt.getText().toLowerCase();
+=======
             if(documentSearchEditorTxt.getText().replace(" ", "").length() > 0){
                 filter.editor = documentSearchEditorTxt.getText().toLowerCase();
+>>>>>>> 6a7a18e73d6bc64d42333a96a7f0f0dde6028f3e
             }
             if (documentSearchPublisherTxt.getText().replace(" ", "").length() > 0) {
                 filter.publisher = documentSearchPublisherTxt.getText().toLowerCase();
