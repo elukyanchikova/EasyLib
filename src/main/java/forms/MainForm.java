@@ -134,6 +134,7 @@ public class MainForm {
 
 
     //TODO move to action manager
+
     /**
      * Check out the document
      *
@@ -179,8 +180,10 @@ public class MainForm {
 
 
     //TODO move to action manager
+
     /**
      * Request the document
+     *
      * @return true if the document has requested
      */
     public boolean request(Document document) {
@@ -226,6 +229,7 @@ public class MainForm {
     }
 
     //TODO move to action manager
+
     /**
      * Set new database manager to the form
      */
@@ -234,6 +238,7 @@ public class MainForm {
     }
 
     //TODO move to action manager
+
     /**
      * Set new session to the form
      */
@@ -242,7 +247,7 @@ public class MainForm {
     }
 
     //TODO: add doc
-    public void setActionManager(ActionManager actionManager){
+    public void setActionManager(ActionManager actionManager) {
         this.actionManager = actionManager;
     }
 
@@ -304,7 +309,7 @@ public class MainForm {
         documentSearchMinPriceTxt.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(!newValue.matches("\\d{0,7}"))
+                if (!newValue.matches("\\d{0,7}"))
                     documentSearchMinPriceTxt.setText(oldValue);
             }
         });
@@ -312,7 +317,7 @@ public class MainForm {
         documentSearchMaxPriceTxt.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(!newValue.matches("\\d{0,7}"))
+                if (!newValue.matches("\\d{0,7}"))
                     documentSearchMaxPriceTxt.setText(oldValue);
             }
         });
@@ -321,7 +326,7 @@ public class MainForm {
         documentSearchPublicationYearTxt.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(!newValue.matches("\\d{0,4}"))
+                if (!newValue.matches("\\d{0,4}"))
                     documentSearchPublicationYearTxt.setText(oldValue);
             }
         });
@@ -330,7 +335,7 @@ public class MainForm {
         documentSearchEditionTxt.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(!newValue.matches("\\d{0,2}"))
+                if (!newValue.matches("\\d{0,2}"))
                     documentSearchEditionTxt.setText(oldValue);
             }
         });
@@ -342,12 +347,18 @@ public class MainForm {
     }
 
     //TODO: update because of adding new permissions
+
     /**
      * Load special permission buttons' state
      */
     private void loadHighPermissionInterface() {
-        editBtn.setVisible(session.getUser().isHasModifyPerm() || session.getUser().isHasDeletePerm() || session.getUser().isHasAddPerm() ||
-        session.getUser().isHasEditingLibrarianPerm());
+        boolean b = session.getUser().isHasModifyPerm();
+        boolean b1 = session.getUser().isHasDeletePerm();
+        boolean b2 = session.getUser().isHasAddPerm();
+        boolean b3 = session.getUser().isHasEditingLibrarianPerm();
+
+        editBtn.setVisible(session.getUser().isHasEditPerm() || session.getUser().isHasModifyPerm() || session.getUser().isHasDeletePerm() || session.getUser().isHasAddPerm() ||
+                session.getUser().isHasEditingLibrarianPerm());
         returnBtn.setVisible(session.getUser().isHasReturnPerm());
         infoBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
         manageBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
@@ -355,7 +366,7 @@ public class MainForm {
 
     //TODO: add doc
     //TODO: move list of types to document
-    private void loadSearchPane(){
+    private void loadSearchPane() {
         ArrayList<String> documentTypes = new ArrayList<>();
         documentTypes.add("");
         documentTypes.add(Book.class.getName().replace("documents.", ""));
@@ -365,11 +376,11 @@ public class MainForm {
         documentSearchTypeBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
             public ListCell<String> call(ListView<String> param) {
-                return new ListCell<String>(){
+                return new ListCell<String>() {
                     @Override
                     protected void updateItem(String type, boolean flag) {
                         super.updateItem(type, flag);
-                        if(type != null)
+                        if (type != null)
                             setText(type);
                     }
                 };
@@ -417,6 +428,7 @@ public class MainForm {
     }
 
     //TODO: move to Action Manager
+
     /**
      * Update the user card for current session
      */
@@ -499,6 +511,7 @@ public class MainForm {
     }
 
     //TODO: reduce java doc
+
     /**
      * Click on check out button event
      * Check out or request(temp) document
@@ -570,75 +583,78 @@ public class MainForm {
      * Open Booking Requests Form
      */
     @FXML
-    public void clickOnManageBtn() throws Exception{
+    public void clickOnManageBtn() throws Exception {
         ManageForm manageForm = new ManageForm();
-        manageForm.startForm(stage,session, databaseManager, actionManager);
+        manageForm.startForm(stage, session, databaseManager, actionManager);
     }
 
     @FXML
-    public void clickOnFilterBtn(){
+    public void clickOnFilterBtn() {
         Filter filter = new Filter();
-        if(documentSearchTitleTxt.getText().replace(" ", "").length() > 0){
+        if (documentSearchTitleTxt.getText().replace(" ", "").length() > 0) {
             filter.title = documentSearchTitleTxt.getText().replace(" ", "");
         }
-        if(documentSearchKeywordsTxt.getText().replace(" ", "").length() > 0){
+        if (documentSearchKeywordsTxt.getText().replace(" ", "").length() > 0) {
             String[] keywords = documentSearchKeywordsTxt.getText().split("[, ]+");
-            for(String keyword: keywords){
+            for (String keyword : keywords) {
                 filter.keywords.add(keyword.toLowerCase());
             }
         }
 
-        if(documentSearchAuthorsTxt.getText().replace(" ", "").length() > 0){
+        if (documentSearchAuthorsTxt.getText().replace(" ", "").length() > 0) {
             String[] authors = documentSearchKeywordsTxt.getText().split("[, ]+");
-            for(String author: authors){
+            for (String author : authors) {
                 filter.authors.add(author.toLowerCase());
             }
         }
 
-        if(documentSearchMinPriceTxt.getText().replace(" ", "").length() > 0)
-        {
+        if (documentSearchMinPriceTxt.getText().replace(" ", "").length() > 0) {
             filter.minPrice = Integer.parseInt(documentSearchMinPriceTxt.getText());
         }
-        if(documentSearchMaxPriceTxt.getText().replace(" ", "").length() > 0)
-        {
+        if (documentSearchMaxPriceTxt.getText().replace(" ", "").length() > 0) {
             filter.maxPrice = Integer.parseInt(documentSearchMaxPriceTxt.getText());
         }
-        if(documentSearchIsAvailableCheck.isSelected()){
+        if (documentSearchIsAvailableCheck.isSelected()) {
             filter.isAvailable = true;
         }
         int i = documentSearchTypeBox.getSelectionModel().getSelectedIndex();
-        if( i == 0 || i == 1){
-            if( i == 1) filter.documentType = "book";
-            if(documentSearchIsBestsellerCheck.isSelected()){
+        if (i == 0 || i == 1) {
+            if (i == 1) filter.documentType = "book";
+            if (documentSearchIsBestsellerCheck.isSelected()) {
                 filter.isBestseller = true;
             }
-            if(documentSearchPublicationYearTxt.getText().replace(" ", "").length() > 0){
+            if (documentSearchPublicationYearTxt.getText().replace(" ", "").length() > 0) {
                 filter.publicationYear = Integer.parseInt(documentSearchPublicationYearTxt.getText());
             }
-            if(documentSearchEditionTxt.getText().replace(" ", "").length() > 0){
+            if (documentSearchEditionTxt.getText().replace(" ", "").length() > 0) {
                 filter.edition = documentSearchEditionTxt.getText();
             }
-            if(documentSearchPublisherTxt.getText().replace(" ", "").length() > 0){
+            if (documentSearchPublisherTxt.getText().replace(" ", "").length() > 0) {
                 filter.publisher = documentSearchPublisherTxt.getText().toLowerCase();
             }
         }
-        if(i == 2) filter.documentType = "avmaterial";
-        if(i == 0 || i == 3){
-            if( i == 3) filter.documentType = "journalarticle";
-            if(documentSearchPublicationYearTxt.getText().replace(" ", "").length() > 0){
+        if (i == 2) filter.documentType = "avmaterial";
+        if (i == 0 || i == 3) {
+            if (i == 3) filter.documentType = "journalarticle";
+            if (documentSearchPublicationYearTxt.getText().replace(" ", "").length() > 0) {
                 filter.publicationYear = Integer.parseInt(documentSearchPublicationYearTxt.getText());
             }
 
-            if(documentSearchPublicationMonthTxt.getText().replace(" ", "").length() > 0){
+            if (documentSearchPublicationMonthTxt.getText().replace(" ", "").length() > 0) {
                 filter.publicationMonth = documentSearchPublicationMonthTxt.getText().toLowerCase();
             }
+<<<<<<< HEAD
+            if (documentSearchEditorTxt.getText().replace(" ", "").length() > 0) {
+                filter.edition = documentSearchEditorTxt.getText().toLowerCase();
+=======
             if(documentSearchEditorTxt.getText().replace(" ", "").length() > 0){
                 filter.editor = documentSearchEditorTxt.getText().toLowerCase();
+>>>>>>> 6a7a18e73d6bc64d42333a96a7f0f0dde6028f3e
             }
-            if(documentSearchPublisherTxt.getText().replace(" ", "").length() > 0){
+            if (documentSearchPublisherTxt.getText().replace(" ", "").length() > 0) {
                 filter.publisher = documentSearchPublisherTxt.getText().toLowerCase();
             }
-            if(documentSearchJournalNameTxt.getText().replace(" ", "").length() > 0){
+            if (documentSearchJournalNameTxt.getText().replace(" ", "").length() > 0) {
                 filter.journalName = documentSearchJournalNameTxt.getText().toLowerCase();
             }
         }
@@ -700,15 +716,15 @@ public class MainForm {
             notificationLbl.setText(session.userCard.notifications.get(lastInd).getMessage(databaseManager));
             session.userCard.notifications.remove(session.userCard.notifications.size() - 1);
         }
-        if(session.userCard.notifications.size() <= 0) notificationBtn.setVisible(false);
+        if (session.userCard.notifications.size() <= 0) notificationBtn.setVisible(false);
     }
 
     //TODO: add doc
     //TODO: move list of types in document
     @FXML
-    public void selectSearchTypeComboBox(){
+    public void selectSearchTypeComboBox() {
 
-        switch (documentSearchTypeBox.getSelectionModel().getSelectedIndex()){
+        switch (documentSearchTypeBox.getSelectionModel().getSelectedIndex()) {
             case 0:
                 documentSearchPublicationYearTxt.setVisible(true);
                 documentSearchPublicationMonthTxt.setVisible(true);

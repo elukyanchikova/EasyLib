@@ -19,7 +19,7 @@ public class AddUserForm {
     private Session session;
     private DatabaseManager databaseManager;
     private ActionManager actionManager;
-   //int openUserCardID=-1;
+    //int openUserCardID=-1;
 
     @FXML
     private TextField nameTextField;
@@ -66,9 +66,11 @@ public class AddUserForm {
         userTypeTextField = (TextField) scene.lookup("#userTypeField");
         phoneNumberTextField = (TextField) scene.lookup("#phoneNumberField");
         addressTextField = (TextField) scene.lookup("#addressField");
-        checkBoxPriv1 = (CheckBox) scene.lookup("#checkBoxPriv1") ;
-        checkBoxPriv2 = (CheckBox) scene.lookup("#checkBoxPriv2") ;
-        checkBoxPriv3 = (CheckBox) scene.lookup("#checkBoxPriv3") ;
+        checkBoxPriv1 = (CheckBox) scene.lookup("#checkBoxPriv1");
+        checkBoxPriv2 = (CheckBox) scene.lookup("#checkBoxPriv2");
+        checkBoxPriv3 = (CheckBox) scene.lookup("#checkBoxPriv3");
+
+
     }
 
     /**
@@ -76,7 +78,7 @@ public class AddUserForm {
      * button for collecting information from the textFields and create a new UserCard
      */
     @FXML
-    public void save() {
+    public void save() throws Exception {
 
         UserCard newUserCard = null;
         String surname = "None";
@@ -96,68 +98,78 @@ public class AddUserForm {
             address = phoneNumberTextField.getText();
         }
 
+        if (session.getUser().isHasEditingLibrarianPerm()) {
+            if (userTypeTextField.getText().toLowerCase().equals("librarian")) {
+                newUserCard = new UserCard(name,
+                        surname, new Librarian(),
+                        phoneNumber,
+                        address);
+                databaseManager.saveUserCard(newUserCard);
+                if (checkBoxPriv1.isSelected()) {
+                    ((Librarian) newUserCard.userType).setPriv1();
+                    databaseManager.saveUserCard(newUserCard);
+                }
+                if (checkBoxPriv2.isSelected()) {
+                    ((Librarian) newUserCard.userType).setPriv2();
+                    databaseManager.saveUserCard(newUserCard);
+                }
+                if (checkBoxPriv3.isSelected()) {
+                    ((Librarian) newUserCard.userType).setPriv3();
+                    databaseManager.saveUserCard(newUserCard);
+                }
+            } else {
+                if (userTypeTextField.getText().toLowerCase().equals("faculty")) {
+                    newUserCard = new UserCard(name,
+                            surname,
+                            new Faculty(),
+                            phoneNumber,
+                            address);
+                } else if (userTypeTextField.getText().toLowerCase().equals("student")) {
+                    newUserCard = new UserCard(nameTextField.getText(),
+                            surname,
+                            new Student(),
+                            phoneNumber,
+                            address);
 
-        if (userTypeTextField.getText().toLowerCase().equals("librarian")) {
-            newUserCard = new UserCard(name,
-                    surname, new Librarian(),
-                    phoneNumber,
-                    address);
-            if(checkBoxPriv1.isSelected()) {
-                    ( (Librarian)newUserCard.userType).setPriv1();
+                } else if (userTypeTextField.getText().toLowerCase().equals("ta")) {
+                    newUserCard = new UserCard(nameTextField.getText(),
+                            surname,
+                            new TA(),
+                            phoneNumber,
+                            address);
+
+                } else if (userTypeTextField.getText().toLowerCase().equals(("visitingprofessor"))) {
+                    newUserCard = new UserCard(nameTextField.getText(),
+                            surname,
+                            new VisitingProfessor(),
+                            phoneNumber,
+                            address);
+
+                } else if (userTypeTextField.getText().toLowerCase().equals("professor")) {
+                    newUserCard = new UserCard(nameTextField.getText(),
+                            surname,
+                            new Professor(),
+                            phoneNumber,
+                            address);
+
+                } else if (userTypeTextField.getText().toLowerCase().equals("instructor")) {
+                    newUserCard = new UserCard(nameTextField.getText(),
+                            surname,
+                            new Instructor(),
+                            phoneNumber,
+                            address);
+
+                } else {
+                    newUserCard = new UserCard(name, surname, new Guest(), phoneNumber, address);
+                }
+                databaseManager.saveUserCard(newUserCard);
             }
-            if(checkBoxPriv2.isSelected()) {
-                ( (Librarian)newUserCard.userType).setPriv2();}
-            if(checkBoxPriv3.isSelected()) {
-                ( (Librarian)newUserCard.userType).setPriv3();}
-
-        } else if (userTypeTextField.getText().toLowerCase().equals("faculty")) {
-            newUserCard = new UserCard(name,
-                    surname,
-                    new Faculty(),
-                    phoneNumber,
-                    address);
-        } else if (userTypeTextField.getText().toLowerCase().equals("student")) {
-            newUserCard = new UserCard(nameTextField.getText(),
-                    surname,
-                    new Student(),
-                    phoneNumber,
-                    address);
-
-        } else if (userTypeTextField.getText().toLowerCase().equals("ta")) {
-            newUserCard = new UserCard(nameTextField.getText(),
-                    surname,
-                    new TA(),
-                    phoneNumber,
-                    address);
-
-        } else if (userTypeTextField.getText().toLowerCase().equals(("visitingprofessor"))) {
-            newUserCard = new UserCard(nameTextField.getText(),
-                    surname,
-                    new VisitingProfessor(),
-                    phoneNumber,
-                    address);
-
-        } else if (userTypeTextField.getText().toLowerCase().equals("professor")) {
-            newUserCard = new UserCard(nameTextField.getText(),
-                    surname,
-                    new Professor(),
-                    phoneNumber,
-                    address);
-
-        } else  if (userTypeTextField.getText().toLowerCase().equals("instructor")) {
-            newUserCard = new UserCard(nameTextField.getText(),
-                    surname,
-                    new Instructor(),
-                    phoneNumber,
-                    address);
-
-        } else {
-            newUserCard = new UserCard(name, surname, new Guest(), phoneNumber, address);
         }
         databaseManager.saveUserCard(newUserCard);
         actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.ADD_USER_ACTION_ID, newUserCard));
     }
 
+    }
     /**
      * Click ob button "back" event
      * button for coming back to the EditForm
@@ -165,9 +177,7 @@ public class AddUserForm {
      */
 
     @FXML
-    public void back() throws Exception {
+    public void back() throws Exception{
         EditForm mainForm = new EditForm();
-        mainForm.startForm(stage, session, databaseManager,actionManager);
-    }
-
-}
+        mainForm.startForm(stage, session, databaseManager, actionManager);
+    }}
