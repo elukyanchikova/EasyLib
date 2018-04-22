@@ -277,7 +277,7 @@ public class TestCases2 {
         Assert.assertEquals(databaseManager.getUserCard(1100).name,"Elvira");
         Assert.assertEquals(databaseManager.getUserCard(1100).address,"Via del Corso, 22");
         Assert.assertEquals(databaseManager.getUserCard(1100).phoneNumb,"30003");
-        Assert.assertEquals(databaseManager.getUserCard(1100).userType.getClass().getName().replace("users.userTypes",""),"Student");
+        Assert.assertEquals(databaseManager.getUserCard(1100).userType.getClass().getName().replace("users.userTypes",""),".Student");
         Assert.assertEquals(databaseManager.getUserCard(1100).getId(),1100);
 
     }
@@ -312,6 +312,8 @@ public class TestCases2 {
         MainForm mainForm = new MainForm();
         mainForm.setSession(session);
         mainForm.setDatabaseManager(databaseManager);
+        mainForm.setActionManager(databaseManager.actionManager);
+
 
         mainForm.selectDocument(0);
         mainForm.checkOut(databaseManager.getDocuments(1));
@@ -330,18 +332,18 @@ public class TestCases2 {
         Assert.assertEquals(databaseManager.getUserCard(1010).name,"Sergey");
         Assert.assertEquals(databaseManager.getUserCard(1010).address,"Via Margutta, 3");
         Assert.assertEquals(databaseManager.getUserCard(1010).phoneNumb,"30001");
-        Assert.assertEquals(databaseManager.getUserCard(1010).userType.getClass().getName().replace("users.",""),"Faculty");
+        Assert.assertEquals(databaseManager.getUserCard(1010).userType.getClass().getName().replace("users.",""),"userTypes.Faculty");
         Assert.assertEquals(databaseManager.getUserCard(1010).getId(),1010);
-        Assert.assertEquals(databaseManager.getUserCard(1010).checkedOutCopies.size(), 1);
-        Assert.assertEquals(databaseManager.getUserCard(1010).checkedOutCopies.get(0).getDueDate(), "1 April");
+        Assert.assertEquals(databaseManager.getUserCard(1010).checkedOutCopies.size(), 2);
+        Assert.assertEquals(databaseManager.getUserCard(1010).checkedOutCopies.get(0).getDueDate(), "2 April");
 
         Assert.assertEquals(databaseManager.getUserCard(1100).name,"Elvira");
         Assert.assertEquals(databaseManager.getUserCard(1100).address,"Via del Corso, 22");
         Assert.assertEquals(databaseManager.getUserCard(1100).phoneNumb,"30003");
-        Assert.assertEquals(databaseManager.getUserCard(1100).userType.getClass().getName().replace("users.",""),"Student");
+        Assert.assertEquals(databaseManager.getUserCard(1100).userType.getClass().getName().replace("users.",""),"userTypes.Student");
         Assert.assertEquals(databaseManager.getUserCard(1100).getId(),1100);
         Assert.assertEquals(databaseManager.getUserCard(1100).checkedOutCopies.size(), 1);
-        Assert.assertEquals(databaseManager.getUserCard(1100).checkedOutCopies.get(0).getDueDate(), "18 March");
+        Assert.assertEquals(databaseManager.getUserCard(1100).checkedOutCopies.get(0).getDueDate(), "19 March");
 
     }
 
@@ -506,6 +508,7 @@ public class TestCases2 {
         session.endSession();
 
         DatabaseManager databaseManager1 = new DatabaseManager(DATABASE_FILE_NAME);
+
 
         Assert.assertEquals(databaseManager1.getDocuments(1).availableCopies.size(), 3);
         Assert.assertEquals(databaseManager1.getDocuments(2).availableCopies.size(), 2);
