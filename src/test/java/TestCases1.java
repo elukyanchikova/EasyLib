@@ -1,4 +1,4 @@
-/*
+
 
 import documents.Book;
 import documents.Copy;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class TestCases1 {
 
-    */
+    /*
 /**
      * Initial state: 1 patron, 1 librian, 2 copies of book 'b'(not a reference)
      * Action: Patron p checks out a copy of book b
@@ -445,6 +445,6 @@ public class TestCases1 {
 
         Assert.assertTrue(session.userCard.checkedOutCopies.size() == numberOfDocs+ 1);
         Assert.assertEquals(session.userCard.checkedOutCopies.get(session.userCard.checkedOutCopies.size()-1), documents.get(doc1ID));
-    }
+    }*/
 }
-*/
+
