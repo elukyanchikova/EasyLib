@@ -96,6 +96,8 @@ public class ModifyFileForm {
         this.scene = new Scene(root, 700, 700);
 
         deleteFileBtn = (Button) scene.lookup("#deleteFileBtn");
+        if(session.getUser().isHasDeletePerm()) deleteFileBtn.setVisible(true);
+        else deleteFileBtn.setVisible(false);
         saveBtn = (Button) scene.lookup("#saveBtn");
         backBtn = (Button) scene.lookup("#backBtn");
 

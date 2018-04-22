@@ -99,6 +99,8 @@ public class ModifyUserForm {
         this.scene = new Scene(root, 700, 700);
 
         deleteUserBtn = (Button) scene.lookup("#deleteUserBtn");
+        if(session.getUser().isHasDeletePerm()) deleteUserBtn.setVisible(true);
+        else deleteUserBtn.setVisible(false);
         saveBtn = (Button) scene.lookup("#saveBtn");
         backBtn = (Button) scene.lookup("#backBtn");
 
@@ -149,6 +151,8 @@ public class ModifyUserForm {
         checkBoxPriv1.setVisible(b);
         checkBoxPriv2.setVisible(b);
         checkBoxPriv3.setVisible(b);
+        if(user.userType.getClass().isAssignableFrom(Librarian.class)) deleteUserBtn.setVisible(b);
+        else deleteUserBtn.setVisible(true);
     }
 
 
