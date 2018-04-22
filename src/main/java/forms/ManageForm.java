@@ -79,6 +79,10 @@ public class ManageForm {
         this.session = session;
     }
 
+    public void setActionManager(ActionManager actionManager) {
+        this.actionManager = actionManager;
+    }
+
     private void sceneInitialization() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/ManageForm.fxml"));
         loader.setController(this);
