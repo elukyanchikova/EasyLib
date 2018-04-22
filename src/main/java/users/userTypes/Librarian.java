@@ -42,34 +42,51 @@ public class Librarian extends users.userTypes.UserType {
         }
     }
 
+    /**
+     * method for setting accessPermission and ModifyPermission to the librarian
+     */
     public void setPriv1() {
 
         this.hasAccessPerm = true;
         this.hasModifyPerm = true;
     }
 
-
+    /**
+     * method for setting accessPermission, ModifyPermission, addPermission to the librarian
+     */
     public void setPriv2() {
         this.setPriv1();
         this.hasAddPerm = true;
     }
 
+    /**
+     * method for setting accessPermission, ModifyPermission, addPermission, deletePermission to the librarian
+     */
     public void setPriv3() {
         this.setPriv2();
         this.hasDeletePerm = true;
     }
 
+    /**
+     * method for resetting accessPermission, ModifyPermission, addPermission, deletePermission to the librarian
+     */
     public void resetPriv1() {
         this.resetPriv2();
         this.hasAccessPerm = false;
         this.hasModifyPerm = false;
     }
 
+    /**
+     * method for resetting addPermission, deletePermission to the librarian
+     */
     public void resetPriv2() {
         this.resetPriv3();
         this.hasAddPerm = false;
     }
 
+    /**
+     * method for resetting deletePermission to the librarian
+     */
     public void resetPriv3() {
         this.hasDeletePerm = false;
     }
