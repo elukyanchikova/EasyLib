@@ -63,11 +63,11 @@ public class EditForm {
         addUserBtn = (Button) scene.lookup("#addUserBtn");
         modifyUserBtn = (Button) scene.lookup("#modifyUserBtn");
         backBtn = (Button) scene.lookup("#backBtn");
-        modifyFileBtn.setVisible(!session.getUser().isHasEditingLibrarianPerm());
-        addFileBtn.setVisible(!session.getUser().isHasEditingLibrarianPerm() && session.getUser().isHasAddPerm());
-        addUserBtn.setVisible(session.getUser().isHasAddPerm() ||session.getUser().isHasEditingLibrarianPerm());
-        modifyUserBtn.setVisible(session.getUser().isHasModifyPerm() || session.getUser().isHasEditingLibrarianPerm());
 
+        modifyFileBtn.setVisible(/*!session.getUser().isHasEditingLibrarianPerm() ||*/ session.getUser().isHasModifyPerm());
+        addFileBtn.setVisible(session.getUser().isHasAddPerm());
+        modifyUserBtn.setVisible(session.getUser().isHasEditingLibrarianPerm() || session.getUser().isHasModifyPerm());
+        addUserBtn.setVisible(session.getUser().isHasEditingLibrarianPerm() || session.getUser().isHasAddPerm());
     }
 
     /**

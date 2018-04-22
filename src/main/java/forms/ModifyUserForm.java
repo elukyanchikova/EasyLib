@@ -164,42 +164,28 @@ public class ModifyUserForm {
             chosenUserSuper = chosenUser;
             loadHighPermissionInterface(chosenUser);
 
+            boolean b1 = String.valueOf(chosenUser.userType).contains("Librarian");
+            boolean b2 = !(b1 || String.valueOf(chosenUser.userType).contains("Admin"));
             if (session.getUser().isHasEditingLibrarianPerm()) {
-                if (!String.valueOf(chosenUser.userType).contains("Librarian")) {
-                    saveBtn.setVisible(false);
-                    deleteUserBtn.setVisible(false);
-                } else {
-                    saveBtn.setVisible(true);
-                    deleteUserBtn.setVisible(true);
-                }
+                saveBtn.setVisible(b1);
+                deleteUserBtn.setVisible(b1);
             } else {
-                if (session.getUser().isHasModifyPerm()) {
-                    if ((String.valueOf(chosenUser.userType).contains("Librarian"))
-                            || (String.valueOf(chosenUser.userType).contains("Admin"))) {
-                        saveBtn.setVisible(false);
-                    } else {
-                        saveBtn.setVisible(true);
-
+                saveBtn.setVisible(b2);
                     }
+
+                if (session.getUser().isHasDeletePerm()) {
+                    deleteUserBtn.setVisible(b2);
+
                 }
-                else if (session.getUser().isHasDeletePerm()) {
-                    if ((String.valueOf(chosenUser.userType).contains("Librarian"))
-                            || (String.valueOf(chosenUser.userType).contains("Admin"))) {
-                        deleteUserBtn.setVisible(false);
-                    } else {
-                        deleteUserBtn.setVisible(true);
 
-                    }
-
+                nameTextField.setText(chosenUser.name);
+                surnameTextField.setText(chosenUser.surname);
+                addressTextField.setText(chosenUser.address);
+                phoneNumberTextField.setText(chosenUser.phoneNumb);
+                userTypeTextField.setText(chosenUser.userType.getClass().getName());
             }
-
-            nameTextField.setText(chosenUser.name);
-            surnameTextField.setText(chosenUser.surname);
-            addressTextField.setText(chosenUser.address);
-            phoneNumberTextField.setText(chosenUser.phoneNumb);
-            userTypeTextField.setText(chosenUser.userType.getClass().getName());
         }
-    }}
+
 
     /**
      * choose a user for starting new session
@@ -257,7 +243,20 @@ public class ModifyUserForm {
             currentUser.phoneNumb = phoneNumberTextField.getText();
             databaseManager.saveUserCard(currentUser);
         }
-
+        if(Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())) {
+            if (checkBoxPriv1.isSelected()) {
+                ((Librarian) databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType).setPriv1();
+                databaseManager.saveUserCard(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]));
+            }
+            if (checkBoxPriv2.isSelected()) {
+                ((Librarian) databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType).setPriv2();
+                databaseManager.saveUserCard(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]));
+            }
+            if (checkBoxPriv3.isSelected()) {
+                ((Librarian) databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType).setPriv3();
+                databaseManager.saveUserCard(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]));
+            }
+        }
     }
 
     /**
@@ -300,9 +299,13 @@ public class ModifyUserForm {
 
     @FXML
     public void setPrivilege3() {
-        UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
+        //UserCard us = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
         if (Librarian.class.isAssignableFrom(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).getClass())) {
-            ((Librarian) us.userType).setPriv3();
+            ((Librarian) databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType).setPriv3();
         }
+        boolean b1 = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType.isHasAddPerm();
+        boolean b2= databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType.isHasModifyPerm();
+        boolean b3= databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType.isHasDeletePerm();
+        boolean b5 = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType.isHasAddPerm();
     }
 }

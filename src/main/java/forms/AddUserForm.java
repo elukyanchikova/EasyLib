@@ -100,13 +100,17 @@ public class AddUserForm {
                     surname, new Librarian(),
                     phoneNumber,
                     address);
+            databaseManager.saveUserCard(newUserCard);
             if(checkBoxPriv1.isSelected()) {
                     ( (Librarian)newUserCard.userType).setPriv1();
+                databaseManager.saveUserCard(newUserCard);
             }
             if(checkBoxPriv2.isSelected()) {
-                ( (Librarian)newUserCard.userType).setPriv2();}
+                ( (Librarian)newUserCard.userType).setPriv2();
+                databaseManager.saveUserCard(newUserCard);}
             if(checkBoxPriv3.isSelected()) {
-                ( (Librarian)newUserCard.userType).setPriv3();}
+                ( (Librarian)newUserCard.userType).setPriv3();
+                databaseManager.saveUserCard(newUserCard);}
 
         } else if (userTypeTextField.getText().toLowerCase().equals("faculty")) {
             newUserCard = new UserCard(name,

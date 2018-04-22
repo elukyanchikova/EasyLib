@@ -146,12 +146,8 @@ public class ModifyFileForm {
             Document chosenDocument = selectFile(documentListView.getSelectionModel().getSelectedIndex());
             titleTextField.setText(chosenDocument.title);
             priceTextField.setText(Integer.toString(chosenDocument.price));
-            if (session.getUser().isHasDeletePerm()) {
-                deleteFileBtn.setVisible(true);
-            }
-            if (session.getUser().isHasModifyPerm()) {
-                saveBtn.setVisible(true);
-            }
+            boolean d = session.getUser().isHasDeletePerm();
+            deleteFileBtn.setVisible(d);
 
         }
     }
