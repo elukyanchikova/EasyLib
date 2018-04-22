@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class TestCases2 {
 
     final static String DATABASE_FILE_NAME = "TestCases";
+
     /**
      * Initial state:  system does not have any documents, any patron.
      * The system only contains one user who is a librarian.
@@ -22,7 +23,7 @@ public class TestCases2 {
      * * patrons p1, p2 and p3
      * Effect: number of documents in the System is 8 and the number of users is 4.
      */
-   @Test
+    @Test
     public void TestCase1() {
 
         //Initial state
@@ -206,8 +207,9 @@ public class TestCases2 {
      * Initial state: TC1
      * Action: librarian checks the information of patron p1 and p3
      * Effect: got all the information
-     */@Test
-   public void TestCase3() {
+     */
+    @Test
+    public void TestCase3() {
         //Initial state
         TestCase1();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
@@ -241,8 +243,8 @@ public class TestCases2 {
         Assert.assertTrue("id of p1 is correct.", ((first.getId() == databaseManager.getUserCard(1010).getId())
                 && (first.getId() == 1010)));
         Assert.assertTrue("User Type of p1 is correct", Faculty.class.isAssignableFrom(first.userType.getClass()));
-        Assert.assertTrue("List of checked out documents is correct", first.checkedOutCopies== databaseManager.getUserCard(1010).checkedOutCopies);
-        for (int i = 1; i <= first.checkedOutCopies.size() ; i++) {
+        Assert.assertTrue("List of checked out documents is correct", first.checkedOutCopies == databaseManager.getUserCard(1010).checkedOutCopies);
+        for (int i = 1; i <= first.checkedOutCopies.size(); i++) {
             Assert.assertTrue("List of due dates of checked out documents is correct", first.checkedOutCopies.get(i).getDueDate().equals(databaseManager.getUserCard(1010).checkedOutCopies));
         }
         /////////////////////////////////////////////////////////////////////////////////////////////
@@ -257,8 +259,8 @@ public class TestCases2 {
         Assert.assertTrue("id of p2 is correct.", ((third.getId() == databaseManager.getUserCard(1100).getId())
                 && (third.getId() == 1100)));
         Assert.assertTrue("User Type of p2 is correct", Student.class.isAssignableFrom(third.userType.getClass()));
-        Assert.assertTrue("List of checked out documents is correct", third.checkedOutCopies== databaseManager.getUserCard(1100).checkedOutCopies);
-        for (int i = 1; i <= third.checkedOutCopies.size() ; i++) {
+        Assert.assertTrue("List of checked out documents is correct", third.checkedOutCopies == databaseManager.getUserCard(1100).checkedOutCopies);
+        for (int i = 1; i <= third.checkedOutCopies.size(); i++) {
             Assert.assertTrue("List of due dates of checked out documents is correct", third.checkedOutCopies.get(i).getDueDate().equals(databaseManager.getUserCard(1100).checkedOutCopies));
         }
     }
@@ -266,7 +268,8 @@ public class TestCases2 {
     /**
      * Initial state:  TC2
      * Action: The librarian checks the information of patron p2 and p3
-     * Effect: got the information about p3 but not p3*/
+     * Effect: got the information about p3 but not p3
+     */
     @Test
     public void TestCase4() {
         TestCase2();
@@ -274,18 +277,19 @@ public class TestCases2 {
 
         Assert.assertNull(databaseManager.getUserCard(1011));
 
-        Assert.assertEquals(databaseManager.getUserCard(1100).name,"Elvira");
-        Assert.assertEquals(databaseManager.getUserCard(1100).address,"Via del Corso, 22");
-        Assert.assertEquals(databaseManager.getUserCard(1100).phoneNumb,"30003");
-        Assert.assertEquals(databaseManager.getUserCard(1100).userType.getClass().getName().replace("users.userTypes",""),".Student");
-        Assert.assertEquals(databaseManager.getUserCard(1100).getId(),1100);
+        Assert.assertEquals(databaseManager.getUserCard(1100).name, "Elvira");
+        Assert.assertEquals(databaseManager.getUserCard(1100).address, "Via del Corso, 22");
+        Assert.assertEquals(databaseManager.getUserCard(1100).phoneNumb, "30003");
+        Assert.assertEquals(databaseManager.getUserCard(1100).userType.getClass().getName().replace("users.userTypes", ""), ".Student");
+        Assert.assertEquals(databaseManager.getUserCard(1100).getId(), 1100);
 
     }
 
     /**
      * Initial state: TC2
      * Action: Patron p2 checks out book b1
-     * Effect: nothing happen*/
+     * Effect: nothing happen
+     */
     @Test
     public void TestCase5() {
         TestCase2();
@@ -301,7 +305,8 @@ public class TestCases2 {
      * p3 checks out b1
      * p1 checks out b2
      * the librarian checks the information of p1 and p3
-     * Effect: correct information about users*/
+     * Effect: correct information about users
+     */
     @Test
     public void TestCase6() {
         TestCase2();
@@ -318,7 +323,7 @@ public class TestCases2 {
         mainForm.selectDocument(0);
         mainForm.checkOut(databaseManager.getDocuments(1));
         ///////////////////////////////////////////////////////////
-        Session session1 = new Session((databaseManager.getUserCard(1100).userType),5,3);
+        Session session1 = new Session((databaseManager.getUserCard(1100).userType), 5, 3);
         session1.userCard = databaseManager.getUserCard(1100);
         mainForm.setSession(session1);
 
@@ -329,19 +334,19 @@ public class TestCases2 {
         mainForm.checkOut(databaseManager.getDocuments(2));
         ///////////////////////////////////////////////////////////
 
-        Assert.assertEquals(databaseManager.getUserCard(1010).name,"Sergey");
-        Assert.assertEquals(databaseManager.getUserCard(1010).address,"Via Margutta, 3");
-        Assert.assertEquals(databaseManager.getUserCard(1010).phoneNumb,"30001");
-        Assert.assertEquals(databaseManager.getUserCard(1010).userType.getClass().getName().replace("users.",""),"userTypes.Faculty");
-        Assert.assertEquals(databaseManager.getUserCard(1010).getId(),1010);
+        Assert.assertEquals(databaseManager.getUserCard(1010).name, "Sergey");
+        Assert.assertEquals(databaseManager.getUserCard(1010).address, "Via Margutta, 3");
+        Assert.assertEquals(databaseManager.getUserCard(1010).phoneNumb, "30001");
+        Assert.assertEquals(databaseManager.getUserCard(1010).userType.getClass().getName().replace("users.", ""), "userTypes.Faculty");
+        Assert.assertEquals(databaseManager.getUserCard(1010).getId(), 1010);
         Assert.assertEquals(databaseManager.getUserCard(1010).checkedOutCopies.size(), 2);
         Assert.assertEquals(databaseManager.getUserCard(1010).checkedOutCopies.get(0).getDueDate(), "2 April");
 
-        Assert.assertEquals(databaseManager.getUserCard(1100).name,"Elvira");
-        Assert.assertEquals(databaseManager.getUserCard(1100).address,"Via del Corso, 22");
-        Assert.assertEquals(databaseManager.getUserCard(1100).phoneNumb,"30003");
-        Assert.assertEquals(databaseManager.getUserCard(1100).userType.getClass().getName().replace("users.",""),"userTypes.Student");
-        Assert.assertEquals(databaseManager.getUserCard(1100).getId(),1100);
+        Assert.assertEquals(databaseManager.getUserCard(1100).name, "Elvira");
+        Assert.assertEquals(databaseManager.getUserCard(1100).address, "Via del Corso, 22");
+        Assert.assertEquals(databaseManager.getUserCard(1100).phoneNumb, "30003");
+        Assert.assertEquals(databaseManager.getUserCard(1100).userType.getClass().getName().replace("users.", ""), "userTypes.Student");
+        Assert.assertEquals(databaseManager.getUserCard(1100).getId(), 1100);
         Assert.assertEquals(databaseManager.getUserCard(1100).checkedOutCopies.size(), 1);
         Assert.assertEquals(databaseManager.getUserCard(1100).checkedOutCopies.get(0).getDueDate(), "19 March");
 
@@ -353,10 +358,11 @@ public class TestCases2 {
      * p1 checks out books b1, b2, b3 and video material av1
      * p2 checks out books b1, b2 and video material av2
      * the librarian checks the information of p1 and p2
-     * Effect: correct information about users*/
+     * Effect: correct information about users
+     */
     @Test
-    public void TestCase7(){
-       /* TestCase1();
+    public void TestCase7() {
+        TestCase1();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
 
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -365,6 +371,7 @@ public class TestCases2 {
         MainForm mainForm = new MainForm();
         mainForm.setSession(session);
         mainForm.setDatabaseManager(databaseManager);
+        mainForm.setActionManager(databaseManager.actionManager);
 
         mainForm.selectDocument(0);
         mainForm.checkOut(databaseManager.getDocuments(1));
@@ -384,7 +391,7 @@ public class TestCases2 {
         mainForm.selectDocument(1);
         mainForm.checkOut(databaseManager.getDocuments(2));
         mainForm.selectDocument(4);
-        mainForm.checkOut(databaseManager.getDocuments(5 ));
+        mainForm.checkOut(databaseManager.getDocuments(5));
         //////////////////////////////////////////////////////////////////////////////////////////
         Session session2 = new Session((databaseManager.getUserCard(1).userType), 5, 3);
         session2.userCard = databaseManager.getUserCard(1);
@@ -395,34 +402,34 @@ public class TestCases2 {
         Assert.assertEquals(user1.address, "Via Margutta, 3");
         Assert.assertEquals(user1.phoneNumb, "30001");
         Assert.assertEquals(user1.getId(), 1010);
-        Assert.assertEquals(user1.userType.getClass().getName().replace("users.", ""), "Faculty");
+        Assert.assertEquals(user1.userType.getClass().getName().replace("users.", ""), "userTypes.Faculty");
 
-        Assert.assertEquals( 3,user1.checkedOutCopies.size());
+        Assert.assertEquals(4, user1.checkedOutCopies.size());
         Assert.assertEquals(user1.checkedOutCopies.get(0).getDocumentID(), databaseManager.getDocuments(1).getID());
-        Assert.assertEquals(user1.checkedOutCopies.get(0).getDueDate(), "1 April");
+        Assert.assertEquals(user1.checkedOutCopies.get(0).getDueDate(), "2 April");
 
-        Assert.assertEquals(user1.checkedOutCopies.get(1).getDocumentID(), databaseManager.getDocuments(2).getID());
-        Assert.assertEquals(user1.checkedOutCopies.get(1).getDueDate(), "1 April");
+        Assert.assertEquals(user1.checkedOutCopies.get(1).getDocumentID(), databaseManager.getDocuments(4).getID());
+        Assert.assertEquals(user1.checkedOutCopies.get(1).getDueDate(), "19 March");
 
-        Assert.assertEquals(user1.checkedOutCopies.get(2).getDocumentID(), databaseManager.getDocuments(4).getID());
-        Assert.assertEquals(user1.checkedOutCopies.get(2).getDueDate(), "18 March");
+        Assert.assertEquals(user1.checkedOutCopies.get(2).getDocumentID(), databaseManager.getDocuments(1).getID());
+        Assert.assertEquals(user1.checkedOutCopies.get(2).getDueDate(), "2 April");
 
         UserCard user2 = databaseManager.getUserCard(1011);
         Assert.assertEquals(user2.name + " " + user2.surname, "Nadia Teixeira");
         Assert.assertEquals(user2.address, "Via Sacra, 13");
         Assert.assertEquals(user2.phoneNumb, "30002");
         Assert.assertEquals(user2.getId(), 1011);
-        Assert.assertEquals(user2.userType.getClass().getName().replace("users.", ""), "Student");
+        Assert.assertEquals(user2.userType.getClass().getName().replace("users.", ""), "userTypes.Student");
 
         Assert.assertEquals(user2.checkedOutCopies.size(), 3);
         Assert.assertEquals(user2.checkedOutCopies.get(0).getDocumentID(), databaseManager.getDocuments(1).getID());
-        Assert.assertEquals(user2.checkedOutCopies.get(0).getDueDate(), "25 March");
+        Assert.assertEquals(user2.checkedOutCopies.get(0).getDueDate(), "26 March");
 
-        Assert.assertEquals(user2.checkedOutCopies.get(1).getDocumentID(), databaseManager.getDocuments(2).getID());
-        Assert.assertEquals(user2.checkedOutCopies.get(1).getDueDate(), "18 March");
+        Assert.assertEquals(user2.checkedOutCopies.get(1).getDocumentID(), databaseManager.getDocuments(1).getID());
+        Assert.assertEquals(user2.checkedOutCopies.get(1).getDueDate(), "26 March");
 
         Assert.assertEquals(user2.checkedOutCopies.get(2).getDocumentID(), databaseManager.getDocuments(5).getID());
-        Assert.assertEquals(user2.checkedOutCopies.get(2).getDueDate(), "18 March");*/
+        Assert.assertEquals(user2.checkedOutCopies.get(2).getDueDate(), "19 March");
     }
 
 
@@ -433,10 +440,11 @@ public class TestCases2 {
      * Action:
      * the librarian checks the due dates of documents checked out by p1
      * the librarian checks the due dates of documents checked out by p2
-     * Effect: overdue should be right*/
-     @Test
+     * Effect: overdue should be right
+     */
+    @Test
     public void TestCase8() {
-       /* TestCase1();
+        TestCase1();
         DatabaseManager databaseManager = new DatabaseManager(DATABASE_FILE_NAME);
 
         Session session = new Session((databaseManager.getUserCard(1010).userType), 9, 2);
@@ -444,6 +452,7 @@ public class TestCases2 {
         MainForm mainForm = new MainForm();
         mainForm.setSession(session);
         mainForm.setDatabaseManager(databaseManager);
+        mainForm.setActionManager(databaseManager.actionManager);
 
         mainForm.selectDocument(0);
         mainForm.checkOut(databaseManager.getDocuments(1));
@@ -466,7 +475,7 @@ public class TestCases2 {
         session3.userCard = databaseManager.getUserCard(1011);
         mainForm.setSession(session3);
         mainForm.selectDocument(3);
-        mainForm.checkOut(databaseManager.getDocuments(4 ));
+        mainForm.checkOut(databaseManager.getDocuments(4));
         ////////////////////////////////////////////////////////////////////////////////////
         Session sessionLib = new Session((databaseManager.getUserCard(1).userType), 5, 3);
         sessionLib.userCard = databaseManager.getUserCard(1);
@@ -476,19 +485,19 @@ public class TestCases2 {
 
         Assert.assertEquals(user1.checkedOutCopies.size(), 2);
         Assert.assertEquals(user1.checkedOutCopies.get(0).getDocumentID(), databaseManager.getDocuments(1).getID());
-        Assert.assertEquals(user1.checkedOutCopies.get(0).getOverdue(sessionLib), -1);
+        Assert.assertEquals(user1.checkedOutCopies.get(0).getOverdue(sessionLib), 0);
 
-        Assert.assertEquals(user1.checkedOutCopies.get(1).getDocumentID(), databaseManager.getDocuments(2).getID());
-        Assert.assertEquals(user1.checkedOutCopies.get(1).getOverdue(sessionLib), 3);
+        Assert.assertEquals(user1.checkedOutCopies.get(1).getDocumentID(), databaseManager.getDocuments(1).getID());
+        Assert.assertEquals(user1.checkedOutCopies.get(1).getOverdue(sessionLib), 0);
 
         UserCard user2 = databaseManager.getUserCard(1011);
 
-        Assert.assertEquals(user2.checkedOutCopies.size(), 2);
+        Assert.assertEquals(user2.checkedOutCopies.size(), 3);
         Assert.assertEquals(user2.checkedOutCopies.get(0).getDocumentID(), databaseManager.getDocuments(1).getID());
-        Assert.assertEquals(user2.checkedOutCopies.get(0).getOverdue(sessionLib), 7);
+        Assert.assertEquals(user2.checkedOutCopies.get(0).getOverdue(sessionLib), 0);
 
-        Assert.assertEquals(user2.checkedOutCopies.get(1).getDocumentID(), databaseManager.getDocuments(4).getID());
-        Assert.assertEquals(user2.checkedOutCopies.get(1).getOverdue(sessionLib), 2);*/
+        Assert.assertEquals(user2.checkedOutCopies.get(1).getDocumentID(), databaseManager.getDocuments(1).getID());
+        Assert.assertEquals(user2.checkedOutCopies.get(1).getOverdue(sessionLib), 0);
     }
 
     /**
@@ -497,7 +506,8 @@ public class TestCases2 {
      * simulate a power loss (stop the application)
      * re-run the application
      * the librarian checks patrons and documents of the system
-     * Effect: all information should be saved*/
+     * Effect: all information should be saved
+     */
     @Test
     public void TestCase9() {
         TestCase1();

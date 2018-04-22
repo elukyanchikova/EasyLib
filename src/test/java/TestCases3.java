@@ -667,6 +667,7 @@ public class TestCases3 {
         initialState();
         MainForm mainForm = new MainForm();
         mainForm.setDatabaseManager(databaseManager);
+        mainForm.setActionManager(databaseManager.actionManager);
 
         UserCard userCard = databaseManager.getUserCard(1010);
         Document document = databaseManager.getDocuments(3);
@@ -713,6 +714,7 @@ public class TestCases3 {
         initialState();
         MainForm mainForm = new MainForm();
         mainForm.setDatabaseManager(databaseManager);
+        mainForm.setActionManager(databaseManager.actionManager);
 
         UserCard userCard = databaseManager.getUserCard(1010);
         Document document = databaseManager.getDocuments(3);
@@ -785,6 +787,7 @@ public class TestCases3 {
         ManageForm manageForm = new ManageForm();
         manageForm.setSession(session);
         manageForm.setDatabaseManager(databaseManager);
+        
         manageForm.outstandingRequest(databaseManager.getDocuments(3));
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////

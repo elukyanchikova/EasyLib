@@ -160,7 +160,7 @@ public class AddUserForm {
                             address);
 
                 } else {
-                    newUserCard = new UserCard(name, surname, new Guest(), phoneNumber, address);
+                    newUserCard = new UserCard(name, surname, new Student(), phoneNumber, address);
                 }
                 databaseManager.saveUserCard(newUserCard);
             }
