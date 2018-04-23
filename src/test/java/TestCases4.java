@@ -2,33 +2,20 @@ import org.junit.Test;
 
 public class TestCases4 {
     @Test
-    public void test1(){}
+    public void Test1(){}
     @Test
-    public void test2(){}
+    public void Test2(){}
     @Test
-    public void test3(){}
+    public void Test3(){}
     @Test
-    public void test4(){}
+    public void Test4(){}
     @Test
-    public void test5(){}
+    public void Test5(){}
     @Test
-    public void test6(){}
+    public void Test6(){}
     @Test
-    public void test7(){}
+    public void Test7(){}
     @Test
-    public void test8(){}
-    @Test
-    public void test9(){}
-    @Test
-    public void test10(){}
-    @Test
-    public void test11(){}
-    @Test
-    public void test12(){}
-    @Test
-    public void test13(){}
-    @Test
-    public void test14(){}
-
+    public void Test8(){}
 
 }
