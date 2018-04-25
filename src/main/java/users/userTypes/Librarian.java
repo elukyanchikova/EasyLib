@@ -9,7 +9,7 @@ public class Librarian extends users.userTypes.UserType {
         super();
         users.userTypes.UserType.userTypes.put(getClass().getName(), this);
         hasCheckOutPerm = true;
-        hasEditPerm = true;
+      /*  hasEditPerm = true;*/
         hasReturnPerm = true;
         hasCheckOverdueDocPerm = true;
         hasCheckUserInfoPerm = true;
@@ -43,16 +43,15 @@ public class Librarian extends users.userTypes.UserType {
         }
     }
 
-    /**
-     * method for setting accessPermission and ModifyPermission to the librarian
-     */
     public void setDefault(){
         this.hasAddPerm = false;
         this.hasAccessPerm = false;
         this.hasModifyPerm = false;
         this.hasDeletePerm = false;
     }
-
+    /**
+     * method for setting accessPermission and ModifyPermission to the librarian
+     */
     public void setPriv1() {
         this.hasAddPerm = false;
         this.hasAccessPerm = true;

@@ -42,7 +42,7 @@ public class LogForm {
 
     private void sceneInitialization() throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/LogForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/logForm.fxml"));
         loader.setController(this);
         AnchorPane root = loader.load();
         this.scene = new Scene(root, 600, 700);

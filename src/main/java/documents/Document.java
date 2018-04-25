@@ -53,7 +53,7 @@ public abstract class Document {
         this.availableCopies = availableCopies;
         this.takenCopies = takenCopies;
         this.bookedCopies = bookedCopies;
-        lastID = lastID < id?id:lastID;
+        lastID = lastID < id ? id : lastID;
         this.lastCopyID = lastCopyID;
     }
 
@@ -63,10 +63,10 @@ public abstract class Document {
     public Document(String title, String docType,
                     ArrayList<String> authors, ArrayList<String> keywords,
                     int price,
-                    ArrayList<Copy> copies){
+                    ArrayList<Copy> copies) {
 
-        this(++lastID,title, docType,authors, keywords,price,0,
-                copies, new ArrayList<>(), new ArrayList<>(),1);
+        this(++lastID, title, docType, authors, keywords, price, 0,
+                copies, new ArrayList<>(), new ArrayList<>(), 1);
 
     }
 
@@ -75,27 +75,28 @@ public abstract class Document {
      */
     public Document(String title, String docType,
                     ArrayList<String> authors, ArrayList<String> keywords,
-                    int price){
+                    int price) {
         this(++lastID, title, docType, authors, keywords, price, 0,
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),1);
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 1);
     }
 
     /**
      * The constructor is used for creating object using information from JSON File
-     * @param id of document
-     * @param data is JSON object which stores information about JSON
+     *
+     * @param id              of document
+     * @param data            is JSON object which stores information about JSON
      * @param databaseManager is the current database manager
      */
-    public Document(int id, JSONObject data, DatabaseManager databaseManager){
+    public Document(int id, JSONObject data, DatabaseManager databaseManager) {
         this.id = id;
-        lastID = lastID < id?id:lastID;
+        lastID = lastID < id ? id : lastID;
         this.title = data.getString("Title");
         this.authors = new ArrayList<>();
-        for(int i = 0; i < data.getJSONArray("Authors").toList().size(); i++ ){
+        for (int i = 0; i < data.getJSONArray("Authors").toList().size(); i++) {
             authors.add(data.getJSONArray("Authors").getString(i));
         }
         this.keywords = new ArrayList<>();
-        for(int i = 0; i < data.getJSONArray("Keywords").toList().size(); i++ ){
+        for (int i = 0; i < data.getJSONArray("Keywords").toList().size(); i++) {
             keywords.add(data.getJSONArray("Keywords").getString(i));
         }
         this.isReference = data.getBoolean("Reference");
@@ -108,57 +109,57 @@ public abstract class Document {
         String[] keys = new String[0];
         JSONObject availableCopiesObj = data.getJSONObject("AvailableCopies");
         keys = availableCopiesObj.keySet().toArray(keys);
-        for (int i = 0; i < availableCopiesObj.length(); i++){
+        for (int i = 0; i < availableCopiesObj.length(); i++) {
             copyID = Integer.parseInt(keys[i]);
             Copy copy = new Copy(availableCopiesObj.getJSONObject(Integer.toString(copyID)), databaseManager);
             availableCopies.add(copy);
-            this.lastCopyID = copyID > lastCopyID? copyID:lastCopyID;
+            this.lastCopyID = copyID > lastCopyID ? copyID : lastCopyID;
         }
         JSONObject takenCopiesObj = data.getJSONObject("TakenCopies");
         keys = takenCopiesObj.keySet().toArray(keys);
-        for (int i = 0; i < takenCopiesObj.length(); i++){
+        for (int i = 0; i < takenCopiesObj.length(); i++) {
             copyID = Integer.parseInt(keys[i]);
             Copy copy = new Copy(takenCopiesObj.getJSONObject(Integer.toString(copyID)), databaseManager);
             takenCopies.add(copy);
-            this.lastCopyID = copyID > lastCopyID? copyID:lastCopyID;
+            this.lastCopyID = copyID > lastCopyID ? copyID : lastCopyID;
         }
         JSONObject bookedCopiesObj = data.getJSONObject("BookedCopies");
         keys = bookedCopiesObj.keySet().toArray(keys);
-        for (int i = 0; i < bookedCopiesObj.length(); i++){
+        for (int i = 0; i < bookedCopiesObj.length(); i++) {
             copyID = Integer.parseInt(keys[i]);
             Copy copy = new Copy(bookedCopiesObj.getJSONObject(Integer.toString(copyID)), databaseManager);
             bookedCopies.add(copy);
-            this.lastCopyID = copyID > lastCopyID? copyID:lastCopyID;
+            this.lastCopyID = copyID > lastCopyID ? copyID : lastCopyID;
         }
         JSONObject requestedByObj = data.getJSONObject("Requests");
         keys = requestedByObj.keySet().toArray(keys);
-        for (int i = 0; i < requestedByObj.length(); i++){
+        for (int i = 0; i < requestedByObj.length(); i++) {
             this.putInPQ(databaseManager.getUserCard(Integer.parseInt(keys[i])));
         }
     }
 
-    public int getID(){
+    public int getID() {
         return id;
     }
 
-    public String getDocType(){
+    public String getDocType() {
         return docType;
     }
 
-    public void putInPQ(UserCard user){
-       this.requestedBy.add(user);
+    public void putInPQ(UserCard user) {
+        this.requestedBy.add(user);
     }
 
     public int getNumberOfRequests() {
         return numberOfRequests;
     }
 
-    public void increaseNumberOfRequest(){
+    public void increaseNumberOfRequest() {
         numberOfRequests++;
     }
 
-    public void decreaseNumberOfRequest(){
-        if(numberOfRequests > 0)
+    public void decreaseNumberOfRequest() {
+        if (numberOfRequests > 0)
             numberOfRequests--;
     }
 
@@ -166,57 +167,61 @@ public abstract class Document {
         return getNumberOfAvailableCopies() + getNumberOfTakenCopies() + getNumberOfBookedCopies();
     }
 
-    public int getNumberOfAvailableCopies(){
+    public int getNumberOfAvailableCopies() {
         return availableCopies.size();
     }
 
-    public int getNumberOfTakenCopies(){
+    public int getNumberOfTakenCopies() {
         return takenCopies.size();
     }
 
-    public int getNumberOfBookedCopies(){
+    public int getNumberOfBookedCopies() {
         return bookedCopies.size();
     }
 
-    public void setCopy(int level, int room){
+    public void setCopy(int level, int room) {
         new Copy(this, level, room);
         lastCopyID++;
     }
 
-    public void setReference(boolean isReference){
+    public void setReference(boolean isReference) {
         this.isReference = isReference;
     }
 
-    public void setCopy(Copy copy){
-        if (copy.getDocumentID() == id){
+    public void setCopy(Copy copy) {
+        if (copy.getDocumentID() == id) {
             availableCopies.add(copy);
             lastCopyID++;
         }
     }
 
-    public void removeCopy(Copy copy){
-        if(availableCopies.contains(copy)) availableCopies.remove(copy);
-        if(takenCopies.contains(copy)){
+    public void removeCopy(Copy copy) {
+        if (availableCopies.contains(copy)) availableCopies.remove(copy);
+        if (takenCopies.contains(copy)) {
             copy.getCheckoutByUser().checkedOutCopies.remove(copy);
             takenCopies.remove(copy);
         }
     }
 
-    public boolean takeCopy(UserCard user, Session session){
-        if(availableCopies.size() > 0){
-            availableCopies.get(0).checkoutBy(user);
-            availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.userType.isHasLongCheckOutPerm(),user.userType.isHasLowerCheckOut());
-            availableCopies.get(0).checkOutDay = session.day;
-            availableCopies.get(0).checkOutMonth = session.month;
-            user.checkedOutCopies.add(availableCopies.get(0));
-            availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.userType.isHasLongCheckOutPerm(),user.userType.isHasLowerCheckOut());
-            takenCopies.add(availableCopies.get(0));
-            availableCopies.remove(0);
-            return true;
-        }else return false;
+    public void takeCopy(UserCard user, Session session) {
+        takeCopy(user, session.day, session.month);
     }
 
-    public void returnCopy(Copy copy){
+    public void takeCopy(UserCard user, int sessionDay, int sessionMonth) {
+        if (availableCopies.size() > 0) {
+            availableCopies.get(0).checkoutBy(user);
+            availableCopies.get(0).checkOutTime =
+                    this.getCheckOutTime(user.userType.isHasLongCheckOutPerm(), user.userType.isHasLowerCheckOut());
+            availableCopies.get(0).checkOutDay = sessionDay;
+            availableCopies.get(0).checkOutMonth = sessionMonth;
+            user.checkedOutCopies.add(availableCopies.get(0));
+            availableCopies.get(0).checkOutTime = this.getCheckOutTime(user.userType.isHasLongCheckOutPerm(), user.userType.isHasLowerCheckOut());
+            takenCopies.add(availableCopies.get(0));
+            availableCopies.remove(0);
+        }
+    }
+
+    public void returnCopy(Copy copy) {
         copy.getCheckoutByUser().checkedOutCopies.remove(copy);
         availableCopies.add(copy);
         takenCopies.remove(copy);
@@ -224,12 +229,12 @@ public abstract class Document {
         copy.returnCopy();
     }
 
-    public int getCheckOutTime(boolean longCheckOutPermission, boolean lowerCheckOut){
-        if(lowerCheckOut) return 7;
+    public int getCheckOutTime(boolean longCheckOutPermission, boolean lowerCheckOut) {
+        if (lowerCheckOut) return 7;
         return checkOutTime;
     }
 
-    public JSONObject serialize(){
+    public JSONObject serialize() {
         JSONObject data = new JSONObject();
         data.put("Title", title);
         data.put("Authors", authors);
@@ -237,57 +242,55 @@ public abstract class Document {
         data.put("Price", price);
         data.put("NumberOfRequest", numberOfRequests);
         JSONObject availableCopiesObj = new JSONObject();
-        for(int i = 0; i < availableCopies.size(); i++){
+        for (int i = 0; i < availableCopies.size(); i++) {
             availableCopiesObj.put(Integer.toString(availableCopies.get(i).getID()), availableCopies.get(i).serialize());
         }
         data.put("AvailableCopies", availableCopiesObj);
         JSONObject takenCopiesObj = new JSONObject();
-        for(int i = 0; i < takenCopies.size(); i++){
+        for (int i = 0; i < takenCopies.size(); i++) {
             takenCopiesObj.put(Integer.toString(takenCopies.get(i).getID()), takenCopies.get(i).serialize());
         }
         data.put("TakenCopies", takenCopiesObj);
 
         JSONObject bookedCopiesObj = new JSONObject();
-        for(int i = 0; i < bookedCopies.size(); i++){
-           bookedCopiesObj.put(Integer.toString(bookedCopies.get(i).getID()), bookedCopies.get(i).serialize());
+        for (int i = 0; i < bookedCopies.size(); i++) {
+            bookedCopiesObj.put(Integer.toString(bookedCopies.get(i).getID()), bookedCopies.get(i).serialize());
         }
         data.put("BookedCopies", bookedCopiesObj);
 
         JSONObject requestsCopiesObj = new JSONObject();
-        while ( 0 < requestedBy.size()){
+        while (0 < requestedBy.size()) {
             requestsCopiesObj.put(Integer.toString(requestedBy.peek().getId()), requestedBy.poll().serialize());
         }
         data.put("Requests", requestsCopiesObj);
 
-        data.put("DocumentType" , docType);
+        data.put("DocumentType", docType);
         data.put("Reference", isReference);
         return data;
     }
 
-    public static void resetID(){
+    public static void resetID() {
         lastID = 0;
     }
 
-    public boolean isReference(){
+    public boolean isReference() {
         return isReference;
     }
 
     protected class UserTypeComparator implements Comparator<UserCard> {
         @Override
         public int compare(UserCard x, UserCard y) {
-            if (x.userType.priority < y.userType.priority)
-            {
+            if (x.userType.priority < y.userType.priority) {
                 return -1;
             }
-            if (x.userType.priority > y.userType.priority)
-            {
+            if (x.userType.priority > y.userType.priority) {
                 return 1;
             }
             return 0;
         }
     }
 
-    public void deletePQ(){
+    public void deletePQ() {
         PriorityQueue<UserCard> newPQ = new PriorityQueue<>();
         this.requestedBy = newPQ;
     }

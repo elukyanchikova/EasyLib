@@ -11,8 +11,9 @@ public class Notification {
     public static final int ACCEPT_NOTIFICATION = 3;
     public static final int REQECT_NOTIFICATION = 4;
 
+
     public int id = 0;
-    int docID;
+    public int docID;
 
     public Notification(int notificationID, int documentID){
         this.id = notificationID;

@@ -40,6 +40,8 @@ public class MainForm {
     @FXML
     private ComboBox<String> documentSearchTypeBox;
     @FXML
+    private CheckBox documentSearchIsConjunction;
+    @FXML
     private TextField documentSearchKeywordsTxt;
     @FXML
     private TextField documentSearchTitleTxt;
@@ -139,22 +141,22 @@ public class MainForm {
 
     /**
      * Check out the document
-     *
-     * @return true if the document has checked out
      */
-    public boolean checkOut(Document document) {
+    public void checkOut(Document document) {
         boolean flag = isAvailableForUser(document);
-        if (!document.isReference() && document.getNumberOfAvailableCopies() > 0 && flag) {
-            document.takeCopy(session.userCard, session);
-            databaseManager.saveUserCard(session.userCard);
-            databaseManager.saveDocuments(document);
-            //databaseManager.load();
-            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.CHECK_OUT_DOCUMENT_ACTION_ID, document));
-            databaseManager.update();
-            updateSession();
-            return true;
+        if (!document.isReference() && flag) {
+            if (document.getNumberOfAvailableCopies() > 0) {
+                document.takeCopy(session.userCard, session);
+                databaseManager.saveUserCard(session.userCard);
+                databaseManager.saveDocuments(document);
+                //databaseManager.load();
+                actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.CHECK_OUT_DOCUMENT_ACTION_ID, document));
+                databaseManager.update();
+                updateSession();
+            } else {
+                request(document);
+            }
         }
-        return false;
     }
 
     //TODO move to action manager
@@ -215,11 +217,11 @@ public class MainForm {
     //TODO move to action manager
     //TODO add doc
     private boolean isAvailableForUser(Document document) {
+       /* if(!(session.userCard.checkedOutCopies.isEmpty())){
         for (int i = 0; i < session.userCard.checkedOutCopies.size(); i++) {
             if (session.userCard.checkedOutCopies.get(i).getDocumentID() == openDocumentID)
                 return false;
-        }
-
+        }}*/
         for (int i = 0; i < document.bookedCopies.size(); i++) {
             if (document.bookedCopies.get(i).getCheckoutByUser().getId() == session.userCard.getId())
                 return false;
@@ -358,7 +360,7 @@ public class MainForm {
      */
     private void loadHighPermissionInterface() {
 
-        editBtn.setVisible(session.getUser().isHasEditPerm() || session.getUser().isHasModifyPerm() || session.getUser().isHasDeletePerm() || session.getUser().isHasAddPerm() ||
+        editBtn.setVisible(/*session.getUser().isHasEditPerm() ||*/ session.getUser().isHasModifyPerm() || session.getUser().isHasDeletePerm() || session.getUser().isHasAddPerm() ||
                 session.getUser().isHasEditingLibrarianPerm());
         returnBtn.setVisible(session.getUser().isHasReturnPerm());
         infoBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
@@ -594,21 +596,16 @@ public class MainForm {
     @FXML
     public void clickOnFilterBtn() {
         Filter filter = new Filter();
+        filter.conjunction = documentSearchIsConjunction.isSelected();
         if (documentSearchTitleTxt.getText().replace(" ", "").length() > 0) {
-            filter.title = documentSearchTitleTxt.getText().replace(" ", "");
+            filter.title = documentSearchTitleTxt.getText();
         }
         if (documentSearchKeywordsTxt.getText().replace(" ", "").length() > 0) {
-            String[] keywords = documentSearchKeywordsTxt.getText().split("[, ]+");
-            for (String keyword : keywords) {
-                filter.keywords.add(keyword.toLowerCase());
-            }
+            filter.keywords = documentSearchKeywordsTxt.getText();
         }
 
         if (documentSearchAuthorsTxt.getText().replace(" ", "").length() > 0) {
-            String[] authors = documentSearchKeywordsTxt.getText().split("[, ]+");
-            for (String author : authors) {
-                filter.authors.add(author.toLowerCase());
-            }
+            filter.authors = documentSearchAuthorsTxt.getText();
         }
 
         if (documentSearchMinPriceTxt.getText().replace(" ", "").length() > 0) {

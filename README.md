@@ -48,7 +48,7 @@ in place of old mock functions
 * Various changes
 
 ### Elena Lukyanchikova
-* Admin class implementation
+* FFAdmin class implementation
 * Privileges for Librarian implementation
 * Action Manager implementation
 * Various changes

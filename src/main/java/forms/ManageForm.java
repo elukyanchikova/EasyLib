@@ -253,6 +253,7 @@ public class ManageForm {
     }
 
     public void outstandingRequest(Document doc){
+
         UserCard[] users = new UserCard[0];
         users = doc.requestedBy.toArray(users);
         for(int i = 0; i < users.length; i++){

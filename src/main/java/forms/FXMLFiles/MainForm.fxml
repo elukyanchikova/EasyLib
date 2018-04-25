@@ -33,23 +33,24 @@
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Search"/>
         <ComboBox GridPane.columnIndex="0"  GridPane.rowIndex="1" fx:id="documentSearchTypeComboBox" maxWidth="Infinity"
         onHidden="#selectSearchTypeComboBox"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentSearchKeywordsTextField" GridPane.rowIndex="2" promptText = "Keyword1, Keyword2"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentSearchTitleTextField" GridPane.rowIndex="3" promptText = "Title"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentSearchAuthorsTextField" GridPane.rowIndex="4" promptText = "Author1, Author2"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentSearchMinPriceTextField" GridPane.rowIndex="5" promptText = "Minimal price"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentSearchMaxPriceTextField" GridPane.rowIndex="6" promptText = "Maximal price"/>
+        <CheckBox GridPane.columnIndex="0" fx:id="documentSearchIsConjunction" GridPane.rowIndex="2" text="Conjunction in query" />
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchKeywordsTextField" GridPane.rowIndex="3" promptText = "Keyword1, Keyword2"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchTitleTextField" GridPane.rowIndex="4" promptText = "Title"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchAuthorsTextField" GridPane.rowIndex="5" promptText = "Author1, Author2"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchMinPriceTextField" GridPane.rowIndex="6" promptText = "Minimal price"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchMaxPriceTextField" GridPane.rowIndex="7" promptText = "Maximal price"/>
 
-        <TextField GridPane.columnIndex="0" fx:id="documentSearchPublisherTextField" GridPane.rowIndex="7" promptText = "Publisher"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentSearchPublicationMonthTextField" GridPane.rowIndex="8" promptText = "Publication Month"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentSearchPublicationYearTextField" GridPane.rowIndex="9" promptText = "Publication Year"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentSearchEditionTextField" GridPane.rowIndex="10" promptText = "Edition"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentSearchJournalNameTextField" GridPane.rowIndex="11" promptText = "Journal Name"/>
-        <TextField GridPane.columnIndex="0" fx:id="documentSearchEditorTextField" GridPane.rowIndex="12" promptText = "Editor"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchPublisherTextField" GridPane.rowIndex="8" promptText = "Publisher"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchPublicationMonthTextField" GridPane.rowIndex="9" promptText = "Publication Month"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchPublicationYearTextField" GridPane.rowIndex="10" promptText = "Publication Year"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchEditionTextField" GridPane.rowIndex="11" promptText = "Edition"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchJournalNameTextField" GridPane.rowIndex="12" promptText = "Journal Name"/>
+        <TextField GridPane.columnIndex="0" fx:id="documentSearchEditorTextField" GridPane.rowIndex="13" promptText = "Editor"/>
 
-        <CheckBox GridPane.columnIndex="0" fx:id="documentSearchIsBestsellerCheckBox" GridPane.rowIndex="13" text="Bestseller"/>
-        <CheckBox GridPane.columnIndex="0" fx:id="documentSearchIsAvailableCheckBox" GridPane.rowIndex="14" text="Available"/>
+        <CheckBox GridPane.columnIndex="0" fx:id="documentSearchIsBestsellerCheckBox" GridPane.rowIndex="14" text="Bestseller"/>
+        <CheckBox GridPane.columnIndex="0" fx:id="documentSearchIsAvailableCheckBox" GridPane.rowIndex="15" text="Available"/>
 
-        <Button GridPane.columnIndex="0" fx:id="documentSearchFilterButton" GridPane.rowIndex="16" text="Filter" onMouseClicked="#clickOnFilterBtn"/>
+        <Button GridPane.columnIndex="0" fx:id="documentSearchFilterButton" GridPane.rowIndex="17" text="Filter" onMouseClicked="#clickOnFilterBtn"/>
     </GridPane>
 
 

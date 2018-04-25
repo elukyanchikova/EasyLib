@@ -22,6 +22,10 @@ public class ActionNote {
     public static final int RETURN_DOCUMENT_ACTION_ID = 12;
     public static final int ACCEPT_REQUEST_ACTION_ID = 13;
     public static final int REJECT_REQUEST_ACTION_ID = 14;
+    public static final int ADD_COPY_ACTION_ID = 15;
+    public static final int REMOVE_WAITING_LIST_ACTION_ID = 16;
+    public static final int NOTIFY_TO_RETURN_ACTION_ID = 17;
+    public static final int NOTIFY_REMOVED_FROM_WAITING_LIST_ACTION_ID = 18;
 
     UserCard userCard;
     public UserCard targetUser;
@@ -29,6 +33,7 @@ public class ActionNote {
     int day;
     int month;
     int actionID;
+    boolean ok;
 
     public ActionNote(UserCard userCard, int day, int month, int id){
         this.actionID = id;
@@ -51,6 +56,11 @@ public class ActionNote {
         this(userCard, day, month, id);
         this.targetUser = targetUser;
         this.targetDocument = targetDocument;
+    }
+
+    public ActionNote(UserCard userCard, int day, int month, int id, UserCard targetUser, Document targetDocument, boolean ok) {
+        this(userCard, day, month, id, targetUser, targetDocument);
+        this.ok = ok;
     }
 
     public ActionNote(JSONObject action, DatabaseManager databaseManager){
@@ -130,6 +140,7 @@ public class ActionNote {
                 stringBuilder.append(targetDocument.getDocType() + " ");
                 stringBuilder.append(targetDocument.title);
                 stringBuilder.append("(ID:" + targetDocument.getID() + ") ");
+                if(!ok) stringBuilder.append("access was denied");
                 break;
             case REQUEST_DOCUMENT_ACTION_ID:
                 stringBuilder.append("requested ");
@@ -177,6 +188,42 @@ public class ActionNote {
                 stringBuilder.append(targetDocument.title);
                 stringBuilder.append("(ID:" + targetDocument.getID() + ") ");
                 stringBuilder.append("made by ");
+                stringBuilder.append(targetUser.userType.getClass().getName().replace("users.userTypes", "") + " ");
+                stringBuilder.append(targetUser.name + " " + targetUser.surname);
+                stringBuilder.append("(ID:" + targetUser.getId() + ") ");
+                break;
+            case ADD_COPY_ACTION_ID:
+                stringBuilder.append("add copy of ");
+                stringBuilder.append(targetDocument.getDocType() + " ");
+                stringBuilder.append(targetDocument.title);
+                stringBuilder.append("(ID:" + targetDocument.getID() + ") ");
+                stringBuilder.append("made by: ");
+                stringBuilder.append(targetUser.userType.getClass().getName().replace("users.userTypes", "") + " ");
+                stringBuilder.append(targetUser.name + " " + targetUser.surname);
+                stringBuilder.append("(ID:" + targetUser.getId() + ") ");
+                break;
+            case REMOVE_WAITING_LIST_ACTION_ID:
+                stringBuilder.append("removed waiting list of ");
+                stringBuilder.append(targetDocument.getDocType() + " ");
+                stringBuilder.append(targetDocument.title);
+                stringBuilder.append("(ID:" + targetDocument.getID() + ") ");
+                break;
+            case NOTIFY_TO_RETURN_ACTION_ID:
+                stringBuilder.append("notified to return ");
+                stringBuilder.append(targetDocument.getDocType() + " ");
+                stringBuilder.append(targetDocument.title);
+                stringBuilder.append("(ID:" + targetDocument.getID() + ") ");
+                stringBuilder.append("taken by: ");
+                stringBuilder.append(targetUser.userType.getClass().getName().replace("users.userTypes", "") + " ");
+                stringBuilder.append(targetUser.name + " " + targetUser.surname);
+                stringBuilder.append("(ID:" + targetUser.getId() + ") ");
+                break;
+            case NOTIFY_REMOVED_FROM_WAITING_LIST_ACTION_ID:
+                stringBuilder.append("notified doc not available ");
+                stringBuilder.append(targetDocument.getDocType() + " ");
+                stringBuilder.append(targetDocument.title);
+                stringBuilder.append("(ID:" + targetDocument.getID() + ") ");
+                stringBuilder.append("and that the user was removed from wait list: ");
                 stringBuilder.append(targetUser.userType.getClass().getName().replace("users.userTypes", "") + " ");
                 stringBuilder.append(targetUser.name + " " + targetUser.surname);
                 stringBuilder.append("(ID:" + targetUser.getId() + ") ");

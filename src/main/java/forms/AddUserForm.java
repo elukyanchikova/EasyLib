@@ -56,7 +56,7 @@ public class AddUserForm {
      * Initialization scene and scene's elements
      */
     private void sceneInitialization() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/AddUserForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLFiles/addUserForm.fxml"));
         loader.setController(this);
         GridPane root = loader.load();
         this.scene = new Scene(root, 700, 700);
@@ -169,14 +169,17 @@ public class AddUserForm {
         actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.ADD_USER_ACTION_ID, newUserCard));
         databaseManager.update();
     }
+
     /**
      * Click ob button "back" event
      * button for coming back to the EditForm
+     *
      * @throws Exception
      */
 
     @FXML
-    public void back() throws Exception{
+    public void back() throws Exception {
         EditForm mainForm = new EditForm();
         mainForm.startForm(stage, session, databaseManager, actionManager);
-    }}
+    }
+}
