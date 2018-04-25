@@ -131,7 +131,7 @@ public class ActionNote {
                 break;
             case DELETE_DOCUMENT_ACTION_ID:
                 stringBuilder.append("deleted ");
-                stringBuilder.append(targetDocument.getDocType() + " ");
+               stringBuilder.append(targetDocument.getDocType() + " ");
                 stringBuilder.append(targetDocument.title);
                 stringBuilder.append("(ID:" + targetDocument.getID() + ") ");
                 break;
