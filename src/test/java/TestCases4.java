@@ -44,6 +44,9 @@ public class TestCases4 {
     private Integer sId;
     private Integer vId;
 
+    /**
+     * Essential settings
+     */
     @Before
     public void init() {
         databaseManager.resetDatabase();
@@ -63,6 +66,10 @@ public class TestCases4 {
         vId = null;
     }
 
+    /**
+     * Method to create book d1
+     * @return document 1
+     */
     private Book makeB1() {
         ArrayList<Copy> b1_copies = new ArrayList<>();
 
@@ -86,6 +93,10 @@ public class TestCases4 {
         return b1;
     }
 
+    /**
+     * Method to create book d2
+     * @return document d2
+     */
     private Book makeB2() {
         ArrayList<Copy> b2_copies = new ArrayList<Copy>();
 
@@ -107,6 +118,10 @@ public class TestCases4 {
         return b2;
     }
 
+    /**
+     * Method to create book d3
+     * @return document d3
+     */
     private Book makeB3() {
         ArrayList<Copy> b3_copies = new ArrayList<Copy>();
 
@@ -150,6 +165,12 @@ public class TestCases4 {
         assertEquals("The system contains only one Admin", 1, admins);
     }
 
+    /**
+     * Test case 2
+     * Creates 3 admins
+     * Checks are there 3 admins
+     * This test is an initial statement for TC3
+     */
     @Test
     public void Test2() {
         Session session = new Session(databaseManager.getUserCard(ADMIN_ID).userType, 25, 4);
@@ -190,6 +211,12 @@ public class TestCases4 {
         assertEquals("Number of librarians in system equals 3", 3, librarians);
     }
 
+    /**
+     * Test Case 3
+     * Checks availability of librarian
+     * Checks availability of some documents
+     * This test case is an initial state for TC3
+     */
     @Test
     public void Test3() {
         Test2();
@@ -211,6 +238,12 @@ public class TestCases4 {
         assertEquals("No books were added because of absence of corresponding permissions(l1)", 0, docs);
     }
 
+    /**
+     * Test Case 4
+     * Checks availability of librarian
+     * Checks amount of copies for used docs
+     * This test case is an initial state for test cases 5, 6, 7
+     */
     @Test
     public void Test4() {
         Test3();
@@ -285,6 +318,10 @@ public class TestCases4 {
 
     }
 
+    /**
+     * Checks availability of user
+     * Checks amount of copies for used docs
+     */
     @Test
     public void Test5() {
         Test4();
@@ -313,6 +350,7 @@ public class TestCases4 {
      * v checks out d3.
      * p3 checks out d3.
      * Librarian l1 places an outstanding request on document d3
+     * This test case is an initial state for TC8
      */
     @Test
     public void Test6() {
@@ -352,6 +390,9 @@ public class TestCases4 {
         ));
     }
 
+    /**
+     * Same actiaons as TC6 but with another librarian and different out
+     */
     @Test
     public void Test7() {
         Test4();
@@ -434,6 +475,9 @@ public class TestCases4 {
         }
     }
 
+    /**
+     * Same as TC8 but with another initial state
+     */
     @Test
     public void Test9() {
         Test7();
@@ -465,6 +509,10 @@ public class TestCases4 {
         }
     }
 
+    /**
+     * TC to check search availability
+     * TC4 is an initial state
+     */
     @Test
     public void Test10() {
         Test4();
@@ -482,6 +530,10 @@ public class TestCases4 {
         Assert.assertEquals("Found matched doc", "Introduction to Algorithms by Thomas H. Cormen", out[0]);
     }
 
+    /**
+     * TC to check search availability
+     * TC4 is an initial state
+     */
     @Test
     public void Test11() {
         Test4();
@@ -499,6 +551,10 @@ public class TestCases4 {
         Assert.assertEquals("Found matched doc 2 ", "Algorithms + Data Structures = Programs by Niklaus Wirth", out[1]);
     }
 
+    /**
+     * TC to check search availability
+     * TC4 is an initial state
+     */
     @Test
     public void Test12() {
         Test4();
@@ -519,6 +575,10 @@ public class TestCases4 {
         Assert.assertEquals("Found matched doc 3 ", "The Art of Computer Programming by Donald E. Knuth", out[2]);
     }
 
+    /**
+     * TC to check search availability
+     * TC4 is an initial state
+     */
     @Test
     public void Test13() {
         Test4();
@@ -533,6 +593,10 @@ public class TestCases4 {
         Assert.assertEquals("No match found", "[]", s);
     }
 
+    /**
+     * TC to check search availability
+     * TC4 is an initial state
+     */
     @Test
     public void Test14() {
         Test4();
