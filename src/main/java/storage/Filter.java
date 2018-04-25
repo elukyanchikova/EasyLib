@@ -25,8 +25,8 @@ public class Filter {
     public Boolean isAvailable;
     public boolean conjunction;
 
-    //TODO: have a copy, bestSell, edition
-    //TODO: publication Month for journal
+
+
 
     private boolean stringMatches(String query, String string) {
         if (query == null || string == null) {
@@ -40,11 +40,11 @@ public class Filter {
         }
 
         String split = " ";
-        String[] queryElements = query.split(split);
+        String[] queryElements = query.toLowerCase().split(split);
         if (queryElements.length == 0) {
             return true;
         }
-        String[] stringElements = string.split(split);
+        String[] stringElements = string.toLowerCase().split(split);
 
         Predicate<String> inString = (q -> Arrays.stream(stringElements).anyMatch(s -> s.contains(q)));
 

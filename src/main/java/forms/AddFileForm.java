@@ -159,9 +159,10 @@ public class AddFileForm {
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
                 room++;
-                databaseManager.saveDocuments(file);
+                file.setCopy(copy);
             }
 
+            databaseManager.saveDocuments(file);
             if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
                     && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
                 file.isReference = true;
@@ -174,8 +175,9 @@ public class AddFileForm {
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
                 room++;
-                databaseManager.saveDocuments(file);
+                file.setCopy(copy);
             }
+            databaseManager.saveDocuments(file);
 
             if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
                     && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 0)) {
@@ -193,8 +195,9 @@ public class AddFileForm {
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
                 room++;
-                databaseManager.saveDocuments(file);
+                file.setCopy(copy);
             }
+            databaseManager.saveDocuments(file);
 
             if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
                     && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
@@ -210,8 +213,9 @@ public class AddFileForm {
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
                 room++;
-                databaseManager.saveDocuments(file);
+                file.setCopy(copy);
             }
+            databaseManager.saveDocuments(file);
             if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
                     && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
                 file.isReference = true;

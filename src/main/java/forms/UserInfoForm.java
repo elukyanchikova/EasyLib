@@ -52,7 +52,7 @@ public class UserInfoForm {
         stage.show();
     }
 
-    //TODO refactor after adding storage
+
     /**
      * Initialization scene and scene's elements
      * All elements will be initialized
