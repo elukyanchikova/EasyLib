@@ -219,7 +219,7 @@ public class ModifyUserForm {
      */
     @FXML
     public void save() throws Exception {
-        //TODO add connection with databaseManager
+
 
 
         if (!nameTextField.getText().isEmpty()) {

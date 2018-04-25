@@ -6,7 +6,6 @@ public class Session {
 
     private UserType authorizedUser;
 
-    //TODO: change userCard access.
     public UserCard userCard;
     public int day;
     public int month;
@@ -38,7 +37,7 @@ public class Session {
         }else return false;
     }
 
-    //TODO: get UserCard instead UserType
+
 
     /**
      * @return user of current session

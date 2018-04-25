@@ -272,6 +272,9 @@ public class ManageForm {
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.NOTIFY_TO_RETURN_ACTION_ID, doc));
             databaseManager.update();
         }
+        for(int i = 0; i < doc.takenCopies.size(); i++){
+            doc.takenCopies.get(i).hasRenewed = true;
+        }
         doc.deletePQ();
         databaseManager.saveDocuments(doc);
     }

@@ -117,7 +117,10 @@ public class AddUserForm {
                     ((Librarian) newUserCard.userType).setPriv3();
                     databaseManager.saveUserCard(newUserCard);
                 }
-            }} else {
+            } else {
+                System.err.println("No permission");
+            }
+        }else {
                 if (userTypeTextField.getText().toLowerCase().equals("faculty")) {
                     newUserCard = new UserCard(name,
                             surname,
@@ -164,11 +167,10 @@ public class AddUserForm {
                 }
                 databaseManager.saveUserCard(newUserCard);
                 databaseManager.saveUserCard(newUserCard);
-            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.ADD_USER_ACTION_ID, newUserCard));
-            databaseManager.update();
-            this.back();
+                actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.ADD_USER_ACTION_ID, newUserCard));
+                databaseManager.update();
+                this.back();
             }
-
 
     }
 

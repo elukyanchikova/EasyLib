@@ -137,7 +137,7 @@ public class MainForm {
     }
 
 
-    //TODO move to action manager
+
 
     /**
      * Check out the document
@@ -159,8 +159,8 @@ public class MainForm {
         }
     }
 
-    //TODO move to action manager
-    //TODO add doc
+
+
     public boolean book(Document document) {
         boolean flag = isAvailableForUser(document);
 
@@ -185,7 +185,7 @@ public class MainForm {
     }
 
 
-    //TODO move to action manager
+
 
     /**
      * Request the document
@@ -207,15 +207,15 @@ public class MainForm {
         return false;
     }
 
-    //TODO move to action manager
-    //TODO add doc
+
+
     public Document selectDocument(int id) {
         openDocumentID = id;
         return databaseManager.getDocuments(openDocumentID);
     }
 
-    //TODO move to action manager
-    //TODO add doc
+
+
     private boolean isAvailableForUser(Document document) {
        /* if(!(session.userCard.checkedOutCopies.isEmpty())){
         for (int i = 0; i < session.userCard.checkedOutCopies.size(); i++) {
@@ -235,7 +235,7 @@ public class MainForm {
         return true;
     }
 
-    //TODO move to action manager
+
 
     /**
      * Set new database manager to the form
@@ -244,7 +244,7 @@ public class MainForm {
         this.databaseManager = databaseManager;
     }
 
-    //TODO move to action manager
+
 
     /**
      * Set new session to the form
@@ -253,7 +253,7 @@ public class MainForm {
         this.session = session;
     }
 
-    //TODO: add doc
+
     public void setActionManager(ActionManager actionManager) {
         this.actionManager = actionManager;
     }
@@ -353,7 +353,7 @@ public class MainForm {
 
     }
 
-    //TODO: update because of adding new permissions
+
 
     /**
      * Load special permission buttons' state
@@ -369,8 +369,8 @@ public class MainForm {
 
     }
 
-    //TODO: add doc
-    //TODO: move list of types to document
+
+
     private void loadSearchPane() {
         ArrayList<String> documentTypes = new ArrayList<>();
         documentTypes.add("");
@@ -414,7 +414,7 @@ public class MainForm {
         }
     }
 
-    //TODO: add java doc
+
     private void updateDocumentListView() {
         documentListView.setItems(FXCollections.observableArrayList(databaseManager.getAllDocuments()));
         documentListView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
@@ -432,7 +432,7 @@ public class MainForm {
         });
     }
 
-    //TODO: move to Action Manager
+
 
     /**
      * Update the user card for current session
@@ -463,7 +463,7 @@ public class MainForm {
         }
     }
 
-    //TODO: add java doc
+
     private void loadInfoOnPanel(Document chosenDocument) {
         titleLbl.setText(chosenDocument.title);
 
@@ -515,7 +515,7 @@ public class MainForm {
         }
     }
 
-    //TODO: reduce java doc
+
 
     /**
      * Click on check out button event
@@ -706,8 +706,8 @@ public class MainForm {
     }
 
 
-    //TODO: add java doc
-    //TODO: make method in action manager that return the first notification and remove it after
+
+
     private Label notificationLbl;
     private Button notificationBtn;
 
@@ -748,8 +748,8 @@ public class MainForm {
         if (session.userCard.notifications.size() <= 0) notificationBtn.setVisible(false);
     }
 
-    //TODO: add doc
-    //TODO: move list of types in document
+
+
     @FXML
     public void selectSearchTypeComboBox() {
 

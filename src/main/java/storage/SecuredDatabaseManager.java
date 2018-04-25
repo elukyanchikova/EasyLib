@@ -269,7 +269,7 @@ public class SecuredDatabaseManager extends Session{
         return null;
     }
 
-    //TODO пока не трогала, хз, что там, что-то по серчу
+
     public ArrayList<Document> filterDocument(Filter filter) {
         return databaseManager.filterDocument(filter);
     }
