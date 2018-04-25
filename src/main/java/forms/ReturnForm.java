@@ -350,13 +350,30 @@ public class ReturnForm {
      */
 
     public void outstandingRequest(Document doc){
+
         UserCard[] users = new UserCard[0];
         users = doc.requestedBy.toArray(users);
         for(int i = 0; i < users.length; i++){
-            users[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, doc.getID()));
+            users[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_PQ, doc.getID()));
             databaseManager.saveUserCard(users[i]);
+            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.NOTIFY_REMOVED_FROM_WAITING_LIST_ACTION_ID, doc));
+            databaseManager.update();
+        }
+        UserCard[] userCO = new UserCard[0];
+        for (int i = 0; i <doc.takenCopies.size(); i++) {
+            userCO[i]=doc.takenCopies.get(i).getCheckoutByUser();
+        }
+        for (int i = 0; i <userCO.length ; i++) {
+            userCO[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, doc.getID()));
+            databaseManager.saveUserCard(userCO[i]);
+            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.NOTIFY_TO_RETURN_ACTION_ID, doc));
+            databaseManager.update();
+        }
+        for(int i = 0; i < doc.takenCopies.size(); i++){
+            doc.takenCopies.get(i).hasRenewed = true;
         }
         doc.deletePQ();
+        databaseManager.saveDocuments(doc);
     }
 
     private void autobooking(Document document){

@@ -485,8 +485,8 @@ public class MainForm {
 
         if (databaseManager.getDocuments(openDocumentID).isReference()) {
 
-            copiesLbl.setText("");
-            labelCopies.setText("Reference book");
+           // copiesLbl.setText("");
+            copiesLbl.setText("Reference book");
         } else copiesLbl.setText(String.valueOf(chosenDocument.getNumberOfAvailableCopies()));
 
 

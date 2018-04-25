@@ -104,7 +104,7 @@ public class AddFileForm {
         ArrayList<String> authors;
         int price = 0;
         int year = 2018;
-        int numberOfCopies = 0;
+       int numberOfCopies = 0;
         String title = "None";
         boolean isBestseller = isBestsellerCheckBox.isSelected();
         String publisher = "None";
@@ -154,28 +154,19 @@ public class AddFileForm {
             Book file = new Book(title, authors, keywords, price, publisher,
                     year, edition, isBestseller);
             databaseManager.saveDocuments(file);
-
-            if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
-                    && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
+            //!!
+             if (numberOfCopies == 1) {
                 file.isReference = true;
                 databaseManager.saveDocuments(file);
             }
-
-            numberOfCopies = Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", ""));
             int room = 417;
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
                 room++;
                 file.setCopy(copy);
-            }
-
-
-            databaseManager.saveDocuments(file);
-            if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
-                    && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
-                file.isReference = true;
                 databaseManager.saveDocuments(file);
             }
+            databaseManager.saveDocuments(file);
         } else if (docTypeTextField.getText().equals("AVMaterial")) {
             AVMaterial file = new AVMaterial(title, authors, keywords, price);
             databaseManager.saveDocuments(file);
@@ -184,11 +175,11 @@ public class AddFileForm {
                 Copy copy = new Copy(file, 4, room);
                 room++;
                 file.setCopy(copy);
+                databaseManager.saveDocuments(file);
             }
             databaseManager.saveDocuments(file);
 
-            if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
-                    && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 0)) {
+            if ((numberOfCopies <= 0)) {
                 file.isReference = true;
                 databaseManager.saveDocuments(file);
             }
@@ -204,11 +195,11 @@ public class AddFileForm {
                 Copy copy = new Copy(file, 4, room);
                 room++;
                 file.setCopy(copy);
+                databaseManager.saveDocuments(file);
             }
             databaseManager.saveDocuments(file);
 
-            if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
-                    && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
+            if (numberOfCopies <= 1) {
                 file.isReference = true;
                 databaseManager.saveDocuments(file);
             }
@@ -222,10 +213,10 @@ public class AddFileForm {
                 Copy copy = new Copy(file, 4, room);
                 room++;
                 file.setCopy(copy);
+                databaseManager.saveDocuments(file);
             }
             databaseManager.saveDocuments(file);
-            if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
-                    && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
+            if (numberOfCopies <= 1) {
                 file.isReference = true;
                 databaseManager.saveDocuments(file);
             }
