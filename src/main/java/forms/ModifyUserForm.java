@@ -218,7 +218,7 @@ public class ModifyUserForm {
      * collecting information from textFields(if the textField is not empty) and rewriting the information about the particular doc in the database
      */
     @FXML
-    public void save() {
+    public void save() throws Exception {
         //TODO add connection with databaseManager
 
 
@@ -270,7 +270,9 @@ public class ModifyUserForm {
                 ((Librarian) databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]).userType).setPriv3();
                 databaseManager.saveUserCard(databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]));
             }
+            this.back();
         }
+
     }
 
     /**

@@ -98,7 +98,7 @@ public class AddFileForm {
      * button for collecting information from the textFields and create a new doc of a particular docType in the database
      */
     @FXML
-    public void save() {
+    public void save() throws Exception {
 
         ArrayList<String> keywords;
         ArrayList<String> authors;
@@ -221,6 +221,7 @@ public class AddFileForm {
                     ActionNote.ADD_DOCUMENT_ACTION_ID, file));
             databaseManager.update();
         }
+        this.back();
     }
 
     /**

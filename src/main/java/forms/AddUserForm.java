@@ -117,7 +117,7 @@ public class AddUserForm {
                     ((Librarian) newUserCard.userType).setPriv3();
                     databaseManager.saveUserCard(newUserCard);
                 }
-            } else {
+            }} else {
                 if (userTypeTextField.getText().toLowerCase().equals("faculty")) {
                     newUserCard = new UserCard(name,
                             surname,
@@ -163,11 +163,13 @@ public class AddUserForm {
                     newUserCard = new UserCard(name, surname, new Student(), phoneNumber, address);
                 }
                 databaseManager.saveUserCard(newUserCard);
+                databaseManager.saveUserCard(newUserCard);
+            actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.ADD_USER_ACTION_ID, newUserCard));
+            databaseManager.update();
+            this.back();
             }
-        }
-        databaseManager.saveUserCard(newUserCard);
-        actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.ADD_USER_ACTION_ID, newUserCard));
-        databaseManager.update();
+
+
     }
 
     /**

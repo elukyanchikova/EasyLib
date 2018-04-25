@@ -236,6 +236,7 @@ public class ModifyFileForm {
         actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.EDIT_DOCUMENT_ACTION_ID,
                 databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID])));
         databaseManager.update();
+        this.save();
     }
 
     /**
