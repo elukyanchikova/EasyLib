@@ -802,9 +802,9 @@ public class TestCases3 {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Assert.assertTrue("Waiting list for d3 is empty", databaseManager.getDocuments(2).requestedBy.isEmpty());
-        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION, databaseManager.getUserCard(1100).notifications.get(0).id);
-        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION, databaseManager.getUserCard(1101).notifications.get(0).id);
-        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION, databaseManager.getUserCard(1110).notifications.get(0).id);
+        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, databaseManager.getUserCard(1100).notifications.get(0).id);
+        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, databaseManager.getUserCard(1101).notifications.get(0).id);
+        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, databaseManager.getUserCard(1110).notifications.get(0).id);
         Assert.assertEquals(0, databaseManager.getUserCard(1011).notifications.size());
         Assert.assertEquals(0, databaseManager.getUserCard(1010).notifications.size());
     }

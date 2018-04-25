@@ -292,11 +292,12 @@ public class ModifyUserForm {
      * remove the UserCard from the database
      */
     @FXML
-    public void deleteUser() {
+    public void deleteUser() throws Exception {
         UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
         databaseManager.removeUserCard(currentUser);
         actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.DELETE_USER_ACTION_ID, currentUser));
         databaseManager.update();
+        this.back();
     }
 
     /**

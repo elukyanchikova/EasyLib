@@ -101,7 +101,7 @@
         <Label GridPane.rowIndex = "7" GridPane.columnIndex="1" fx:id="additionLbl3" />
 
         <Label GridPane.rowIndex = "8" GridPane.columnIndex="1"
-               fx:id="copiesLbl" text="0"/>
+               fx:id="copiesLbl"       />
 
         <Button GridPane.rowIndex = "10" GridPane.columnIndex="1"
                 fx:id="requestButton" text="Request" onMouseClicked="#clickOnRequestBtn"/>

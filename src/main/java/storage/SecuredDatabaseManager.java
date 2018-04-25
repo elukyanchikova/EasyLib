@@ -1,6 +1,5 @@
 package storage;
 
-import core.ActionManager;
 import core.ActionNote;
 import documents.*;
 import org.json.JSONObject;
@@ -11,9 +10,6 @@ import users.userTypes.Admin;
 import users.userTypes.Librarian;
 import users.userTypes.UserType;
 
-import javax.print.Doc;
-import java.io.*;
-import java.net.UnknownServiceException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -237,7 +233,7 @@ public class SecuredDatabaseManager extends Session{
             }
             for (Copy c : doc.takenCopies) {
                 UserCard u = c.getCheckoutByUser();
-                u.notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION, doc.getID()));
+                u.notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, doc.getID()));
                 databaseManager.saveUserCard(u);
                 databaseManager.actionManager.actionNotes.add(new ActionNote(
                         userCard, day, month, ActionNote.NOTIFY_TO_RETURN_ACTION_ID, u, doc

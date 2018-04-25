@@ -1,11 +1,7 @@
-import core.ActionManager;
 import documents.Book;
 import documents.Copy;
 import documents.Document;
 
-import forms.AddUserForm;
-import forms.MainForm;
-import forms.ReturnForm;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +13,6 @@ import users.Session;
 import users.UserCard;
 import users.userTypes.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -425,10 +420,10 @@ public class TestCases4 {
         assertTrue("Waiting list for b3 is empty", databaseManager.getDocuments(b3Id).requestedBy.isEmpty());
         UserCard u = databaseManager.getUserCard(p1Id);
         assertTrue("p1 has notification", databaseManager.getUserCard(p1Id).notifications.stream().anyMatch(
-                n -> n.id == Notification.OUTDATNDING_REQUEST_NOTIFICATION && n.docID == b3Id
+                n -> n.id == Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US && n.docID == b3Id
         ));
         assertTrue("p2 has notification", databaseManager.getUserCard(p2Id).notifications.stream().anyMatch(
-                n -> n.id == Notification.OUTDATNDING_REQUEST_NOTIFICATION && n.docID == b3Id
+                n -> n.id == Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US && n.docID == b3Id
         ));
     }
 

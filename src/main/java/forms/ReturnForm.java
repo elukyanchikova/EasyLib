@@ -353,7 +353,7 @@ public class ReturnForm {
         UserCard[] users = new UserCard[0];
         users = doc.requestedBy.toArray(users);
         for(int i = 0; i < users.length; i++){
-            users[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION, doc.getID()));
+            users[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, doc.getID()));
             databaseManager.saveUserCard(users[i]);
         }
         doc.deletePQ();

@@ -155,6 +155,13 @@ public class AddFileForm {
                     year, edition, isBestseller);
             databaseManager.saveDocuments(file);
 
+            if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
+                    && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
+                file.isReference = true;
+                databaseManager.saveDocuments(file);
+            }
+
+            numberOfCopies = Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", ""));
             int room = 417;
             for (int i = 0; i < numberOfCopies; i++) {
                 Copy copy = new Copy(file, 4, room);
@@ -162,11 +169,7 @@ public class AddFileForm {
                 databaseManager.saveDocuments(file);
             }
 
-            if ((!(numberOfCopiesTextField.getText().replace(" ", "").isEmpty()))
-                    && (Integer.parseInt(numberOfCopiesTextField.getText().replace(" ", "")) <= 1)) {
-                file.isReference = true;
-                databaseManager.saveDocuments(file);
-            }
+
         } else if (docTypeTextField.getText().equals("AVMaterial")) {
             AVMaterial file = new AVMaterial(title, authors, keywords, price);
             databaseManager.saveDocuments(file);
