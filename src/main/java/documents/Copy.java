@@ -31,7 +31,11 @@ public class Copy {
         this.room = data.getInt("Room");
         if(data.get("CheckedOutBy")!= JSONObject.NULL) {
             this.checkoutByUser = databaseManager.getUserCard(data.getInt("CheckedOutBy"));
-            databaseManager.getUserCard(checkoutByUser.getId()).checkedOutCopies.add(this);
+            boolean flag = true;
+            for(int i = 0; i < checkoutByUser.checkedOutCopies.size(); i++) {
+                if(checkoutByUser.checkedOutCopies.get(i).getDocumentID() == documentID) flag = false;
+            }
+            if(flag) databaseManager.getUserCard(checkoutByUser.getId()).checkedOutCopies.add(this);
 
         }
         this.checkOutDay = data.getInt("CheckedOutDay");
@@ -79,17 +83,15 @@ public class Copy {
     }
 
     public int getOverdue(Session session){
-        int days = 0;
+        int days;
         int[] m = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
         if(checkOutMonth > session.month) return 0;
         days = session.day - checkOutDay;
         if(checkOutMonth < session.month){
-            int[] months = new int[session.month - checkOutMonth];
             for(int i = checkOutMonth; i < session.month; i++) {
                 days += m[i-1];
             }
-        }
-        if(checkOutDay==session.day) return 0;
+        }else if(checkOutDay==session.day) return 0;
         return days<(checkOutTime)? 0: (days-checkOutTime);
     }
 

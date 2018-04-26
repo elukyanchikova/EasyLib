@@ -245,15 +245,15 @@ public class DatabaseManager {
         if (Book.class.isAssignableFrom(doc.getClass())) {
             if (doc.getNumberOfAvailableCopies() == 1) {
                 doc.isReference = true;
-            }
+            }else doc.isReference = false;
         } else if (AVMaterial.class.isAssignableFrom(doc.getClass())) {
             if (doc.getNumberOfAvailableCopies() == 0) {
                 doc.isReference = true;
-            }
+            }else doc.isReference = false;
         } else if (JournalArticle.class.isAssignableFrom(doc.getClass())) {
             if (doc.getNumberOfAvailableCopies() == 1) {
                 doc.isReference = true;
-            }
+            }else doc.isReference = false;
         }
         databaseManager.saveDocuments(doc);
     }

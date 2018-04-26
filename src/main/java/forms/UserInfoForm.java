@@ -129,6 +129,7 @@ public class UserInfoForm {
                 stringBuilder.append("(" + c.getDueDate());
                 stringBuilder.append("), ");
             }
+            checkedOutLbl.setText(stringBuilder.toString());
 
         }
     }

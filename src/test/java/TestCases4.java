@@ -405,15 +405,12 @@ public class TestCases4 {
 
         ArrayList<Copy> takenCopies = databaseManager.getDocuments(b3Id).takenCopies;
 
-        assertTrue("p1 checked out b3", takenCopies.stream().anyMatch(
-                c -> databaseManager.getUserCard(p1Id).checkedOutCopies.contains(c)
-        ));
-        assertTrue("p2 checked out b3", takenCopies.stream().anyMatch(
-                c -> databaseManager.getUserCard(p2Id).checkedOutCopies.contains(c)
-        ));
-        assertTrue("s checked out b3", takenCopies.stream().anyMatch(
-                c -> databaseManager.getUserCard(sId).checkedOutCopies.contains(c)
-        ));
+        assertEquals("p1 checked out b3", takenCopies.get(0).getDocumentID(),
+                databaseManager.getUserCard(p1Id).checkedOutCopies.get(0).getDocumentID() );
+        assertEquals("p2 checked out b3", takenCopies.get(1).getDocumentID(),
+                databaseManager.getUserCard(p1Id).checkedOutCopies.get(0).getDocumentID() );
+        assertEquals("s checked out b3", takenCopies.get(2).getDocumentID(),
+                databaseManager.getUserCard(p1Id).checkedOutCopies.get(0).getDocumentID() );
 
         assertTrue("b3 has no queue", databaseManager.getDocuments(b3Id).requestedBy.isEmpty());
 

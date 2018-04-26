@@ -597,6 +597,10 @@ public class TestCases3 {
         ManageForm manageForm = new ManageForm();
         ReturnForm returnForm = new ReturnForm();
         manageForm.setSession(session);
+        manageForm.setDatabaseManager(databaseManager);
+        returnForm.setDatabaseManager(databaseManager);
+        returnForm.setSession(session);
+        returnForm.setActionManager(databaseManager.actionManager);
         returnForm.outstandingRequest(b2);
 
         session = new Session(p1.userType, 29, 3);
@@ -802,11 +806,9 @@ public class TestCases3 {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Assert.assertTrue("Waiting list for d3 is empty", databaseManager.getDocuments(2).requestedBy.isEmpty());
-        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, databaseManager.getUserCard(1100).notifications.get(0).id);
-        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, databaseManager.getUserCard(1101).notifications.get(0).id);
-        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, databaseManager.getUserCard(1110).notifications.get(0).id);
-        Assert.assertEquals(0, databaseManager.getUserCard(1011).notifications.size());
-        Assert.assertEquals(0, databaseManager.getUserCard(1010).notifications.size());
+        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_PQ, databaseManager.getUserCard(1100).notifications.get(0).id);
+        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_PQ, databaseManager.getUserCard(1101).notifications.get(0).id);
+        Assert.assertEquals(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_PQ, databaseManager.getUserCard(1110).notifications.get(0).id);
     }
 
     @Test

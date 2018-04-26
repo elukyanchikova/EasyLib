@@ -290,9 +290,9 @@ public class ReturnForm {
         databaseManager.update();
         databaseManager.getUserCard(userCard.getId()).checkedOutCopies.remove(copy);
         databaseManager.getDocuments(databaseManager.getDocuments(copy.getDocumentID()).getID()).returnCopy(copy);
-        databaseManager.rebalanceForReferenceType(databaseManager.getDocuments(copy.getID()));
-        databaseManager.saveDocuments( databaseManager.getDocuments(copy.getID()));
+        databaseManager.saveDocuments( databaseManager.getDocuments(copy.getDocumentID()));
         databaseManager.saveUserCard(databaseManager.getUserCard(userCard.getId()));
+        databaseManager.rebalanceForReferenceType(databaseManager.getDocuments(copy.getDocumentID()));
         this.autobooking(databaseManager.getDocuments(copy.getDocumentID()));
     }
 
@@ -359,13 +359,13 @@ public class ReturnForm {
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.NOTIFY_REMOVED_FROM_WAITING_LIST_ACTION_ID, doc));
             databaseManager.update();
         }
-        UserCard[] userCO = new UserCard[0];
+        ArrayList<UserCard> userCO = new ArrayList<>();
         for (int i = 0; i <doc.takenCopies.size(); i++) {
-            userCO[i]=doc.takenCopies.get(i).getCheckoutByUser();
+            userCO.add(doc.takenCopies.get(i).getCheckoutByUser());
         }
-        for (int i = 0; i <userCO.length ; i++) {
-            userCO[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, doc.getID()));
-            databaseManager.saveUserCard(userCO[i]);
+        for (int i = 0; i <userCO.size() ; i++) {
+            userCO.get(i).notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, doc.getID()));
+            databaseManager.saveUserCard(userCO.get(i));
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.NOTIFY_TO_RETURN_ACTION_ID, doc));
             databaseManager.update();
         }
@@ -379,18 +379,18 @@ public class ReturnForm {
     private void autobooking(Document document){
         UserCard[] userCards = document.requestedBy.toArray(new UserCard[0]);
         Arrays.sort(userCards);
-        int ind =userCards.length-1;
+        int ind = userCards.length-1;
         if(userCards.length > 0) {
             userCards[ind].notifications.add(new Notification(Notification.GET_COPY_NOTIFICATION, document.getID()));
-            if (!document.isReference() && document.getNumberOfAvailableCopies() > 0) {
+            if (!document.isReference()) {
                 document.bookedCopies.add(document.availableCopies.get(0));
                 document.availableCopies.get(0).checkoutBy(userCards[ind]);
                 document.availableCopies.remove(0);
+                document.requestedBy.remove(userCards[ind]);
                 databaseManager.saveDocuments(document);
                 databaseManager.saveUserCard(userCards[ind]);
                 databaseManager.load();
             }
         }
-        document.requestedBy.remove(userCards[ind]);
     }
 }

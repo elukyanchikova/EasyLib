@@ -18,6 +18,7 @@ import users.Notification;
 import users.Session;
 import users.UserCard;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -262,13 +263,14 @@ public class ManageForm {
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.NOTIFY_REMOVED_FROM_WAITING_LIST_ACTION_ID, doc));
             databaseManager.update();
         }
-        UserCard[] userCO = new UserCard[0];
+        ArrayList<UserCard> userCO = new ArrayList<>();
         for (int i = 0; i <doc.takenCopies.size(); i++) {
-            userCO[i]=doc.takenCopies.get(i).getCheckoutByUser();
+            userCO.add(doc.takenCopies.get(i).getCheckoutByUser());
         }
-        for (int i = 0; i <userCO.length ; i++) {
-            userCO[i].notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, doc.getID()));
-            databaseManager.saveUserCard(userCO[i]);
+
+        for (int i = 0; i <userCO.size() ; i++) {
+            userCO.get(i).notifications.add(new Notification(Notification.OUTDATNDING_REQUEST_NOTIFICATION_FOR_CHECKED_OUT_US, doc.getID()));
+            databaseManager.saveUserCard(userCO.get(i));
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.NOTIFY_TO_RETURN_ACTION_ID, doc));
             databaseManager.update();
         }

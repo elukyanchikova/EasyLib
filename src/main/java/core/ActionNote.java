@@ -30,6 +30,7 @@ public class ActionNote {
     UserCard userCard;
     public UserCard targetUser;
     public Document targetDocument;
+    public String nameOfDeleted;
     int day;
     int month;
     int actionID;
@@ -52,6 +53,11 @@ public class ActionNote {
         this.targetDocument = targetDocument;
     }
 
+    public ActionNote(UserCard userCard, int day, int month, int id, String nameOfDeleted){
+        this(userCard, day, month, id);
+        this.nameOfDeleted = nameOfDeleted;
+    }
+
     public ActionNote(UserCard userCard, int day, int month, int id, UserCard targetUser, Document targetDocument){
         this(userCard, day, month, id);
         this.targetUser = targetUser;
@@ -70,6 +76,7 @@ public class ActionNote {
         this.userCard = databaseManager.getUserCard(action.getInt("UserCardAction"));
         this.targetUser = databaseManager.getUserCard(action.getInt("TargetUser"));
         this.targetDocument = databaseManager.getDocuments(action.getInt("TargetDocument"));
+        //this.nameOfDeleted = action.getString("Name");
     }
 
     public JSONObject serialize(){
@@ -84,6 +91,9 @@ public class ActionNote {
         if(targetDocument != null)
             action.put("TargetDocument", targetDocument.getID());
         else  action.put("TargetDocument", 0);
+        if(nameOfDeleted != null)
+            action.put("Name", nameOfDeleted);
+        else  action.put("Name", JSONObject.NULL);
         return action;
     }
 
@@ -113,9 +123,7 @@ public class ActionNote {
                 break;
             case DELETE_USER_ACTION_ID:
                 stringBuilder.append("deleted ");
-                stringBuilder.append(targetUser.userType.getClass().getName().replace("users.userTypes.", "") + " ");
-                stringBuilder.append(targetUser.name + " " + targetUser.surname);
-                stringBuilder.append("(ID:" + targetUser.getId() + ") ");
+                stringBuilder.append(nameOfDeleted + " ");
                 break;
             case ADD_DOCUMENT_ACTION_ID:
                 stringBuilder.append("added ");
@@ -131,9 +139,7 @@ public class ActionNote {
                 break;
             case DELETE_DOCUMENT_ACTION_ID:
                 stringBuilder.append("deleted ");
-                stringBuilder.append(targetDocument.getDocType() + " ");
-                stringBuilder.append(targetDocument.title);
-                stringBuilder.append("(ID:" + targetDocument.getID() + ") ");
+                stringBuilder.append(nameOfDeleted + " ");
                 break;
             case OUTSTANDING_REQUEST_ACTION_ID:
                 stringBuilder.append("made an outstanding request on ");

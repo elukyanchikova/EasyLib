@@ -295,7 +295,7 @@ public class ModifyUserForm {
     public void deleteUser() throws Exception {
         UserCard currentUser = databaseManager.getUserCard(databaseManager.getUserCardsID()[openUserCardID]);
         databaseManager.removeUserCard(currentUser);
-        actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.DELETE_USER_ACTION_ID, currentUser));
+        actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.DELETE_USER_ACTION_ID, currentUser.name + " " + currentUser.surname));
         databaseManager.update();
         this.back();
     }

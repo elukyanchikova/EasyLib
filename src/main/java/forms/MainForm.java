@@ -144,12 +144,12 @@ public class MainForm {
      */
     public void checkOut(Document document) {
         boolean flag = isAvailableForUser(document);
-        if (!document.isReference() && flag) {
-            if (document.getNumberOfAvailableCopies() > 0) {
+        if (flag) {
+            if (!document.isReference()) {
                 document.takeCopy(session.userCard, session);
-                databaseManager.saveUserCard(session.userCard);
                 databaseManager.saveDocuments(document);
-                //databaseManager.load();
+                databaseManager.saveUserCard(session.userCard);
+                databaseManager.rebalanceForReferenceType(document);
                 actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.CHECK_OUT_DOCUMENT_ACTION_ID, document));
                 databaseManager.update();
                 updateSession();
@@ -171,6 +171,7 @@ public class MainForm {
             databaseManager.saveDocuments(document);
             databaseManager.saveUserCard(session.userCard);
             databaseManager.load();
+            databaseManager.rebalanceForReferenceType(document);
             updateSession();
             actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.BOOK_DOCUMENT_ACTION_ID, document));
             databaseManager.update();
@@ -195,7 +196,7 @@ public class MainForm {
     public boolean request(Document document) {
         boolean flag = isAvailableForUser(document);
 
-        if (!document.isReference() && document.getNumberOfAvailableCopies() == 0 && flag) {
+        if ( document.isReference && flag) {
             document.putInPQ(session.userCard);
             databaseManager.saveDocuments(document);
             databaseManager.saveUserCard(session.userCard);
@@ -217,11 +218,12 @@ public class MainForm {
 
 
     private boolean isAvailableForUser(Document document) {
-       /* if(!(session.userCard.checkedOutCopies.isEmpty())){
-        for (int i = 0; i < session.userCard.checkedOutCopies.size(); i++) {
-            if (session.userCard.checkedOutCopies.get(i).getDocumentID() == openDocumentID)
-                return false;
-        }}*/
+       if(!(session.userCard.checkedOutCopies.isEmpty())){
+           for (int i = 0; i < session.userCard.checkedOutCopies.size(); i++) {
+               if (session.userCard.checkedOutCopies.get(i).getDocumentID() == openDocumentID)
+                   return false;
+           }
+       }
         for (int i = 0; i < document.bookedCopies.size(); i++) {
             if (document.bookedCopies.get(i).getCheckoutByUser().getId() == session.userCard.getId())
                 return false;
@@ -360,7 +362,7 @@ public class MainForm {
      */
     private void loadHighPermissionInterface() {
 
-        editBtn.setVisible(/*session.getUser().isHasEditPerm() ||*/ session.getUser().isHasModifyPerm() || session.getUser().isHasDeletePerm() || session.getUser().isHasAddPerm() ||
+        editBtn.setVisible( session.getUser().isHasModifyPerm() || session.getUser().isHasDeletePerm() || session.getUser().isHasAddPerm() ||
                 session.getUser().isHasEditingLibrarianPerm());
         returnBtn.setVisible(session.getUser().isHasReturnPerm());
         infoBtn.setVisible(session.getUser().isHasCheckUserInfoPerm());
@@ -406,7 +408,7 @@ public class MainForm {
             boolean flag = isAvailableForUser(databaseManager.getDocuments(openDocumentID));
 
             if (flag) {
-                if (databaseManager.getDocuments(openDocumentID).availableCopies.size() > 0) {
+                if (!databaseManager.getDocuments(openDocumentID).isReference) {
                     checkOutBtn.setVisible(session.getUser().isHasCheckOutPerm());
                     bookBtn.setVisible(!session.getUser().isHasCheckOutPerm());
                 } else requestBtn.setVisible(true);
@@ -484,8 +486,6 @@ public class MainForm {
         keywordsLbl.setText(stringBuilderKeywords.toString());
 
         if (databaseManager.getDocuments(openDocumentID).isReference()) {
-
-           // copiesLbl.setText("");
             copiesLbl.setText("Reference book");
         } else copiesLbl.setText(String.valueOf(chosenDocument.getNumberOfAvailableCopies()));
 
@@ -525,22 +525,24 @@ public class MainForm {
     public void clickOnRequestBtn() {
         request(databaseManager.getDocuments(openDocumentID));
         loadAvailableAction();
-        copiesLbl.setText(String.valueOf(databaseManager.getDocuments(openDocumentID).getNumberOfAvailableCopies()));
+        if(databaseManager.getDocuments(openDocumentID).isReference) copiesLbl.setText("Reference book");
+        else copiesLbl.setText(String.valueOf(databaseManager.getDocuments(openDocumentID).getNumberOfAvailableCopies()));
     }
 
     @FXML
     public void clickOnCheckOutBtn() {
         checkOut(databaseManager.getDocuments(openDocumentID));
         loadAvailableAction();
-        copiesLbl.setText(String.valueOf(databaseManager.getDocuments(openDocumentID).getNumberOfAvailableCopies()));
+        if(databaseManager.getDocuments(openDocumentID).isReference) copiesLbl.setText("Reference book");
+        else copiesLbl.setText(String.valueOf(databaseManager.getDocuments(openDocumentID).getNumberOfAvailableCopies()));
     }
 
     @FXML
     public void clickOnBookBtn() {
         book(databaseManager.getDocuments(openDocumentID));
         loadAvailableAction();
-        copiesLbl.setText(String.valueOf(databaseManager.getDocuments(openDocumentID).getNumberOfAvailableCopies()));
-
+        if(databaseManager.getDocuments(openDocumentID).isReference) copiesLbl.setText("Reference book");
+        else copiesLbl.setText(String.valueOf(databaseManager.getDocuments(openDocumentID).getNumberOfAvailableCopies()));
     }
 
     /**

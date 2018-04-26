@@ -246,8 +246,8 @@ public class ModifyFileForm {
     @FXML
     public void deleteFile() {
         Document currentDoc = databaseManager.getDocuments(databaseManager.getDocumentsID()[openDocumentID]);
+        actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.DELETE_DOCUMENT_ACTION_ID, currentDoc.title));
         databaseManager.removeDocuments(currentDoc);
-        actionManager.actionNotes.add(new ActionNote(session.userCard, session.day, session.month, ActionNote.DELETE_DOCUMENT_ACTION_ID, currentDoc));
         databaseManager.update();
     }
 
